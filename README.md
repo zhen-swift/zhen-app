@@ -16,7 +16,7 @@ measured, rule by rule — and for what replaces it, in what order.
 | `Docs/Design/` | The same six artboards as PNGs, `01-devices-dark.png` through `06-settings.png` — the canonical copy |
 | `Docs/A1`–`A3`, `Docs/03-zhen-app.md`, `Docs/REVIEW-ui-architecture.md` | The old app's design system, brief and review. Record, not instruction |
 | `Docs/plans/RESPONSIVE-plan.md`, `Docs/process/APP-CATCHUP.md` | The old app's responsive plan and migration list. Record |
-| `Docs/process/prompts/rebuild-phase-0-1.md` | The brief for rebuild phases 0 and 1. **Written before the split** — it names monorepo paths and needs re-pathing before it is run |
+| `Docs/process/prompts/rebuild-phase-0-1.md` | The brief for rebuild phases 0 and 1, rewritten for this repository on 2026-10-04 |
 | `Zhen/`, `ZhenTests/`, `Resources/`, `Zhen.xcodeproj` | The old app. Phase 0 deletes it |
 | `Scripts/` | How the old app was built, signed and checked. They name monorepo paths (`zhen-app/`, `zhen/`) and **do not run here**; they are kept as the record until phase 0 decides which survive |
 
