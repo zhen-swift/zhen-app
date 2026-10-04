@@ -24,8 +24,8 @@ measured, rule by rule — and for what replaces it, in what order.
 `../zhen`, which was a sibling directory in the monorepo this was split from. That is not
 fixed, because the project is the first thing the rebuild deletes.
 
-**`AGENTS.md` is missing.** The rebuild plan names it as the authority on how the app is
-built. It was not in the monorepo either, and is an open question.
+**`AGENTS.md` is the house rules** — the authority on how Swift and SwiftUI are written
+here. Where it and the rebuild plan disagree, `AGENTS.md` wins.
 
 ## The engine
 

@@ -2,6 +2,7 @@
 
 | | |
 |---|---|
+| `../AGENTS.md` | The house rules: **how** the app is written. Wins over every document here |
 | `plans/REBUILD-plan.md` | **Start here.** Why the app is being demolished and rebuilt, and in what order |
 | `Design/` | The six artboards the design was measured from, `01-devices-dark.png` through `06-settings.png`. `../Design/artboards-2026-10-01.pdf` is the same six as one export |
 | `03-zhen-app.md` | The old app's brief: bundle identity, screens, isolation, the privileged helper |
