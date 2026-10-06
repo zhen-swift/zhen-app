@@ -42,8 +42,7 @@ failing. A version is a promise the engine has to keep on purpose.
 
 The app moved to its own repository on 2026-10-03. Its history here begins on 2026-09-26,
 when it was given its own directory and project in the monorepo; everything before that is
-in the archived monorepo, [`JCTec/zhen`](https://github.com/JCTec/zhen), tagged
-`monorepo-final`.
+in the archived monorepo this repository was split from.
 
 ## Licence
 
