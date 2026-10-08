@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — phase 0 done. P0.5 done; CI pushed. Next: P1.1 tokens.
+**Liveness:** 2026-10-07 — P1.1 done, P1.6 done. Next: P1.2 colorsets.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -353,3 +353,45 @@ and Hardened Runtime are on, with no entitlement beyond them because nothing els
 - `.gitignore` now commits `Package.resolved` (it pins 0.6.0) and the project's own
   workspace. A first edit cut the old comment mid-sentence and left the ignore rule in
   place; `git check-ignore` caught it before the commit.
+
+### P1.6 — CI gate
+
+Pushed with the project (`fb69e48`); run 37713232116 on `ubuntu-latest`, GNU grep:
+`check-tokens self-test: 20 of 20 planted violations found, 1 allowed line skipped, every
+rule fired — PASS`, then `check-tokens: 1 files checked, 0 allowed by comment — PASS`.
+P1.6 done.
+
+## P1.1 — tokens · done
+
+`Zhen/Utilities/`: `Spacing`, `CornerRadius`, `BorderWidth`, `IconSize`, four `nonisolated`
+enums with `CGFloat` extensions so a view reads `.padding(.spacing.medium)`. `nonisolated`
+because the target is MainActor by default and a `Shape` or `ButtonStyle` reads tokens off
+the main actor.
+
+**Measured from the artboards, not taken from A1 or the old `Metrics`.** The tools are in
+`Docs/process/evidence/`: `runs-artboard.swift` (colour runs along a line) and
+`corner-artboard.swift` (bounding box of a colour, then where the top row and left column
+reach full strength). Artboards are 2x (2364 px = 1182 pt).
+
+| Measured | pt | Where | A1 said |
+|---|---|---|---|
+| row pitch, separator | 51–52, 1 | 01, x=1300 | 52 |
+| sidebar incl. divider `313136` | 228 | 01, y=900 | 228 |
+| content inset | 20 | 03 | 20 |
+| card padding / gap between cards / header rule to first card | 16 / 16 / 16 | 03 | 16 (card padding) |
+| card radius | 8 (15–16 px, five cards in 03, 05, 06) | | **10** |
+| field, button, selection, popup | 6 (11–13 px) | 01, 06 | 6 |
+| chip radius | 4 (7 px; `private`, `GATEWAY`, `WINNER`) | 01, 03 | **5** |
+| device tile radius | 10 (19 px) | 03 | — |
+| filter pill, toggle | capsule | 04, 06 | — |
+| status dot / footer dot / meter / stage check / tile | 8 / 6 / 12 / 15–16 / ~40 | 01, 03, 05 | — |
+
+**A wrong control, caught:** the first corner tool walked outward from a point and stopped
+on text and inner separators, reporting 0 for half the elements, including the card I had
+measured by hand at 8. Rewritten to use the bounding box; the same card then measures 8.
+
+Row height and sidebar width are `Table`'s and `NavigationSplitView`'s, not tokens.
+
+**Gate:** `xcodebuild … test -only-testing:ZhenTests` → `** TEST SUCCEEDED **`, 4 tests
+(call sites compile, including the Optional `spacing:` form; scales ascend); no compiler
+warnings. `check-tokens.sh` passes (`Utilities/` is where the numbers live, and is excluded).
