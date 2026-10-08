@@ -3,9 +3,10 @@
 The macOS app for [Zhen](https://github.com/zhen-swift/zhen-core), a fast, native network
 scanner.
 
-**The app is being rebuilt.** The code in this repository is the old app, and it is about
-to be deleted. Read [`Docs/plans/REBUILD-plan.md`](Docs/plans/REBUILD-plan.md) for why —
-measured, rule by rule — and for what replaces it, in what order.
+**The app is being rebuilt from zero.** The old app's code was deleted on 2026-10-07; it is
+readable at `fdb7eaf`, the last commit that had it. Read
+[`Docs/plans/REBUILD-plan.md`](Docs/plans/REBUILD-plan.md) for why — measured, rule by rule
+— and for what replaces it, in what order.
 
 ## What is here
 
@@ -17,12 +18,10 @@ measured, rule by rule — and for what replaces it, in what order.
 | `Docs/A1`–`A3`, `Docs/03-zhen-app.md`, `Docs/REVIEW-ui-architecture.md` | The old app's design system, brief and review. Record, not instruction |
 | `Docs/plans/RESPONSIVE-plan.md`, `Docs/process/APP-CATCHUP.md` | The old app's responsive plan and migration list. Record |
 | `Docs/process/prompts/rebuild-phase-0-1.md` | The brief for rebuild phases 0 and 1, rewritten for this repository on 2026-10-04 |
-| `Zhen/`, `ZhenTests/`, `Resources/`, `Zhen.xcodeproj` | The old app. Phase 0 deletes it |
-| `Scripts/` | How the old app was built, signed and checked. They name monorepo paths (`zhen-app/`, `zhen/`) and **do not run here**; they are kept as the record until phase 0 decides which survive |
 
-**The old app does not build in this repository.** Its project references the package at
-`../zhen`, which was a sibling directory in the monorepo this was split from. That is not
-fixed, because the project is the first thing the rebuild deletes.
+**There is no code here yet.** Phase 0 deleted the old app — `Zhen/`, `ZhenTests/`,
+`Resources/`, `Zhen.xcodeproj` and `Scripts/` — so that phase 1 starts from an empty Xcode
+project. Progress is in `Docs/process/REBUILD-progress.md`.
 
 **`AGENTS.md` is the house rules** — the authority on how Swift and SwiftUI are written
 here. Where it and the rebuild plan disagree, `AGENTS.md` wins.
