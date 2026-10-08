@@ -259,3 +259,98 @@ order survives in the file.
 Settings), so the shortcuts become ⌘1–⌘4 in drawn order. But `AGENTS.md` moves Settings to a
 `Settings { }` scene opened with ⌘, — so whether Settings keeps a sidebar row *and* a ⌘4 is a
 phase-2 decision (`REBUILD-questions.md` Q2).
+
+---
+
+## 4. The artboards, sampled (for P1.2)
+
+**Source:** `Docs/Design/01`–`06-*.png` (no colour profile; `sips -g profile` → nil, so the
+bytes are read uncorrected and treated as sRGB, as A1 did). Sampled 2026-10-07 by
+[`evidence/sample-artboard.swift`](evidence/sample-artboard.swift) with the boxes in
+[`evidence/artboard-boxes/`](evidence/artboard-boxes/), in source pixels. `fill` is the
+most common colour in a box; `ink` is the pixel furthest from it, for text and glyphs.
+Reproduce with:
+
+    swift Docs/process/evidence/sample-artboard.swift Docs/Design/01-devices-dark.png \
+      Docs/process/evidence/artboard-boxes/01-devices-dark.txt
+
+**Light exists only for Devices** (`02`). Every other screen is drawn dark only, so the
+light values for cards, chips, status text, the histogram and controls must be derived.
+No artboard draws Increase Contrast.
+
+### Surfaces and fills
+
+| Role | Dark | Light | Where sampled | Old palette (dark / light) |
+|---|---|---|---|---|
+| window / content surface | `1A1A1F` | `FFFFFF` | 01/02 content | same |
+| sidebar, cards (raised) | `212127` | `EEEDF3` | 01/02 sidebar; 03, 05, 06 cards | same |
+| live-scan stage card | `1E1E23` | — | 05 | none |
+| search field | `27272C` | `F4F4F4` | 01/02 | `2C2C32` / `F0F0F0` (`surfaceField`) |
+| text field, chip | `2C2C32`, `2C2C31` | `F0F0F0` | 06 field; 01/02 `private` chip | `surfaceField` |
+| popup button | `2E2E34` | — | 06 | none |
+| sidebar selection | `373548` | `DBD8ED` | 01/02 | same |
+| gateway chip | `302E3F` | `ECE9F8` | 01/02 | none |
+| winner chip | `363446` | — | 03 | none |
+| device icon tile | `2D2B3C` | — | 03 | none |
+| progress track | `29292E` | — | 05 | none |
+| toggle off | `404045` | — | 06 | none (a platform `Toggle` draws its own) |
+
+### Lines and marks
+
+| Role | Dark | Light | Where | Old palette |
+|---|---|---|---|---|
+| row / header separator | `2A2A2F` | `E8E8E8` | 01/02 | `2A2A2F` / `E3E3E8` |
+| card border | `313136` | — | 03 | none |
+| active stage card border | `4F496A` | — | 05 | none |
+| offline ring | `49494F` | `CECED0` | 01/02 | `49494F` / `C4C4C9` |
+| past identity dot | `49494E` | — | 03 | none |
+| online dot / toggle on / progress done / signal | `4CD268` | `23A844` | 01–06 | `4CD268` both (old app made marks theme-invariant; **the light artboard does not**) |
+| signal, weak bars | `3A3A3F` | `E0E0E0` | 01/02 | none |
+| histogram, ordinary bar | `5F5884` | — | 04 | none |
+
+### Accent and status
+
+| Role | Dark | Light | Where |
+|---|---|---|---|
+| accent: button, links, signal, selected icon, merged, histogram peak | `A495E8` | `6A58C9` | 01–05 |
+| label on accent | `17141F` | `FFFFFF` | 01/02 button, 04 filter (old palette: `1A1A1F`) |
+| warning / port events | `D9A856` | — | 04, 05 |
+| info / IP changed | `6DB3D4` | — | 04 |
+| appeared | `4CD268` | — | 04 |
+| disappeared | `65656C` | — | 04 (the faint grey, not a hue) |
+
+### Text — and which reads
+
+The artboards use **more text greys than A1 recorded**, and most of them fail. Ratios
+against every surface each can land on (WCAG 2, same formula as section 1):
+
+| Text | Dark | on surface / raised / stage / search / field | Light | on surface / raised / search / chip |
+|---|---|---|---|---|
+| primary | `EBEBF0` | 14.59 / 13.48 / 13.97 / 12.51 / 11.68 | `1D1D1F` | 16.83 / 14.46 / 15.30 / 14.77 |
+| secondary (event prose, IP, filter chips, unidentified name) | `97979F` | 5.98 / 5.52 / 5.72 / 5.13 / 4.79 | `7B7B7F` | **4.22 / 3.62 / 3.83 / 3.70** |
+| sidebar label | `9A9AA3` | 6.21 / 5.74 / 5.95 / 5.33 / 4.97 | `75757C` | 4.57 / **3.93 / 4.16 / 4.01** |
+| chip text | `717178` | **3.58 / 3.31 / 3.43 / 3.07 / 2.86** | `A4A4A7` | **2.49 / 2.14 / 2.26 / 2.18** |
+| section header | `6A6A71` | **3.23 / 2.98 / 3.09 / 2.77 / 2.59** | `A3A3A9` | **2.51 / 2.16 / 2.28 / 2.20** |
+| offline row name | `68686F` | **3.14 / 2.90 / 3.00 / 2.69 / 2.51** | `B0B0B2` | **2.17 / 1.86 / 1.97 / 1.90** |
+| tertiary (descriptor lines, column headers, MAC, times) | `65656C` | **3.00 / 2.77 / 2.87 / 2.57 / 2.40** | `ADADB0` | **2.24 / 1.92 / 2.04 / 1.96** |
+| queued stage | `46464C` | **1.85 / 1.71 / 1.77 / 1.59 / 1.48** | — | — |
+| accent | `A495E8` | 6.64 / 6.13 / 6.36 / 5.69 / 5.31 | `6A58C9` | 5.45 / 4.68 / 4.96 / 4.78 |
+| label on accent | `17141F` on `A495E8`: 6.96 | | `FFFFFF` on `6A58C9`: 5.45 | |
+
+Bold = below 4.5. **On dark, everything below `97979F` fails; on light, even the secondary
+grey fails.** The old app collapsed this to two corrected tokens (`939396` / `939399`), so its
+offline, chip, section and queued texts became as loud as secondary text. P1.2 has to
+choose between keeping the artboards' four-step hierarchy, with each step lifted to clear
+4.5 on every surface it touches (the steps then compress, as A1's "secondary and tertiary
+converge" found), or carrying the hierarchy in type rather than colour. That is the
+"could not reconcile" item for the phase report. `AGENTS.md`'s "legibility is
+non-negotiable" rules out shipping the sampled values as they are.
+
+### Two discrepancies between artboards
+
+- **Field fill:** the search field in 01 is `27272C`, the text fields in 06 are `2C2C32`.
+  Both are native controls in the rebuild (`.searchable`, `TextField` in a `Form`), which
+  draw their own fill, so neither becomes a token unless a component needs it.
+- **Light online green:** `23A844` in 02 versus `4CD268` everywhere dark. As a mark it
+  clears the 3:1 non-text floor on the light surface (3.11) but not on the raised sidebar
+  (2.67), where the footer dot sits.

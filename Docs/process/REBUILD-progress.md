@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — P1.4 done (zhen-core#5, macOS CI green); P1.6 CI unpushed; P0.1, P0.5 waiting on JC; sampling artboard colours for P1.2.
+**Liveness:** 2026-10-07 — stopped, waiting on JC: P0.1 (unregister) and P0.5 (new project). Done: step 0, P0.2–P0.4, P1.4, P1.6 script, P1.2 sampling.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -273,3 +273,20 @@ green on GitHub") is open.
   **Not mine:** `main`'s last run (37407410412, `ae0fc58`) fails Linux on the same line with
   the same error. It is AUDIT M2 ("Five `zhenTests` fail on Linux").
 - Docs: pass.
+
+## P1.2 — colour · sampling done; colorsets wait for the project
+
+All six artboards sampled into `DESIGN-FINDINGS.md` section 4: 31 boxes on 01 and 02, 45
+more on 03–06, every box saved under `evidence/artboard-boxes/` and re-run from there. **Cross-check against
+the old palette:** surface, raised, selection, accent, primary text, online, warning and info
+come out the same to the byte, which shows the sampler reads what the old app read. The
+artboard's `65656C` / `ADADB0` reproduce A1's two known failures.
+
+**New:** the artboards use six text greys on dark below primary, and four of them fail AA
+on every surface. The light secondary grey `7B7B7F` fails too. The old app had two text
+tokens. Choosing the corrected hierarchy is P1.2's work, and it is logged in the report as
+not reconciled with the house rules as drawn.
+
+**Not started, and why:** P1.1 tokens, P1.2 colorsets, P1.3 type and P1.5 components all
+live in the Xcode project, which only JC can create (P0.5). Writing them into `Zhen/` first
+would collide with the folder Xcode creates.

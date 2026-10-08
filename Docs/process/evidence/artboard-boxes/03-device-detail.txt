@@ -1,0 +1,11 @@
+cardSurface 1534 1050 2242 1068 fill
+cardBorder 1484 885 1490 1003 ink
+winnerChipFill 1315 876 1320 897 fill
+winnerChipText 1326 878 1409 897 ink
+deviceTileFill 507 165 519 177 fill
+deviceTileGlyph 519 183 562 218 ink
+secondaryButtonFill 1938 33 1947 71 fill
+secondaryButtonBorder 1926 35 1933 68 ink
+signalGreen 1919 545 1945 564 ink
+historyDotCurrent 539 450 546 457 fill
+historyDotPast 539 531 546 538 fill

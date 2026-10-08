@@ -1,0 +1,9 @@
+warningDot 527 426 534 433 fill
+progressDone 526 309 910 312 fill
+progressActive 987 309 1217 312 fill
+progressTrack 1448 309 1832 312 fill
+stageCard 1773 225 1844 254 fill
+queuedText 1444 269 1766 288 ink
+linkText 2033 485 2293 508 ink
+foundCard 1182 1182 2246 1478 fill
+activeCardBorder 955 260 965 284 ink
