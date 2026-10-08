@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — P0.2 done; P0.1 waiting on JC; P0.3 next.
+**Liveness:** 2026-10-07 — P0.3 done; P0.1 waiting on JC; P0.4 gate next.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -102,3 +102,14 @@ path and line, readable with `git show`.
   withdraws the tab-stop counts (lines 9–23; 12 / 5 / 5, measured against a design JC
   replaced). Recorded as withdrawn; eight measured findings that survive are recorded with
   lines. No traversal order exists to extract.
+
+## P0.3 — move the documents that describe the dead app · done
+
+`git mv` of six files to `Docs/process/` (A1, A2, A3, `03-zhen-app.md`,
+`REVIEW-ui-architecture.md`, `plans/RESPONSIVE-plan.md`); `APP-CATCHUP.md` was already
+there. All six are 100% renames (`git status`: `R`). `Docs/README.md` and the README's table
+rewritten. None of the six had relative links that a move could break
+(`grep -o '](…)'` excluding URLs and anchors: no output).
+
+**Gate:** every path the two indexes name exists, 17 of 17 ok. **Would have failed:** the
+same loop given `Docs/process/not-a-file.md` printed `MISSING`.

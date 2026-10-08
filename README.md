@@ -15,8 +15,9 @@ readable at `fdb7eaf`, the last commit that had it. Read
 | `Docs/plans/REBUILD-plan.md` | **Start here.** The decision to demolish and rebuild, the phases, and the open decisions |
 | `Design/` | The design source: `artboards-2026-10-01.pdf` (the six screens as one export) and `marks/03-z/`, the layered mark |
 | `Docs/Design/` | The same six artboards as PNGs, `01-devices-dark.png` through `06-settings.png` — the canonical copy |
-| `Docs/A1`–`A3`, `Docs/03-zhen-app.md`, `Docs/REVIEW-ui-architecture.md` | The old app's design system, brief and review. Record, not instruction |
-| `Docs/plans/RESPONSIVE-plan.md`, `Docs/process/APP-CATCHUP.md` | The old app's responsive plan and migration list. Record |
+| `Docs/process/REBUILD-progress.md` | The rebuild's ledger, step by step, with evidence |
+| `Docs/process/DESIGN-FINDINGS.md` | What the old app's tests measured, extracted before they were deleted |
+| `Docs/process/` | Record, not instruction: the old app's design system (`A1`–`A3`), brief, review, responsive plan and migration list |
 | `Docs/process/prompts/rebuild-phase-0-1.md` | The brief for rebuild phases 0 and 1, rewritten for this repository on 2026-10-04 |
 
 **There is no code here yet.** Phase 0 deleted the old app — `Zhen/`, `ZhenTests/`,
