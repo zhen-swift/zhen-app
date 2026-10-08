@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — P1.1 done, P1.6 done. Next: P1.2 colorsets.
+**Liveness:** 2026-10-07 — P1.2 done. Next: P1.3 type, P1.5 components.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -274,7 +274,7 @@ green on GitHub") is open.
   the same error. It is AUDIT M2 ("Five `zhenTests` fail on Linux").
 - Docs: pass.
 
-## P1.2 — colour · sampling done; colorsets wait for the project
+## P1.2 — colour · sampling (see below), then colorsets: done
 
 All six artboards sampled into `DESIGN-FINDINGS.md` section 4: 31 boxes on 01 and 02, 45
 more on 03–06, every box saved under `evidence/artboard-boxes/` and re-run from there. **Cross-check against
@@ -395,3 +395,59 @@ Row height and sidebar width are `Table`'s and `NavigationSplitView`'s, not toke
 **Gate:** `xcodebuild … test -only-testing:ZhenTests` → `** TEST SUCCEEDED **`, 4 tests
 (call sites compile, including the Optional `spacing:` form; scales ascend); no compiler
 warnings. `check-tokens.sh` passes (`Utilities/` is where the numbers live, and is excluded).
+
+### P1.2 — colorsets
+
+JC, 2026-10-07: "stick as best to design, creative liberty on the rest". So the rule in
+`Docs/process/evidence/derive-palette.py` is: keep an artboard value wherever it reads; where
+it doesn't, move it toward white (dark) or black (light) by the smallest step that clears its
+floor on **every** background it is drawn on, so the hue survives. Increase Contrast comes
+from the same rule at 7:1 for text and 3:1 for lines and marks.
+
+**20 colorsets, four variants each** (light, dark, light high-contrast, dark high-contrast),
+used through generated symbols (`.surface`, `.textTertiary`, `.accent`, …). Names avoid
+SwiftUI's own `ShapeStyle` statics: `Divider`, not `separator`; `SelectionFill`, not
+`selection`.
+
+Kept exactly as drawn: surfaces, selection, accent fill, accent, label on accent, primary
+text, every line and mark at standard contrast, and the dark status colours.
+
+**Corrected** (artboard → standard; increased):
+
+| | dark | light |
+|---|---|---|
+| secondary | `97979F` → `9F9FA6`; `C7C7CB` | `7B7B7F` → `5F5F63`; `434346` |
+| tertiary | `65656C` → `939398`; `B8B8BB` | `ADADB0` → `6C6C6E`; `4F4F51` |
+
+The artboards' six sub-primary greys fold into secondary and tertiary: the sidebar labels
+into secondary; chip, section-header, offline-row and queued greys into tertiary. The
+order survives the correction: secondary stays louder than tertiary in all four variants.
+Secondary dark moved although `97979F` passes on the surfaces, because the sidebar's selected
+row puts it on `373548`.
+
+**Creative liberty, marked "derived" in the script:** light values for the dark-only screens:
+`CardBorder` `E2E2E6`, status marks `A88243` / `5890AB`, status text `2C7B3D` / `866735` /
+`457186`. Every increased variant is derived too. **Left as drawn although it is under 3:1:**
+the light online dot `23A844` on the raised sidebar (2.67). It is never the only signal
+(the row says "now"; the dot also changes filled vs ring); Increase Contrast lifts it to
+`219D40`.
+
+**Checking, two ways, because one of them cannot see everything:**
+
+- `ZhenTests/PaletteContrastTests.swift`: resolves the compiled catalogue through AppKit
+  (`NSColor(resource:)` in `performAsCurrentDrawingAppearance`), light and dark: every text
+  pair ≥ 4.5 on each surface it lands on, themes differ, and surfaces equal the artboards.
+- **A test process cannot build Increase Contrast:** `NSAppearance(named:
+  .accessibilityHighContrastDarkAqua)` returns `darkAqua` (measured, macOS 26.6.2). My first
+  version of the suite tried, and failed with the standard values (accent 5.06 at
+  "increased"). Pinned as a test, so if AppKit changes, the increased tier moves back in.
+- `Scripts/check-palette.py <Zhen.app>`: reads the shipped `Assets.car` with
+  `xcrun assetutil --info`, so it sees all four variants, and checks every pair at its floor.
+  It fails on a missing variant rather than falling back.
+
+**Gate:** tests `** TEST SUCCEEDED **` (8 tests, 3 suites); `check-palette: 142 pairs across 4
+appearances, 20 colours — PASS`; `check-tokens` PASS. **Shown failing:** TextTertiary's dark
+high-contrast entry set to its standard → 3 pairs under 7 (5.67 / 4.54 / 5.24); Divider
+without high-contrast entries → "no darkIncreased variant" ×2; TextTertiary light back to
+the artboard's `ADADB0` → the unit test fails at 2.24 / 1.92 / 1.96, the same ratios
+section 4 measured. Each restored and `cmp`'d.
