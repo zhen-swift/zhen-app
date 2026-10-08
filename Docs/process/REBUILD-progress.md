@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — step 0 (delete all the code) in progress. Next: P0.1 hand-back, P0.2.
+**Liveness:** 2026-10-07 — P0.2 done; P0.1 waiting on JC; P0.3 next.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -58,3 +58,47 @@ Scope: "all the code" = `Zhen/`, `ZhenTests/`, `Resources/`, `Zhen.xcodeproj`, `
 wider, so they go too, and the phase-1 report still lists what the new app needs from each
 (from `fdb7eaf`). Kept: `Docs/`, `Design/`, `AGENTS.md`, `README.md`, licence and
 community files, `.editorconfig`, `.gitattributes`, `.gitignore`.
+
+**Done:** `02adbb7`. `git ls-files Zhen ZhenTests Resources Zhen.xcodeproj Scripts` → 0
+lines (88 before). Nothing left on disk under those roots (`ls` → "No such file" × 5).
+
+## P0.1 — unregister the helper · waiting on JC
+
+**Before** — the print in step 0 above, read 2026-10-07 without sudo: `type = Submitted`,
+`BTM uuid = 4FCC3863-71C1-48A7-A520-3F92BCDFC896`, `runs = 0`.
+
+The only `unregister()` on this Mac is in `~/Dev/InfinityCastle/build/Zhen.app` (built
+2026-09-23, signed `com.jctec.zhen`, team `S8662L649U`). Its binary carries
+`unregisterAndReturnError:` and `onRemoveHelper` (`strings …/Contents/MacOS/Zhen`), and its
+Settings draws `Remove` beside the helper (`SettingsView.swift:252,264` at `fdb7eaf`).
+Unregistering needs no password; nothing here needs root.
+
+**JC's steps:**
+
+1. `open ~/Dev/InfinityCastle/build/Zhen.app`, then ⌘, → the helper row → **Remove**.
+2. After: `launchctl print system/com.jctec.zhen.helper` — the gate is
+   `Could not find service "com.jctec.zhen.helper" in domain for system`. Paste it here.
+3. Optionally, System Settings → General → Login Items & Extensions: Zhen gone.
+
+Only after the gate passes may `~/Dev/InfinityCastle/build/` be deleted. Nothing else in
+phases 0–1 depends on this step, so work continues.
+
+## P0.2 — extract the findings · done
+
+`Docs/process/DESIGN-FINDINGS.md`, read at `fdb7eaf`. **Gate adapted:** step 0 deleted the
+tests first, so "a test that still exists" means one that exists at `fdb7eaf`, cited by
+path and line, readable with `git show`.
+
+- **Contrast:** the test holds no ratio literals; `printTable()` computes them. Recomputed
+  from `Palette.swift` at `fdb7eaf` by `Docs/process/evidence/contrast-table.py`, which uses
+  the test's formula (lines 67–83) and the palette's tier lookup. 100 asserted pairs, 0
+  below floor. **Would have failed:** run with the AA floor at 4.6 → 3 pairs below floor,
+  printed. **Independent check:** matches A1's published table to two decimals, all 26
+  numbers A1 prints. A1's two original failures recomputed: 3.00 and 2.24, as A1 says.
+- **Symbols:** 30 names (`Symbols.swift` lines 18–86), checked with the test's own call,
+  `NSImage(systemSymbolName:)`, on macOS 26.6.2: 30 exist. **Would have failed:** control
+  name `zhen.not.a.symbol` → `MISSING`.
+- **Keyboard: the brief's premise does not hold.** At `fdb7eaf`, `KeyboardTests.swift`
+  withdraws the tab-stop counts (lines 9–23; 12 / 5 / 5, measured against a design JC
+  replaced). Recorded as withdrawn; eight measured findings that survive are recorded with
+  lines. No traversal order exists to extract.
