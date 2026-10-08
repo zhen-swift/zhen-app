@@ -1,0 +1,24 @@
+{
+  "originHash" : "703c17d36f7dcbd4c595b66b31e0f153945714ca383c3f4b9c7c03967b64aac6",
+  "pins" : [
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "version" : "1.8.2"
+      }
+    },
+    {
+      "identity" : "zhen-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zhen-swift/zhen-core.git",
+      "state" : {
+        "revision" : "ae0fc58ffa08b747678387e61e5dcd25f00af0ef",
+        "version" : "0.6.0"
+      }
+    }
+  ],
+  "version" : 3
+}

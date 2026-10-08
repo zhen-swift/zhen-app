@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — P0.1 done. Next: P0.5, generating the Xcode project by script.
+**Liveness:** 2026-10-07 — phase 0 done. P0.5 done; CI pushed. Next: P1.1 tokens.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -152,7 +152,7 @@ All at `fdb7eaf:Scripts/`. Deleted, not fixed. They named monorepo paths and did
 replaced by folder-synchronised groups, the second by an Icon Composer icon from
 `Design/marks/03-z/` (plan §3).
 
-## P0.5 — hand back for the empty project · waiting on JC
+## P0.5 — the empty project · done 2026-10-07 (generated, not hand-made in Xcode)
 
 **Precondition:** `git ls-remote --tags https://github.com/zhen-swift/zhen-core.git 0.5.0`
 → `5c3ea419… refs/tags/0.5.0`, peeling to `8aa7b97`. Tagged. Xcode 26.6 (17F113).
@@ -321,3 +321,35 @@ service: a made-up label prints the same, so it does not mean the request failed
 **What remains:** the Background Task Management record (`4FCC3863…`) was never
 unregistered through `SMAppService`, so Login Items may still list Zhen. The `disable`
 override keeps it from loading. `~/Dev/InfinityCastle/build/` can now be deleted.
+
+### P0.5 — how it was done
+
+JC asked for scripts in place of hand-offs, so the project was written by a one-shot
+generator (session scratchpad, not committed) that reproduces Xcode 26.6's macOS App
+template: objectVersion 77, three `PBXFileSystemSynchronizedRootGroup`s (`Zhen`,
+`ZhenTests`, `ZhenUITests`), a shared `Zhen` scheme, and zhen-core as an
+`XCRemoteSwiftPackageReference`. Unlike `generate-xcodeproj.py`, it is not kept: Xcode owns
+the file from here, and folder sync means adding a source file never touches it.
+
+The app's root is a placeholder `ContentUnavailableView`, the minimum an `App` needs to
+compile. It is not a screen. Template sources: `ZhenApp.swift`, `Assets.xcassets` (empty
+AccentColor, AppIcon), one unit test (`ZhenVersion` links), one UI launch test. App Sandbox
+and Hardened Runtime are on, with no entitlement beyond them because nothing else is wired.
+
+**Verified from `xcodebuild -showBuildSettings -target Zhen`, not from the generator:**
+`SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`, `SWIFT_VERSION = 6.0`,
+`SWIFT_STRICT_CONCURRENCY = complete`, `MACOSX_DEPLOYMENT_TARGET = 26.0`,
+`SWIFT_TREAT_WARNINGS_AS_ERRORS = YES`, `GCC_TREAT_WARNINGS_AS_ERRORS = YES`,
+`ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES`,
+`PRODUCT_BUNDLE_IDENTIFIER = com.jctec.zhen`, `ENABLE_APP_SANDBOX = YES`,
+`ENABLE_HARDENED_RUNTIME = YES`. Package reference: `kind = upToNextMajorVersion`,
+`minimumVersion = 0.5.0`; `XCLocalSwiftPackageReference` count 0.
+
+- `xcodebuild -scheme Zhen -destination 'platform=macOS' test -only-testing:ZhenTests` →
+  zhen-core resolved **0.6.0** from GitHub, `** TEST SUCCEEDED **`, 1 test, no warnings.
+- **Warnings really are errors:** a planted `let unused = 1` → `error: initialization of
+  immutable value 'unused' was never used`, `** BUILD FAILED **`, exit 65. Removed.
+- `Scripts/check-tokens.sh` → `1 files checked, 0 allowed by comment — PASS`.
+- `.gitignore` now commits `Package.resolved` (it pins 0.6.0) and the project's own
+  workspace. A first edit cut the old comment mid-sentence and left the ignore rule in
+  place; `git check-ignore` caught it before the commit.

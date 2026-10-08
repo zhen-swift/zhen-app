@@ -11,18 +11,17 @@
 .swiftpm/
 *.doccarchive
 
-# Resolved dependency versions. Carried from the monorepo, where the app resolved its
-# engine by path and had nothing to lock. **Revisit in rebuild phase 1:** an app that
-# resolves zhen-core by version range is exactly the case a committed Package.resolved
-# is for. Left as it was rather than decided here.
-Package.resolved
+# Package.resolved is committed: the app resolves zhen-core by a version range, and the lock
+# file is what pins the exact release (AGENTS.md: pinned to a version, never a branch). It
+# lives in Zhen.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/.
 
 # ── Xcode ───────────────────────────────────────────────────────────────────
 # Zhen.xcodeproj is Xcode's (folder-synchronised groups) and IS committed.
 # Per-user state and build products are not.
 xcuserdata/
 DerivedData/
-*.xcworkspace
+# A workspace at the root would be a second container; the project's own is committed.
+/*.xcworkspace
 
 # ── Build products ──────────────────────────────────────────────────────────
 build/
