@@ -6,6 +6,7 @@
 | `plans/REBUILD-plan.md` | **Start here.** Why the app is being demolished and rebuilt, and in what order |
 | `Design/` | The six artboards the design was measured from, `01-devices-dark.png` through `06-settings.png`. `../Design/artboards-2026-10-01.pdf` is the same six as one export |
 | `process/REBUILD-progress.md` | The rebuild's ledger: every step, its gate and its evidence. `REBUILD-questions.md` beside it holds what is JC's to decide |
+| `process/REBUILD-phase-1-report.md` | **Phases 0 and 1, summarised:** what was built, the gates with their numbers, what platform controls cover, and what the artboards ask that the house rules do not allow |
 | `process/DESIGN-FINDINGS.md` | What the old app's tests measured — contrast, symbols, keyboard — extracted before they were deleted. Phase 1's case list |
 | `process/` | Record, not documentation. Also: the old app's brief (`03-zhen-app.md`), design system (`A1`–`A3`), review (`REVIEW-ui-architecture.md`), responsive plan (`RESPONSIVE-plan.md`, whose choice of `ScrollView` over `Table` the rebuild plan names as the root cause) and migration list (`APP-CATCHUP.md`); and the brief for rebuild phases 0 and 1 (`prompts/rebuild-phase-0-1.md`) |
 

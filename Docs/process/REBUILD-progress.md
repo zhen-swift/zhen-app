@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — P1.2 done. Next: P1.3 type, P1.5 components.
+**Liveness:** 2026-10-07 — phase 1 done; report written. Stopped for JC to look at the previews.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -451,3 +451,57 @@ high-contrast entry set to its standard → 3 pairs under 7 (5.67 / 4.54 / 5.24)
 without high-contrast entries → "no darkIncreased variant" ×2; TextTertiary light back to
 the artboard's `ADADB0` → the unit test fails at 2.24 / 1.92 / 1.96, the same ratios
 section 4 measured. Each restored and `cmp`'d.
+
+### P1.2 — addendum: Increase Contrast checked in-process after all
+
+`EnvironmentValues._colorSchemeContrast` (underscored, public, settable) makes
+`Color(resource).resolve(in:)` serve the high-contrast variant: dark tertiary resolved
+`B8B8BB`. `PaletteContrastTests` now checks all four appearances through the call views make
+(60 pair × look cases), keeps a test pinning that AppKit's accessibility appearance collapses,
+and pins the increased value so "different" cannot mean "different and wrong". **Shown
+failing:** TextTertiary's dark high-contrast entry set to its standard → 3 pairs under 7 and
+both guard cases. `check-palette.py` stays as the check on the shipped `Assets.car`.
+
+## P1.3 — type · done
+
+System font, text styles only. Each role measured as a cap height with
+`evidence/inkbox-artboard.swift` (SF cap height ≈ 0.70 × size, minus ~0.5 pt of
+anti-aliasing), mapped to the macOS style that renders at that size:
+
+| Role | Measured | Style |
+|---|---|---|
+| page title | ≈15 | `.title3` |
+| detail title | ≈18.6 | `.title2` |
+| row name, sidebar label, button | ≈13.6 | `.body` |
+| subtitle; IP and MAC | ≈12.5 | `.callout`; `.callout.monospaced()` |
+| card title | ≈12.5, bold | `.headline` |
+| row detail; section and day headers | ≈11–12 | `.subheadline` |
+| column header, chip, event label | ≈10.7, capitals | `.caption` |
+
+Two roles carry more than a font and became modifiers in `Components/`: `.sectionLabel()`
+(subheadline semibold, uppercase, tracked, tertiary) and `.numericValue()`
+(`.monospacedDigit()` + `.contentTransition(.numericText())`). `@ScaledMetric` sizes the
+dot and the meter. No fixed font size anywhere (`check-tokens` rule `font-size-literal`).
+
+## P1.5 — components · done
+
+`Zhen/Components/`, each a `struct …: View` (or `ButtonStyle` / `ViewModifier`) with
+`#Preview`s in dark, light and Increase Contrast:
+
+- `PressButtonStyle` (`.buttonStyle(.press)`): 0.96 scale on press, spring. Content
+  controls only.
+- `StatusDot` + `StatusDot.Tone`: online, offline (ring), warning, info, accent, neutral.
+  Filled vs ring carries meaning without hue. Accessibility label per tone.
+- `Chip` + `Chip.Style`: neutral (`private`) and accent (`GATEWAY`, `WINNER`).
+- `SignalMeter`: lit of n bars, tint; proportional geometry, so it scales as one shape.
+  Accessibility value "2 of 3".
+- `SectionLabel`, `NumericValue`: the type roles above.
+
+**Not built, because a platform control is it:** see the phase report.
+
+**Rendered and looked at:** `ComponentRenderTests` renders every component with
+`ImageRenderer` in all four looks, writes them to `Docs/process/evidence/renders/`, and
+asserts a rendered dot's centre pixel is the catalogue colour for that look. **A wrong check,
+caught:** converting `colorAt`'s "calibrated RGB" components to sRGB shifted a correct
+`4CD268` to `58D77B` and failed the test. The image is tagged sRGB, so the test now asserts
+the tag and compares raw components. Raw values seen: `4CD268` dark, `219D40` light-increased.
