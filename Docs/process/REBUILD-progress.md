@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — stopped, waiting on JC: P0.1 (unregister) and P0.5 (new project). Done: step 0, P0.2–P0.4, P1.4, P1.6 script, P1.2 sampling.
+**Liveness:** 2026-10-07 — P0.1 done. Next: P0.5, generating the Xcode project by script.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -62,7 +62,7 @@ community files, `.editorconfig`, `.gitattributes`, `.gitignore`.
 **Done:** `02adbb7`. `git ls-files Zhen ZhenTests Resources Zhen.xcodeproj Scripts` → 0
 lines (88 before). Nothing left on disk under those roots (`ls` → "No such file" × 5).
 
-## P0.1 — unregister the helper · waiting on JC
+## P0.1 — unregister the helper · done 2026-10-07 (by `launchctl`, not `SMAppService`)
 
 **Before** — the print in step 0 above, read 2026-10-07 without sudo: `type = Submitted`,
 `BTM uuid = 4FCC3863-71C1-48A7-A520-3F92BCDFC896`, `runs = 0`.
@@ -290,3 +290,34 @@ not reconciled with the house rules as drawn.
 **Not started, and why:** P1.1 tokens, P1.2 colorsets, P1.3 type and P1.5 components all
 live in the Xcode project, which only JC can create (P0.5). Writing them into `Zhen/` first
 would collide with the folder Xcode creates.
+
+### P0.1 — how it was actually done
+
+**The button route failed.** I scripted Settings → Remove with UI scripting, launching the
+old app each time with `ZHEN_HISTORY` on a scratch file. The real store hashed the same
+before and after every launch (`d735909a…`), and a backup is in the session scratchpad. It
+could not work: ⌘3 did not switch rooms, and the old app's buttons expose no accessible
+name (the AX tree shows `AXButton | missing value` throughout). That is the plan's
+"identifiers: 0", measured. Its launch scan did use the helper (`active count = 2`, then
+`state = running`).
+
+**What worked:** `Docs/process/evidence/remove-old-helper.sh`, run by JC with sudo:
+`launchctl bootout system/com.jctec.zhen.helper`, then `launchctl disable` so launchd
+won't load it again if Background Task Management resubmits it. JC's output:
+
+    == before
+    	type = Submitted
+    	state = running
+    	BTM uuid = 4FCC3863-71C1-48A7-A520-3F92BCDFC896
+    == after
+    Bad request.
+    		"com.jctec.zhen.helper" => disabled
+
+**Gate**, re-checked by me without sudo: `launchctl print system/com.jctec.zhen.helper` →
+`Could not find service "com.jctec.zhen.helper" in domain for system`, exit 113;
+`pgrep -fl zhen-helper` → nothing. "Bad request." is launchctl's first line for any missing
+service: a made-up label prints the same, so it does not mean the request failed.
+
+**What remains:** the Background Task Management record (`4FCC3863…`) was never
+unregistered through `SMAppService`, so Login Items may still list Zhen. The `disable`
+override keeps it from loading. `~/Dev/InfinityCastle/build/` can now be deleted.
