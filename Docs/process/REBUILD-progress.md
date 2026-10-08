@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — P0.4 gate passed; P0.1 waiting on JC; P0.5 hand-back next.
+**Liveness:** 2026-10-07 — phase 0 done but for JC: P0.1 (unregister) and P0.5 (new project) waiting on him. P1.4 in progress.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -151,3 +151,36 @@ All at `fdb7eaf:Scripts/`. Deleted, not fixed. They named monorepo paths and did
 `generate-xcodeproj.py` and `make-icon.sh` were the brief's own deletions: the first is
 replaced by folder-synchronised groups, the second by an Icon Composer icon from
 `Design/marks/03-z/` (plan §3).
+
+## P0.5 — hand back for the empty project · waiting on JC
+
+**Precondition:** `git ls-remote --tags https://github.com/zhen-swift/zhen-core.git 0.5.0`
+→ `5c3ea419… refs/tags/0.5.0`, peeling to `8aa7b97`. Tagged. Xcode 26.6 (17F113).
+
+**JC's steps:**
+
+1. Xcode → File → New → Project → macOS → App.
+2. Product Name `Zhen`; Team as for the old app (`S8662L649U`); Organization Identifier
+   `com.jctec`; Interface SwiftUI; Language Swift; **Testing System: Swift Testing with
+   XCTest UI Tests**; Storage **None**.
+3. Save into `~/Dev/zhen-app`, with **"Create Git repository on my Mac" unticked** (it is
+   one already). Xcode puts the project in an enclosing `Zhen/` folder; leave it there and
+   I lift it to the root, so the root holds `Zhen.xcodeproj`, `Zhen/`, `ZhenTests/`,
+   `ZhenUITests/`.
+4. File → Add Package Dependencies → `https://github.com/zhen-swift/zhen-core.git`,
+   Dependency Rule *Up to Next Major Version* from `0.5.0`; add `ZhenCore`, `ZhenScan`,
+   `ZhenPrivilege` to the `Zhen` target.
+5. Don't commit. Say "it exists".
+
+**Then I check, before building on it:** `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`,
+`SWIFT_VERSION = 6.0`, `SWIFT_STRICT_CONCURRENCY = complete`,
+`MACOSX_DEPLOYMENT_TARGET = 26.0`, `SWIFT_TREAT_WARNINGS_AS_ERRORS = YES` and
+`GCC_TREAT_WARNINGS_AS_ERRORS = YES`,
+`ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES`,
+`PBXFileSystemSynchronizedRootGroup` for the sources, and an
+`XCRemoteSwiftPackageReference` with `minimumVersion = 0.5.0` (not an
+`XCLocalSwiftPackageReference`). Settings Xcode's template doesn't set, I set in the
+project and record here.
+
+**Meanwhile:** P1.4 does not need the project (it is a zhen-core pull request), so it goes
+next.
