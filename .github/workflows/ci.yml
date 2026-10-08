@@ -1,0 +1,33 @@
+name: CI
+
+# Fast feedback on every pull request and every push to main. AGENTS.md's CI section adds
+# `bundle exec fastlane test` once phase 3 brings fastlane; until then the jobs here are the
+# ones that exist.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tokens:
+    # First, because it is seconds long and it is the rule the previous app broke most:
+    # 351 lines of colour in code and 18 computed views, none of them checked.
+    name: Tokens — no literals in a view
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # The self-test before the check. The rules are POSIX regexes written on a Mac's BSD
+      # grep and run here on GNU grep; a pattern one of them reads differently would make the
+      # check below pass on nothing. This proves every rule still fires on this runner.
+      - name: Self-test
+        run: ./Scripts/check-tokens.sh --self-test
+
+      - name: Check the app's sources
+        run: ./Scripts/check-tokens.sh

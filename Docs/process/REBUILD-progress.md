@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — phase 0 done but for JC: P0.1 (unregister) and P0.5 (new project) waiting on him. P1.4 in progress.
+**Liveness:** 2026-10-07 — P1.6 script done, CI unpushed; P1.4 PR CI running; P0.1, P0.5 waiting on JC.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -184,3 +184,82 @@ project and record here.
 
 **Meanwhile:** P1.4 does not need the project (it is a zhen-core pull request), so it goes
 next.
+
+## P1.4 — the contrast helper: a zhen-core pull request · PR open, CI pending
+
+**zhen-core moved since the brief:** `0.6.0` exists (`ae0fc58`, 2026-10-05). It only removes
+four rename-compatibility members of `HistoryLocation`, none of which the new app uses.
+*Up to Next Major* from `0.5.0` resolves it, so P0.5's instructions stand.
+
+Cloned to `~/Dev/zhen-core`, branch `contrast-helper`,
+[zhen-swift/zhen-core#5](https://github.com/zhen-swift/zhen-core/pull/5). Not merged, not
+tagged. `main` untouched.
+
+- `Sources/ZhenCore/Accessibility/SRGBColor.swift`, `Contrast.swift`: `Contrast.ratio`,
+  `Level` (`.nonText` 3, `.aa` 4.5, `.aaa` 7), `meets`, and
+  `foreground(on:preferring:level:)`. That last one returns the first candidate that meets
+  the level, or else the best one with `meetsLevel == false`.
+- `Tests/ZhenCoreTests/ContrastTests.swift`: 10 tests; **the 100 pairs** of
+  `DESIGN-FINDINGS.md` generated from the old palette (not retyped), each checked for its
+  ratio (±0.005) and its floor; plus the artboard's failing greys, one preference list
+  across all three dark surfaces, the `#767676`/`#777777` boundary, and falling short.
+- Generated values: `Float` (old app) vs `Double` (Core) changes 0 of 100 at two decimals.
+
+**Gate, locally (macOS 26.6.2, Swift 6.3.3):** `swift test` → 632 tests in 139 suites pass;
+`main` without the change → 622 in 138. `check-docs.sh` PASS. **Shown failing**, each by an
+exactly-once replacement, diff printed, file restored by `trap` and `cmp`'d identical:
+
+| Mutation | Issues |
+|---|---|
+| A — AA floor 4.5 → 4.6 | 5 (the three pairs at 4.53, 4.54, 4.56, plus two selection tests) |
+| B — linearisation 0.04045 → 0.03928 | **0, correctly**: no 8-bit value lies between them |
+| C — linearisation → 0.5 | 105 |
+| D — ratio without the 0.05 flare | 113 |
+
+**A slip, caught:** the first run of A used a script with `set -o pipefail`, so the failing
+`swift test` aborted it before its restore line. The mutated `4.6` stayed in the source until
+I saw the file-change notice. Restored by exact replacement, re-verified green, script
+rewritten to restore in a `trap`. Nothing was committed in between. Also corrected before
+committing: the test header said "eleven" pairs sit within 0.1 of their floor; counted, it is
+nineteen.
+
+## P1.6 — the ratchet · script done and shown failing; CI written, not yet pushed
+
+Ahead of P1.1–P1.5 because it needs no project, and because a ratchet written after the
+work tends to be fitted to it.
+
+`Scripts/check-tokens.sh`, in check-docs.sh's shape: twelve POSIX-ERE rules (spacing,
+frame width/height incl. `min`/`max`/`ideal`, corner radius, line/border width, font size,
+colour from components / string name / AppKit-UIKit / hex, and `var x: some View` except
+`body`). `Utilities/` is excluded because that's where the token definitions live. A line
+ending `// tokens: allow — <reason>` is skipped and counted. **Exits 2 on a missing or
+empty source directory**: a pass on zero files is not a pass.
+
+`--self-test` runs `Scripts/check-tokens.fixture.swift` (not compiled; outside the app's
+folders) and compares the **exact line numbers** reported with the 20 lines marked
+`expect:`, not just the count, plus exactly one allowed line and every rule firing.
+
+**Run, 2026-10-07, macOS BSD grep:**
+
+    $ Scripts/check-tokens.sh --self-test
+    check-tokens self-test: 20 of 20 planted violations found, 1 allowed line skipped, every rule fired — PASS
+
+**Shown failing** (each an exactly-once mutation, restored by `trap`, `cmp` identical):
+
+| Mutation | Result |
+|---|---|
+| frame rule made case-sensitive (`width`, not `[wW]idth`): the old inventory's bug | FAIL, lines 13 and 14 (`minWidth`, `maxHeight`) missing |
+| an unmarked `.padding(2)` added to the clean block | FAIL, line 34 reported but not expected |
+| `computed-view` rule renamed, so the `body` exemption no longer applies | FAIL, line 8 (`var body`) reported |
+| empty directory; `Zhen/` before the project exists | exit 2, "nothing was checked" |
+| a one-file view with `.padding(8)`, then with `.padding(.spacing.small)` | exit 1 then exit 0 |
+
+Two of my own rules were wrong before the first run and fixed before it: `Color(.sRGB, …)`
+has a comma, not a colon, after `.sRGB`, and `Color(NSColor.red)` has no `(` after
+`NSColor`. Both are fixture lines now.
+
+`.github/workflows/ci.yml`: job `tokens` on `ubuntu-latest`, the self-test first (it proves
+GNU grep reads the rules as BSD grep does), then the check. It parses (`ruby -ryaml`:
+one job, three steps); `actionlint` is not installed. **Not pushed:** with no `Zhen/` the
+check exits 2 and `main` would go red, so it goes up with the project. The gate ("has run
+green on GitHub") is open.
