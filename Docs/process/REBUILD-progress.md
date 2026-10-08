@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-07 — P1.6 script done, CI unpushed; P1.4 PR CI running; P0.1, P0.5 waiting on JC.
+**Liveness:** 2026-10-07 — P1.4 done (zhen-core#5, macOS CI green); P1.6 CI unpushed; P0.1, P0.5 waiting on JC; sampling artboard colours for P1.2.
 
 # Rebuild — phases 0 and 1, progress
 
@@ -185,7 +185,7 @@ project and record here.
 **Meanwhile:** P1.4 does not need the project (it is a zhen-core pull request), so it goes
 next.
 
-## P1.4 — the contrast helper: a zhen-core pull request · PR open, CI pending
+## P1.4 — the contrast helper: a zhen-core pull request · done (PR open, unmerged)
 
 **zhen-core moved since the brief:** `0.6.0` exists (`ae0fc58`, 2026-10-05). It only removes
 four rename-compatibility members of `HistoryLocation`, none of which the new app uses.
@@ -263,3 +263,13 @@ GNU grep reads the rules as BSD grep does), then the check. It parses (`ruby -ry
 one job, three steps); `actionlint` is not installed. **Not pushed:** with no `Zhen/` the
 check exits 2 and `main` would go red, so it goes up with the project. The gate ("has run
 green on GitHub") is open.
+
+### P1.4 — CI on the PR (run 37710570289)
+
+- **macOS — the tool: pass.** Log: `✔ Suite "Contrast" passed`, `✔ Test run with 632 tests in
+  139 suites passed`. So it ran my suite and did not skip it.
+- **Linux: `Suite "Contrast" passed`**, then the job failed on
+  `zhenTests/PipelineTests.swift:547: Fatal error: 'try!' … unsupportedPlatform`, signal 4.
+  **Not mine:** `main`'s last run (37407410412, `ae0fc58`) fails Linux on the same line with
+  the same error. It is AUDIT M2 ("Five `zhenTests` fail on Linux").
+- Docs: pass.
