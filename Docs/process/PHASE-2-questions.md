@@ -41,3 +41,24 @@ first appears under one key and later presents a stronger one. Staging that conv
 in a synthetic history risked teaching the fixture something core does not do.
 **Instead:** Activity, the Identity filter and the identity card all handle `merged`; the
 fixture just never produces one. A real capture with a merge would make it visible.
+
+## Q6 — Core's Local Network remedy speaks to the command line (stage B)
+
+`ProbePermissionAdvice.appleLocalNetwork` ends: "A command-line build has no bundle of its
+own, so the grant may be listed under the terminal application rather than under this
+tool." Inside Zhen.app that is wrong — the app has a bundle and its grant is listed under
+its own name. **Instead:** `DegradationCopy.forTheApp` removes exactly that sentence and
+leaves the rest of core's text untouched; `FixtureNetworkTests.silentVariant` pins it.
+The cleaner fix is a zhen-core change — an advice case for bundled apps — which this run
+must not make.
+
+## Q7 — UI-test screenshots on a desktop in use (stage B)
+
+XCUITest screenshots are screen pixels. During this run another app's window (a "Connect
+your bot" setup window) and a menu-bar popover appeared over Zhen, and two captures came
+out showing them, or showing Zhen half-drawn. The assertions read accessibility, not
+pixels, so they held — but the four-appearance gate samples one pixel, and stage H's
+marketing captures would be ruined. **Instead:** captures stay in scratch, nothing from a
+result bundle is committed, and the luminance sample sits in the table's empty area,
+which an overlapping window would also have to cover. A dedicated quiet session (or a
+second macOS user) is the place to take the marketing captures.

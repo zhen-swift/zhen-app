@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-10 — stage A done and committed. Next: stage B.
+**Liveness:** 2026-10-10 — stages A and B done and committed. Next: stage C.
 
 # Phase 2 — build the whole app, progress
 
@@ -193,3 +193,63 @@ The harness needs screens to drive, so the Devices table, the detail, the live-s
 takeover, Activity and Settings were written in this stage. Their own gates (coalescing
 excepted, which is A3's off-main sibling and already passes) are run and recorded at
 stages B–F; nothing here claims them.
+
+## Stage B — Devices and detail · done
+
+`Table` with `KeyPathComparator` sort, `Set<DeviceItem.ID>` selection,
+`contextMenu(forSelectionType:primaryAction:)`, `.searchable`, `.toolbar` — built in A,
+proven here. Columns measured from the rows on screen, NAME takes the rest (A's bends).
+Detail: one column of four cards — identity history, Known by, open ports, recent events —
+no Omada column and nothing laid out around its absence.
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| Identity, order, subtitle, reassignment, link-local form, measured columns, search | `DeviceItemTests` (10) | **the address sort failed on a real bug** (below) before it was fixed |
+| Sorting by a column, both directions | `DevicesUITests.testSortingAndSearch` | the same bug: `.10, .13, .28, .31, .1, .16 …` under "IP Address ↑" (screenshot) |
+| Never scanned: empty state with Scan Now, footer says so | `testNeverScanned` | footer title blanked → `the footer is never empty` |
+| First run streams rows; never a spinner over an empty table; hands back | `testFirstScanStreamsRowsNeverASpinner` | batches held to the end (interval 1 h) → the first host did not arrive while discovery ran |
+| Loaded from a partial run: amber footer dot + persistent notice opening the degradation rows | `testPartialRunSaysSoAfterTheFact` | `latestRunIsPartial` forced false → `partialRunNotice never appeared` |
+| Nothing answered: named, actionable, not an empty list | `testNothingAnsweredIsExplained` | Local Network sentence not recognised → no "appears to be denied" cause |
+| Context menu mirrors the Device menu | `testContextMenuMirrorsTheDeviceMenu` | "Scan Ports" renamed → `the context menu has no Scan Ports` |
+| Four blocks, winner chipped, losers shown, port as `5000/tcp`, rename among events | `DeviceDetailUITests.testFourBlocksForANamedDevice` | Known by removed → `knownByCard is missing` |
+| An unidentified device's detail is normal: every source says "— not advertised", Scan Ports offered | `testUnidentifiedDeviceIsANormalDetail` | absence rendered as "" → `Assigned hides its absence` |
+| Rename is local and wins, in detail and table | `testRenameIsLocalAndWins` | name not kept → `knownBy-You` never appeared |
+| The app does not repeat CLI-only advice | `FixtureNetworkTests.silentVariant` | `forTheApp` bypassed → the sentence "…under the terminal application…" present |
+
+Two breaks first failed to compile (warnings are errors: an unused binding) and were
+re-spelled so the build succeeded and the test failed — a compile error proves nothing
+about the gate. One break **passed**: deleting "Scan Ports" from the context menu, because
+`app.menuItems["Scan Ports"]` also matched the menu bar's Device ▸ Scan Ports. The test
+now requires each item to be on screen, and fails on the same break.
+
+### Bugs the gates found
+
+- **Address sort was not numeric.** `KeyPathComparator` over a `String` uses
+  localized-standard comparison, which reads digit runs as numbers: the hex key `…8320a`
+  (.10) sorted before `…83201` (.1). The key is now core's own `Comparable` `IPAddress`,
+  and the MAC key the MAC's raw value, which had the same trap.
+- **`extension DeviceItem` without `nonisolated`** compiled, and crashed the first time a
+  nonisolated test called `DeviceItem.rows` — in a MainActor-default target an extension's
+  members take the default even when the type is `nonisolated`. Every extension of a
+  nonisolated type is now marked.
+- **The rename field did not have focus** when the sheet opened; typing went nowhere. It
+  takes focus, and Return confirms.
+- **"Resolving name…" after Stop.** A stopped scan still said a name query was in flight.
+  `isNamingPending` is false unless the scan is running.
+- **Core's Local Network remedy ends with CLI advice** (Q6); the app drops that sentence.
+
+### Bends
+
+| Bend | Why |
+|---|---|
+| Before history loads, Devices shows nothing (`Color.clear`), not a spinner | "never a spinner over an empty table"; the load takes milliseconds |
+| Return opens a row through `.onKeyPress`, not the primary action | measured in A: Return never reaches `primaryAction` |
+| Rename keeps the name in this app's defaults, keyed by device identity | A3: local only, source "You", always the winner. The command line does not see it — the history file has no field for it (see stage F) |
+| The unidentified detail's header tile is `questionmark.circle` | A1's `unknown` symbol; the kind is guessed only from a model or name, never from nothing |
+
+### Test-robot changes, and why
+
+Rows, headers and context menus are clicked at their centre (accessibility calls them not
+hittable). Opening a row and opening a context menu re-try up to three times after
+activating the app, for the same reason as A's shortcuts: the desktop is in use, and
+another app's window was seen over Zhen mid-run (Q7).

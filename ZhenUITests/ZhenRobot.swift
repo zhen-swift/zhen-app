@@ -127,9 +127,35 @@ struct ZhenRobot {
     XCTFail("\(identifier) never appeared after ⌘-key \(key) ×3", file: file, line: line)
   }
 
+  /// Opens the device at `address` with a double-click, as a person would.
+  func openDevice(_ address: String, file: StaticString = #filePath, line: UInt = #line) {
+    for _ in 0..<3 {
+      frontmost()
+      guard let row = rows.first(where: { $0.descendants(matching: .any)["deviceName-\(address)"].exists }) else {
+        XCTFail("no row for \(address)", file: file, line: line)
+        return
+      }
+      row.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).doubleClick()
+      if element("deviceDetail").waitForExistence(timeout: 4) { return }
+    }
+    XCTFail("\(address) never opened", file: file, line: line)
+  }
+
+  /// Opens a row's context menu, re-trying a right-click that landed while the app was
+  /// coming to the front. `marker` is an item only the context menu has.
+  func openContextMenu(row index: Int, marker: String, file: StaticString = #filePath, line: UInt = #line) {
+    for _ in 0..<3 {
+      frontmost()
+      rows[index].rightClickCentre()
+      if app.menuItems[marker].waitForExistence(timeout: 3) { return }
+      key(.escape)
+    }
+    XCTFail("the context menu never opened", file: file, line: line)
+  }
+
   /// These tests run on a desktop someone may be using: another app's menu-bar popover
   /// once took key focus mid-test and swallowed an Esc. Keys go to Zhen or nowhere.
-  private func frontmost() {
+  func frontmost() {
     guard app.state != .runningForeground else { return }
     app.activate()
     _ = app.wait(for: .runningForeground, timeout: 3)
@@ -145,6 +171,15 @@ struct ZhenRobot {
 }
 
 extension XCUIElement {
+  /// Everything an element says, label and value together: a combined element keeps its
+  /// children's text in one or the other depending on the control.
+  var words: String { [label, (value as? String) ?? ""].joined(separator: " ") }
+
+  /// Clicks the middle of an element that accessibility reports as not hittable — table
+  /// rows and headers on macOS 26.
+  func clickCentre() { coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).click() }
+  func rightClickCentre() { coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).rightClick() }
+
   /// A text element's words: SwiftUI puts them in the value, not the label.
   var text: String { (value as? String).flatMap { $0.isEmpty ? nil : $0 } ?? label }
 }

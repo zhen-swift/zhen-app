@@ -67,6 +67,9 @@ struct FixtureNetworkTests {
   func silentVariant() {
     let degradations = FixtureNetwork.degradations(.silent, capture: capture)
     #expect(degradations.count == 1)
-    #expect(DegradationCopy(degradations[0]).action == .openLocalNetworkSettings)
+    let copy = DegradationCopy(degradations[0])
+    #expect(copy.action == .openLocalNetworkSettings)
+    #expect(!copy.consequence.contains("terminal application"), "the app repeats advice meant for the CLI")
+    #expect(copy.consequence.contains("Privacy & Security › Local Network"))
   }
 }

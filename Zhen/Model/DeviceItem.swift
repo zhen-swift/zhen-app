@@ -72,6 +72,15 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
   var mac: String? { device.mac?.description }
   var isPrivateMAC: Bool { device.mac?.isLocallyAdministered ?? false }
 
+  /// Whether a search term finds this device: by name, by what is known, by address, by
+  /// MAC — the way a person types, ignoring case and accents.
+  func matches(_ term: String) -> Bool {
+    let term = term.trimmingCharacters(in: .whitespaces)
+    guard !term.isEmpty else { return true }
+    return [name ?? String(localized: "Unidentified device"), subtitle, address, mac ?? ""]
+      .contains { $0.localizedStandardContains(term) }
+  }
+
   // ── Sort keys ──────────────────────────────────────────────────────────────────
 
   /// Online first.
@@ -79,14 +88,15 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
   /// Named devices alphabetically, then the unidentified ones.
   var nameSortKey: String { name.map { "0" + $0.lowercased() } ?? "1" + address }
   var identificationRank: Int { identification.rank }
-  /// Numeric address order, IPv4 before IPv6.
-  var addressSortKey: String {
-    if let v4 = device.ipv4Addresses.first {
-      return "4" + String(v4.raw, radix: 16).leftPadded(to: 8)
-    }
-    return "6" + device.primaryAddress.description
-  }
-  var macSortKey: String { mac ?? "~" }
+  /// Address order: core's own, IPv4 before IPv6, numeric within each.
+  ///
+  /// Not a string. `KeyPathComparator` compares strings with localized-standard ordering,
+  /// which reads runs of digits as numbers: a hex key put `.10` (`…8320a`) before `.1`
+  /// (`…83201`). Caught by `DevicesUITests.testSortingAndSearch`, pinned by
+  /// `DeviceItemTests.addressOrder`.
+  var addressSortKey: IPAddress { device.ipv4Addresses.first.map(IPAddress.v4) ?? device.primaryAddress }
+  /// Hardware order by value; devices without a MAC last.
+  var macSortKey: UInt64 { device.mac?.raw ?? .max }
 
   /// The default order: status, then most recently seen.
   static let defaultOrder: [KeyPathComparator<DeviceItem>] = [
@@ -95,7 +105,7 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
   ]
 }
 
-extension DeviceItem {
+nonisolated extension DeviceItem {
   /// The stable key for a device: core's strongest identifier for it.
   static func identity(of device: Device, in network: IPv4Network?) -> ID {
     if let network, let key = HostIdentifier.candidates(for: device, in: network).first {
@@ -121,11 +131,5 @@ extension DeviceItem {
         userName: userNames[id], isReassigned: reassigned
       )
     }
-  }
-}
-
-private nonisolated extension String {
-  func leftPadded(to width: Int) -> String {
-    count >= width ? self : String(repeating: "0", count: width - count) + self
   }
 }

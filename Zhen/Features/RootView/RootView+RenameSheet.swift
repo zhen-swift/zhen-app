@@ -9,11 +9,14 @@ extension RootView {
     @Environment(NetworkModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     @State private var name = ""
+    @FocusState private var fieldFocused: Bool
 
     var body: some View {
       let device = model.device(id)
       Form {
         TextField("Name", text: $name, prompt: Text(device?.device.displayName ?? "Unidentified device"))
+          .focused($fieldFocused)
+          .onSubmit(confirm)
           .accessibilityIdentifier("renameField")
         Text("Only this Mac sees this name. It wins over every name the device announces.")
           .font(.subheadline)
@@ -27,14 +30,19 @@ extension RootView {
             .accessibilityIdentifier("renameCancelButton")
         }
         ToolbarItem(placement: .confirmationAction) {
-          Button("Rename") {
-            model.rename(id, to: name)
-            dismiss()
-          }
+          Button("Rename", action: confirm)
           .accessibilityIdentifier("renameConfirmButton")
         }
       }
-      .onAppear { name = device?.userName ?? "" }
+      .onAppear {
+        name = device?.userName ?? ""
+        fieldFocused = true
+      }
+    }
+
+    private func confirm() {
+      model.rename(id, to: name)
+      dismiss()
     }
   }
 }

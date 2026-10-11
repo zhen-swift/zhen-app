@@ -21,7 +21,9 @@ struct DevicesView: View {
       if model.scan.phase != .idle {
         LiveScanView()
       } else if !model.hasLoaded {
-        ProgressView().controlSize(.small)
+        // Never a spinner over an empty table: history loads in milliseconds, and the
+        // first thing a person sees should be devices, not a wait.
+        Color.clear
       } else if model.latestRun == nil, model.devices.isEmpty {
         NeverScannedView()
       } else if model.devices.isEmpty {
