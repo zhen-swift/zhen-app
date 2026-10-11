@@ -12,7 +12,9 @@ extension ActivityView {
       VStack(alignment: .leading, spacing: .spacing.medium) {
         Picker("Show", selection: $filter) {
           ForEach(ActivityFilter.allCases) { item in
-            Text(item.title).tag(item)
+            Text(item.title)
+              .tag(item)
+              .accessibilityIdentifier("activityFilter-\(item.rawValue)")
           }
         }
         .pickerStyle(.segmented)

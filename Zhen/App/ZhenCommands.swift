@@ -27,12 +27,15 @@ struct ZhenCommands: Commands {
     }
 
     CommandMenu("Scan") {
+      // Enabled state from the window when it has published (its focused value is re-sent
+      // whenever the window redraws), from the model only before then. A `Commands` body
+      // is not re-evaluated by @Observable alone: Stop Scan stayed disabled from launch.
       Button("Scan Now") { model.startScan() }
         .keyboardShortcut("r", modifiers: .command)
-        .disabled(model.scan.isRunning)
+        .disabled(window?.isScanning ?? model.scan.isRunning)
       Button("Stop Scan") { model.scan.stop() }
         .keyboardShortcut(".", modifiers: .command)
-        .disabled(!model.scan.isRunning)
+        .disabled(!(window?.isScanning ?? model.scan.isRunning))
     }
 
     CommandMenu("Device") {
@@ -49,6 +52,16 @@ struct ZhenCommands: Commands {
       Button("Scan Ports") { window?.scanSelectionPorts() }
         .keyboardShortcut("r", modifiers: [.command, .shift])
         .disabled(window?.room != .devices || window?.isScanning == true || (window?.selectionCount != 1 && window?.canGoBack != true))
+      Button("Show in Activity") { window?.showSelectionInActivity() }
+        .keyboardShortcut("a", modifiers: [.command, .shift])
+        .disabled(window?.room != .devices || (window?.selectionCount != 1 && window?.canGoBack != true))
+      Divider()
+      Button("Copy Address") { window?.copyAddresses() }
+        .keyboardShortcut("c", modifiers: [.command, .shift])
+        .disabled(window?.room != .devices || (window?.selectionCount == 0 && window?.canGoBack != true))
+      Button("Copy MAC Address") { window?.copyMACAddresses() }
+        .keyboardShortcut("c", modifiers: [.command, .option, .shift])
+        .disabled(window?.room != .devices || (window?.selectionCount == 0 && window?.canGoBack != true))
     }
 
     CommandGroup(after: .sidebar) {

@@ -19,6 +19,11 @@ extension RootView {
       focusSearch: {
         path = []
         searchFocused = true
+      },
+      copyAddresses: { copy { $0.address } },
+      copyMACAddresses: { copy { $0.mac } },
+      showSelectionInActivity: {
+        if let id = singleSelection, let item = model.device(id) { showActivity(for: item.name ?? item.address) }
       }
     )
   }
@@ -38,6 +43,17 @@ extension RootView {
   func openSelection() {
     guard room == .devices, path.isEmpty, let id = singleSelection else { return }
     path.append(.device(id))
+  }
+
+  /// The open device, or the selected ones: what a Copy command acts on.
+  var targets: [DeviceItem] {
+    if case .device(let id)? = path.last { return model.device(id).map { [$0] } ?? [] }
+    return selection.compactMap(model.device)
+  }
+
+  func copy(_ value: (DeviceItem) -> String?) {
+    let lines = targets.compactMap(value).sorted()
+    if !lines.isEmpty { Pasteboard.copy(lines.joined(separator: "\n")) }
   }
 
   /// A deep scan of one device: its own /32, ports included.

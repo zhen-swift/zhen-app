@@ -91,7 +91,7 @@ final class DevicesUITests: XCTestCase {
     robot.openContextMenu(row: 1, marker: "Copy MAC Address")
     // On screen, not merely in the app: the menu bar's Device menu has the same titles,
     // and a query that found those passed with an item deleted from the context menu.
-    for item in ["Open", "Rename…", "Scan Ports", "Copy Address", "Copy MAC Address"] {
+    for item in ["Open", "Rename…", "Scan Ports", "Show in Activity", "Copy Address", "Copy MAC Address"] {
       let shown = robot.app.menuItems.matching(NSPredicate(format: "title == %@", item)).allElementsBoundByIndex.contains(where: \.isHittable)
       XCTAssertTrue(shown, "the context menu has no \(item)")
     }

@@ -10,6 +10,7 @@ extension DevicesView {
     @Binding var sortOrder: [KeyPathComparator<DeviceItem>]
     let onOpen: (DeviceItem.ID) -> Void
     let onRename: (DeviceItem.ID) -> Void
+    let onShowActivity: (String) -> Void
     @Environment(NetworkModel.self) private var model
 
     var body: some View {
@@ -41,7 +42,7 @@ extension DevicesView {
         // to match, rather than the split view taking the width from the sidebar (F2).
         .frame(minWidth: widths.minimumTable)
         .contextMenu(forSelectionType: DeviceItem.ID.self) { ids in
-          DeviceMenuView(ids: ids, onOpen: onOpen, onRename: onRename)
+          DeviceMenuView(ids: ids, onOpen: onOpen, onRename: onRename, onShowActivity: onShowActivity)
         } primaryAction: { ids in
           if ids.count == 1, let id = ids.first { onOpen(id) }
         }

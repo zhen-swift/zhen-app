@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-10 — stages A–E done and committed. Next: stage F.
+**Liveness:** 2026-10-10 — stages A–E done; F done with recorded gaps (UI runs halted, below). Next: stage G.
 
 # Phase 2 — build the whole app, progress
 
@@ -374,3 +374,82 @@ Recorded, not hidden; see Q8.
 | Section labels read "SCANNING" to accessibility | `.textCase(.uppercase)` inside a grouped `Form` header reaches AX transformed (probe). A1 asked for the underlying value; the Form header does not give it, and a custom header would leave the platform control |
 | The panel's Remove is present but disabled while nothing is installed | "an uninstall control beside it" — always in the same place, so a person learns where it is before they need it |
 | The launchd plist lives in `Helper/` at the repository root | a file in the synchronised `Zhen/` folder becomes a resource; a Copy Files phase needs a plain file reference |
+
+## Stage F — integration · done with gaps, recorded
+
+### Commands
+
+Every action in the menu bar; frequent ones with shortcuts; window state through
+`@FocusedValue(\.windowActions)`, published with `.focusedSceneValue`:
+
+| Menu | Items |
+|---|---|
+| View | Devices ⌘1 · Activity ⌘2 · Activity Filter: All ⌥⌘1, Presence ⌥⌘2, Identity ⌥⌘3, Ports ⌥⌘4, Addresses ⌥⌘5 |
+| Edit | Find… ⌘F |
+| Scan | Scan Now ⌘R · Stop Scan ⌘. |
+| Device | Open ⌘O · Back to Devices ⌘[ · Rename… ⇧⌘E · Scan Ports ⇧⌘R · Show in Activity ⇧⌘A · Copy Address ⇧⌘C · Copy MAC Address ⌥⇧⌘C |
+| (app) | Settings… ⌘, |
+
+The context menu mirrors Device, item for item (Back excepted: it acts on the detail).
+Return opens, Esc leaves a stopped scan, double-click opens.
+
+### Gates
+
+| Gate | Test | Result | Shown failing on |
+|---|---|---|---|
+| Every action in the menu bar | `CommandsUITests.testEveryActionIsInTheMenuBar` | pass | **not run** (below) |
+| Commands reach the front window's state through `@FocusedValue` | `testCopyAddressActsOnTheWindowsSelection` — ⇧⌘C puts the keyboard-selected row's address on the pasteboard | pass | **not run** |
+| The less-travelled shortcuts work when pressed | `testDeviceShortcuts` — ⌥⇧⌘C copies a MAC, ⇧⌘A opens Activity, ⇧⌘R scans the device's /32 | pass | **not run** |
+| Every interactive control on every screen has an identifier and a name — Devices, detail, Activity, live scan running and stopped, Settings in two helper states, never-scanned, nothing-answered | `AccessibilityAuditUITests` (2) | pass, **after it failed on four real gaps** (below) | the four gaps are its failing evidence: it failed before they were fixed |
+| Keyboard-only across rooms, detail, takeover, scene | `KeyboardUITests` (A) + the three above | pass | A: room shortcuts removed |
+| Restoration of window, room, device | `RestorationUITests` (A) | pass | A |
+| Min window → full screen: rooms | `WindowSizeUITests.testMinimumWindowAndFullScreen` (A) | pass in A and B | A: declared minimum |
+| Min window → full screen: **detail and takeover** | `WindowSizeUITests.testDetailAndTakeoverFitAtBothSizes` | **never seen passing** — its only runs failed on stolen key focus (below) | — |
+| Four appearances: rooms, detail, Settings | `AppearanceUITests` (A) | pass in A and B | A: pinned scheme ignored |
+| Four appearances: **takeover** added | same test, extended | **never seen passing** after the extension, same reason | — |
+
+### Found by the gates
+
+- **Four Settings controls had no accessible name** — the interval and retention pickers,
+  the deep-scan toggle and the subnet field. A grouped `Form` draws the label as its own
+  element and leaves the control nameless. Each now names itself. This is the old app's
+  defect in miniature (its helper could not be uninstalled because no button had a name).
+- **Stop Scan stayed disabled** while a scan ran: a `Commands` body is not re-evaluated
+  by an `@Observable` model alone. The scan commands now read the window's focused value
+  (re-sent on every redraw) and fall back to the model only before the window publishes.
+- **Copy Address, Copy MAC Address and Show in Activity** existed only in the context menu
+  or the detail. They are in the Device menu now, with shortcuts.
+- Activity's segments had no identifiers; each has `activityFilter-<kind>`.
+
+### Why UI runs stopped here — and what that leaves
+
+At 19:23 the recordings showed another app's setup window ("Add your xAI key", a key being
+typed into it) holding key focus over Zhen during this suite, and text appearing in the
+Claude app's reply field. `pgrep` then showed a second `xcodebuild … -scheme Perch … test`
+driving its own UI tests on the same desktop. XCUITest synthesises real keystrokes: two
+suites on one screen type into each other's windows, and this one could type into a field
+holding a secret. **No further UI tests were run in this session.** Unit tests (which only
+launch the test host briefly) were still run where a stage needed them.
+
+Left open by that decision, each to be closed in a session with the desktop to itself:
+
+1. Deliberate breaks for `CommandsUITests` and `AccessibilityAuditUITests` (the audit's
+   failing evidence is real but came from bugs, not a planted break).
+2. `WindowSizeUITests.testDetailAndTakeoverFitAtBothSizes` and the takeover capture in
+   `AppearanceUITests`: written, never seen passing.
+3. A full-suite run of everything on one quiet desktop.
+
+The commands are in `PHASE-2-verification.md`.
+
+### macOS screen checklist (house rules), per screen
+
+| | Devices | Detail | Activity | Live scan | Settings |
+|---|---|---|---|---|---|
+| Reachable from sidebar **and** menu bar | ⌘1 + sidebar | ⌘O / Return / double-click; ⌘[ back | ⌘2 + sidebar | ⌘R; replaces Devices | ⌘, |
+| Every action has a menu item; frequent ones ⌘ | yes (above) | Rename ⇧⌘E, Scan Ports ⇧⌘R, Show in Activity ⇧⌘A | filters ⌥⌘1–5, Find ⌘F | Stop ⌘., Scan Again ⌘R, Esc | form controls; ⌘W |
+| Keyboard-only: Tab, arrows, Return, Esc, ⌫ | arrows + Return (gate A). **⌫ does nothing**: there is nothing to delete — devices are history | toolbar via Tab | segmented picker via ⌥⌘n | Esc leaves a stopped scan | Tab through the form |
+| `.help()` on icon-only controls | Scan Now has words; toolbar search is the system's | Rename, Scan Ports | — | Stop Scan has words | — |
+| Lists are `Table`s with multi-select; context menu mirrors the menu bar | yes | n/a | **`List`** (bend, stage D) | `List` of arrivals, read-only | n/a |
+| Min size → full screen; light, dark, increased | gate (A) | gate written, unverified (above) | gate (A) | gate written, unverified | fixed 560 × 640 |
+| Window and selection restore on relaunch | gate (A) | gate (A) | room restored (A) | **not restored on purpose**: a scan is not resumed on relaunch | the system does not restore Settings windows |
+| No iOS-only API, no `#if os` in feature views | `grep -rn '#if os' Zhen/Features` → 0 | | | | |

@@ -14,7 +14,7 @@ final class AppearanceUITests: XCTestCase {
     var surfaces: [ZhenRobot.Look: Double] = [:]
     var devicesShots: [ZhenRobot.Look: Data] = [:]
     for look in ZhenRobot.Look.allCases {
-      let robot = ZhenRobot.launch(look: look)
+      let robot = ZhenRobot.launch(look: look, scanPace: 500)
       robot.waitFor("deviceTable")
       let shot = robot.window.screenshot()
       devicesShots[look] = shot.pngRepresentation
@@ -29,6 +29,12 @@ final class AppearanceUITests: XCTestCase {
       robot.press("o", .command, expecting: "deviceDetail")
       robot.capture("detail-\(look.rawValue)", in: self)
       robot.key("[", .command)
+
+      robot.press("r", .command, expecting: "liveScan")
+      _ = robot.element("foundHost-192.168.50.1").waitForExistence(timeout: 5)
+      robot.capture("livescan-\(look.rawValue)", in: self)
+      robot.press(".", .command, expecting: "showDevicesButton")
+      robot.key(.escape)
 
       robot.press(",", .command, expecting: "settings")
       // The Settings window, never the screen: a screen capture holds whatever else the

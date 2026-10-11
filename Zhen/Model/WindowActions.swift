@@ -17,6 +17,9 @@ struct WindowActions {
   var renameSelection: () -> Void
   var goBack: () -> Void
   var focusSearch: () -> Void
+  var copyAddresses: () -> Void
+  var copyMACAddresses: () -> Void
+  var showSelectionInActivity: () -> Void
 }
 
 extension FocusedValues {

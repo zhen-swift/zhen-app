@@ -25,7 +25,8 @@ struct RootView: View {
       NavigationStack(path: $path) {
         RoomContentView(
           room: room, selection: $selection, path: $path, search: $search,
-          activityFilter: $activityFilter, searchFocused: $searchFocused, onRename: rename
+          activityFilter: $activityFilter, searchFocused: $searchFocused, onRename: rename,
+          onShowActivity: showActivity
         )
           .navigationDestination(for: Route.self) { route in
             switch route {

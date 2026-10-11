@@ -11,6 +11,7 @@ struct DevicesView: View {
   @Binding var path: [Route]
   @Binding var search: String
   let onRename: (DeviceItem.ID) -> Void
+  var onShowActivity: (String) -> Void = { _ in }
   @Environment(NetworkModel.self) var model
   @State var sortOrder = DeviceItem.defaultOrder
   /// The table holds focus when the room opens, so arrows select and Return opens at once.
@@ -31,7 +32,7 @@ struct DevicesView: View {
       } else {
         DeviceTableView(
           rows: rows, selection: $selection, sortOrder: $sortOrder,
-          onOpen: open, onRename: onRename
+          onOpen: open, onRename: onRename, onShowActivity: onShowActivity
         )
         .focused($tableFocused)
         .defaultFocus($tableFocused, true)

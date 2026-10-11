@@ -39,6 +39,40 @@ final class WindowSizeUITests: XCTestCase {
     robot.key("f", [.command, .control])
   }
 
+  /// The detail and the live-scan takeover at the same two sizes.
+  @MainActor
+  func testDetailAndTakeoverFitAtBothSizes() {
+    let robot = ZhenRobot.launch(scanPace: 900)
+    robot.waitFor("deviceTable")
+    robot.shrinkToMinimum()
+    checkDetailAndTakeover(robot, at: "minimum")
+    robot.key("f", [.command, .control])
+    let entered = NSPredicate { _, _ in robot.window.frame.width > self.minimumWidth + 200 }
+    wait(for: [XCTNSPredicateExpectation(predicate: entered, object: nil)], timeout: 10)
+    checkDetailAndTakeover(robot, at: "full screen")
+    robot.key("f", [.command, .control])
+  }
+
+  @MainActor
+  private func checkDetailAndTakeover(_ robot: ZhenRobot, at size: String) {
+    robot.openDevice("192.168.50.10")
+    assertInside(robot, ["detailName", "renameButton", "scanPortsButton", "sidebar"], at: "\(size), detail")
+    for card in ["identityCard", "knownByCard"] {
+      let frame = robot.element(card).frame
+      XCTAssertLessThanOrEqual(frame.maxX, robot.window.frame.maxX + 1, "\(card) runs past the window at \(size)")
+      XCTAssertGreaterThan(frame.width, 200, "\(card) collapsed at \(size)")
+    }
+    robot.capture("detail-\(size)", in: self)
+    robot.press("[", .command, expecting: "deviceTable")
+    robot.press("r", .command, expecting: "liveScan")
+    assertInside(robot, ["liveScanTitle", "liveStopScanButton", "stageCard-discovery", "stageCard-naming", "stageCard-deep_scan"], at: "\(size), live scan")
+    robot.capture("livescan-\(size)", in: self)
+    robot.press(".", .command, expecting: "showDevicesButton")
+    assertInside(robot, ["showDevicesButton", "scanAgainButton"], at: "\(size), stopped scan")
+    robot.key(.escape)
+    robot.waitFor("deviceTable")
+  }
+
   @MainActor
   private func assertNothingClipped(_ robot: ZhenRobot, at size: String) {
     assertInside(robot, ["sidebar", "deviceTable", "scanNowButton", "scanStatus"], at: size)

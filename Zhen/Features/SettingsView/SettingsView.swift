@@ -19,12 +19,16 @@ struct SettingsView: View {
           Text("Every 15 minutes").tag(15)
           Text("Every hour").tag(60)
         }
+        // A grouped Form draws the label as its own element; without this the control
+        // itself is nameless to accessibility — the audit found all four (stage F).
+        .accessibilityLabel("Scan automatically")
         .accessibilityIdentifier("scanIntervalPicker")
         SubnetRowView(subnet: $subnet)
         Toggle(isOn: $deepScan) {
           Text("Deep-scan new devices")
           Text("Also check common ports on every device that answers. Slower, and more visible on the network.")
         }
+        .accessibilityLabel("Deep-scan new devices")
         .accessibilityIdentifier("deepScanToggle")
       } header: {
         Text("Scanning").sectionLabel()
@@ -37,6 +41,7 @@ struct SettingsView: View {
           Text("90 days").tag(90)
           Text("Forever").tag(0)
         }
+        .accessibilityLabel("Keep events for")
         .accessibilityIdentifier("retentionPicker")
         LabeledContent("Device identity history") {
           Text("Kept forever — it’s what makes merges possible")

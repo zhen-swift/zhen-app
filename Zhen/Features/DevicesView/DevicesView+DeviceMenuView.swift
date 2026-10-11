@@ -7,6 +7,7 @@ extension DevicesView {
     let ids: Set<DeviceItem.ID>
     let onOpen: (DeviceItem.ID) -> Void
     let onRename: (DeviceItem.ID) -> Void
+    let onShowActivity: (String) -> Void
     @Environment(NetworkModel.self) private var model
 
     var body: some View {
@@ -25,6 +26,10 @@ extension DevicesView {
         }
       }
       .disabled(single?.device.ipv4Addresses.isEmpty ?? true || model.scan.isRunning)
+      Button("Show in Activity", systemImage: "waveform.path.ecg") {
+        if let single { onShowActivity(single.name ?? single.address) }
+      }
+      .disabled(single == nil)
       Divider()
       Button("Copy Address", systemImage: "doc.on.doc") {
         copy(ids.compactMap { model.device($0)?.address })

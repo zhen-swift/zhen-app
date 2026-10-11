@@ -14,6 +14,7 @@ extension SettingsView {
         }
         TextField("Override", text: $subnet, prompt: Text("e.g. 192.168.1.0/24"))
           .font(.callout.monospaced())
+          .accessibilityLabel("Subnet override")
           .accessibilityIdentifier("subnetOverrideField")
         if !subnet.isEmpty, Preferences.network(subnet) == nil {
           Text("Not a network Zhen can scan. Use CIDR form, /16 or narrower.")
