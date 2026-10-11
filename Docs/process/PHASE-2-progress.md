@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-10 — stages A–C done and committed. Next: stage D.
+**Liveness:** 2026-10-10 — stages A–D done and committed. Next: stage E.
 
 # Phase 2 — build the whole app, progress
 
@@ -293,3 +293,31 @@ are pinned; only the list scrolls (A3).
 | Scan Now / Stop Scan in the menu bar act on the model, not through `@FocusedValue` | measured: right after launch the focused value is nil and the shortcut is dropped. The house rule protects multi-window apps from acting on the wrong window; this app has one window |
 | "Name query in flight" names no protocol per host | core's progress events say which stage runs, not which query is outstanding for a host; the card says "Asking Bonjour, UPnP and NetBIOS", which is what the naming stage does |
 | A window's `hasKeyboardFocus` is not used by the robot | measured: it reads 0 even when the window is key |
+
+## Stage D — Activity · done
+
+Segmented `Picker` with the frozen copy (All, Presence, Identity, Ports, Addresses), ⌥⌘1–5
+in the View menu; device filtering is the search field. `TimelineHistogram` is Swift Charts
+`BarMark`, 48 hourly buckets, busiest bar at full accent, labels every six hours, hover for
+a count, no axis. Events grouped by day under "TODAY — SATURDAY 10 OCT". Filter and
+histogram pinned; the days scroll. The list and the histogram are drawn from one function,
+`ActivityView.filtered(_:by:search:)`.
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| **The filter drives both**: under All, Presence, Identity, Addresses the histogram's total equals the rows listed | `ActivityUITests.testFilterDrivesListAndHistogram` | histogram fed the unfiltered window → `Presence: list shows 6, histogram counts 8` |
+| Filter with no match keeps the segments and the histogram, says "No port events in this window" | `testFilterWithNoMatchKeepsItsContext` | histogram hidden when the filter is empty → `the histogram went away` |
+| Nothing at all → "Nothing has changed" | `testNothingHasChanged` | the empty state bypassed → `activityEmpty never appeared` |
+| Segments partition the events; search composes with them | `ActivityTests.segments`, `.search` | Presence also taking address changes → `.ipChanged` in Presence, and 9 parts for 8 events |
+| 48 buckets count the window and nothing outside it | `ActivityTests.buckets` | — |
+| Under two hours of history the histogram hides | `ActivityTests.histogramThreshold` | threshold 0 → shown at 1 h 59 m |
+| Today / Yesterday titles | `ActivityTests.days` | — |
+
+### Bends
+
+| Bend | Why |
+|---|---|
+| The histogram is one accessibility element whose **label** carries the total | Swift Charts exposes a container of bars, and a generic element on macOS has no accessibility value (probe: `value=Optional()`). A2 calls the bars a rhythm; the total is what is worth saying, and it is what the gate checks against the list |
+| Activity is a `List` with day sections, not a `Table` | events are sentences read in time order, not records compared by column; there is nothing to select or sort, and `Table` has no day grouping |
+| The Ports segment stays and is always empty | core 0.6.0 derives no port events (Q3); decision 6 froze the copy, and the empty state says the true thing |
+| Event kind label "Left" for `disappeared` | the artboard's "Disappeared" is 2.4× the column at caption bold; "Left" is the word the detail uses ("last answered at …") |

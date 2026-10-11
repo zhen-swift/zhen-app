@@ -43,8 +43,13 @@ struct TimelineHistogram: View {
       }
     }
     .chartXSelection(value: $hovered)
-    .accessibilityLabel("Events per hour")
-    .accessibilityValue("\(buckets.reduce(0) { $0 + $1.count }) events over \(buckets.count) hours")
+    // One element, not Swift Charts' per-bar container: the bars are a rhythm (A2), and
+    // what a person — or a test — needs from them is the total over the window. In the
+    // label, because a generic element on macOS carries no accessibility value (measured).
+    // The total is stated so it can be checked against the list it summarises: a
+    // histogram counting what the list has filtered out is two answers about one dataset.
+    .accessibilityElement(children: .ignore)
+    .accessibilityLabel("Events per hour: \(buckets.reduce(0) { $0 + $1.count }) over \(buckets.count) hours")
   }
 
   /// Hourly buckets over `hours` ending at `end`, counting `dates`.

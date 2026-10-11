@@ -11,17 +11,26 @@ extension ActivityView {
 
   /// The window's events, through the filter and the search.
   var filtered: [DerivedEvent] {
+    Self.filtered(model.eventsInWindow, by: filter, search: search)
+  }
+
+  /// The one filter both the list and the histogram are drawn from.
+  static func filtered(_ events: [DerivedEvent], by filter: ActivityFilter, search: String) -> [DerivedEvent] {
     let term = search.trimmingCharacters(in: .whitespaces)
-    return model.eventsInWindow.filter { event in
+    return events.filter { event in
       filter.includes(event.kind)
         && (term.isEmpty || event.subject.localizedStandardContains(term) || event.detail.localizedStandardContains(term))
     }
   }
 
-  /// Fewer than two hours of history draws three lonely bars; the list stands alone.
   var showsHistogram: Bool {
-    guard let oldest = model.eventsInWindow.map(\.date).min() else { return false }
-    return Date.now.timeIntervalSince(oldest) >= 2 * 3_600
+    Self.showsHistogram(oldest: model.eventsInWindow.map(\.date).min(), now: .now)
+  }
+
+  /// Fewer than two hours of history draws three lonely bars; the list stands alone.
+  static func showsHistogram(oldest: Date?, now: Date) -> Bool {
+    guard let oldest else { return false }
+    return now.timeIntervalSince(oldest) >= 2 * 3_600
   }
 
   var noMatchTitle: String {
