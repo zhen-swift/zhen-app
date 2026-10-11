@@ -1,4 +1,5 @@
 import ServiceManagement
+import ZhenPrivilege
 
 /// The helper through `SMAppService`, as a launch daemon.
 ///
@@ -6,8 +7,8 @@ import ServiceManagement
 /// which is what makes Login Items show "Zhen" with the app's icon instead of a bare
 /// reverse-DNS label. `HelperPlistTests` reads the built app's copy and pins that key.
 struct LiveHelperService: HelperService {
-  static let plistName = "com.jctec.zhen.helper.plist"
-  private let service = SMAppService.daemon(plistName: plistName)
+  /// Core's name for it, so the app, the helper and the plist cannot disagree.
+  private let service = SMAppService.daemon(plistName: HelperIdentity.plistName)
 
   var state: HelperState {
     switch service.status {

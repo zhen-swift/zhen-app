@@ -10,6 +10,7 @@
 		BAF25A90929912BA8CB8FBBF /* ZhenCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1B417D090B1D07A91103FA /* ZhenCore */; };
 		C172F36BA8767423C41086E4 /* ZhenScan in Frameworks */ = {isa = PBXBuildFile; productRef = D5818EF3CE50B07BBF9458FC /* ZhenScan */; };
 		D4E0392ADDB0F46AAD8F273F /* ZhenPrivilege in Frameworks */ = {isa = PBXBuildFile; productRef = 070E7AE6E4415407A08EDDCC /* ZhenPrivilege */; };
+		5E1A0C0D2F00000000000012 /* com.jctec.zhen.helper.plist in Embed Launch Daemon */ = {isa = PBXBuildFile; fileRef = 5E1A0C0D2F00000000000010 /* com.jctec.zhen.helper.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,10 +30,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5E1A0C0D2F00000000000013 /* Embed Launch Daemon */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LaunchDaemons;
+			dstSubfolderSpec = 1;
+			files = (
+				5E1A0C0D2F00000000000012 /* com.jctec.zhen.helper.plist in Embed Launch Daemon */,
+			);
+			name = "Embed Launch Daemon";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		8BCD5BC4CDFDF0918087C782 /* Zhen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zhen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDC0227D447700EB725E9769 /* ZhenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZhenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C9FD69DA095A3BF0CB4587 /* ZhenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZhenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E1A0C0D2F00000000000010 /* com.jctec.zhen.helper.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = com.jctec.zhen.helper.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -94,12 +110,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E1A0C0D2F00000000000011 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				5E1A0C0D2F00000000000010 /* com.jctec.zhen.helper.plist */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		E50290A24C49A459B43487C5 = {
 			isa = PBXGroup;
 			children = (
 				69F8D45498D7E20DA99BB780 /* Zhen */,
 				C25149068875BE014F61F0BA /* ZhenTests */,
 				119C44536C59FD2DC605EB12 /* ZhenUITests */,
+				5E1A0C0D2F00000000000011 /* Helper */,
 				328EC33DF3954DC9B83FA285 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,6 +149,7 @@
 				971ED9D05B25DB6C4D7680D4,
 				78AE8C6BEB2A40A6D824CCEE,
 				364863F9F2E558B0F50473FC,
+				5E1A0C0D2F00000000000013 /* Embed Launch Daemon */,
 			);
 			buildRules = (
 			);

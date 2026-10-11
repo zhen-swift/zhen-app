@@ -62,3 +62,11 @@ marketing captures would be ruined. **Instead:** captures stay in scratch, nothi
 result bundle is committed, and the luminance sample sits in the table's empty area,
 which an overlapping window would also have to cover. A dedicated quiet session (or a
 second macOS user) is the place to take the marketing captures.
+
+## Q8 — How should the helper executable reach the bundle? (stage E)
+
+zhen-core 0.6.0 has no product for `zhen-helper`, so the Xcode build cannot embed it (defect
+E1 in the ledger). **Instead:** stage G's script builds it from the pinned zhen-core revision
+and embeds it before signing. The durable fix is a zhen-core release that declares the
+product — you said no second scheme; a product without a scheme is possible by excluding it
+from the scheme list. Your call, in zhen-core.

@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-10 — stages A–D done and committed. Next: stage E.
+**Liveness:** 2026-10-10 — stages A–E done and committed. Next: stage F.
 
 # Phase 2 — build the whole app, progress
 
@@ -321,3 +321,56 @@ histogram pinned; the days scroll. The list and the histogram are drawn from one
 | Activity is a `List` with day sections, not a `Table` | events are sentences read in time order, not records compared by column; there is nothing to select or sort, and `Table` has no day grouping |
 | The Ports segment stays and is always empty | core 0.6.0 derives no port events (Q3); decision 6 froze the copy, and the empty state says the true thing |
 | Event kind label "Left" for `disappeared` | the artboard's "Disappeared" is 2.4× the column at caption bold; "Left" is the word the detail uses ("last answered at …") |
+
+## Stage E — Settings and the helper · done, with one recorded defect
+
+`Settings { }` scene (⌘,), `Form` + `.formStyle(.grouped)`, 560 × 640. **SCANNING**: scan
+automatically (Off / 5 / 15 / 60 min, driven by a `.task(id:)` on the window with the
+injected clock), subnet "192.168.50.0/24 — auto, from en0" with a validated override
+(CIDR, /16 or narrower — core's `isEnumerable`), deep-scan toggle. **HISTORY**: keep events
+for 7 / 30 / 90 days / forever (handed to the store's `setRetention`), identity history
+"Kept forever — it's what makes merges possible". **PRIVILEGED ENGINE**: A3's copy, what it
+can and cannot do, and three states — not installed (Install Helper…, Remove beside it,
+disabled), waiting for approval (amber; Open Login Items…, Remove), installed (Show in
+System Settings…, which calls `SMAppService.openSystemSettingsLoginItems()`, and Remove,
+confirmed with `confirmationDialog`). Scan Now reads the deep-scan and subnet settings.
+
+The helper sits behind `HelperService`: `LiveHelperService` is `SMAppService.daemon` named
+by core's `HelperIdentity.plistName`; tests and `-UITesting` get `FakeHelperService`.
+**Nothing in this run registered anything.**
+
+The daemon plist is `Helper/com.jctec.zhen.helper.plist`, copied by an **Embed Launch
+Daemon** Copy Files phase (destination: wrapper, `Contents/Library/LaunchDaemons`). It lives
+outside the synchronised `Zhen/` folder so it is a plain file reference, not a resource.
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| **Built app's plist**: at `HelperIdentity.plistBundlePath`; `AssociatedBundleIdentifiers == [HelperIdentity.applicationBundleIdentifier] == [Bundle.main.bundleIdentifier]`; `Label` and the only Mach service == `HelperIdentity.label`; `BundleProgram == Contents/MacOS/zhen-helper` | `HelperPlistTests` (4) | key removed → `associated → nil`; label `…Helper` → mismatch with core; program under `Resources/` → mismatch; copy phase pointed at `Contents/Resources` (fresh build directory, so no stale copy could pass it) → all four: `no such file` at `Contents/Library/LaunchDaemons/` |
+| Sections and controls present; identity history kept forever | `SettingsUITests.testSectionsAndControls` | — |
+| Subnet override validated | `testSubnetOverrideIsValidated`; `SettingsTests.subnet` (6 cases) | validation removed → `a /8 was accepted` |
+| Helper panel: Remove always beside Install; approval is its own state; the OS check is offered; removal confirmed and undone | `testHelperPanelInstallApproveRemove` | Remove dropped from the not-installed state → `no Remove beside Install` |
+| Settings reach the scan | `SettingsTests.scanUsesPreferences`, `.preferences` | — |
+| The fake helper walks the three states | `SettingsTests.helperStates` | — |
+
+### Defect E1 — the helper executable is not in the Xcode build
+
+`BundleProgram` names `Contents/MacOS/zhen-helper`, and the built app has no such file.
+zhen-core 0.6.0 deliberately declares no executable product for `zhen-helper` ("declaring
+it would put a second scheme in Xcode's menu"), and Xcode can only build a remote
+package's **products**. So the plist is right and tested, and the program it names is
+absent: `SMAppService.register()` on this build would register a job whose program does
+not exist. **Three honest routes, none taken in this run:** (1) a zhen-core release with a
+`zhen-helper` product — a zhen-core change, out of bounds; (2) a Run Script phase calling
+`swift build` on the resolved checkout — needs user-script sandboxing off for the target
+and the whole package graph resolved inside a build phase, fragile and slow; (3) a script
+that builds the helper from the pinned zhen-core revision and embeds it before Developer ID
+signing — **this is what stage G hands JC**, because that signing is his anyway.
+Recorded, not hidden; see Q8.
+
+### Bends
+
+| Bend | Why |
+|---|---|
+| Section labels read "SCANNING" to accessibility | `.textCase(.uppercase)` inside a grouped `Form` header reaches AX transformed (probe). A1 asked for the underlying value; the Form header does not give it, and a custom header would leave the platform control |
+| The panel's Remove is present but disabled while nothing is installed | "an uninstall control beside it" — always in the same place, so a person learns where it is before they need it |
+| The launchd plist lives in `Helper/` at the repository root | a file in the synchronised `Zhen/` folder becomes a resource; a Copy Files phase needs a plain file reference |
