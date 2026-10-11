@@ -23,4 +23,5 @@ struct LiveHelperService: HelperService {
   func install() throws { try service.register() }
   func uninstall() async throws { try await service.unregister() }
   func openLoginItems() { SMAppService.openSystemSettingsLoginItems() }
+  func version() async -> String? { await HelperClient.version() }
 }

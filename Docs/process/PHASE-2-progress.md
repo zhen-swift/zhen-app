@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-10 — stages A–E done; F done with recorded gaps (UI runs halted, below). Next: stage G.
+**Liveness:** 2026-10-10 — stages A–G done (E and F with recorded gaps); H not run, by the brief's own rule. Run ended; report below.
 
 # Phase 2 — build the whole app, progress
 
@@ -453,3 +453,65 @@ The commands are in `PHASE-2-verification.md`.
 | Min size → full screen; light, dark, increased | gate (A) | gate written, unverified (above) | gate (A) | gate written, unverified | fixed 560 × 640 |
 | Window and selection restore on relaunch | gate (A) | gate (A) | room restored (A) | **not restored on purpose**: a scan is not resumed on relaunch | the system does not restore Settings windows |
 | No iOS-only API, no `#if os` in feature views | `grep -rn '#if os' Zhen/Features` → 0 | | | | |
+
+## Stage G — the handoff · done
+
+`PHASE-2-verification.md`: seven steps only JC can take, each with exact commands and what
+a pass looks like — the UI suite on a quiet desktop (with the three breaks still owed),
+Developer ID signing and notarisation (keychain profile **`zhen-notary`**; no credential
+anywhere in the repo), helper registration and the Login Items check, the mis-signed caller,
+removal, a real scan of 10.10.20.0/24 with and without the Local Network grant, and the
+instrument trace.
+
+What was built for those steps, and what was run here:
+
+| Piece | Run here | Shown failing on |
+|---|---|---|
+| `Scripts/release.sh` — Release build, `zhen-helper` built from the pinned zhen-core checkout and embedded (the route around E1), inside-out signing as `com.jctec.zhen.helper` then the app, hardened runtime, team, daemon plist checks, then notarise + staple + Gatekeeper | ad hoc (`release.sh - --no-notarize`): helper 171 KB embedded, both signed `flags=…(adhoc,runtime)`, all checks PASS | plist `BundleProgram` broken → `release: BundleProgram — FAIL`. A first version also failed falsely: under `pipefail`, `codesign … \| grep -q` reports failure when grep matches early; the checks now capture first |
+| `Tools/MisSignedCaller` — calls the helper through zhen-core's own `HelperClient` at the pinned 0.6.0; exit 0 = refused, 1 = answered | built: `Identifier=MisSignedCaller`, `adhoc`, no team | not run: no helper is registered here, and a refusal from nothing proves nothing — the doc makes Settings' live version the positive control |
+| Settings shows the helper's **own** answer (`HelperClient.version()`) when installed, not just `SMAppService.status` | unit level (fake) | — |
+| `Scripts/check-main-thread-trace.py` — exports a Time Profiler trace, fails on any engine frame in a main-thread sample, and on a trace with no engine frames at all | on a real export of a CLI process: as recorded → `the engine never appears … FAIL`; engine frame planted off main → `PASS` | planted on main → `1 main-thread samples were scanning — FAIL` |
+
+### Found while writing the handoff
+
+**The unit-test host saw real data.** The unit tests' host is Zhen.app launched with no
+arguments — live mode — so every unit-test run opened the shared history file (read-only:
+its SHA-256 was `d735909a…d239a` at the start of the run and is the same now). An XCTest
+host is now detected in `AppEnvironment` and runs on the fixture network.
+`TestHostTests` pins it; with the detection removed both its tests fail
+(`AppEnvironment.current.dataSource → .live`).
+
+### Unverified at the end of the run
+
+`SettingsUITests.testHelperPanelInstallApproveRemove` now waits for "Installed · Zhen Scan
+Engine fixture" (the fake's version). Changed after UI runs stopped; never seen passing.
+
+## Stage H — not run
+
+The brief: "only if A–G are green … drop this stage without regret if anything earlier is
+unfinished." E carries defect E1 and F carries three gates never shown failing on a break
+plus two harness extensions never seen passing. Not green, so no `fastlane/`,
+`Marketing/copy.json`, `AppStoreAssets/`, `Localizable.xcstrings`, `screenshots.yml` or
+`Docs/ARCHITECTURE.md`. The marketing captures would also need the quiet desktop of
+verification step 0 (Q7).
+
+## Report
+
+| Stage | State | Commit |
+|---|---|---|
+| A — foundation | done; six gates, each shown failing | `e664cfe` |
+| B — Devices and detail | done; eleven gates; a real sort bug found and fixed | `fc6d133` |
+| C — live scan | done; coalescing and degradation gates; a quadratic `apply` found and fixed (88 s → 0.47 s) | `9cc24de` |
+| D — Activity | done; the filter drives list and histogram | `46cb4c7` |
+| E — Settings and helper | done; plist pinned to core; **defect E1** (no helper binary from Xcode) | `2e250f7` |
+| F — integration | done; menu bar, audit (found four nameless controls); **gaps**: UI runs halted | `51f9375` |
+| G — handoff | done | this commit |
+| H — repo layer | not run (above) | — |
+
+**Hard stops:** none hit. No root, no password, no real network data committed (the
+transform's `--verify` and `FixtureNetworkTests` guard it; the ledger's capture note names
+no host address), nothing outside `zhen-app` changed. The real history file is untouched.
+
+**Defects carried:** E1. **Gates owed a break:** three (verification step 0).
+**Never seen passing:** `testDetailAndTakeoverFitAtBothSizes`, the takeover capture in
+`AppearanceUITests`, and the version wait in `SettingsUITests`. **Questions:** Q1–Q8.

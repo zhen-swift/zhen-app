@@ -28,3 +28,20 @@ struct InfoPlistTests {
     #expect(ProcessInfo.processInfo.environment["APP_SANDBOX_CONTAINER_ID"] == nil)
   }
 }
+
+/// Tests never see real data: the unit-test host runs on the fixture network.
+struct TestHostTests {
+  @Test("The unit-test host is on fixtures, not the shared history file")
+  @MainActor
+  func hostUsesFixtures() {
+    #expect(AppEnvironment.current.usesFixtures)
+    #expect(AppEnvironment.current.dataSource == .fixture(.home))
+  }
+
+  @Test("A plain launch is live; -UITesting and an XCTest host are not")
+  func parse() {
+    #expect(!AppEnvironment.parse(arguments: [], environment: [:], now: .now).usesFixtures)
+    #expect(AppEnvironment.parse(arguments: ["-UITesting"], environment: [:], now: .now).usesFixtures)
+    #expect(AppEnvironment.parse(arguments: [], environment: ["XCTestConfigurationFilePath": "/x"], now: .now).usesFixtures)
+  }
+}

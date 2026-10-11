@@ -12,6 +12,8 @@ extension SettingsView {
     @State private var state: HelperState = .notInstalled
     @State private var failure: String?
     @State private var confirmingRemoval = false
+    /// The running helper's own answer, when installed: the claim, checked.
+    @State private var answered: String?
 
     var body: some View {
       VStack(alignment: .leading, spacing: .spacing.medium) {
@@ -64,6 +66,7 @@ extension SettingsView {
       }
       .padding(.vertical, .spacing.xSmall)
       .onAppear { state = model.helper.state }
+      .task(id: state) { answered = state == .installed ? await model.helper.version() : nil }
       .confirmationDialog("Remove the privileged engine?", isPresented: $confirmingRemoval) {
         Button("Remove", role: .destructive, action: remove)
           .accessibilityIdentifier("confirmRemoveHelperButton")
@@ -84,7 +87,9 @@ extension SettingsView {
       switch state {
       case .notInstalled: String(localized: "Not installed.")
       case .requiresApproval: String(localized: "Installed · waiting for your approval")
-      case .installed: String(localized: "Installed · Zhen Scan Engine")
+      case .installed:
+        answered.map { String(localized: "Installed · Zhen Scan Engine \($0)") }
+          ?? String(localized: "Installed · Zhen Scan Engine (not answering yet)")
       case .unavailable(let reason): reason
       }
     }

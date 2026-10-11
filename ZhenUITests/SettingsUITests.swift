@@ -57,7 +57,8 @@ final class SettingsUITests: XCTestCase {
     XCTAssertTrue(robot.element("removeHelperButton").isEnabled)
 
     robot.element("openLoginItemsButton").click()
-    XCTAssertEqual(robot.element("helperState").text, "Installed · Zhen Scan Engine")
+    let answering = NSPredicate { _, _ in robot.element("helperState").text == "Installed · Zhen Scan Engine fixture" }
+    wait(for: [XCTNSPredicateExpectation(predicate: answering, object: nil)], timeout: 5)
     XCTAssertTrue(robot.element("showInSystemSettingsButton").exists, "no way to check the claim against the OS")
 
     robot.element("removeHelperButton").click()

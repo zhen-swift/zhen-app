@@ -20,6 +20,9 @@ protocol HelperService {
   func install() throws
   func uninstall() async throws
   func openLoginItems()
+  /// What the running helper says it is, asked over its own connection — nil when nothing
+  /// answers. `state` is what was registered; this is what will actually answer.
+  func version() async -> String?
 }
 
 /// The helper as a test or screenshot sees it: state in memory, nothing registered.
@@ -29,4 +32,5 @@ final class FakeHelperService: HelperService {
   func install() throws { state = .requiresApproval }
   func uninstall() async throws { state = .notInstalled }
   func openLoginItems() { if state == .requiresApproval { state = .installed } }
+  func version() async -> String? { state == .installed ? "fixture" : nil }
 }

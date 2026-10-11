@@ -48,7 +48,10 @@ nonisolated struct AppEnvironment: Sendable {
       }
       return arguments[index + 1]
     }
-    let uiTesting = arguments.contains("-UITesting")
+    // The unit-test host is this app, launched with no arguments. Without this it would
+    // open the history file the command line shares — tests must never see real data.
+    let unitTestHost = environment["XCTestConfigurationFilePath"] != nil || environment["XCTestBundlePath"] != nil
+    let uiTesting = arguments.contains("-UITesting") || unitTestHost
     let showcase = arguments.contains("-ShowcaseData")
     let variant = value(after: "-Fixture").flatMap(FixtureNetwork.Variant.init(rawValue:)) ?? .home
     let pace = value(after: "-ScanPace").flatMap(Int.init) ?? 60
