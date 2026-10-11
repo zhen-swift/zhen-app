@@ -1,0 +1,71 @@
+import SwiftUI
+import ZhenCore
+
+/// One device, everything known about it: the header, then four cards in one column —
+/// identity history, the names it is known by, its open ports, and what has happened to it.
+///
+/// "Known by" lists every source that offered a name and which one won. That card is the
+/// product's argument for itself.
+struct DeviceDetailView: View {
+  let id: DeviceItem.ID
+  let onRename: (DeviceItem.ID) -> Void
+  let onShowActivity: (String) -> Void
+  @Environment(NetworkModel.self) var model
+
+  var body: some View {
+    Group {
+      if let item = model.device(id) {
+        ScrollView {
+          VStack(alignment: .leading, spacing: .spacing.large) {
+            HeaderView(item: item)
+            IdentityCardView(item: item, merges: events(for: item).filter { $0.kind == .merged })
+            KnownByCardView(item: item)
+            PortsCardView(item: item)
+            RecentEventsCardView(events: Array(events(for: item).prefix(5))) {
+              onShowActivity(item.name ?? item.address)
+            }
+          }
+          .padding(.spacing.xLarge)
+        }
+        .navigationTitle(item.name ?? String(localized: "Unidentified device"))
+        .navigationSubtitle(item.address)
+        .toolbar {
+          ToolbarItemGroup(placement: .primaryAction) {
+            Button("Rename…", systemImage: "pencil") { onRename(item.id) }
+              .help("Give this device a name of your own")
+              .accessibilityIdentifier("renameButton")
+            Button("Scan Ports", systemImage: "network") { scanPorts(item) }
+              .help("Scan this device again, ports included")
+              .disabled(item.device.ipv4Addresses.isEmpty || model.scan.isRunning)
+              .accessibilityIdentifier("scanPortsButton")
+          }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("deviceDetail")
+      } else {
+        ContentUnavailableView(
+          "Device not found", systemImage: "questionmark.circle",
+          description: Text("History no longer has this device.")
+        )
+      }
+    }
+  }
+}
+
+#Preview("Detail — identified, dark") {
+  NavigationStack {
+    DeviceDetailView(id: PreviewContainer.namedDeviceID, onRename: { _ in }, onShowActivity: { _ in })
+  }
+  .environment(PreviewContainer.model(.home))
+  .frame(width: .windowSize.defaultWidth, height: .windowSize.defaultHeight)
+  .preferredColorScheme(.dark)
+}
+
+#Preview("Detail — unidentified, light") {
+  NavigationStack {
+    DeviceDetailView(id: PreviewContainer.anonymousDeviceID, onRename: { _ in }, onShowActivity: { _ in })
+  }
+  .environment(PreviewContainer.model(.home))
+  .frame(width: .windowSize.defaultWidth, height: .windowSize.defaultHeight)
+  .preferredColorScheme(.light)
+}

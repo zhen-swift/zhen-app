@@ -1,4 +1,5 @@
 import SwiftUI
+import ZhenCore
 
 /// Rising bars, some lit: how sure the app is of a device's identity, or a Wi-Fi signal.
 ///
@@ -8,9 +9,11 @@ struct SignalMeter: View {
   let lit: Int
   let bars: Int
   let tint: Color
+  let label: LocalizedStringKey
   @ScaledMetric(relativeTo: .body) private var size = IconSize.medium
 
-  init(lit: Int, of bars: Int = 3, tint: Color = .accent) {
+  init(lit: Int, of bars: Int = 3, tint: Color = .accent, label: LocalizedStringKey = "Signal") {
+    self.label = label
     self.lit = min(max(lit, 0), bars)
     self.bars = max(bars, 1)
     self.tint = tint
@@ -29,7 +32,7 @@ struct SignalMeter: View {
     }
     .frame(width: size, height: size, alignment: .bottom)
     .accessibilityElement()
-    .accessibilityLabel("Signal")
+    .accessibilityLabel(label)
     .accessibilityValue("\(lit) of \(bars)")
   }
 }
@@ -59,5 +62,17 @@ private struct SignalMeterPreview: View {
     .foregroundStyle(.textSecondary)
     .padding(.spacing.xLarge)
     .background(.surface)
+  }
+}
+
+extension SignalMeter {
+  /// A2's ConfidenceMeter: identity as three bars. One meter, two readings — this is the
+  /// same view, not a second one.
+  init(_ identification: Identification) {
+    self.init(
+      lit: 3 - identification.rank, of: 3,
+      tint: identification == .minimal ? .textTertiary : .accent,
+      label: "Identity"
+    )
   }
 }

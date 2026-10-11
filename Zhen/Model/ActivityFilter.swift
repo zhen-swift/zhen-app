@@ -1,0 +1,43 @@
+import SwiftUI
+import ZhenCore
+
+/// Activity's segments. Copy frozen by the designer's round 2: Presence (was Appearances),
+/// Addresses (was Network). Filtering by device is the search field, never a sixth segment.
+enum ActivityFilter: String, CaseIterable, Identifiable, Hashable {
+  case all, presence, identity, ports, addresses
+
+  var id: Self { self }
+
+  var title: LocalizedStringKey {
+    switch self {
+    case .all: "All"
+    case .presence: "Presence"
+    case .identity: "Identity"
+    case .ports: "Ports"
+    case .addresses: "Addresses"
+    }
+  }
+
+  /// The noun in "No ⟨kind⟩ events in this window".
+  var noun: String {
+    switch self {
+    case .all: ""
+    case .presence: String(localized: "presence")
+    case .identity: String(localized: "identity")
+    case .ports: String(localized: "port")
+    case .addresses: String(localized: "address")
+    }
+  }
+
+  func includes(_ kind: DerivedEvent.Kind) -> Bool {
+    switch self {
+    case .all: true
+    case .presence: kind == .appeared || kind == .disappeared
+    case .identity: kind == .renamed || kind == .merged
+    // zhen-core 0.6.0 derives no port events; the segment is kept with its frozen copy
+    // and says so honestly when empty (PHASE-2-questions Q3).
+    case .ports: false
+    case .addresses: kind == .ipChanged
+    }
+  }
+}

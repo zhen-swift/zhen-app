@@ -36,3 +36,6 @@ build/
 .DS_Store
 
 
+
+# Test results: uploaded by CI, never committed.
+fastlane/test_output/

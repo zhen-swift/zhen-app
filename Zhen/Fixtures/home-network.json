@@ -1,0 +1,503 @@
+{
+  "degradations": [
+    {
+      "reason": "8 replies arrived after the probe that asked for them had timed out. Those hosts were still identified — the token on each probe says which transmission it answers — but the per-host timeouts are running tight for this network.",
+      "recoverable": true,
+      "stage": "discovery"
+    }
+  ],
+  "devices": [
+    {
+      "addresses": [
+        "192.168.50.1",
+        "fe80::0200:5eff:fe00:5301%en0"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "partial",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": true,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:01",
+      "names": [],
+      "ports": [
+        {
+          "address": "192.168.50.1",
+          "port": 53,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 35.323625,
+            "samples": 1
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.1",
+          "port": 80,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 35.431708,
+            "samples": 1
+          },
+          "service": {
+            "banner": "HTTP/1.0 200 OK",
+            "evidence": "banner",
+            "name": "http"
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.1",
+          "port": 443,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 35.147417,
+            "samples": 1
+          },
+          "service": {
+            "evidence": "tls_certificate",
+            "name": "https",
+            "tls_subject": "TP-Link"
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 143.238792,
+        "samples": 1,
+        "smoothed_millis": 143.238792,
+        "variance_millis": 71.619396
+      },
+      "ttl": 64
+    },
+    {
+      "addresses": [
+        "192.168.50.10",
+        "fe80::1000:0:0:2%en0"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": false,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:02",
+      "names": [
+        {
+          "model": "AppleTV5,3",
+          "rank": 1,
+          "source": "mdns",
+          "value": "Sala de estar principal"
+        },
+        {
+          "model": "AppleTV5,3",
+          "rank": 3,
+          "source": "mdns",
+          "value": "Sala de estar principal"
+        },
+        {
+          "model": "AppleTV5,3",
+          "rank": 15,
+          "source": "mdns",
+          "value": "Sala de estar principal"
+        },
+        {
+          "rank": 16,
+          "source": "mdns",
+          "value": "Sala de estar principal"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.10",
+          "port": 5000,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 72.136291,
+            "samples": 1
+          },
+          "service": {
+            "banner": "AirTunes/960.13.1",
+            "evidence": "banner",
+            "name": "http",
+            "product": "AirTunes",
+            "version": "960.13.1"
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 143.204792,
+        "samples": 1,
+        "smoothed_millis": 143.204792,
+        "variance_millis": 71.602396
+      },
+      "ttl": 64
+    },
+    {
+      "addresses": [
+        "192.168.50.13"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "partial",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": true,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:03",
+      "names": [],
+      "ports": [],
+      "rtt": {
+        "millis": 143.177959,
+        "samples": 1,
+        "smoothed_millis": 143.177959,
+        "variance_millis": 71.5889795
+      },
+      "ttl": 128
+    },
+    {
+      "addresses": [
+        "192.168.50.16",
+        "fe80::1000:0:0:3%en0",
+        "fe80::1000:0:0:4%en0"
+      ],
+      "discovered_via": [
+        "probe_reply",
+        "neighbor_table"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "minimal",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "weak",
+      "last_seen": 1767268806027,
+      "mac": "2A:5C:00:00:00:01",
+      "names": [],
+      "ports": []
+    },
+    {
+      "addresses": [
+        "192.168.50.19"
+      ],
+      "discovered_via": [
+        "neighbor_table"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "minimal",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:04",
+      "names": [],
+      "ports": []
+    },
+    {
+      "addresses": [
+        "192.168.50.22"
+      ],
+      "discovered_via": [
+        "neighbor_table"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "minimal",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:05",
+      "names": [],
+      "ports": []
+    },
+    {
+      "addresses": [
+        "192.168.50.25"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "partial",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": true,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "weak",
+      "last_seen": 1767268806027,
+      "mac": "3A:5C:00:00:00:02",
+      "names": [],
+      "ports": [],
+      "rtt": {
+        "millis": 142.997584,
+        "samples": 1,
+        "smoothed_millis": 142.997584,
+        "variance_millis": 71.498792
+      },
+      "ttl": 32
+    },
+    {
+      "addresses": [
+        "192.168.50.28",
+        "fe80::1000:0:0:5%en0"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "partial",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": true,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "weak",
+      "last_seen": 1767268806027,
+      "mac": "4A:5C:00:00:00:03",
+      "names": [],
+      "ports": [],
+      "rtt": {
+        "millis": 158.457458,
+        "samples": 1,
+        "smoothed_millis": 158.457458,
+        "variance_millis": 79.228729
+      },
+      "ttl": 64
+    },
+    {
+      "addresses": [
+        "192.168.50.31",
+        "fe80::1000:0:0:6%en0"
+      ],
+      "discovered_via": [
+        "neighbor_table"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "minimal",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "weak",
+      "last_seen": 1767268806027,
+      "mac": "5A:5C:00:00:00:04",
+      "names": [],
+      "ports": []
+    },
+    {
+      "addresses": [
+        "192.168.50.34",
+        "fe80::0200:5eff:fe00:5306%en0"
+      ],
+      "discovered_via": [
+        "probe_reply",
+        "neighbor_table"
+      ],
+      "first_seen": 1767268799980,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:06",
+      "names": [
+        {
+          "rank": 5,
+          "source": "mdns",
+          "value": "SpeakerConnect"
+        }
+      ],
+      "ports": []
+    },
+    {
+      "addresses": [
+        "192.168.50.37"
+      ],
+      "discovered_via": [],
+      "first_seen": 1767268799980,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "moderate",
+      "last_seen": 1767268806027,
+      "mac": "6A:5C:00:00:00:05",
+      "names": [
+        {
+          "rank": 1,
+          "source": "mdns",
+          "value": "Alex’s MacBook Pro"
+        }
+      ],
+      "ports": []
+    },
+    {
+      "addresses": [
+        "fe80::0200:5eff:fe00:5307%en0"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268806027,
+      "identification": "minimal",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:07",
+      "names": [],
+      "ports": []
+    },
+    {
+      "addresses": [
+        "fe80::1000:0:0:8%en0"
+      ],
+      "discovered_via": [
+        "neighbor_table"
+      ],
+      "first_seen": 1767268806027,
+      "identification": "minimal",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "weak",
+      "last_seen": 1767268806027,
+      "mac": "7A:5C:00:00:00:06",
+      "names": [],
+      "ports": []
+    }
+  ],
+  "run": {
+    "engine": {
+      "capabilities": [
+        "icmp_sweep",
+        "connect_scan",
+        "banner_probe",
+        "neighbor_table"
+      ],
+      "kind": "unprivileged",
+      "name": "unprivileged-icmp"
+    },
+    "finished_at": 1767268806027,
+    "id": "6291c7d9-8b6e-5be9-9e72-a5ae7e3bfa69",
+    "interface": "en0",
+    "mode": "full",
+    "outcome": "complete",
+    "started_at": 1767268800000,
+    "target": "192.168.50.0/24",
+    "timing": {
+      "effective_probes_per_second": 310.63559204823247,
+      "peak_concurrency": 396,
+      "probes_sent": 1169,
+      "replies_seen": 27,
+      "stages": [
+        {
+          "budget_policy": "split",
+          "elapsed_millis": 475.769208,
+          "hosts_found": 10,
+          "probes_sent": 763,
+          "replies_seen": 17,
+          "retransmit_budget_millis": 150,
+          "spacing_jitter": 0.25,
+          "spacing_policy": "spread-into-tail",
+          "spread_budget_millis": 0,
+          "stage": "discovery",
+          "tail_budget_millis": 251.226686
+        },
+        {
+          "elapsed_millis": 2658.19375,
+          "hosts_found": 3,
+          "name_source_budget_millis": 3150,
+          "name_stage_budget_millis": 4500,
+          "probes_sent": 10,
+          "replies_seen": 6,
+          "stage": "naming"
+        },
+        {
+          "elapsed_millis": 629.289,
+          "probes_sent": 396,
+          "replies_seen": 4,
+          "stage": "deep_scan"
+        }
+      ]
+    }
+  },
+  "schema": 3
+}
