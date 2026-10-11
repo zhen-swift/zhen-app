@@ -45,8 +45,14 @@ final class ScanSession {
   private(set) var startedAt: Date?
   private(set) var finishedAt: Date?
   private(set) var stageStates: [Stage: StageState] = [:]
-  /// Newest first.
-  private(set) var found: [FoundHost] = []
+  /// Hosts in the order they answered, and where each one is. Kept oldest-first so an
+  /// arrival is an append and an update a lookup: newest-first storage made every batch
+  /// re-index every row, and 50 000 hosts took 88 s to apply (`ScanSessionTests`).
+  private(set) var arrivals: [FoundHost] = []
+  @ObservationIgnored private var positions: [IPv4Address: Int] = [:]
+
+  /// Newest first, as the screen lists them.
+  var found: [FoundHost] { arrivals.reversed() }
   private(set) var degradations: [Degradation] = []
   /// How many batches the view has been handed. The coalescing gate reads it.
   private(set) var publishedBatches = 0
@@ -77,7 +83,8 @@ final class ScanSession {
     phase = .running
     startedAt = .now
     finishedAt = nil
-    found = []
+    arrivals = []
+    positions = [:]
     degradations = []
     publishedBatches = 0
     stageStates = Dictionary(uniqueKeysWithValues: Self.stages.map {
@@ -113,7 +120,7 @@ final class ScanSession {
       stopped = false
     }
     if stopped {
-      phase = .stopped(after: elapsed(at: finishedAt ?? .now), found: found.count)
+      phase = .stopped(after: elapsed(at: finishedAt ?? .now), found: arrivals.count)
     } else {
       // Hand back to Devices. Its degradations go with it: the model keeps them.
       phase = .idle
@@ -125,8 +132,7 @@ final class ScanSession {
   /// Folds a batch of engine events into what the screen shows.
   func apply(_ batch: [ProbeEvent]) {
     publishedBatches += 1
-    let index = Dictionary(uniqueKeysWithValues: found.enumerated().map { ($0.element.id, $0.offset) })
-    var arrivals: [FoundHost] = []
+    let now = Date.now
     for event in batch {
       switch event {
       case .stageStarted(let stage):
@@ -136,18 +142,16 @@ final class ScanSession {
       case .stageFinished(let timing):
         stageStates[timing.stage] = .done
       case .hostFound(let facts), .hostUpdated(let facts):
-        if let at = index[facts.ip] {
-          found[at].facts = facts
-        } else if let pending = arrivals.firstIndex(where: { $0.id == facts.ip }) {
-          arrivals[pending].facts = facts
+        if let at = positions[facts.ip] {
+          arrivals[at].facts = facts
         } else {
-          arrivals.append(FoundHost(facts: facts, foundAt: .now))
+          positions[facts.ip] = arrivals.count
+          arrivals.append(FoundHost(facts: facts, foundAt: now))
         }
       case .degraded(let degradation):
         if !degradations.contains(degradation) { degradations.append(degradation) }
       }
     }
-    if !arrivals.isEmpty { found.insert(contentsOf: arrivals.reversed(), at: 0) }
   }
 
   func elapsed(at date: Date) -> Duration {

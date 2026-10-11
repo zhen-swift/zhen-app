@@ -156,6 +156,8 @@ struct ZhenRobot {
   /// These tests run on a desktop someone may be using: another app's menu-bar popover
   /// once took key focus mid-test and swallowed an Esc. Keys go to Zhen or nowhere.
   func frontmost() {
+    // (A window's `hasKeyboardFocus` reads 0 even when it is key — measured — so the
+    // only signal worth waiting on is the app's own state.)
     guard app.state != .runningForeground else { return }
     app.activate()
     _ = app.wait(for: .runningForeground, timeout: 3)

@@ -3,6 +3,10 @@ import SwiftUI
 /// The menu bar. Every action in the app is here; the frequent ones have shortcuts. Each
 /// reaches the front window through `@FocusedValue`, never through a global.
 struct ZhenCommands: Commands {
+  /// Scanning is the app's, not a window's: there is one window and one model, and a scan
+  /// asked for in the instant before the window publishes its focused value must still
+  /// start. Measured: ⌘R right after launch found Scan Now disabled.
+  let model: NetworkModel
   @FocusedValue(\.windowActions) private var window
 
   var body: some Commands {
@@ -23,12 +27,12 @@ struct ZhenCommands: Commands {
     }
 
     CommandMenu("Scan") {
-      Button("Scan Now") { window?.scanNow() }
+      Button("Scan Now") { model.startScan() }
         .keyboardShortcut("r", modifiers: .command)
-        .disabled(window == nil || window?.isScanning == true)
-      Button("Stop Scan") { window?.stopScan() }
+        .disabled(model.scan.isRunning)
+      Button("Stop Scan") { model.scan.stop() }
         .keyboardShortcut(".", modifiers: .command)
-        .disabled(window?.isScanning != true)
+        .disabled(!model.scan.isRunning)
     }
 
     CommandMenu("Device") {

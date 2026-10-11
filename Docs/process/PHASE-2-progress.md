@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-10 — stages A and B done and committed. Next: stage C.
+**Liveness:** 2026-10-10 — stages A–C done and committed. Next: stage D.
 
 # Phase 2 — build the whole app, progress
 
@@ -253,3 +253,43 @@ Rows, headers and context menus are clicked at their centre (accessibility calls
 hittable). Opening a row and opening a context menu re-try up to three times after
 activating the app, for the same reason as A's shortcuts: the desktop is in use, and
 another app's window was seen over Zhen mid-run (Q7).
+
+## Stage C — Live scan · done
+
+Replaces the Devices content while a scan runs: "Scanning 192.168.50.0/24", "Stage n of m ·
+0:07 elapsed · 4 devices so far", three `StageCard`s (Discovery, Naming, Deep scan — the
+last "Not requested" unless asked), the `DegradationBanner` when anything degraded, and
+"Found so far · newest first". A host that naming has not reached reads *Resolving name…*
+in italic secondary, with "found 4 s ago · name query in flight". Header, stages and banner
+are pinned; only the list scrolls (A3).
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| **Coalescing**, at the view model: 50 000 hosts in 0.4 s reach `ScanSession` in ≤ one batch per 16 ms frame, none lost, applied in < 3 s | `ScanSessionTests.coalescesIntoTheViewModel` (and A's pipeline gate) | tick of 50 µs → `publishedBatches 69 <= frames + 2 → 28` failed; `apply` searching linearly again → `elapsed 150.9 s < 3 s` failed |
+| **Degradations do not evaporate**: a run that degrades during naming still shows it on Devices after the hand-back — amber footer, notice, the same rows | `LiveScanUITests.testDegradationsSurviveTheHandBack` | `lastDegradations = []` at hand-back → the notice had nothing to disclose (`partialRunDisclosure` absent) |
+| Starting → "Listening…", stages queued, deep scan not requested | `testStartingThenNamingThenHandBack` | — (asserted on the way) |
+| Mid-naming placeholder | same | placeholder replaced by "Unidentified device" → assertion at line 22 |
+| Done → hands back to Devices, no dismissal | same | phase left `.stopped` at completion → `the scan never handed back` |
+| Stopped → results kept, "Stopped after 0:0x · n devices found", Scan Again restarts, nothing claims a name in flight | `testStoppedKeepsWhatItFound`; `ScanSessionTests.stoppedKeepsResults` | arrivals cleared on stop → `stopping discarded the results` (first attempt failed a step early on a dropped shortcut; re-run, then the unbroken test re-run green) |
+| Session rules: arrival order, in-place updates, stage states, degradation de-duplication, hand-back | `ScanSessionTests` (6) | — |
+
+### Found by the gates
+
+- **`apply` was quadratic.** Coalescing held the batch count to display rate, and each
+  batch then cost O(n²): a linear search inside the batch and a re-index of every row.
+  50 000 hosts took **88 s** on the main actor — the frame-time tail the gate exists for,
+  moved inside the batch. Hosts are now stored in arrival order with a position index
+  (`found` is the reversed view): 0.47 s. The gate asserts the time, and fails at 150 s
+  with the linear search put back.
+- **Scan Now was disabled right after launch** — the window had not yet published its
+  focused value, so ⌘R did nothing. Scanning belongs to the app (one window, one model):
+  Scan Now and Stop Scan now act on the model; room and device commands still reach the
+  window through `@FocusedValue`. Bend recorded below.
+
+### Bends
+
+| Bend | Why |
+|---|---|
+| Scan Now / Stop Scan in the menu bar act on the model, not through `@FocusedValue` | measured: right after launch the focused value is nil and the shortcut is dropped. The house rule protects multi-window apps from acting on the wrong window; this app has one window |
+| "Name query in flight" names no protocol per host | core's progress events say which stage runs, not which query is outstanding for a host; the card says "Asking Bonjour, UPnP and NetBIOS", which is what the naming stage does |
+| A window's `hasKeyboardFocus` is not used by the robot | measured: it reads 0 even when the window is key |

@@ -12,8 +12,6 @@ struct WindowActions {
   var showRoom: (Room) -> Void
   var activityFilter: ActivityFilter
   var setActivityFilter: (ActivityFilter) -> Void
-  var scanNow: () -> Void
-  var stopScan: () -> Void
   var openSelection: () -> Void
   var scanSelectionPorts: () -> Void
   var renameSelection: () -> Void

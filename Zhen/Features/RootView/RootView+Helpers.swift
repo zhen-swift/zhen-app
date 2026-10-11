@@ -12,8 +12,6 @@ extension RootView {
       showRoom: { room = $0 },
       activityFilter: activityFilter,
       setActivityFilter: { activityFilter = $0 },
-      scanNow: { model.startScan() },
-      stopScan: { model.scan.stop() },
       openSelection: openSelection,
       scanSelectionPorts: scanSelectionPorts,
       renameSelection: { if let id = singleSelection { rename(id) } },

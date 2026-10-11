@@ -20,7 +20,7 @@ struct ZhenApp: App {
     .defaultSize(width: .windowSize.defaultWidth, height: .windowSize.defaultHeight)
     .windowResizability(.contentMinSize)
     .commands {
-      ZhenCommands()
+      ZhenCommands(model: model)
     }
 
     Settings {
