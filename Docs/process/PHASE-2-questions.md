@@ -70,3 +70,13 @@ E1 in the ledger). **Instead:** stage G's script builds it from the pinned zhen-
 and embeds it before signing. The durable fix is a zhen-core release that declares the
 product — you said no second scheme; a product without a scheme is possible by excluding it
 from the scheme list. Your call, in zhen-core.
+
+## Q9 — Two real identifiers already in the design appendices (end of run)
+
+The closing check ran `anonymise-scan.py --verify` over every tracked text file against the
+raw capture: 2 of 37 raw identifiers appear, both in files this run did not touch
+(`git log -S` over phase 2 finds neither). `A2-design-system-components.md` names the
+living-room Apple TV by its real Bonjour name as a sample, and `A1` gives a sample address
+whose text contains the gateway's. Both were published before this run and are design
+prose, not data. **Instead:** left as they are — rewriting your appendices is outside this
+brief. If you want the repository to hold no real names, those two lines are the ones.
