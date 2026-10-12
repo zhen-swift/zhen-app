@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 import ZhenCore
 
 /// The Settings scene (⌘,): scanning, history, and the privileged engine. Standard macOS
@@ -10,6 +11,7 @@ struct SettingsView: View {
   @AppStorage(Preferences.Key.deepScan) private var deepScan = false
   @AppStorage(Preferences.Key.retentionDays) private var retentionDays = 0
   @AppStorage(Preferences.Key.budgetSeconds) private var budgetSeconds = Preferences.defaultBudgetSeconds
+  @State private var exporting: HistoryDocument?
 
   var body: some View {
     Form {
@@ -58,6 +60,21 @@ struct SettingsView: View {
           Text("Kept forever — it’s what makes merges possible")
             .foregroundStyle(.textSecondary)
         }
+        LabeledContent("History file") {
+          HStack(spacing: .spacing.small) {
+            Text(historySize)
+              .foregroundStyle(.textSecondary)
+              .monospacedDigit()
+              .accessibilityIdentifier("historySize")
+            if let url = model.historyURL {
+              Button("Show in Finder") { Finder.reveal(url) }
+                .accessibilityIdentifier("revealHistoryButton")
+            }
+            Button("Export…") { exporting = model.exportDocument() }
+              .help("Save devices and events as JSON")
+              .accessibilityIdentifier("exportHistoryButton")
+          }
+        }
       } header: {
         Text("History").sectionLabel()
       }
@@ -69,11 +86,42 @@ struct SettingsView: View {
       }
     }
     .formStyle(.grouped)
+    // Pinned, per A3: the title and version describe the whole scene.
+    .safeAreaInset(edge: .top, spacing: .zero) {
+      Text(Self.versionLine)
+        .font(.subheadline)
+        .foregroundStyle(.textSecondary)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, .spacing.xLarge)
+        .padding(.top, .spacing.medium)
+        .accessibilityIdentifier("settingsVersion")
+    }
+    .fileExporter(
+      isPresented: Binding(get: { exporting != nil }, set: { if !$0 { exporting = nil } }),
+      document: exporting, contentType: .json, defaultFilename: NetworkModel.exportFilename
+    ) { _ in exporting = nil }
     .frame(width: .windowSize.settingsWidth, height: .windowSize.settingsHeight)
     .defaultAppStorage(model.defaults)
     .task(id: retentionDays) { await model.applyRetention(days: retentionDays) }
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier("settings")
+  }
+}
+
+extension SettingsView {
+  /// "Zhen 1.0 (1)".
+  static var versionLine: String {
+    let info = Bundle.main.infoDictionary ?? [:]
+    let version = info["CFBundleShortVersionString"] as? String ?? "?"
+    let build = info["CFBundleVersion"] as? String ?? "?"
+    return String(localized: "Zhen \(version) (\(build))")
+  }
+
+  /// "2.1 MB", or what is true when there is no file.
+  var historySize: String {
+    guard model.historyURL != nil else { return String(localized: "In memory — this launch uses a fixture") }
+    guard let bytes = model.historyFileSize else { return String(localized: "Not created yet — no scan so far") }
+    return Int64(bytes).formatted(.byteCount(style: .file))
   }
 }
 

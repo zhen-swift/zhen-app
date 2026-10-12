@@ -38,7 +38,9 @@ final class NetworkModel {
   /// The device whose ports are being scanned. The window's `.task(id:)` runs it.
   private(set) var portScanTarget: PortScanTarget?
 
-  init(environment: AppEnvironment) {
+  /// - Parameter defaults: a test's own domain. Fixture models otherwise share one, which
+  ///   each clears when it is made — fine for one app, a race between parallel tests.
+  init(environment: AppEnvironment, defaults testDefaults: UserDefaults? = nil) {
     self.environment = environment
     switch environment.dataSource {
     case .live:
@@ -62,9 +64,13 @@ final class NetworkModel {
         pace: environment.scanPace, clock: ContinuousClock()
       ))
       // A throwaway domain: a test can never change, or be changed by, real preferences.
-      let suite = "com.jctec.zhen.fixture"
-      UserDefaults().removePersistentDomain(forName: suite)
-      self.defaults = UserDefaults(suiteName: suite) ?? .standard
+      if let testDefaults {
+        self.defaults = testDefaults
+      } else {
+        let suite = "com.jctec.zhen.fixture"
+        UserDefaults().removePersistentDomain(forName: suite)
+        self.defaults = UserDefaults(suiteName: suite) ?? .standard
+      }
       self.helper = FakeHelperService()
     }
     self.clock = ContinuousClock()

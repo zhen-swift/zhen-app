@@ -76,3 +76,14 @@ struct ComponentRenderTests {
     print("rendered \(url.path(percentEncoded: false))")
   }
 }
+
+/// Phase 3, stage 3: with Differentiate Without Colour on, no two tones share a shape.
+@MainActor
+struct StatusDotShapeTests {
+  /// Gate. Break: give `.warning` the same symbol as `.online`.
+  @Test("Every tone has its own shape without colour")
+  func distinctShapes() {
+    let shapes = StatusDot.Tone.allCases.map { $0.symbol ?? "ring" }
+    #expect(Set(shapes).count == StatusDot.Tone.allCases.count, "\(shapes)")
+  }
+}

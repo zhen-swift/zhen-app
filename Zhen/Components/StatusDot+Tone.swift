@@ -29,6 +29,20 @@ extension StatusDot {
 
     var isFilled: Bool { self != .offline }
 
+    /// The mark drawn when the person has asked for Differentiate Without Colour: every
+    /// tone a different shape, so none depends on telling a green from an amber. Offline
+    /// keeps its ring, which is already a shape.
+    var symbol: String? {
+      switch self {
+      case .online: "checkmark.circle.fill"
+      case .offline: nil
+      case .warning: "exclamationmark.triangle.fill"
+      case .info: "arrow.left.arrow.right.circle.fill"
+      case .accent: "link.circle.fill"
+      case .neutral: "minus.circle.fill"
+      }
+    }
+
     var label: LocalizedStringKey {
       switch self {
       case .online: "Online"

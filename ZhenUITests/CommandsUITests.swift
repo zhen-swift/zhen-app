@@ -17,6 +17,7 @@ final class CommandsUITests: XCTestCase {
     ("Device", "Open", "o"), ("Device", "Back to Devices", "["), ("Device", "Rename…", "e"),
     ("Device", "Scan Ports", "r"), ("Device", "Show in Activity", "a"),
     ("Device", "Copy Address", "c"), ("Device", "Copy MAC Address", "c"),
+    ("File", "Export History…", "s"),
   ]
 
   @MainActor
@@ -75,5 +76,28 @@ final class CommandsUITests: XCTestCase {
     XCTAssertTrue(slow.element("deviceDetail").exists)
     XCTAssertFalse(slow.element("liveScan").exists, "a port scan took over the window")
     slow.press(".", .command, expecting: "portScanFailure")
+  }
+
+  /// Phase 3, stage 3: one window. The scan runs from the window's task, so a second
+  /// window over the same model ran every scan twice.
+  @MainActor
+  func testThereIsOneWindow() {
+    let robot = ZhenRobot.launch()
+    robot.waitFor("deviceTable")
+    robot.key("n", .command)
+    let second = NSPredicate { _, _ in robot.app.windows.matching(NSPredicate(format: "identifier BEGINSWITH 'main'")).count > 1 }
+    let result = XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: second, object: nil)], timeout: 3)
+    XCTAssertEqual(result, .timedOut, "⌘N opened a second window over the same model")
+    XCTAssertFalse(robot.app.menuItems["New Window"].exists && robot.app.menuItems["New Window"].isEnabled, "File offers New Window")
+  }
+
+  /// Phase 3, stage 3: ⇧⌘S exports history from the main window.
+  @MainActor
+  func testExportShortcut() {
+    let robot = ZhenRobot.launch()
+    robot.waitFor("deviceTable")
+    robot.key("s", [.command, .shift])
+    XCTAssertTrue(robot.app.sheets.firstMatch.waitForExistence(timeout: 5), "⇧⌘S opened no save panel")
+    robot.key(.escape)
   }
 }

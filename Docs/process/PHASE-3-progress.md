@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — stages 1–2 done; stage 3 next.
+**Liveness:** 2026-10-11 — stages 1–3 done; stage 4 next.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -147,3 +147,20 @@ Unit suite: 58 tests, green three runs in a row after the race fix.
 **Seen, not fixed here:** a `devices-partial` capture came out half-drawn, with placeholder rows and an empty sidebar. The test's assertions read accessibility and passed. This is phase 2's Q7 again, a capture taken mid-redraw. It belongs to stage 5's screenshot work.
 
 UI: `ActivityUITests`, `DeviceDetailUITests`, `DevicesUITests`, `LiveScanUITests`, 17 tests, all green. Unit: 65 green.
+
+## Stage 3 — Settings and housekeeping
+
+| Change | Where | Gate |
+|---|---|---|
+| **One window.** The main scene was a `WindowGroup` from stage A until now, despite the phase-2 ledger's "a single `Window`" and a comment saying so in `ZhenApp.swift`. ⌘N opened a second window over the same model, and both windows' `.task(id: scan.runToken)` ran the same scan | `ZhenApp`: `Window("Zhen", id: "main")` | `CommandsUITests.testThereIsOneWindow`. Break: back to `WindowGroup` and ⌘N made a second window. `RestorationUITests` still passes under `Window` |
+| **Export History…** (File, ⇧⌘S, and in Settings): JSON with every device (core's `Codable` `Device`, plus the name shown and presence), every event in a shape this app owns (core keeps `DerivedEvent` off the wire on purpose), and the latest run. Write-only | `HistoryExport`, `HistoryDocument`, `.fileExporter` in `RootView` and `SettingsView` | `HousekeepingTests.exportHoldsEverything`. Break: events emptied gave `0 == 8`. `SettingsUITests.testVersionHistoryAndExport`. Break: the button never set the document, so "Export opened no save panel". `CommandsUITests.testExportShortcut` |
+| **Settings shows the version and the history file**: "Zhen 1.0 (1)", pinned above the form (A3: "Settings: title and version"). The file's size, Show in Finder, Export. Under a fixture it says so rather than show a size | `SettingsView.versionLine`, `historySize`, `Finder.reveal` | `HousekeepingTests.versionLine`, `SettingsUITests.testVersionHistoryAndExport` |
+| **Retention applied at launch** (stage 1) | `NetworkModel.load()` | `HousekeepingTests.retentionAtLaunch`. **Its first version passed with the policy never applied.** It dated its "nine days later" run from the capture's own run, which is in January 2026, months before the fixture's history, so nothing was ever old enough to prune. It now dates from the store's latest run, and the break (no `applyRetention` in `load()`) fails it |
+| **Status without colour.** With Differentiate Without Colour on, each tone draws its own symbol. Online and warning were both filled dots differing only in hue, with the same footer words ("Last scan 6 min. ago") | `StatusDot`, `StatusDot.Tone.symbol` | `StatusDotShapeTests.distinctShapes`. Break: warning given online's symbol gave 5 shapes for 6 tones |
+| **Reduce Transparency**: no change needed. The only translucency is system materials (`.bar`, `.regularMaterial`), which macOS makes opaque under that setting itself | — | — |
+
+**A test race, found on the way:** every fixture `NetworkModel` clears the shared `com.jctec.zhen.fixture` defaults domain when it is made. That is right for one app, but parallel unit tests wiped each other's settings between `set` and `load`. The retention test failed in the full run and passed alone. `NetworkModel(environment:defaults:)` now takes a test's own domain.
+
+**Never seen passing in phase 2, now passing:** `SettingsUITests.testHelperPanelInstallApproveRemove`, with its helper-version wait.
+
+UI: `SettingsUITests` (4) and `CommandsUITests` (5), green. Unit: 70 green, three runs in a row.

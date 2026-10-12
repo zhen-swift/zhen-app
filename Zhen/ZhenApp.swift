@@ -10,8 +10,9 @@ struct ZhenApp: App {
 
   var body: some Scene {
     // A single window, not a group: the scan runs from this window's task, and two windows
-    // sharing one model would run it twice.
-    WindowGroup(id: "main") {
+    // sharing one model would run it twice. It was a `WindowGroup` from stage A until
+    // phase 3 despite this comment — ⌘N opened a second window (ledger, phase 3 stage 3).
+    Window("Zhen", id: "main") {
       RootView()
         .environment(model)
         .defaultAppStorage(model.defaults)

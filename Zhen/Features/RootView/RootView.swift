@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 import ZhenCore
 
 /// The main window: the sidebar's two rooms, and a stack in the detail column that pushes a
@@ -14,6 +15,8 @@ struct RootView: View {
   @State var search = ""
   @State var renaming: RenameRequest?
   @State var restored = false
+  /// The export being saved, while its panel is up.
+  @State var exporting: HistoryDocument?
   @FocusState var searchFocused: Bool
   @AppStorage(Preferences.Key.scanInterval) var scanInterval = 0
 
@@ -60,6 +63,10 @@ struct RootView: View {
     .sheet(item: $renaming) { request in
       RenameSheet(id: request.id)
     }
+    .fileExporter(
+      isPresented: Binding(get: { exporting != nil }, set: { if !$0 { exporting = nil } }),
+      document: exporting, contentType: .json, defaultFilename: NetworkModel.exportFilename
+    ) { _ in exporting = nil }
     .focusedSceneValue(\.windowActions, actions)
   }
 }

@@ -24,11 +24,26 @@ final class SettingsUITests: XCTestCase {
         .matching(NSPredicate(format: "label ==[c] %@", section)).count > 0
       XCTAssertTrue(found, "no \(section) section")
     }
-    for control in ["scanIntervalPicker", "subnetOverrideField", "deepScanToggle", "retentionPicker"] {
+    for control in ["scanIntervalPicker", "subnetOverrideField", "scanBudgetPicker", "deepScanToggle", "retentionPicker", "exportHistoryButton"] {
       XCTAssertTrue(robot.element(control).exists, "no \(control)")
     }
     XCTAssertTrue(robot.element("settings").staticTexts["Kept forever — it’s what makes merges possible"].exists)
     XCTAssertTrue(robot.element("settings").staticTexts.allElementsBoundByIndex.contains { $0.text.contains("auto, from en0") })
+  }
+
+  /// Phase 3, stage 3: the version is pinned above the form, the history line says what is
+  /// true under a fixture, and Export opens a save panel.
+  @MainActor
+  func testVersionHistoryAndExport() {
+    let robot = openSettings()
+    XCTAssertTrue(robot.element("settingsVersion").text.hasPrefix("Zhen "), robot.element("settingsVersion").text)
+    XCTAssertTrue(robot.element("historySize").text.contains("fixture"), robot.element("historySize").text)
+    robot.element("exportHistoryButton").click()
+    let panel = robot.app.sheets.firstMatch
+    XCTAssertTrue(panel.waitForExistence(timeout: 5), "Export opened no save panel")
+    XCTAssertTrue(panel.textFields.allElementsBoundByIndex.contains { $0.text.hasPrefix("Zhen history") }, "the export is not named for its date")
+    robot.key(.escape)
+    XCTAssertTrue(panel.waitForNonExistence(timeout: 5))
   }
 
   @MainActor

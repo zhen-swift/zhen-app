@@ -19,6 +19,12 @@ struct ZhenCommands: Commands {
       Divider()
     }
 
+    CommandGroup(replacing: .importExport) {
+      Button("Export History…") { window?.exportHistory() }
+        .keyboardShortcut("s", modifiers: [.command, .shift])
+        .disabled(window == nil)
+    }
+
     CommandGroup(after: .pasteboard) {
       Divider()
       Button("Find…") { window?.focusSearch() }
