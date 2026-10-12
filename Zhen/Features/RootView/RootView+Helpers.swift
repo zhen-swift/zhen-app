@@ -87,6 +87,8 @@ extension RootView {
     activityFilter = .all
     storedSelection = ""
     storedPath = ""
+    storedSort = ""
+    columnCustomization = TableColumnCustomization()
   }
 
   /// Puts back what the last session had open, once the devices it names are loaded.

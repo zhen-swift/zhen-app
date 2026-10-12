@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — part 4: menu bar mode done.
+**Liveness:** 2026-10-12 — part 5: table sort and columns remembered; clean captures tried and dropped (Q8).
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -524,3 +524,45 @@ running scan never changes host.
 failed twice in a row on "showDevicesButton never appeared after ⌘.". The audit of the
 live scan took 18 s, and at 900 ms a step the fixture scan ended first, so Stop had
 nothing to stop. It now runs at 2 500 ms a step.
+
+---
+
+# Part 5 — the table remembers; clean captures, tried
+
+## The table's sort and columns come back
+
+The sort reset on every launch, and the columns were fixed. Now:
+- The sort is kept with the window, in `@SceneStorage("deviceSort")`, the way the room
+  and selection already are.
+  - `KeyPathComparator` is not storable, so `DevicesView.SortStorage` stores the column's
+    name and direction ("address-reverse").
+  - The default order, online first then most recently seen, is stored as nothing.
+- Columns can be hidden and reordered from the header's menu, using SwiftUI's
+  `TableColumnCustomization` in `@SceneStorage("deviceColumns")`. NAME cannot be hidden.
+- A launch that does not restore (every fixture launch without `-RestoreState`) clears
+  both in `startFresh`, so one test's hidden column never reaches the next.
+
+| Gate | Break | Failure |
+|---|---|---|
+| `SortStorageTests.roundTrip`: every column, both directions, plus the default and garbage | — | — |
+| `RestorationUITests.testSortAndColumnsReturn`: address ascending survives a relaunch; then descending with MAC hidden survives one too | the sort's `onChange` store removed | "the ascending sort did not come back" (the window had last saved descending) |
+| the same | a constant customization passed to the `Table` | "the hidden column came back" |
+
+**The test took three versions to be a test:**
+1. It compared only the first row. That passed with the sort never stored: in the
+   fixture, the first row is the same under the default order and address-descending.
+2. It compared every row under Last Seen. That failed even with the code right: every
+   online row is "Now", and ties came back in a different order.
+3. Now: address order, unique, in two directions across two relaunches. A sort never
+   stored still matches whatever the window last saved, so a single direction would also
+   have passed on the earlier run's leftovers. It also first makes a column hidden by an
+   earlier run visible again.
+
+## Clean marketing captures: tried, dropped
+
+The app tried drawing its own window into the capture: `cacheDisplay`, then the frame
+view's `CALayer.render(in:)`, behind a hidden ⌃⌥⌘C command in `-ShowcaseData` launches.
+Both produced 2880 × 1800 images of the title bar's text on white. The table, sidebar and
+toolbar are composited outside the view's own drawing, and neither call reaches them. All
+of it was reverted; nothing from it ships. The two routes that work are in Q8: hide the
+Dock, or grant Screen Recording for a ScreenCaptureKit capture.

@@ -86,3 +86,22 @@ registration (Q2), it is the last trace of the monorepo-era app.
 subnet a UI test wrote to the real domain before the stage-4 fix) are cleared at the end of
 the run. The container is listed here rather than deleted, because macOS protects
 containers and its contents predate this run.
+
+## Q8 — Clean marketing captures: hide the Dock, or grant Screen Recording? (part 5)
+
+Q5's captures show this Mac's Dock and notification banners, because an XCUITest
+screenshot is screen pixels. Part 5 tried having the app draw its own window instead
+(`cacheDisplay`, then `CALayer.render(in:)`). Both produced the title bar's text on white:
+the table, sidebar and toolbar are composited by the window server, and neither call
+reaches them. The experiment was reverted.
+
+What would work:
+1. **Hide the Dock and turn on Do Not Disturb** while `bundle exec fastlane screenshots`
+   runs. Nothing to build.
+2. **ScreenCaptureKit** (`SCScreenshotManager` with a single-window filter), which
+   captures one window whatever covers it. It needs Screen Recording permission for the
+   app taking the capture. That is your approval, and for ad-hoc test builds possibly
+   again after each rebuild.
+
+**Blocks:** committed App Store and README artwork. **Instead:** nothing changed; 1 is the
+documented path (`Docs/SCREENSHOTS.md`). Say if you want 2.

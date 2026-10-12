@@ -8,6 +8,7 @@ extension DevicesView {
     let rows: [DeviceItem]
     @Binding var selection: Set<DeviceItem.ID>
     @Binding var sortOrder: [KeyPathComparator<DeviceItem>]
+    @Binding var columnCustomization: TableColumnCustomization<DeviceItem>
     let onOpen: (DeviceItem.ID) -> Void
     let onRename: (DeviceItem.ID) -> Void
     let onShowActivity: (String) -> Void
@@ -16,27 +17,34 @@ extension DevicesView {
     var body: some View {
       TimelineView(.everyMinute) { context in
         let widths = ColumnWidths(rows: rows, now: context.date)
-        Table(rows, selection: $selection, sortOrder: $sortOrder) {
+        Table(rows, selection: $selection, sortOrder: $sortOrder, columnCustomization: $columnCustomization) {
           TableColumn(String(localized: .name), value: \.nameSortKey) { item in
             NameCellView(item: item, now: context.date)
           }
           .width(min: .windowSize.nameMinimum)
+          .customizationID("name")
+          // The name is what a row is; hiding it would leave rows nobody can tell apart.
+          .disabledCustomizationBehavior(.visibility)
           TableColumn(String(localized: .identity), value: \.identificationRank) { item in
             IdentityCellView(identification: item.identification)
           }
           .width(widths.identity)
+          .customizationID("identity")
           TableColumn(String(localized: .ipAddressColumn), value: \.addressSortKey) { item in
             AddressCellView(item: item)
           }
           .width(widths.address)
+          .customizationID("address")
           TableColumn(String(localized: .macAddress), value: \.macSortKey) { item in
             MACCellView(item: item)
           }
           .width(widths.mac)
+          .customizationID("mac")
           TableColumn(String(localized: .lastSeenColumn), value: \.lastSeen) { item in
             LastSeenCellView(item: item, now: context.date)
           }
           .width(widths.lastSeen)
+          .customizationID("lastSeen")
         }
         // The table's minimum is its measured columns. The window grows its own minimum
         // to match, rather than the split view taking the width from the sidebar (F2).

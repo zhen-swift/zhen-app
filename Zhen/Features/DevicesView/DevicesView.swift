@@ -14,6 +14,10 @@ struct DevicesView: View {
   var onShowActivity: (String) -> Void = { _ in }
   @Environment(NetworkModel.self) var model
   @State var sortOrder = DeviceItem.defaultOrder
+  /// The sort, and which columns show in what order, kept with the window across launches
+  /// like the room and the selection.
+  @SceneStorage("deviceSort") var storedSort = ""
+  @SceneStorage("deviceColumns") var columnCustomization: TableColumnCustomization<DeviceItem>
   /// The table holds focus when the room opens, so arrows select and Return opens at once.
   @FocusState var tableFocused: Bool
 
@@ -31,14 +35,18 @@ struct DevicesView: View {
         NothingAnsweredView()
       } else {
         DeviceTableView(
-          rows: rows, selection: $selection, sortOrder: $sortOrder,
+          rows: rows, selection: $selection, sortOrder: $sortOrder, columnCustomization: $columnCustomization,
           onOpen: open, onRename: onRename, onShowActivity: onShowActivity
         )
         .focused($tableFocused)
         .defaultFocus($tableFocused, true)
         // Coming back from a device, the table takes focus again: Return and the arrows
         // should act on the list the person is looking at, not on the search field.
-        .onAppear { tableFocused = true }
+        .onAppear {
+          tableFocused = true
+          sortOrder = SortStorage.decode(storedSort)
+        }
+        .onChange(of: sortOrder) { storedSort = SortStorage.encode(sortOrder) }
         .overlay {
           if rows.isEmpty {
             ContentUnavailableView(

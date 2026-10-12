@@ -10,6 +10,10 @@ struct RootView: View {
   @SceneStorage("selection") var storedSelection = ""
   @SceneStorage("path") var storedPath = ""
   @SceneStorage("activityFilter") var activityFilter: ActivityFilter = .all
+  // The Devices table's, declared here only so a launch that does not restore can clear
+  // them with the rest (`startFresh`): same keys, same scene, same values.
+  @SceneStorage("deviceSort") var storedSort = ""
+  @SceneStorage("deviceColumns") var columnCustomization: TableColumnCustomization<DeviceItem>
   @State var selection: Set<DeviceItem.ID> = []
   @State var path: [Route] = []
   @State var search = ""

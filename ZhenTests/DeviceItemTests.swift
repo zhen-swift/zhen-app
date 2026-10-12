@@ -107,3 +107,22 @@ struct DeviceItemTests {
     #expect(sorted.drop { !$0.contains(":") }.allSatisfy { $0.contains(":") })
   }
 }
+
+/// The Devices table's sort, as the window stores it.
+@MainActor
+struct SortStorageTests {
+  @Test("Every column round-trips in both directions; the default order is stored as nothing")
+  func roundTrip() {
+    #expect(DevicesView.SortStorage.encode(DeviceItem.defaultOrder) == "")
+    #expect(DevicesView.SortStorage.decode("") == DeviceItem.defaultOrder)
+    for column in DevicesView.SortStorage.columns {
+      for order in [SortOrder.forward, .reverse] {
+        var comparator = column.comparator
+        comparator.order = order
+        let text = DevicesView.SortStorage.encode([comparator])
+        #expect(DevicesView.SortStorage.decode(text) == [comparator], "\(column.name) \(order) stored as '\(text)'")
+      }
+    }
+    #expect(DevicesView.SortStorage.decode("nonsense") == DeviceItem.defaultOrder)
+  }
+}
