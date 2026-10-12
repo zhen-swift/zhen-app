@@ -15,7 +15,7 @@ extension DevicesView {
           .accessibilityHidden(true)
         VStack(alignment: .leading, spacing: .spacing.xxSmall) {
           HStack(spacing: .spacing.small) {
-            Text(item.name ?? String(localized: .unidentifiedDevice))
+            Text(item.name ?? DeviceItem.Words.unidentifiedDevice)
               .font(.body)
               .foregroundStyle(.textPrimary)
               .lineLimit(1)
@@ -38,7 +38,7 @@ extension DevicesView {
 
     /// The row as a person would say it: name, state, address, when.
     private var sentence: String {
-      let name = item.name ?? String(localized: .unidentifiedDevice)
+      let name = item.name ?? DeviceItem.Words.unidentifiedDevice
       let state = item.isOnline ? String(localized: .onlineLower) : String(localized: .offlineLower)
       let identity = IdentityCellView.word(for: item.identification).lowercased()
       let seen = LastSeenCellView.text(for: item, now: now)

@@ -76,9 +76,15 @@ struct ScanSessionTests {
   func stoppedKeepsResults() async {
     let session = ScanSession()
     session.start(ScanRequest())
-    let runner = FixtureScanRunner(store: InMemoryHistoryStore(), capture: capture, variant: .home, pace: .milliseconds(40), clock: ContinuousClock())
+    // 300 ms a host: the whole scan takes about 4 s, so the stop always lands mid-scan.
+    let runner = FixtureScanRunner(store: InMemoryHistoryStore(), capture: capture, variant: .home, pace: .milliseconds(300), clock: ContinuousClock())
     let scan = Task { await session.run(with: ScanPipeline(runner: runner)) }
-    try? await Task.sleep(for: .milliseconds(250))
+    // Until something has answered, not a fixed 250 ms: with the scale tests running beside
+    // it, a fixed wait sometimes stopped the scan before the first host (phase 3, part 6).
+    let deadline = ContinuousClock.now + .seconds(5)
+    while session.found.isEmpty, ContinuousClock.now < deadline {
+      try? await Task.sleep(for: .milliseconds(10))
+    }
     scan.cancel()
     _ = await scan.value
     guard case .stopped(_, let found) = session.phase else {

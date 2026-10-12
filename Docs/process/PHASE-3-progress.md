@@ -609,3 +609,32 @@ outside the app. The check is verification step 2, JC's.
 `Zhen/AppShortcuts.xcstrings` gives the three Siri phrases in Spanish ("Escanea mi red con
 Zhen"). `LocalizationTests.spanishPhrases` checks that the built app has all three, each
 still naming the app.
+
+## Search and sort at /16
+
+The same probe found two worse costs than the column widths:
+
+| Step | Before | After |
+|---|---|---|
+| Filtering 65 534 devices for a term: per keystroke | **33.9 s** | 0.67 s |
+| Filtering and sorting on every redraw, a selection click included | 0.8 s (default sort) | once per change to devices, search or sort |
+
+**The cause was `String(localized:)` in every row's subtitle**, at about 0.12 ms a call:
+three for the subtitle and one for the "Unidentified device" fallback, per device, per
+keystroke. That was 0.5 ms a device, so even 1 000 devices lagged half a second a key.
+These fixed words are now looked up once per launch (`DeviceItem.Words`). A language
+change relaunches a Mac app, so once a launch is right. The table's rows are memoised on
+the devices revision, the search and the whole sort order (`DevicesView.RowsCache`).
+
+| Gate | Break | Failure |
+|---|---|---|
+| `ScaleTests.search`: under 1 s in Debug at 65 534 rows | per-row `String(localized:)` back in the subtitle | 25.9 s |
+
+**Not gated:** the row memo. `DevicesView.rows` reads the model from the environment, so a
+unit test cannot build one; the search gate covers the cost it would have prevented.
+
+**A flaky test, made honest:** `ScanSessionTests.stoppedKeepsResults` cancelled a scan
+after a fixed 250 ms and expected some hosts by then. With the scale tests' CPU load
+beside it, that failed both ways: sometimes no host yet, sometimes the whole 40 ms-a-host
+scan already over. It now waits for the first host, and the fixture runs at 300 ms a host.
+Green six runs in a row.

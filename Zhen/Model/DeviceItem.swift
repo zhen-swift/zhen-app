@@ -33,20 +33,20 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
     if let vendor = device.vendor { parts.append(vendor) }
     if device.vendor == nil {
       switch device.mac {
-      case .none: parts.append(String(localized: .noHardwareAddressLower))
+      case .none: parts.append(Words.noHardwareAddress)
       case .some(let mac) where mac.isLocallyAdministered:
-        parts.append(String(localized: .randomizedMac))
-        parts.append(String(localized: .noVendor))
-      case .some: parts.append(String(localized: .noVendor))
+        parts.append(Words.randomizedMAC)
+        parts.append(Words.noVendor)
+      case .some: parts.append(Words.noVendor)
       }
     }
     let via = Set(device.discoveredVia)
     if via.contains(.localInterface) {
-      parts.append(String(localized: .thisMac))
+      parts.append(Words.thisMac)
     } else if via.contains(.probeReply) || via.contains(.arpReply) {
-      parts.append(String(localized: .respondsPing))
+      parts.append(Words.respondsToPing)
     } else if via.contains(.neighborTable) {
-      parts.append(String(localized: .arpTableNoPingReply))
+      parts.append(Words.inARPTable)
     }
     // Sentence case: only the first letter of the line is raised, so "ARP" and "MAC" and a
     // model string like "AppleTV5,3" keep their own capitals.
@@ -77,7 +77,7 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
   func matches(_ term: String) -> Bool {
     let term = term.trimmingCharacters(in: .whitespaces)
     guard !term.isEmpty else { return true }
-    return [name ?? String(localized: .unidentifiedDevice), subtitle, address, mac ?? ""]
+    return [name ?? Words.unidentifiedDevice, subtitle, address, mac ?? ""]
       .contains { $0.localizedStandardContains(term) }
   }
 
@@ -106,6 +106,19 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
 }
 
 nonisolated extension DeviceItem {
+  /// The words every row repeats, looked up once. `String(localized:)` costs about 0.12 ms
+  /// a call; a search over a /16 made four per device per keystroke and took 33.9 s
+  /// (`ScaleTests`). A language change relaunches a Mac app, so once per launch is right.
+  enum Words {
+    static let unidentifiedDevice = String(localized: .unidentifiedDevice)
+    static let noHardwareAddress = String(localized: .noHardwareAddressLower)
+    static let randomizedMAC = String(localized: .randomizedMac)
+    static let noVendor = String(localized: .noVendor)
+    static let thisMac = String(localized: .thisMac)
+    static let respondsToPing = String(localized: .respondsPing)
+    static let inARPTable = String(localized: .arpTableNoPingReply)
+  }
+
   /// The stable key for a device: core's strongest identifier for it.
   static func identity(of device: Device, in network: IPv4Network?) -> ID {
     if let network, let key = HostIdentifier.candidates(for: device, in: network).first {

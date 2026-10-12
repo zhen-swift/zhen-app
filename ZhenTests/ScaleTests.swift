@@ -79,3 +79,19 @@ extension ScaleTests {
     #expect(TextMeasure.widest(grouped, .headline) == TextMeasure.widest(every, .headline))
   }
 }
+
+extension ScaleTests {
+  /// Gate. Search runs per keystroke. Break: look the row words up with `String(localized:)`
+  /// again in `DeviceItem.subtitle` — 33.9 s for this, measured.
+  @Test("Searching a /16 takes under a second in Debug")
+  func search() throws {
+    let rows = try Self.rows(65_534)
+    let clock = ContinuousClock()
+    let start = clock.now
+    let found = rows.filter { $0.matches("10.0.1") }
+    let took = clock.now - start
+    print("search, 65 534 rows: \(took)")
+    #expect(!found.isEmpty)
+    #expect(took < .seconds(1), "took \(took)")
+  }
+}
