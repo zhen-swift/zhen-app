@@ -19,6 +19,9 @@ nonisolated enum WindowSize {
   static let sidebarIdeal: CGFloat = 220
   /// The narrowest the NAME column may get before the subtitle loses its meaning.
   static let nameMinimum: CGFloat = 200
+  /// The unified toolbar above the content, which the window's frame includes and its
+  /// content size does not. Measured: a 900 pt content size made a 952 pt window.
+  static let toolbarHeight: CGFloat = 52
 }
 
 nonisolated extension CGFloat {

@@ -1,0 +1,43 @@
+name: Screenshots
+
+# The App Store and README artwork, on demand and for release tags.
+#
+# It RE-RENDERS from committed captures (`fastlane marketing`); it does not capture. A Mac
+# capture must be 2880 × 1800, which only a Retina display produces — a 1× runner's
+# captures are undersized and the renderer refuses them (AGENTS.md, macOS targets). So
+# captures are taken locally with `bundle exec fastlane screenshots` and committed to
+# AppStoreSimulatorCaptures/macOS/ (Docs/SCREENSHOTS.md). Workflows never commit back:
+# download the artifacts, review, commit deliberately.
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+jobs:
+  render:
+    name: Render artwork from committed captures
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+      - name: Render
+        run: bundle exec fastlane marketing
+      - uses: actions/upload-artifact@v4
+        with:
+          name: appstore-assets
+          path: AppStoreAssets
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: readme-artwork
+          path: Docs/assets
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: raw-captures
+          path: AppStoreSimulatorCaptures
+          retention-days: 14

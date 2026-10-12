@@ -31,6 +31,9 @@ nonisolated struct AppEnvironment: Sendable {
   var increasedContrast: Bool
   /// How long the fixture scanner waits between events. `-ScanPace <milliseconds>`.
   var scanPace: Duration
+  /// `-WindowSize 1440x900`: the window's content size at launch, for App Store captures
+  /// (AGENTS.md: the Mac capture is a 1440 × 900 window on a Retina display).
+  var windowSize: CGSize?
   /// The process environment, handed to `HistoryLocation` so `ZHEN_HISTORY` still works.
   var processEnvironment: [String: String]
   /// When this launch began; fixtures are laid out relative to it.
@@ -55,6 +58,10 @@ nonisolated struct AppEnvironment: Sendable {
     let showcase = arguments.contains("-ShowcaseData")
     let variant = value(after: "-Fixture").flatMap(FixtureNetwork.Variant.init(rawValue:)) ?? .home
     let pace = value(after: "-ScanPace").flatMap(Int.init) ?? 60
+    let size = value(after: "-WindowSize").flatMap { text -> CGSize? in
+      let parts = text.split(separator: "x").compactMap { Double($0) }
+      return parts.count == 2 ? CGSize(width: parts[0], height: parts[1]) : nil
+    }
 
     return AppEnvironment(
       dataSource: uiTesting || showcase ? .fixture(variant) : .live,
@@ -70,6 +77,7 @@ nonisolated struct AppEnvironment: Sendable {
       },
       increasedContrast: value(after: "-Contrast") == "increased",
       scanPace: .milliseconds(pace),
+      windowSize: size,
       processEnvironment: environment,
       launchedAt: now
     )

@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — stages 1–4 done; stage 5 next.
+**Liveness:** 2026-10-11 — stages 1–5 done; closing checks next.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -215,3 +215,34 @@ cleared at the end of this run, after the last UI test (stage 5).
   "just now" under a minute.
 - **Live-scan rows hid the MAC and vendor while a name query was in flight.** They now show
   both, with the query last.
+
+## Stage 5 — the store layer (phase 2's stage H)
+
+| Piece | Where | Evidence |
+|---|---|---|
+| **App icon.** The AppIcon set had no images, so the app had none, and Login Items would have shown a generic one. It is generated from the design mark | `Scripts/generate-app-icon.sh`, `Zhen/Assets.xcassets/AppIcon.appiconset` | Q6 |
+| **String catalogue.** 243 strings from the compiler's extraction (`xcstringstool sync`). Plural forms for the 10 counted strings, three of them with several arguments | `Zhen/Localizable.xcstrings`, `Scripts/catalog-plurals.py` | `PluralTests.singular`. Break: the `one` form removed gave "1 identity changes" |
+| **Screenshot mode.** `-WindowSize 1440x900` fixes the window at that size, toolbar included | `AppEnvironment.windowSize`, `ZhenApp`, `WindowSize.toolbarHeight` | measured twice. `defaultSize` alone lost to AppKit's saved frame (1093 × 532). A 900 pt content size made a 952 pt window: the toolbar is 52 pt and counts against the slot |
+| **Captures.** Five ids, `-ShowcaseData` only, settle 1.5 s before each, exact window size asserted. Skipped unless `ZHEN_SCREENSHOTS=1` reaches the runner, so `test` never runs them | `ZhenUITests/AppStoreScreenshotUITests.swift` | five 2880 × 1800 captures |
+| **Export.** Attachments by id. Anything not 2880 × 1800 is refused | `Scripts/export-screenshots.sh` | — |
+| **Renderer.** AppKit: gradient, black title, semibold subtitle, rounded clip with shadow and white hairline. App Store plain and captioned, README hero 2400 × 1000, feature tiles 620 px wide, app icon. Missing capture: prints every path tried, exits 1. Never upscales | `Scripts/generate_appstore_assets.swift`, `Marketing/copy.json` | rendered all 17 outputs into scratch |
+| **fastlane** 2.241 under Ruby 4.0, gems in `vendor/bundle`. Lanes `test`, `unit`, `ui`, `screenshots`, `marketing`, `release` | `Gemfile`, `Gemfile.lock` (four platforms), `fastlane/Fastfile` | `bundle exec fastlane unit` green; JUnit and `.xcresult` in `fastlane/test_output` |
+| **CI**: `ci.yml` runs `bundle exec fastlane test` with a SwiftPM cache. `screenshots.yml` renders from committed captures | `.github/workflows/` | YAML parses; never run on GitHub (Q3) |
+| **Docs**: ARCHITECTURE (ends in Known rough edges), TESTING, SCREENSHOTS, CI, APP_STORE, PRIVACY. README rewritten (it still said "there is no code here yet"). CHANGELOG, CONTRIBUTING | `Docs/`, root | — |
+
+**Bends:**
+- **No `Snapfile`.** fastlane `snapshot` is iOS-only; AGENTS.md's own macOS table
+  captures through XCUITest attachments instead. A Snapfile would configure nothing.
+- **`screenshots.yml` renders and does not capture.** AGENTS.md has it run `fastlane
+  screenshots`. On a 1× runner that would make undersized captures, which the export
+  refuses by AGENTS.md's own rule, so the workflow could only fail.
+- **`Docs/`, not `docs/`** for the new documents and `Docs/assets/` (phase 2, decision 8).
+- **String keys are English, not symbols** (Q4).
+- **The 05 slot is the all-unidentified network, not Settings.** Settings is a 560 × 640
+  window and cannot fill a 2880 × 1800 slot without upscaling, which the renderer refuses.
+
+**Caught by the captures:**
+- **The fixture scanner streamed IPv6-only devices as `0.0.0.0`.** `HostFacts` is IPv4;
+  the engine never streams one. They now reach the report only.
+- **Clean marketing captures cannot come from this desktop.** The Dock and a notification
+  were in every capture (Q5). Nothing rendered is committed.

@@ -14,12 +14,22 @@ struct ZhenApp: App {
     // phase 3 despite this comment — ⌘N opened a second window (ledger, phase 3 stage 3).
     Window("Zhen", id: "main") {
       RootView()
+        // Screenshot mode: a fixed size the window must take, toolbar included — the slot
+        // is the whole window. `defaultSize` alone lost to the frame AppKit had saved from
+        // the last launch (1093 × 532, measured).
+        .frame(
+          width: model.environment.windowSize?.width,
+          height: model.environment.windowSize.map { $0.height - WindowSize.toolbarHeight }
+        )
         .environment(model)
         .defaultAppStorage(model.defaults)
         .launchAppearance(model.environment)
     }
-    .defaultSize(width: .windowSize.defaultWidth, height: .windowSize.defaultHeight)
-    .windowResizability(.contentMinSize)
+    .defaultSize(
+      width: model.environment.windowSize?.width ?? .windowSize.defaultWidth,
+      height: model.environment.windowSize?.height ?? .windowSize.defaultHeight
+    )
+    .windowResizability(model.environment.windowSize == nil ? .contentMinSize : .contentSize)
     .commands {
       ZhenCommands(model: model)
     }

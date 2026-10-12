@@ -31,7 +31,9 @@ nonisolated struct FixtureScanRunner: ScanRunning {
     progress(.stageStarted(.discovery))
     for (index, device) in devices.enumerated() {
       guard await pause() else { break }
-      progress(.hostFound(Self.facts(device, named: false)))
+      // `HostFacts` is an IPv4 host: the engine never streams an IPv6-only one, it reaches
+      // the report from the neighbour table. Streamed here, it showed as "0.0.0.0".
+      if !device.ipv4Addresses.isEmpty { progress(.hostFound(Self.facts(device, named: false))) }
       announced += 1
       progress(.stageProgress(.discovery, completed: index + 1, total: devices.count))
     }
@@ -43,7 +45,7 @@ nonisolated struct FixtureScanRunner: ScanRunning {
     if !Task.isCancelled, !devices.isEmpty {
       progress(.stageStarted(.naming))
       for degradation in degradations where degradation.stage != .discovery { progress(.degraded(degradation)) }
-      for device in devices where !device.names.isEmpty {
+      for device in devices where !device.names.isEmpty && !device.ipv4Addresses.isEmpty {
         guard await pause() else { break }
         progress(.hostUpdated(Self.facts(device, named: true)))
       }

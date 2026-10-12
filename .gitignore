@@ -39,3 +39,11 @@ build/
 
 # Test results: uploaded by CI, never committed.
 fastlane/test_output/
+
+# fastlane: gems, raw captures and generated reports. Raw captures are committed only
+# from a clean desktop, to AppStoreSimulatorCaptures/ (Docs/SCREENSHOTS.md).
+vendor/bundle/
+.bundle/
+fastlane/screenshots/
+fastlane/report.xml
+fastlane/README.md

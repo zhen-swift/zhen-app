@@ -1,8 +1,7 @@
 name: CI
 
-# Fast feedback on every pull request and every push to main. AGENTS.md's CI section adds
-# `bundle exec fastlane test` once phase 3 brings fastlane; until then the jobs here are the
-# ones that exist.
+# Fast feedback on every pull request and every push to main: the token check, then
+# `bundle exec fastlane test` — the same command a person runs locally.
 
 on:
   push:
@@ -51,16 +50,23 @@ jobs:
       - name: NSBonjourServices matches zhen-core
         run: ./Scripts/generate-bonjour-services.sh --check
 
-      # Ad-hoc signing: forks have no team, and a UI test needs a runnable, signed app.
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+
+      # SwiftPM's checkouts, keyed on the lock file. SPM_CACHE_PATH reaches `scan`'s
+      # cloned_source_packages_path, or the cache is never read.
+      - uses: actions/cache@v4
+        with:
+          path: .spm
+          key: spm-${{ hashFiles('Zhen.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+
+      # Exactly the local command. Ad-hoc signing is in the lane: forks have no team.
       - name: Test
-        shell: bash
-        run: |
-          mkdir -p fastlane/test_output
-          xcodebuild test \
-            -project Zhen.xcodeproj -scheme Zhen -destination 'platform=macOS' \
-            -resultBundlePath fastlane/test_output/Zhen.xcresult \
-            CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= \
-            | tee fastlane/test_output/xcodebuild.log
+        env:
+          SPM_CACHE_PATH: ${{ github.workspace }}/.spm
+        run: bundle exec fastlane test
 
       - name: Keep the results
         if: always()
