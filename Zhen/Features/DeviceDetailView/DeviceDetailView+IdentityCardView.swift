@@ -60,13 +60,11 @@ extension DeviceDetailView {
 
     private var caption: String {
       let count = changes.count
-      // Spelled out: `^[…](inflect: true)` is rendered literally by `String(localized:)`
-      // without a catalog entry, which the stage-2 screenshot showed.
-      let seen = switch count {
-      case 0: String(localized: "No identity changes seen")
-      case 1: String(localized: "1 identity change")
-      default: String(localized: "\(count) identity changes")
-      }
+      // The plural is the catalogue's (`Localizable.xcstrings`): `^[…](inflect: true)` is
+      // rendered literally by `String(localized:)`, which the stage-2 screenshot showed.
+      let seen = count == 0
+        ? String(localized: "No identity changes seen")
+        : String(localized: "\(count) identity changes")
       return "\(item.identityCaption) · \(seen)"
     }
   }

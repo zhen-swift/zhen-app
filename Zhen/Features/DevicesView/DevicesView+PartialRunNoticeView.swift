@@ -48,9 +48,8 @@ extension DevicesView {
       case .cancelled?:
         return String(localized: "Last scan was stopped — results are partial")
       default:
-        return problems == 1
-          ? String(localized: "Last scan completed with partial results — 1 source unavailable")
-          : String(localized: "Last scan completed with partial results — \(problems) sources unavailable")
+        // Plural from the catalogue.
+        return String(localized: "Last scan completed with partial results — \(problems) sources unavailable")
       }
     }
   }

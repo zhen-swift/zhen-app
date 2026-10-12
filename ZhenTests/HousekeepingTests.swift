@@ -63,3 +63,18 @@ struct HousekeepingTests {
     #expect(before > 0)
   }
 }
+
+/// Phase 3, stage 5: counted strings take their plural from `Localizable.xcstrings`.
+@MainActor
+struct PluralTests {
+  /// Gate. Break: drop the `one` variation of "%lld identity changes" from the catalogue.
+  @Test("One of a thing is singular, through the catalogue")
+  func singular() {
+    let one = 1
+    let two = 2
+    #expect(String(localized: "\(one) identity changes") == "1 identity change")
+    #expect(String(localized: "\(two) identity changes") == "2 identity changes")
+    #expect(String(localized: "\(one) devices · \(one) online · \(0) unidentified") == "1 device · 1 online · 0 unidentified")
+    #expect(String(localized: "Stopped after \("0:05") · \(one) devices found") == "Stopped after 0:05 · 1 device found")
+  }
+}
