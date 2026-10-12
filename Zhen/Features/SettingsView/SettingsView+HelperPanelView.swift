@@ -66,6 +66,12 @@ extension SettingsView {
       }
       .padding(.vertical, .spacing.xSmall)
       .onAppear { state = model.helper.state }
+      // Approval happens in System Settings, outside this app: read the state again when
+      // the person comes back. It used to stay "waiting for your approval" until Settings
+      // was closed and reopened.
+      .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+        state = model.helper.state
+      }
       .task(id: state) { answered = state == .installed ? await model.helper.version() : nil }
       .confirmationDialog(String(localized: .removePrivilegedEngine), isPresented: $confirmingRemoval) {
         Button(String(localized: .remove), role: .destructive, action: remove)

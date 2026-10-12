@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-12 — part 5: table sort and columns remembered; clean captures tried and dropped (Q8).
+**Liveness:** 2026-10-12 — part 6: the table at /16 scale, helper state on return, Spanish Siri phrases.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -566,3 +566,46 @@ Both produced 2880 × 1800 images of the title bar's text on white. The table, s
 toolbar are composited outside the view's own drawing, and neither call reaches them. All
 of it was reverted; nothing from it ships. The two routes that work are in Q8: hide the
 Dock, or grant Screen Recording for a ScreenCaptureKit capture.
+
+---
+
+# Part 6 — a /16, the helper's state, Siri in Spanish
+
+## The Devices table at the size of a /16
+
+The column widths ran over every row on every redraw of the table and of the window's
+minimum, a selection click included. Nothing measured it past the fixture's 13 devices.
+`ScaleTests` built 65 534 rows, the widest network Zhen scans (Debug build, unoptimised):
+
+| Step | 10 000 rows | 65 534 rows |
+|---|---|---|
+| As it was | 0.77 s | **5.2 s**, on the main thread, per redraw |
+| `TextMeasure.widest`: monospaced measures only the longest; proportional measures each distinct string once | 0.52 s | 3.5 s |
+| Last Seen: rows grouped by age at the resolution the text shows, the youngest and oldest of each group formatted (formatting every offline row's relative date was 3.3 s of the 3.5) | 0.02 s | 0.12 s |
+| A single pass for the longest address, IPv4 lengths by arithmetic (the first try, `max(by:)`, computed each length twice and was slower: 0.20 s) | 0.023 s | 0.135 s |
+
+**Then cached:** `ColumnWidths.cached(for:now:)` works the widths out once per change to
+the devices (`NetworkModel.devicesRevision`) and once a minute, as the "2 min. ago" text
+grows. It no longer runs per redraw. And it is computed over all devices, not the search's
+subset, so columns no longer resize while a person types.
+
+| Gate | Break | Failure |
+|---|---|---|
+| `ScaleTests.columnWidths`: under 250 ms in Debug at 10 000 and 65 534 rows | every row's Last Seen text formatted again | 0.52 s at 10 000 |
+| `ScaleTests.cached`: 1 000 reads with nothing changed take under 20 ms | the cache check removed | 1.37 s |
+| `ScaleTests.lastSeenWidthIsExact`: 3 000 rows at ages around every boundary, the grouped texts exactly as wide as every row's | only the youngest row, and one group per unit | 73 pt against the true width. **Two weaker breaks did not fail it:** youngest-only with fine groups, and coarse groups with youngest and oldest. Both still find the widest text, because the oldest row in a group has the most digits, so neither was a defect |
+| `ScaleTests.addressLength`: computed length = written length, 0.0.0.0 to 255.255.255.255 | — | — |
+
+## The helper's state, on coming back
+
+The panel read the helper's state when Settings opened, and after Install or Remove. But
+approval happens in System Settings › Login Items, outside the app, so the panel kept
+saying "waiting for your approval" until Settings was reopened. It now reads the state
+again whenever Zhen becomes active. **Not gated:** the fake helper cannot be approved from
+outside the app. The check is verification step 2, JC's.
+
+## Siri, in Spanish
+
+`Zhen/AppShortcuts.xcstrings` gives the three Siri phrases in Spanish ("Escanea mi red con
+Zhen"). `LocalizationTests.spanishPhrases` checks that the built app has all three, each
+still naming the app.

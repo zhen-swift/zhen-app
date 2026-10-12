@@ -2,8 +2,8 @@ import SwiftUI
 import ZhenCore
 
 extension DevicesView {
-  /// The device table. Every column but NAME is as wide as its widest cell, measured from
-  /// the rows it is showing; NAME takes the rest.
+  /// The device table. Every column but NAME is as wide as its widest cell, measured over
+  /// every device (not only those the search shows); NAME takes the rest.
   struct DeviceTableView: View {
     let rows: [DeviceItem]
     @Binding var selection: Set<DeviceItem.ID>
@@ -16,7 +16,7 @@ extension DevicesView {
 
     var body: some View {
       TimelineView(.everyMinute) { context in
-        let widths = ColumnWidths(rows: rows, now: context.date)
+        let widths = ColumnWidths.cached(for: model, now: context.date)
         Table(rows, selection: $selection, sortOrder: $sortOrder, columnCustomization: $columnCustomization) {
           TableColumn(String(localized: .name), value: \.nameSortKey) { item in
             NameCellView(item: item, now: context.date)

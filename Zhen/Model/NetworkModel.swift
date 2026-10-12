@@ -22,7 +22,11 @@ final class NetworkModel {
   /// The history file, when this launch uses one.
   @ObservationIgnored let historyURL: URL?
 
-  private(set) var devices: [DeviceItem] = []
+  private(set) var devices: [DeviceItem] = [] {
+    didSet { devicesRevision &+= 1 }
+  }
+  /// Changes whenever `devices` does: what work derived from the whole list is cached by.
+  @ObservationIgnored private(set) var devicesRevision = 0
   private(set) var events: [DerivedEvent] = []
   private(set) var latestRun: ScanRun?
   /// What went wrong in the latest run. Kept after the live scan hands back, and across a

@@ -30,7 +30,7 @@ extension RootView {
   }
 
   var minimumWidth: CGFloat {
-    let table = DevicesView.ColumnWidths(rows: model.devices, now: .now).minimumTable
+    let table = DevicesView.ColumnWidths.cached(for: model, now: .now).minimumTable
     // The floating sidebar occupies its ideal plus an 8 pt inset: the splitter reports 228
     // for an ideal of 220.
     return max(WindowSize.minimumWidth, WindowSize.sidebarIdeal + Spacing.small + BorderWidth.hairline + table)

@@ -1,0 +1,21 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "How many devices are online in ${applicationName}" : {
+      "localizations" : {
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cuántos dispositivos están en línea en ${applicationName}" } }
+      }
+    },
+    "Scan my network with ${applicationName}" : {
+      "localizations" : {
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Escanea mi red con ${applicationName}" } }
+      }
+    },
+    "Scan the network in ${applicationName}" : {
+      "localizations" : {
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Escanea la red en ${applicationName}" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

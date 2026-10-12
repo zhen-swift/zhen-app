@@ -43,4 +43,12 @@ struct LocalizationTests {
     #expect(Self.spanish(.stoppedAfterDevicesFound("0:05", devices: 2)) == "Detenido después de 0:05 · 2 dispositivos encontrados")
     #expect(Self.spanish(.scanNow) == "Escanear ahora")
   }
+
+  @Test("Siri's phrases are in Spanish too, each still naming the app")
+  func spanishPhrases() throws {
+    let path = try #require(Bundle.main.path(forResource: "AppShortcuts", ofType: "strings", inDirectory: nil, forLocalization: "es"))
+    let phrases = try #require(NSDictionary(contentsOfFile: path) as? [String: String])
+    #expect(phrases.count == 3)
+    #expect(phrases.values.allSatisfy { $0.contains("${applicationName}") })
+  }
 }

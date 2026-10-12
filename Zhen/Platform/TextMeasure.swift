@@ -19,8 +19,19 @@ nonisolated enum TextMeasure {
     return ceil((text as NSString).size(withAttributes: [.font: font]).width)
   }
 
+  /// The widest of several strings.
+  ///
+  /// Measuring every one was 5.2 s for a /16's 65 534 rows, on the main thread, on every
+  /// redraw of the table (`ScaleTests`). In a monospaced face every character is as wide as
+  /// every other, so the longest string is the widest and is the only one measured. In a
+  /// proportional face each distinct string is measured once — a column of addresses
+  /// repeats little, a column of "Now" and "2 hr. ago" repeats almost everything.
   static func widest(_ texts: some Sequence<String>, _ style: Style, monospaced: Bool = false) -> CGFloat {
-    texts.reduce(0) { max($0, width($1, style, monospaced: monospaced)) }
+    if monospaced {
+      guard let longest = texts.max(by: { $0.count < $1.count }) else { return 0 }
+      return width(longest, style, monospaced: true)
+    }
+    return Set(texts).reduce(0) { max($0, width($1, style)) }
   }
 }
 
