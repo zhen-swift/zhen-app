@@ -154,6 +154,23 @@
         }
       }
     },
+    "anotherDeviceAnswersAt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Another device answers at %@ now, so its ports are not shown here."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ahora responde otro dispositivo en %@, así que sus puertos no se muestran aquí."
+          }
+        }
+      }
+    },
     "appeared": {
       "extractionState": "manual",
       "localizations": {

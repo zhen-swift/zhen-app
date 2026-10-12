@@ -9,6 +9,7 @@
   "all": "Todo",
   "allowZhenUnderSystemSettingsGeneral": "Permite “Zhen” en Configuración del Sistema › General › Ítems de inicio para terminar.",
   "alsoCheckCommonPortsEveryDevice": "También revisa los puertos comunes en cada dispositivo que responde. Más lento y más visible en la red.",
+  "anotherDeviceAnswersAt": "Ahora responde otro dispositivo en %@, así que sus puertos no se muestran aquí.",
   "appeared": "Apareció",
   "arpTableNoPingReply": "en la tabla ARP, sin respuesta a ping",
   "askingBonjourUpnpNetbios": "Preguntando a Bonjour, UPnP y NetBIOS",

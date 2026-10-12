@@ -96,10 +96,19 @@ final class ScanSession {
     runToken = UUID()
   }
 
+  /// Whether a host's task is executing the scan, as opposed to the scan only having been
+  /// asked for.
+  private(set) var isExecuting = false
+
   /// Stops the running scan. What had answered stays.
+  ///
+  /// A scan can be asked for with no host to run it — ⌘R with the window closed and
+  /// Settings open, menu bar mode off. Stopping that one has no task to unwind it, so it
+  /// returns to idle here; it used to stay "running" until a relaunch (review, part 7).
   func stop() {
     guard phase == .running else { return }
     runToken = nil
+    if !isExecuting { phase = .idle }
   }
 
   /// Leaves a stopped scan's results and goes back to the table.
@@ -111,6 +120,8 @@ final class ScanSession {
   /// Runs the requested scan to its end, publishing batches as they come.
   /// Returns what it produced, and whether it ran to completion or was stopped.
   func run(with pipeline: ScanPipeline) async -> ScanOutcome {
+    isExecuting = true
+    defer { isExecuting = false }
     let outcome = await pipeline.run(request) { [weak self] batch in
       self?.apply(batch)
     }

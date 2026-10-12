@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-12 — part 6: the table at /16 scale, helper state on return, Spanish Siri phrases.
+**Liveness:** 2026-10-12 — part 7: review defects fixed; live smoke run.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -638,3 +638,47 @@ after a fixed 250 ms and expected some hosts by then. With the scale tests' CPU 
 beside it, that failed both ways: sometimes no host yet, sometimes the whole 40 ms-a-host
 scan already over. It now waits for the first host, and the fixture runs at 300 ms a host.
 Green six runs in a row.
+
+---
+
+# Part 7 — a real scan, and a code review
+
+## The real engine, in the app, on the home LAN
+
+Every UI test runs on the fixture, so the real engine had never run inside the app. The
+installed release build ran on a scratch copy of JC's history (`ZHEN_HISTORY`), on
+10.10.20.0/24:
+- **⌘R:** a complete run in about 3.2 s: discovery 0.5 s, naming 2.7 s, through the
+  unprivileged engine. The stale helper registration does not answer, so no capture.
+- **⇧⌘R on a device:** the scratch history was byte-for-byte unchanged, the live proof
+  of `ProbeOnlyStore`.
+- **The real history:** `7600d79b` before and after.
+
+`LiveSmokeUITests` repeats this as a test, skipped unless `ZHEN_LIVE_HISTORY` names a
+scratch file. Its run here stopped at macOS's Local Network prompt for the test build,
+which macOS treats as a different app from the installed one. The prompt is JC's to
+answer, so the test is handed over (`PHASE-2-verification.md`, live smoke test). Its
+recording showed real device names; it and the scratch history were deleted.
+
+## The code review
+
+An independent reader went through the app against zhen-core 0.6.0 and found nine
+defects, each traced through the code. All are fixed:
+
+| # | Defect | Fix | Gate (break → failure) |
+|---|---|---|---|
+| 1 | **A Mac that changed networks kept scanning the old one.** The cached engine fixed its interface at build, its empty run marked every known device as gone in the shared history, and the footer and Settings kept the old network | `NetworkFingerprint` (a `getifaddrs` walk) is noted before each scan, and a change rebuilds the engine. The interface is re-read after each scan | `ReviewFixTests.networkChange`: no fingerprint check gave `built 1 == 2` |
+| 2 | **A scan stuck "running".** ⌘R with the window closed, Settings open and menu bar mode off: there was no host to run it, and Stop could not end it | `ScanSession.isExecuting`; stopping a scan nothing is running returns to idle | `stopWithoutAHost`: still running after stop |
+| 3 | **Warnings that belonged to another run.** A terminal run showed the previous app run's partial-results notice; "no usable interface" vanished at the reload | degradations follow the latest run, or none; an unavailable scan's reason is set after the reload | `degradationsFollowTheRun`: a complete terminal run kept the old warnings |
+| 4 | **A device's ID changed and took its name with it.** A run without names re-keyed `mdns_instance:` to `randomized_mac:`; the given name, open page and port results were lost | when the hardware address says it is the same device, name, port results and an alias move to the new ID. Names keep their MAC across launches (`userNameAnchors`). The durable fix is core exposing its stable record key | `idChange`: name nil and old ID not found |
+| 5 | **Another device's ports, shown as an offline device's.** Its old address now belonged to someone else | the answering MAC must match | `portsOfAnotherDevice` |
+| 6 | **Notifications dropped while Zhen was frontmost:** no `UNUserNotificationCenterDelegate` | `AppDelegate` presents banners in the foreground (live launches only) | **not gated:** Notification Centre cannot be driven from a test |
+| 7 | **Show in Activity found nothing for a renamed device:** it searched for the given name, which no event carries | `DeviceItem.activitySearchTerm`: core's name, or the address | `activityTerm` |
+| 8 | **The static caches were not tied to a model,** and a cache hit stopped the window observing the devices (the window minimum could go stale, F2) | keyed by `ObjectIdentifier(model)`; read through the observed property | `cachesAreModels`: the empty model got the home model's widths |
+| 9 | **Two engines built at once at launch,** each paying the helper check | an in-flight build is shared | — |
+
+The degradation test's first version failed even with the fix in place. It used the
+shared fixture defaults domain, which parallel tests clear, the race stage 3 found. It
+now has its own domain, like the retention test.
+
+Unit: 94 green, three runs in a row.

@@ -25,15 +25,19 @@ extension DevicesView {
     /// /16 re-measured 65 534 rows (`ScaleTests`). All devices, never the search's subset:
     /// columns that resized as a person typed would move the thing they were reading.
     static func cached(for model: NetworkModel, now: Date) -> ColumnWidths {
-      let key = Cache.Key(revision: model.devicesRevision, minute: Int(now.timeIntervalSince1970 / 60))
+      // Through the observed property (a cache hit must not stop the caller redrawing when
+      // the devices change), and keyed on the model (previews and tests make several).
+      let devices = model.devices
+      let key = Cache.Key(model: ObjectIdentifier(model), revision: model.devicesRevision, minute: Int(now.timeIntervalSince1970 / 60))
       if let cache, cache.key == key { return cache.widths }
-      let widths = ColumnWidths(rows: model.devices, now: now)
+      let widths = ColumnWidths(rows: devices, now: now)
       cache = Cache(key: key, widths: widths)
       return widths
     }
 
     private struct Cache {
       struct Key: Equatable {
+        let model: ObjectIdentifier
         let revision: Int
         let minute: Int
       }

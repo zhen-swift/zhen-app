@@ -22,7 +22,7 @@ struct DeviceDetailView: View {
             KnownByCardView(item: item)
             PortsCardView(item: item)
             RecentEventsCardView(events: Array(events(for: item).prefix(5))) {
-              onShowActivity(item.name ?? item.address)
+              onShowActivity(item.activitySearchTerm)
             }
           }
           .padding(.spacing.xLarge)

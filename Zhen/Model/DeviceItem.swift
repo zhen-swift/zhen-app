@@ -25,6 +25,11 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
 
   var isUnidentified: Bool { name == nil }
 
+  /// What to search Activity for: the name core writes into events — never a name given in
+  /// this app, which no event carries — or else the address, which events about an
+  /// unidentified device mention.
+  var activitySearchTerm: String { device.displayName ?? address }
+
   /// What we know about it, said plainly. For an unidentified device this line is the
   /// whole row's worth of information, so it never says nothing.
   var subtitle: String {

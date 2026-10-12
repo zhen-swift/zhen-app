@@ -29,8 +29,9 @@ actor LiveScanRunner: ScanRunning {
   /// The engines in use, each built when first needed: one that records runs, one that
   /// only probes (see `ProbeOnlyStore`).
   private var engines: [Bool: any ScanEngine] = [:]
-  /// The helper's state when they were built.
+  /// The helper's state, and the networks this Mac was on, when they were built.
   private var builtFor: HelperState?
+  private var builtOn: String?
 
   init(store: any HistoryStore, make: @escaping Factory = { store throws(PlatformError) in try await ScanRunner(store: store) }) {
     self.store = store
@@ -59,9 +60,13 @@ actor LiveScanRunner: ScanRunning {
 
   /// Says what the helper's state is now. A change since the engines were built means
   /// the next scan builds new ones, which see the helper as it is.
-  func note(_ helper: HelperState) {
-    if builtFor != helper { engines = [:] }
+  ///
+  /// The same for the networks: an engine built on one network scans that network, so a
+  /// move to another — `network`, from `NetworkFingerprint` — means a fresh one.
+  func note(_ helper: HelperState, network: String = NetworkFingerprint.current()) {
+    if builtFor != helper || builtOn != network { engines = [:] }
     builtFor = helper
+    builtOn = network
   }
 
   /// The interface this Mac would scan from, for the sidebar footer and Settings.
@@ -69,10 +74,26 @@ actor LiveScanRunner: ScanRunning {
     try? await prepared(recording: true).interface
   }
 
+  /// Builds in flight, so two callers arriving together — `load()` asking for the
+  /// interface and a scan from a Shortcut, at launch — share one build instead of paying
+  /// the helper check twice (review, part 7).
+  private var building: [Bool: Task<any ScanEngine, any Error>] = [:]
+
   private func prepared(recording: Bool) async throws(PlatformError) -> any ScanEngine {
     if let engine = engines[recording] { return engine }
-    let made = try await make(recording ? store : ProbeOnlyStore(base: store))
-    engines[recording] = made
-    return made
+    let task = building[recording] ?? Task { [make, store] in
+      try await make(recording ? store : ProbeOnlyStore(base: store))
+    }
+    building[recording] = task
+    defer { building[recording] = nil }
+    do {
+      let made = try await task.value
+      engines[recording] = made
+      return made
+    } catch let error as PlatformError {
+      throw error
+    } catch {
+      throw PlatformError.unavailable(String(describing: error))
+    }
   }
 }

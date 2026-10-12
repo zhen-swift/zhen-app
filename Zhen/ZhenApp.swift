@@ -18,6 +18,7 @@ struct ZhenApp: App {
     // preferences (phase 3, stage 4).
     _keepInMenuBar = AppStorage(wrappedValue: false, Preferences.Key.keepInMenuBar, store: model.defaults)
     AppDelegate.preferences = model.defaults
+    AppDelegate.postsNotifications = !model.environment.usesFixtures
     // The one model, for App Intents too: a Shortcut's Scan Network is the toolbar's.
     AppDependencyManager.shared.add(dependency: model)
   }

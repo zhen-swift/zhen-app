@@ -18,13 +18,22 @@ nonisolated struct PortScan: Equatable, Sendable {
   var at: Date
 
   /// What a finished scan of one address amounts to.
-  static func result(of outcome: ScanOutcome, for address: IPv4Address) -> PortScan {
+  ///
+  /// `mac` is the hardware address of the device asked about. An offline device's address
+  /// may belong to another device now; whatever answers there is not this device, and its
+  /// ports were once shown as this one's (review, part 7).
+  static func result(of outcome: ScanOutcome, for address: IPv4Address, expecting mac: MACAddress? = nil) -> PortScan {
     switch outcome {
     case .unavailable(let degradation):
       return PortScan(state: .failed(degradation.reason), ports: [], at: .now)
     case .finished(let scan):
-      if let device = scan.report.devices.first(where: { $0.ipv4Addresses.contains(address) }), !device.ports.isEmpty {
-        return PortScan(state: .finished, ports: device.ports, at: .now)
+      if let device = scan.report.devices.first(where: { $0.ipv4Addresses.contains(address) }) {
+        if let mac, let answered = device.mac, answered != mac {
+          return PortScan(state: .failed(String(localized: .anotherDeviceAnswersAt(address.description))), ports: [], at: .now)
+        }
+        if !device.ports.isEmpty {
+          return PortScan(state: .finished, ports: device.ports, at: .now)
+        }
       }
       let reason = scan.report.run.outcome == .cancelled
         ? String(localized: .stoppedBeforeAnyPortAnswered)
@@ -38,5 +47,7 @@ nonisolated struct PortScan: Equatable, Sendable {
 nonisolated struct PortScanTarget: Hashable, Sendable {
   let id: DeviceItem.ID
   let address: IPv4Address
+  /// The device's hardware address, when it has one: what answers must match it.
+  let mac: MACAddress?
   let token = UUID()
 }

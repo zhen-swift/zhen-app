@@ -29,7 +29,7 @@ extension DevicesView {
       }
       .disabled(single?.device.ipv4Addresses.isEmpty ?? true || model.isBusy)
       Button(String(localized: .showActivity), systemImage: "waveform.path.ecg") {
-        if let single { onShowActivity(single.name ?? single.address) }
+        if let single { onShowActivity(single.activitySearchTerm) }
       }
       .disabled(single == nil)
       Divider()

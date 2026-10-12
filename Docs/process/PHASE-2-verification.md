@@ -175,3 +175,29 @@ thread: `PASS`; planted on the main thread: `1 main-thread samples were scanning
 Not run against Zhen: recording it means launching the app's window, which this session
 stopped doing (step 0). The compile-time and runtime gates in `ScanPipelineTests` hold the
 same line in the test suite.
+
+## Live smoke test (added in phase 3, part 7)
+
+`ZhenUITests/LiveSmokeUITests` drives the app on the real network: a scan, then a port scan
+of the first row. It checks that the scan finds devices online and that the port scan
+leaves the network's counts alone. It is skipped unless a scratch history is named, so
+`test` never probes a network.
+
+```
+cp ~/Library/Application\ Support/zhen/history.ndjson /tmp/zhen-live.ndjson
+TEST_RUNNER_ZHEN_LIVE_HISTORY=/tmp/zhen-live.ndjson \
+  xcodebuild test -project Zhen.xcodeproj -scheme Zhen -destination 'platform=macOS' \
+  -only-testing:ZhenUITests/LiveSmokeUITests CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM=
+shasum -a 256 ~/Library/Application\ Support/zhen/history.ndjson   # unchanged
+```
+
+**The first run asks for Local Network permission** for the test build, a different app
+to macOS than the installed one. Allow it once, then run the test again.
+
+**Pass:**
+- the test is green
+- its "after the scan" activity names an online count above zero
+- its "ports card" activity shows a port result or a reason
+- the real history's hash is unchanged
+
+The test's recording shows your devices; delete the result bundle afterwards.

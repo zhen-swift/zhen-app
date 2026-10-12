@@ -23,7 +23,7 @@ extension RootView {
       copyAddresses: { copy { $0.address } },
       copyMACAddresses: { copy { $0.mac } },
       showSelectionInActivity: {
-        if let id = singleSelection, let item = model.device(id) { showActivity(for: item.name ?? item.address) }
+        if let id = singleSelection, let item = model.device(id) { showActivity(for: item.activitySearchTerm) }
       },
       exportHistory: { exporting = model.exportDocument() }
     )
