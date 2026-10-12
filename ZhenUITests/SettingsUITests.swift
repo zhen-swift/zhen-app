@@ -57,6 +57,15 @@ final class SettingsUITests: XCTestCase {
     robot.key("a", .command)
     robot.app.typeText("192.168.7.0/24")
     XCTAssertTrue(robot.element("subnetOverrideError").waitForNonExistence(timeout: 3), "a good /24 was refused")
+    // And it reaches the scan. Settings once wrote a store the model never read — the
+    // real app's preferences, under fixtures — so the override was accepted and ignored.
+    // The fixture has nothing in that /24, so the scan ends at once; the footer names
+    // the network the recorded run covered.
+    robot.key("w", .command)
+    robot.key("r", .command)
+    let scanned = NSPredicate { _, _ in robot.element("scanStatus").words.contains("192.168.7.0/24") }
+    let result = XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: scanned, object: nil)], timeout: 10)
+    XCTAssertEqual(result, .completed, "the scan ignored the override: \(robot.element("scanStatus").words)")
   }
 
   @MainActor

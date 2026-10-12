@@ -68,8 +68,14 @@ final class NetworkModel {
         self.defaults = testDefaults
       } else {
         let suite = "com.jctec.zhen.fixture"
-        UserDefaults().removePersistentDomain(forName: suite)
-        self.defaults = UserDefaults(suiteName: suite) ?? .standard
+        let defaults = UserDefaults(suiteName: suite) ?? .standard
+        // Key by key, through the instance in use. `removePersistentDomain` from another
+        // instance left cached values readable: a Settings capture in phase 3 showed the
+        // subnet a previous UI test had typed.
+        for key in (defaults.persistentDomain(forName: suite) ?? [:]).keys {
+          defaults.removeObject(forKey: key)
+        }
+        self.defaults = defaults
       }
       self.helper = FakeHelperService()
     }

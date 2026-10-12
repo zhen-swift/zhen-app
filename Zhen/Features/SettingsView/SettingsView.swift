@@ -101,7 +101,6 @@ struct SettingsView: View {
       document: exporting, contentType: .json, defaultFilename: NetworkModel.exportFilename
     ) { _ in exporting = nil }
     .frame(width: .windowSize.settingsWidth, height: .windowSize.settingsHeight)
-    .defaultAppStorage(model.defaults)
     .task(id: retentionDays) { await model.applyRetention(days: retentionDays) }
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier("settings")

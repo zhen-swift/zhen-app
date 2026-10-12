@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — stages 1–3 done; stage 4 next.
+**Liveness:** 2026-10-11 — stages 1–4 done; stage 5 next.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -164,3 +164,54 @@ UI: `ActivityUITests`, `DeviceDetailUITests`, `DevicesUITests`, `LiveScanUITests
 **Never seen passing in phase 2, now passing:** `SettingsUITests.testHelperPanelInstallApproveRemove`, with its helper-version wait.
 
 UI: `SettingsUITests` (4) and `CommandsUITests` (5), green. Unit: 70 green, three runs in a row.
+
+## Stage 4 — the outstanding phase-2 gates, on a quiet desktop
+
+**The full UI suite ran: 37 tests, all green** (`ZhenUITests`, about 11 minutes). This is
+the run phase 2's verification step 0 asked for. A notification banner from another app
+showed in one capture; no window took focus.
+
+**Never seen passing in phase 2, now passing:**
+- `WindowSizeUITests.testDetailAndTakeoverFitAtBothSizes`
+- the live-scan captures in `AppearanceUITests`, in all four looks
+- `SettingsUITests.testHelperPanelInstallApproveRemove` (stage 3)
+
+**Never shown failing in phase 2, now shown failing:**
+
+| Gate | Break | Failure |
+|---|---|---|
+| `CommandsUITests.testEveryActionIsInTheMenuBar` | Copy MAC Address retitled to nothing | "Device ▸ Copy MAC Address is missing" |
+| `AccessibilityAuditUITests.testEveryScreen` | Export… lost its identifier | "Settings: a button named 'Export…' has no identifier", in both Settings states |
+| `WindowSizeUITests.testDetailAndTakeoverFitAtBothSizes` | `.frame(minWidth: 1600)` on the detail | "detailName (102.5, 175.0, 180.0, 20.5) leaves the window (165.0, 102.0, 1095.0, 534.0) at minimum, detail" |
+
+### A real defect the captures found: Settings wrote the person's real preferences
+
+The light-appearance Settings capture showed a subnet override of `192.168.7.0/24` on a
+fresh fixture launch. `com.jctec.zhen.plist`, the installed app's own preferences, held
+`subnetOverride = 192.168.7.0/24`. `SettingsUITests` types that subnet.
+
+`SettingsView` applied `.defaultAppStorage(model.defaults)` inside its own body. A view's
+own `@AppStorage` reads the store its parent provides, so the modifier reached only the
+children, and the Settings scene provided none. So:
+- under fixtures, every Settings control wrote the real app's domain
+- the fixture model read its own domain, so the setting never reached a fixture scan
+- the installed app would have scanned `192.168.7.0/24` on its next launch
+
+**Fix:** `.defaultAppStorage(model.defaults)` on the Settings scene's content in `ZhenApp`,
+the way the main window already had it.
+
+**Gate:** `SettingsUITests.testSubnetOverrideIsValidated` now carries the override through
+to a scan. The footer must name `192.168.7.0/24` after ⌘R. Break: the scene-level modifier
+removed gave "the scan ignored the override: … 192.168.50.0/24 · en0". The real domain is
+cleared at the end of this run, after the last UI test (stage 5).
+
+**Also fixed on the way:**
+- **Fixture defaults were reset unreliably.** `removePersistentDomain` from a fresh instance
+  left cached values readable. The fixture domain is now cleared key by key, through the
+  instance in use.
+- **The Override label inherited the field's monospaced face.** The field now sits in a
+  `LabeledContent`.
+- **The footer said "Last scan in 0 sec."** for a scan that had just finished. It now says
+  "just now" under a minute.
+- **Live-scan rows hid the MAC and vendor while a name query was in flight.** They now show
+  both, with the query last.

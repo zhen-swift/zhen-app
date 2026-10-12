@@ -33,6 +33,9 @@ extension NetworkModel {
       return String(localized: "Never scanned")
     }
     let date = Date(timeIntervalSince1970: finished.timeIntervalSince1970)
+    // Under a minute reads "just now": the relative style said "in 0 sec." for a scan that
+    // had just finished, the clocks a few milliseconds apart.
+    if now.timeIntervalSince(date) < 60 { return String(localized: "Last scan just now") }
     let ago = date.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated))
     return String(localized: "Last scan \(ago)")
   }

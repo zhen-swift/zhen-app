@@ -42,15 +42,15 @@ extension LiveScanView {
 
     private func detail(at now: Date) -> String {
       let seconds = Int(max(0, now.timeIntervalSince(host.foundAt)))
-      let found = String(localized: "found \(seconds) s ago")
-      if host.facts.displayName == nil, namingPending {
-        return found + " · " + String(localized: "name query in flight")
-      }
-      var parts = [found]
+      var parts = [String(localized: "found \(seconds) s ago")]
       if let mac = host.facts.mac { parts.append(mac.description) }
       if let vendor = host.facts.vendor { parts.append(vendor) }
       if let known {
         parts.append(known.name.map { String(localized: "matched to \($0)") } ?? String(localized: "matched to a known device"))
+      }
+      // Last, so the facts already in hand are not hidden behind the one still coming.
+      if host.facts.displayName == nil, namingPending {
+        parts.append(String(localized: "name query in flight"))
       }
       return parts.joined(separator: " · ")
     }

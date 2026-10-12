@@ -12,10 +12,15 @@ extension SettingsView {
         LabeledContent("Subnet") {
           Text(automatic).font(.callout.monospaced()).foregroundStyle(.textSecondary)
         }
-        TextField("Override", text: $subnet, prompt: Text("e.g. 192.168.1.0/24"))
-          .font(.callout.monospaced())
-          .accessibilityLabel("Subnet override")
-          .accessibilityIdentifier("subnetOverrideField")
+        LabeledContent("Override") {
+          // The monospaced face is for the address, not the label beside it.
+          TextField("Override", text: $subnet, prompt: Text("e.g. 192.168.1.0/24"))
+            .labelsHidden()
+            .font(.callout.monospaced())
+            .multilineTextAlignment(.trailing)
+            .accessibilityLabel("Subnet override")
+            .accessibilityIdentifier("subnetOverrideField")
+        }
         if !subnet.isEmpty, Preferences.network(subnet) == nil {
           Text("Not a network Zhen can scan. Use CIDR form, /16 or narrower. Until then, scans use the automatic network.")
             .font(.subheadline)
