@@ -1,62 +1,68 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "%@ %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ %2$@"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
           }
         }
       }
     },
-    "%@ (TCP fingerprint)": {},
-    "%@ did not answer this time, so no port was checked.": {},
-    "%@ ran with partial results": {},
-    "%@ — ^[%lld independent source](inflect: true)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ — ^[%2$lld independent source](inflect: true)"
+    "%@ (TCP fingerprint)" : {
+
+    },
+    "%@ did not answer this time, so no port was checked." : {
+
+    },
+    "%@ ran with partial results" : {
+
+    },
+    "%@ — ^[%lld independent source](inflect: true)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ — ^[%2$lld independent source](inflect: true)"
           }
         }
       }
     },
-    "%@ — auto, from %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ — auto, from %2$@"
+    "%@ — auto, from %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ — auto, from %2$@"
           }
         }
       }
     },
-    "%lld devices · %lld online · %lld unidentified": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%#@devices@ · %2$lld online · %3$lld unidentified"
+    "%lld devices · %lld online · %lld unidentified" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@devices@ · %2$lld online · %3$lld unidentified"
           },
-          "substitutions": {
-            "devices": {
-              "argNum": 1,
-              "formatSpecifier": "lld",
-              "variations": {
-                "plural": {
-                  "one": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%arg device"
+          "substitutions" : {
+            "devices" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg device"
                     }
                   },
-                  "other": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%arg devices"
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg devices"
                     }
                   }
                 }
@@ -66,21 +72,21 @@
         }
       }
     },
-    "%lld events": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld event"
+    "%lld events" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld event"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld events"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld events"
                 }
               }
             }
@@ -88,21 +94,21 @@
         }
       }
     },
-    "%lld hosts answered": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld host answered"
+    "%lld hosts answered" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld host answered"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld hosts answered"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld hosts answered"
                 }
               }
             }
@@ -110,21 +116,21 @@
         }
       }
     },
-    "%lld identity changes": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld identity change"
+    "%lld identity changes" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld identity change"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld identity changes"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld identity changes"
                 }
               }
             }
@@ -132,21 +138,21 @@
         }
       }
     },
-    "%lld names found": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld name found"
+    "%lld names found" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld name found"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld names found"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld names found"
                 }
               }
             }
@@ -154,113 +160,251 @@
         }
       }
     },
-    "%lld of %lld": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$lld of %2$lld"
+    "%lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld"
           }
         }
       }
     },
-    "30 days": {},
-    "443 · https": {},
-    "7 days": {},
-    "90 days": {},
-    "Activity": {},
-    "Activity Filter": {},
-    "Address changed": {},
-    "Addresses": {},
-    "All": {},
-    "Allow “Zhen” under System Settings › General › Login Items to finish.": {},
-    "Also check common ports on every device that answers. Slower, and more visible on the network.": {},
-    "Appeared": {},
-    "Asking Bonjour, UPnP and NetBIOS": {},
-    "Assigned": {},
-    "Back to Devices": {},
-    "Bonjour": {},
-    "Bonjour name": {},
-    "Bonjour · Sala de estar principal": {},
-    "Cancel": {},
-    "Changed": {},
-    "Check ports on every scan": {},
-    "Check this device's common ports": {},
-    "Checked %@": {},
-    "Checking common ports": {},
-    "Checking common ports on %@…": {},
-    "Copy Address": {},
-    "Copy MAC Address": {},
-    "DHCP name": {},
-    "Deep scan": {},
-    "Device": {},
-    "Device identity history": {},
-    "Device not found": {},
-    "Devices": {},
-    "Discovery": {},
-    "Done": {},
-    "ER7206": {},
-    "Events": {},
-    "Events appear here when devices join, leave, or change.": {},
-    "Events per hour: %lld over %lld hours": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Events per hour: %1$lld over %2$lld hours"
+    "30 days" : {
+
+    },
+    "443 · https" : {
+
+    },
+    "7 days" : {
+
+    },
+    "90 days" : {
+
+    },
+    "Activity" : {
+
+    },
+    "Activity Filter" : {
+
+    },
+    "Address changed" : {
+
+    },
+    "Addresses" : {
+
+    },
+    "All" : {
+
+    },
+    "Allow “Zhen” under System Settings › General › Login Items to finish." : {
+
+    },
+    "Also check common ports on every device that answers. Slower, and more visible on the network." : {
+
+    },
+    "Appeared" : {
+
+    },
+    "Asking Bonjour, UPnP and NetBIOS" : {
+
+    },
+    "Assigned" : {
+
+    },
+    "Back to Devices" : {
+
+    },
+    "Bonjour" : {
+
+    },
+    "Bonjour name" : {
+
+    },
+    "Bonjour · Sala de estar principal" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Changed" : {
+
+    },
+    "Check ports on every scan" : {
+
+    },
+    "Check this device's common ports" : {
+
+    },
+    "Checked %@" : {
+
+    },
+    "Checking common ports" : {
+
+    },
+    "Checking common ports on %@…" : {
+
+    },
+    "Copy Address" : {
+
+    },
+    "Copy MAC Address" : {
+
+    },
+    "DHCP name" : {
+
+    },
+    "Deep scan" : {
+
+    },
+    "Device" : {
+
+    },
+    "Device identity history" : {
+
+    },
+    "Device not found" : {
+
+    },
+    "Devices" : {
+
+    },
+    "Discovery" : {
+
+    },
+    "Done" : {
+
+    },
+    "Events" : {
+
+    },
+    "Events appear here when devices join, leave, or change." : {
+
+    },
+    "Events per hour: %lld over %lld hours" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Events per hour: %1$lld over %2$lld hours"
           }
         }
       }
     },
-    "Every 15 minutes": {},
-    "Every 5 minutes": {},
-    "Every hour": {},
-    "Export History…": {},
-    "Export…": {},
-    "F2:3A:91:6B:0D:44": {},
-    "Filter by device": {},
-    "Find…": {},
-    "First seen": {},
-    "Forever": {},
-    "Found so far · newest first": {},
-    "From an earlier scan that checked ports": {},
-    "Gateway": {},
-    "Give this device a name of your own": {},
-    "Gone": {},
-    "Hide Details": {},
-    "History": {},
-    "History file": {},
-    "History no longer has this device.": {},
-    "Hour": {},
-    "IP Address": {},
-    "IP address": {},
-    "Identified": {},
-    "Identity": {},
-    "Identity history": {},
-    "In memory — this launch uses a fixture": {},
-    "Install Helper…": {},
-    "Installed · Zhen Scan Engine %@": {},
-    "Installed · Zhen Scan Engine (not answering yet)": {},
-    "Installed · waiting for your approval": {},
-    "It can: sweep this network at layer 2 (ARP), and SYN-scan ports on the devices found. It cannot: read files, run commands, or talk to anything but this app.": {},
-    "Keep events for": {},
-    "Kept forever — it’s what makes merges possible": {},
-    "Known by": {},
-    "Last 48 hours · %lld events": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Last 48 hours · %lld event"
+    "Every 15 minutes" : {
+
+    },
+    "Every 5 minutes" : {
+
+    },
+    "Every hour" : {
+
+    },
+    "Export History…" : {
+
+    },
+    "Export…" : {
+
+    },
+    "Filter by device" : {
+
+    },
+    "Find…" : {
+
+    },
+    "First seen" : {
+
+    },
+    "Forever" : {
+
+    },
+    "Found so far · newest first" : {
+
+    },
+    "From an earlier scan that checked ports" : {
+
+    },
+    "Gateway" : {
+
+    },
+    "Give this device a name of your own" : {
+
+    },
+    "Gone" : {
+
+    },
+    "Hide Details" : {
+
+    },
+    "History" : {
+
+    },
+    "History file" : {
+
+    },
+    "History no longer has this device." : {
+
+    },
+    "Hour" : {
+
+    },
+    "IP Address" : {
+
+    },
+    "IP address" : {
+
+    },
+    "Identified" : {
+
+    },
+    "Identity" : {
+
+    },
+    "Identity history" : {
+
+    },
+    "In memory — this launch uses a fixture" : {
+
+    },
+    "Install Helper…" : {
+
+    },
+    "Installed · Zhen Scan Engine %@" : {
+
+    },
+    "Installed · Zhen Scan Engine (not answering yet)" : {
+
+    },
+    "Installed · waiting for your approval" : {
+
+    },
+    "It can: sweep this network at layer 2 (ARP), and SYN-scan ports on the devices found. It cannot: read files, run commands, or talk to anything but this app." : {
+
+    },
+    "Keep events for" : {
+
+    },
+    "Kept forever — it’s what makes merges possible" : {
+
+    },
+    "Known by" : {
+
+    },
+    "Last 48 hours · %lld events" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Last 48 hours · %lld event"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Last 48 hours · %lld events"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Last 48 hours · %lld events"
                 }
               }
             }
@@ -268,23 +412,27 @@
         }
       }
     },
-    "Last Seen": {},
-    "Last scan %@": {},
-    "Last scan completed with partial results — %lld sources unavailable": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Last scan completed with partial results — %lld source unavailable"
+    "Last Seen" : {
+
+    },
+    "Last scan %@" : {
+
+    },
+    "Last scan completed with partial results — %lld sources unavailable" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Last scan completed with partial results — %lld source unavailable"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Last scan completed with partial results — %lld sources unavailable"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Last scan completed with partial results — %lld sources unavailable"
                 }
               }
             }
@@ -292,47 +440,99 @@
         }
       }
     },
-    "Last scan just now": {},
-    "Last scan ran out of time — results are partial": {},
-    "Last scan was stopped — results are partial": {},
-    "Last seen %@": {},
-    "Left": {},
-    "Listening…": {},
-    "Local Network access appears to be denied": {},
-    "MAC": {},
-    "MAC Address": {},
-    "Merged": {},
-    "Minimal": {},
-    "Name": {},
-    "Naming": {},
-    "NetBIOS": {},
-    "Network device (TTL)": {},
-    "Never scanned": {},
-    "No %@ events in this window": {},
-    "No device matches “%@”.": {},
-    "No events match “%@”": {},
-    "No hardware address": {},
-    "No identity changes seen": {},
-    "No matches": {},
-    "No names could be read": {},
-    "No network yet": {},
-    "No port scan yet": {},
-    "No scan yet": {},
-    "None of the %lld ports checked was open.": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "The %lld port checked was not open."
+    "Last scan just now" : {
+
+    },
+    "Last scan ran out of time — results are partial" : {
+
+    },
+    "Last scan was stopped — results are partial" : {
+
+    },
+    "Last seen %@" : {
+
+    },
+    "Left" : {
+
+    },
+    "Listening…" : {
+
+    },
+    "Local Network access appears to be denied" : {
+
+    },
+    "MAC" : {
+
+    },
+    "MAC Address" : {
+
+    },
+    "Merged" : {
+
+    },
+    "Minimal" : {
+
+    },
+    "Name" : {
+
+    },
+    "Naming" : {
+
+    },
+    "NetBIOS" : {
+
+    },
+    "Network device (TTL)" : {
+
+    },
+    "Never scanned" : {
+
+    },
+    "No %@ events in this window" : {
+
+    },
+    "No device matches “%@”." : {
+
+    },
+    "No events match “%@”" : {
+
+    },
+    "No hardware address" : {
+
+    },
+    "No identity changes seen" : {
+
+    },
+    "No matches" : {
+
+    },
+    "No names could be read" : {
+
+    },
+    "No network yet" : {
+
+    },
+    "No port scan yet" : {
+
+    },
+    "No scan yet" : {
+
+    },
+    "None of the %lld ports checked was open." : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "The %lld port checked was not open."
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "None of the %lld ports checked was open."
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "None of the %lld ports checked was open."
                 }
               }
             }
@@ -340,92 +540,218 @@
         }
       }
     },
-    "Not a network Zhen can scan. Use CIDR form, /16 or narrower. Until then, scans use the automatic network.": {},
-    "Not created yet — no scan so far": {},
-    "Not installed.": {},
-    "Not part of this scan": {},
-    "Not requested": {},
-    "Nothing answered": {},
-    "Nothing answered before the scan stopped.": {},
-    "Nothing has changed": {},
-    "Nothing has changed for this device yet.": {},
-    "Nothing is installed": {},
-    "Now": {},
-    "OS fingerprinting and fast SYN port scans need raw network sockets, which macOS only grants to root. The engine is a small helper that runs only during scans and only sends results back to this app. Everything else works without it.": {},
-    "Off": {},
-    "Offline": {},
-    "Online": {},
-    "Only this Mac sees this name. It wins over every name the device announces.": {},
-    "Open": {},
-    "Open Login Items…": {},
-    "Open System Settings…": {},
-    "Open ports": {},
-    "Override": {},
-    "Partial": {},
-    "Ports": {},
-    "Ports checked": {},
-    "Presence": {},
-    "Privileged engine": {},
-    "Queued": {},
-    "Recent events": {},
-    "Remove": {},
-    "Remove the privileged engine?": {},
-    "Rename": {},
-    "Rename Device": {},
-    "Renamed": {},
-    "Rename…": {},
-    "Resolving name…": {},
-    "Reverse DNS": {},
-    "Review in Settings…": {},
-    "Run a scan to see what’s on your network.": {},
-    "Running": {},
-    "Running with partial results": {},
-    "Save devices and events as JSON": {},
-    "Scan": {},
-    "Scan Again": {},
-    "Scan Now": {},
-    "Scan Ports": {},
-    "Scan automatically": {},
-    "Scan for up to": {},
-    "Scan the network now": {},
-    "Scanned %@ · this session, not saved to history": {},
-    "Scanning": {},
-    "Scanning %@": {},
-    "Scanning…": {},
-    "Scans keep working without it; they lose the layer-2 sweep and SYN scanning.": {},
-    "Search devices": {},
-    "Setup": {},
-    "Show": {},
-    "Show Details": {},
-    "Show Devices": {},
-    "Show in Activity": {},
-    "Show in Finder": {},
-    "Show in System Settings…": {},
-    "Signal": {},
-    "Some replies arrived late": {},
-    "Stage %lld of %lld · %@ elapsed · %lld devices so far": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stage %1$lld of %2$lld · %3$@ elapsed · %#@devices@"
+    "Not a network Zhen can scan. Use CIDR form, /16 or narrower. Until then, scans use the automatic network." : {
+
+    },
+    "Not created yet — no scan so far" : {
+
+    },
+    "Not installed." : {
+
+    },
+    "Not part of this scan" : {
+
+    },
+    "Not requested" : {
+
+    },
+    "Nothing answered" : {
+
+    },
+    "Nothing answered before the scan stopped." : {
+
+    },
+    "Nothing has changed" : {
+
+    },
+    "Nothing has changed for this device yet." : {
+
+    },
+    "Nothing is installed" : {
+
+    },
+    "Now" : {
+
+    },
+    "OS fingerprinting and fast SYN port scans need raw network sockets, which macOS only grants to root. The engine is a small helper that runs only during scans and only sends results back to this app. Everything else works without it." : {
+
+    },
+    "Off" : {
+
+    },
+    "Offline" : {
+
+    },
+    "Online" : {
+
+    },
+    "Only this Mac sees this name. It wins over every name the device announces." : {
+
+    },
+    "Open" : {
+
+    },
+    "Open Login Items…" : {
+
+    },
+    "Open System Settings…" : {
+
+    },
+    "Open ports" : {
+
+    },
+    "Override" : {
+
+    },
+    "Partial" : {
+
+    },
+    "Ports" : {
+
+    },
+    "Ports checked" : {
+
+    },
+    "Presence" : {
+
+    },
+    "Privileged engine" : {
+
+    },
+    "Queued" : {
+
+    },
+    "Recent events" : {
+
+    },
+    "Remove" : {
+
+    },
+    "Remove the privileged engine?" : {
+
+    },
+    "Rename" : {
+
+    },
+    "Rename Device" : {
+
+    },
+    "Renamed" : {
+
+    },
+    "Rename…" : {
+
+    },
+    "Resolving name…" : {
+
+    },
+    "Reverse DNS" : {
+
+    },
+    "Review in Settings…" : {
+
+    },
+    "Run a scan to see what’s on your network." : {
+
+    },
+    "Running" : {
+
+    },
+    "Running with partial results" : {
+
+    },
+    "Save devices and events as JSON" : {
+
+    },
+    "Scan" : {
+
+    },
+    "Scan Again" : {
+
+    },
+    "Scan Now" : {
+
+    },
+    "Scan Ports" : {
+
+    },
+    "Scan automatically" : {
+
+    },
+    "Scan for up to" : {
+
+    },
+    "Scan the network now" : {
+
+    },
+    "Scanned %@ · this session, not saved to history" : {
+
+    },
+    "Scanning" : {
+
+    },
+    "Scanning %@" : {
+
+    },
+    "Scanning…" : {
+
+    },
+    "Scans keep working without it; they lose the layer-2 sweep and SYN scanning." : {
+
+    },
+    "Search devices" : {
+
+    },
+    "Setup" : {
+
+    },
+    "Show" : {
+
+    },
+    "Show Details" : {
+
+    },
+    "Show Devices" : {
+
+    },
+    "Show in Activity" : {
+
+    },
+    "Show in Finder" : {
+
+    },
+    "Show in System Settings…" : {
+
+    },
+    "Signal" : {
+
+    },
+    "Some replies arrived late" : {
+
+    },
+    "Stage %lld of %lld · %@ elapsed · %lld devices so far" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stage %1$lld of %2$lld · %3$@ elapsed · %#@devices@"
           },
-          "substitutions": {
-            "devices": {
-              "argNum": 4,
-              "formatSpecifier": "lld",
-              "variations": {
-                "plural": {
-                  "one": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%arg device so far"
+          "substitutions" : {
+            "devices" : {
+              "argNum" : 4,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg device so far"
                     }
                   },
-                  "other": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%arg devices so far"
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg devices so far"
                     }
                   }
                 }
@@ -435,31 +761,35 @@
         }
       }
     },
-    "Stop Scan": {},
-    "Stop the scan. Devices found so far are kept.": {},
-    "Stopped after %@ · %lld devices found": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stopped after %1$@ · %#@devices@"
+    "Stop Scan" : {
+
+    },
+    "Stop the scan. Devices found so far are kept." : {
+
+    },
+    "Stopped after %@ · %lld devices found" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopped after %1$@ · %#@devices@"
           },
-          "substitutions": {
-            "devices": {
-              "argNum": 2,
-              "formatSpecifier": "lld",
-              "variations": {
-                "plural": {
-                  "one": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%arg device found"
+          "substitutions" : {
+            "devices" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg device found"
                     }
                   },
-                  "other": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%arg devices found"
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg devices found"
                     }
                   }
                 }
@@ -469,84 +799,200 @@
         }
       }
     },
-    "Stopped before any port answered.": {},
-    "Subnet": {},
-    "Subnet override": {},
-    "The helper is missing from this copy of Zhen.": {},
-    "The layer-2 sweep did not run": {},
-    "The scan completed but no devices replied. This usually means the Local Network permission is denied.": {},
-    "Today — %@": {},
-    "Today — Sunday, Aug 31": {},
-    "Try another filter, or clear the search.": {},
-    "UPnP": {},
-    "Unidentified device": {},
-    "Unix-like (TTL)": {},
-    "Use the privileged engine": {},
-    "Vendor": {},
-    "Warning": {},
-    "Windows (TTL)": {},
-    "Winner": {},
-    "Yesterday — %@": {},
-    "You": {},
-    "Zhen": {},
-    "Zhen %@ (%@)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Zhen %1$@ (%2$@)"
+    "Stopped before any port answered." : {
+
+    },
+    "Subnet" : {
+
+    },
+    "Subnet override" : {
+
+    },
+    "The helper is missing from this copy of Zhen." : {
+
+    },
+    "The layer-2 sweep did not run" : {
+
+    },
+    "The scan completed but no devices replied. This usually means the Local Network permission is denied." : {
+
+    },
+    "Today — %@" : {
+
+    },
+    "Today — Sunday, Aug 31" : {
+
+    },
+    "Try another filter, or clear the search." : {
+
+    },
+    "UPnP" : {
+
+    },
+    "Unidentified device" : {
+
+    },
+    "Unix-like (TTL)" : {
+
+    },
+    "Use the privileged engine" : {
+
+    },
+    "Vendor" : {
+
+    },
+    "Warning" : {
+
+    },
+    "Windows (TTL)" : {
+
+    },
+    "Winner" : {
+
+    },
+    "Yesterday — %@" : {
+
+    },
+    "You" : {
+
+    },
+    "Zhen" : {
+
+    },
+    "Zhen %@ (%@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Zhen %1$@ (%2$@)"
           }
         }
       }
     },
-    "Zhen history %@": {},
-    "address": {},
-    "address only": {},
-    "auto": {},
-    "competing names by source — highest-trust source wins": {},
-    "e.g. 192.168.1.0/24": {},
-    "found %lld s ago": {},
-    "hardware MAC": {},
-    "holds only while the lease does": {},
-    "identity": {},
-    "identity key: %@, %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "new",
-            "value": "identity key: %1$@, %2$@"
+    "Zhen history %@" : {
+
+    },
+    "address" : {
+
+    },
+    "address only" : {
+
+    },
+    "auto" : {
+
+    },
+    "competing names by source — highest-trust source wins" : {
+
+    },
+    "e.g. 192.168.1.0/24" : {
+
+    },
+    "found %lld s ago" : {
+
+    },
+    "hardware MAC" : {
+
+    },
+    "holds only while the lease does" : {
+
+    },
+    "identity" : {
+
+    },
+    "identity key: %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "identity key: %1$@, %2$@"
           }
         }
       }
     },
-    "in ARP table, no ping reply": {},
-    "last seen": {},
-    "macOS did not register the helper: %@": {},
-    "macOS did not remove the helper: %@": {},
-    "macOS reported a state this version does not know.": {},
-    "matched to %@": {},
-    "matched to a known device": {},
-    "name query in flight": {},
-    "no hardware address": {},
-    "no vendor": {},
-    "offline": {},
-    "online": {},
-    "permanent": {},
-    "port": {},
-    "presence": {},
-    "private": {},
-    "randomized MAC": {},
-    "reassigned": {},
-    "responds to ping": {},
-    "results are still valid, just less complete": {},
-    "rotating MAC": {},
-    "since %@": {},
-    "splits when the MAC rotates": {},
-    "stabilised by Bonjour name": {},
-    "stabilised by DHCP name": {},
-    "this Mac": {},
-    "— not advertised": {},
-    "−52 dBm": {}
+    "in ARP table, no ping reply" : {
+
+    },
+    "last seen" : {
+
+    },
+    "macOS did not register the helper: %@" : {
+
+    },
+    "macOS did not remove the helper: %@" : {
+
+    },
+    "macOS reported a state this version does not know." : {
+
+    },
+    "matched to %@" : {
+
+    },
+    "matched to a known device" : {
+
+    },
+    "name query in flight" : {
+
+    },
+    "no hardware address" : {
+
+    },
+    "no vendor" : {
+
+    },
+    "offline" : {
+
+    },
+    "online" : {
+
+    },
+    "permanent" : {
+
+    },
+    "port" : {
+
+    },
+    "presence" : {
+
+    },
+    "private" : {
+
+    },
+    "randomized MAC" : {
+
+    },
+    "reassigned" : {
+
+    },
+    "responds to ping" : {
+
+    },
+    "results are still valid, just less complete" : {
+
+    },
+    "rotating MAC" : {
+
+    },
+    "since %@" : {
+
+    },
+    "splits when the MAC rotates" : {
+
+    },
+    "stabilised by Bonjour name" : {
+
+    },
+    "stabilised by DHCP name" : {
+
+    },
+    "this Mac" : {
+
+    },
+    "— not advertised" : {
+
+    },
+    "−52 dBm" : {
+
+    }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }
