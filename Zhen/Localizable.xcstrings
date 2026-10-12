@@ -9,6 +9,12 @@
             "state": "translated",
             "value": "Activity"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actividad"
+          }
         }
       }
     },
@@ -19,6 +25,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Activity Filter"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtro de actividad"
           }
         }
       }
@@ -31,6 +43,12 @@
             "state": "translated",
             "value": "address"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dirección"
+          }
         }
       }
     },
@@ -41,6 +59,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Address changed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueva dirección"
           }
         }
       }
@@ -53,6 +77,12 @@
             "state": "translated",
             "value": "address only"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "solo dirección"
+          }
         }
       }
     },
@@ -63,6 +93,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Addresses"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direcciones"
           }
         }
       }
@@ -75,6 +111,12 @@
             "state": "translated",
             "value": "All"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todo"
+          }
         }
       }
     },
@@ -85,6 +127,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Allow “Zhen” under System Settings › General › Login Items to finish."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permite “Zhen” en Configuración del Sistema › General › Ítems de inicio para terminar."
           }
         }
       }
@@ -97,6 +145,12 @@
             "state": "translated",
             "value": "Also check common ports on every device that answers. Slower, and more visible on the network."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "También revisa los puertos comunes en cada dispositivo que responde. Más lento y más visible en la red."
+          }
         }
       }
     },
@@ -107,6 +161,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Appeared"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apareció"
           }
         }
       }
@@ -119,6 +179,12 @@
             "state": "translated",
             "value": "in ARP table, no ping reply"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "en la tabla ARP, sin respuesta a ping"
+          }
         }
       }
     },
@@ -129,6 +195,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Asking Bonjour, UPnP and NetBIOS"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preguntando a Bonjour, UPnP y NetBIOS"
           }
         }
       }
@@ -141,6 +213,12 @@
             "state": "translated",
             "value": "Assigned"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asignado"
+          }
         }
       }
     },
@@ -151,6 +229,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "auto"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "automático"
           }
         }
       }
@@ -163,6 +247,12 @@
             "state": "new",
             "value": "%1$@ — auto, from %2$@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — automático, desde %2$@"
+          }
         }
       }
     },
@@ -174,6 +264,12 @@
             "state": "translated",
             "value": "Back to Devices"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volver a Dispositivos"
+          }
         }
       }
     },
@@ -181,6 +277,12 @@
       "extractionState": "manual",
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bonjour"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Bonjour"
@@ -196,6 +298,12 @@
             "state": "translated",
             "value": "Bonjour name"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nombre Bonjour"
+          }
         }
       }
     },
@@ -206,6 +314,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cancel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
           }
         }
       }
@@ -218,6 +332,12 @@
             "state": "translated",
             "value": "Changed"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cambió"
+          }
         }
       }
     },
@@ -228,6 +348,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Check ports on every scan"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisar puertos en cada escaneo"
           }
         }
       }
@@ -240,6 +366,12 @@
             "state": "translated",
             "value": "Check this device's common ports"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisar los puertos comunes de este dispositivo"
+          }
         }
       }
     },
@@ -250,6 +382,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Checked %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisado %@"
           }
         }
       }
@@ -262,6 +400,12 @@
             "state": "translated",
             "value": "Checking common ports"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisando puertos comunes"
+          }
         }
       }
     },
@@ -272,6 +416,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Checking common ports on %@…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisando puertos comunes en %@…"
           }
         }
       }
@@ -284,6 +434,12 @@
             "state": "translated",
             "value": "competing names by source — highest-trust source wins"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nombres en competencia por fuente — gana la fuente más confiable"
+          }
         }
       }
     },
@@ -294,6 +450,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Complete"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completo"
           }
         }
       }
@@ -306,6 +468,12 @@
             "state": "translated",
             "value": "Copy Address"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar dirección"
+          }
         }
       }
     },
@@ -316,6 +484,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copy MAC Address"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar dirección MAC"
           }
         }
       }
@@ -328,6 +502,12 @@
             "state": "translated",
             "value": "Count Online Devices"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contar dispositivos en línea"
+          }
         }
       }
     },
@@ -338,6 +518,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Deep scan"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escaneo profundo"
           }
         }
       }
@@ -350,6 +536,12 @@
             "state": "translated",
             "value": "Device"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispositivo"
+          }
         }
       }
     },
@@ -360,6 +552,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Device identity history"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historial de identidad de dispositivos"
           }
         }
       }
@@ -372,6 +570,12 @@
             "state": "translated",
             "value": "Device not found"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispositivo no encontrado"
+          }
         }
       }
     },
@@ -383,6 +587,12 @@
             "state": "translated",
             "value": "Devices"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispositivos"
+          }
         }
       }
     },
@@ -393,6 +603,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld devices answered the latest scan."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld dispositivos respondieron al último escaneo."
           }
         }
       }
@@ -427,6 +643,34 @@
               }
             }
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%#@devices@ · %2$lld en línea · %3$lld sin identificar"
+          },
+          "substitutions": {
+            "devices": {
+              "argNum": 1,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg dispositivo"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg dispositivos"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -437,6 +681,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "DHCP name"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nombre DHCP"
           }
         }
       }
@@ -449,6 +699,12 @@
             "state": "translated",
             "value": "%@ did not answer this time, so no port was checked."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ no respondió esta vez, así que no se revisó ningún puerto."
+          }
         }
       }
     },
@@ -460,6 +716,12 @@
             "state": "translated",
             "value": "Discovery"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Descubrimiento"
+          }
         }
       }
     },
@@ -470,6 +732,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Done"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listo"
           }
         }
       }
@@ -494,6 +762,24 @@
               }
             }
           }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld evento"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld eventos"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -504,6 +790,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Events appear here when devices join, leave, or change."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los eventos aparecen aquí cuando los dispositivos se conectan, se van o cambian."
           }
         }
       }
@@ -516,6 +808,12 @@
             "state": "new",
             "value": "Events per hour: %1$lld over %2$lld hours"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eventos por hora: %1$lld en %2$lld horas"
+          }
         }
       }
     },
@@ -526,6 +824,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Events"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eventos"
           }
         }
       }
@@ -538,6 +842,12 @@
             "state": "translated",
             "value": "Every 15 minutes"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada 15 minutos"
+          }
         }
       }
     },
@@ -548,6 +858,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Every 5 minutes"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada 5 minutos"
           }
         }
       }
@@ -560,6 +876,12 @@
             "state": "translated",
             "value": "Every hour"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada hora"
+          }
         }
       }
     },
@@ -570,6 +892,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Export…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportar…"
           }
         }
       }
@@ -582,6 +910,12 @@
             "state": "translated",
             "value": "Export History…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportar historial…"
+          }
         }
       }
     },
@@ -592,6 +926,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Filter by device"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtrar por dispositivo"
           }
         }
       }
@@ -604,6 +944,12 @@
             "state": "translated",
             "value": "Find…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar…"
+          }
         }
       }
     },
@@ -614,6 +960,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "First seen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visto por primera vez"
           }
         }
       }
@@ -626,6 +978,12 @@
             "state": "translated",
             "value": "Forever"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siempre"
+          }
         }
       }
     },
@@ -636,6 +994,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "found %lld s ago"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "encontrado hace %lld s"
           }
         }
       }
@@ -648,6 +1012,12 @@
             "state": "translated",
             "value": "Found so far"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encontrados hasta ahora"
+          }
         }
       }
     },
@@ -658,6 +1028,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Found so far · newest first"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encontrados hasta ahora · los más recientes primero"
           }
         }
       }
@@ -670,6 +1046,12 @@
             "state": "translated",
             "value": "From an earlier scan that checked ports"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De un escaneo anterior que revisó puertos"
+          }
         }
       }
     },
@@ -680,6 +1062,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gateway"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puerta de enlace"
           }
         }
       }
@@ -692,6 +1080,12 @@
             "state": "translated",
             "value": "Give this device a name of your own"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dale a este dispositivo un nombre propio"
+          }
         }
       }
     },
@@ -702,6 +1096,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gone"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se fue"
           }
         }
       }
@@ -714,6 +1114,12 @@
             "state": "translated",
             "value": "hardware MAC"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MAC de hardware"
+          }
         }
       }
     },
@@ -724,6 +1130,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "It can: sweep this network at layer 2 (ARP), and SYN-scan ports on the devices found. It cannot: read files, run commands, or talk to anything but this app."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puede: barrer esta red en la capa 2 (ARP) y hacer escaneo SYN de puertos en los dispositivos encontrados. No puede: leer archivos, ejecutar comandos ni comunicarse con nada que no sea esta app."
           }
         }
       }
@@ -736,6 +1148,12 @@
             "state": "translated",
             "value": "The helper is missing from this copy of Zhen."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falta el asistente en esta copia de Zhen."
+          }
         }
       }
     },
@@ -746,6 +1164,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hide Details"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar detalles"
           }
         }
       }
@@ -758,6 +1182,12 @@
             "state": "translated",
             "value": "History"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historial"
+          }
         }
       }
     },
@@ -768,6 +1198,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "History file"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archivo de historial"
           }
         }
       }
@@ -780,6 +1216,12 @@
             "state": "translated",
             "value": "History no longer has this device."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El historial ya no tiene este dispositivo."
+          }
         }
       }
     },
@@ -790,6 +1232,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "holds only while the lease does"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dura solo mientras dure la concesión"
           }
         }
       }
@@ -814,6 +1262,24 @@
               }
             }
           }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld equipo respondió"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld equipos respondieron"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -824,6 +1290,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hour"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hora"
           }
         }
       }
@@ -836,6 +1308,12 @@
             "state": "translated",
             "value": "How many devices answered Zhen's most recent scan. Reads history; does not scan."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuántos dispositivos respondieron al escaneo más reciente de Zhen. Lee el historial; no escanea."
+          }
         }
       }
     },
@@ -847,6 +1325,12 @@
             "state": "translated",
             "value": "Identified"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identificado"
+          }
         }
       }
     },
@@ -857,6 +1341,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Identity"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identidad"
           }
         }
       }
@@ -881,6 +1371,24 @@
               }
             }
           }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld cambio de identidad"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld cambios de identidad"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -891,6 +1399,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Identity history"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historial de identidad"
           }
         }
       }
@@ -903,6 +1417,12 @@
             "state": "new",
             "value": "identity key: %1$@, %2$@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "clave de identidad: %1$@, %2$@"
+          }
         }
       }
     },
@@ -913,6 +1433,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "identity"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "identidad"
           }
         }
       }
@@ -925,6 +1451,12 @@
             "state": "new",
             "value": "%1$@ — ^[%2$lld independent source](inflect: true)"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — ^[%2$lld fuente independiente](inflect: true)"
+          }
         }
       }
     },
@@ -935,6 +1467,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Install Helper…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instalar asistente…"
           }
         }
       }
@@ -947,6 +1485,12 @@
             "state": "translated",
             "value": "Installed · waiting for your approval"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instalado · esperando tu aprobación"
+          }
         }
       }
     },
@@ -957,6 +1501,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Installed · Zhen Scan Engine %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instalado · Zhen Scan Engine %@"
           }
         }
       }
@@ -969,6 +1519,12 @@
             "state": "translated",
             "value": "Installed · Zhen Scan Engine (not answering yet)"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instalado · Zhen Scan Engine (todavía no responde)"
+          }
         }
       }
     },
@@ -979,6 +1535,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "IP Address"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dirección IP"
           }
         }
       }
@@ -991,6 +1553,12 @@
             "state": "translated",
             "value": "IP address"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dirección IP"
+          }
         }
       }
     },
@@ -1001,6 +1569,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Keep events for"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conservar eventos durante"
           }
         }
       }
@@ -1013,6 +1587,12 @@
             "state": "translated",
             "value": "Kept forever — it’s what makes merges possible"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se conserva siempre — es lo que hace posibles las fusiones"
+          }
         }
       }
     },
@@ -1023,6 +1603,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Known by"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conocido como"
           }
         }
       }
@@ -1047,6 +1633,24 @@
               }
             }
           }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Últimas 48 horas · %lld evento"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Últimas 48 horas · %lld eventos"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1057,6 +1661,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Last scan %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Último escaneo %@"
           }
         }
       }
@@ -1081,6 +1691,24 @@
               }
             }
           }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "El último escaneo terminó con resultados parciales — %lld fuente no disponible"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "El último escaneo terminó con resultados parciales — %lld fuentes no disponibles"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1091,6 +1719,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Last scan just now"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Último escaneo hace un momento"
           }
         }
       }
@@ -1103,6 +1737,12 @@
             "state": "translated",
             "value": "Last scan ran out of time — results are partial"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Al último escaneo se le acabó el tiempo — los resultados son parciales"
+          }
         }
       }
     },
@@ -1113,6 +1753,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Last scan was stopped — results are partial"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El último escaneo se detuvo — los resultados son parciales"
           }
         }
       }
@@ -1125,6 +1771,12 @@
             "state": "translated",
             "value": "Last seen %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visto por última vez %@"
+          }
         }
       }
     },
@@ -1135,6 +1787,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Last Seen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Última vez visto"
           }
         }
       }
@@ -1147,6 +1805,12 @@
             "state": "translated",
             "value": "last seen"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "visto por última vez"
+          }
         }
       }
     },
@@ -1157,6 +1821,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "The layer-2 sweep did not run"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El barrido de capa 2 no se ejecutó"
           }
         }
       }
@@ -1169,6 +1839,12 @@
             "state": "translated",
             "value": "Left"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se fue"
+          }
         }
       }
     },
@@ -1179,6 +1855,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Listening…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escuchando…"
           }
         }
       }
@@ -1191,6 +1873,12 @@
             "state": "translated",
             "value": "Local Network access appears to be denied"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parece que el acceso a la red local está denegado"
+          }
         }
       }
     },
@@ -1198,6 +1886,12 @@
       "extractionState": "manual",
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MAC"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "MAC"
@@ -1213,6 +1907,12 @@
             "state": "translated",
             "value": "MAC Address"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dirección MAC"
+          }
         }
       }
     },
@@ -1223,6 +1923,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "macOS did not register the helper: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS no registró el asistente: %@"
           }
         }
       }
@@ -1235,6 +1941,12 @@
             "state": "translated",
             "value": "macOS did not remove the helper: %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS no eliminó el asistente: %@"
+          }
         }
       }
     },
@@ -1245,6 +1957,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "macOS reported a state this version does not know."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS informó un estado que esta versión no conoce."
           }
         }
       }
@@ -1257,6 +1975,12 @@
             "state": "translated",
             "value": "matched to %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "coincide con %@"
+          }
         }
       }
     },
@@ -1267,6 +1991,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "matched to a known device"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "coincide con un dispositivo conocido"
           }
         }
       }
@@ -1279,6 +2009,12 @@
             "state": "translated",
             "value": "In memory — this launch uses a fixture"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En memoria — esta ejecución usa datos de prueba"
+          }
         }
       }
     },
@@ -1289,6 +2025,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Merged"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fusionado"
           }
         }
       }
@@ -1301,6 +2043,12 @@
             "state": "translated",
             "value": "Minimal"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mínima"
+          }
         }
       }
     },
@@ -1311,6 +2059,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "30 days"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 días"
           }
         }
       }
@@ -1323,6 +2077,12 @@
             "state": "translated",
             "value": "7 days"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 días"
+          }
         }
       }
     },
@@ -1333,6 +2093,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "90 days"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "90 días"
           }
         }
       }
@@ -1345,6 +2111,12 @@
             "state": "translated",
             "value": "Name"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombre"
+          }
         }
       }
     },
@@ -1355,6 +2127,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "name query in flight"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "consulta de nombre en curso"
           }
         }
       }
@@ -1379,6 +2157,24 @@
               }
             }
           }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld nombre encontrado"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld nombres encontrados"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1390,6 +2186,12 @@
             "state": "translated",
             "value": "Naming"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombres"
+          }
         }
       }
     },
@@ -1397,6 +2199,12 @@
       "extractionState": "manual",
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NetBIOS"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "NetBIOS"
@@ -1412,6 +2220,12 @@
             "state": "translated",
             "value": "Network device (TTL)"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispositivo de red (TTL)"
+          }
         }
       }
     },
@@ -1422,6 +2236,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Never scanned"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nunca escaneado"
           }
         }
       }
@@ -1434,6 +2254,12 @@
             "state": "translated",
             "value": "No device matches “%@”."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ningún dispositivo coincide con “%@”."
+          }
         }
       }
     },
@@ -1444,6 +2270,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "No events match “%@”"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ningún evento coincide con “%@”"
           }
         }
       }
@@ -1456,6 +2288,12 @@
             "state": "translated",
             "value": "No %@ events in this window"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hay eventos de %@ en este periodo"
+          }
         }
       }
     },
@@ -1466,6 +2304,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "No hardware address"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin dirección de hardware"
           }
         }
       }
@@ -1478,6 +2322,12 @@
             "state": "translated",
             "value": "no hardware address"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sin dirección de hardware"
+          }
         }
       }
     },
@@ -1488,6 +2338,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "No identity changes seen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se han visto cambios de identidad"
           }
         }
       }
@@ -1500,6 +2356,12 @@
             "state": "translated",
             "value": "No matches"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin coincidencias"
+          }
         }
       }
     },
@@ -1510,6 +2372,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "No names could be read"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo leer ningún nombre"
           }
         }
       }
@@ -1522,6 +2390,12 @@
             "state": "translated",
             "value": "No network yet"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no hay red"
+          }
         }
       }
     },
@@ -1532,6 +2406,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "No port scan yet"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no se han escaneado puertos"
           }
         }
       }
@@ -1544,6 +2424,12 @@
             "state": "translated",
             "value": "No scan yet"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no hay escaneos"
+          }
         }
       }
     },
@@ -1554,6 +2440,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "no vendor"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sin fabricante"
           }
         }
       }
@@ -1578,6 +2470,24 @@
               }
             }
           }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "El %lld puerto revisado no estaba abierto."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Ninguno de los %lld puertos revisados estaba abierto."
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1588,6 +2498,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "— not advertised"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "— no anunciado"
           }
         }
       }
@@ -1600,6 +2516,12 @@
             "state": "translated",
             "value": "Not created yet — no scan so far"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no se ha creado — no hay escaneos todavía"
+          }
         }
       }
     },
@@ -1610,6 +2532,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not installed."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No instalado."
           }
         }
       }
@@ -1622,6 +2550,12 @@
             "state": "translated",
             "value": "Not a network Zhen can scan. Use CIDR form, /16 or narrower. Until then, scans use the automatic network."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No es una red que Zhen pueda escanear. Usa formato CIDR, /16 o más estrecha. Mientras tanto, los escaneos usan la red automática."
+          }
         }
       }
     },
@@ -1632,6 +2566,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not part of this scan"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No forma parte de este escaneo"
           }
         }
       }
@@ -1644,6 +2584,12 @@
             "state": "translated",
             "value": "Not requested"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No solicitado"
+          }
         }
       }
     },
@@ -1654,6 +2600,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nothing answered"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada respondió"
           }
         }
       }
@@ -1666,6 +2618,12 @@
             "state": "translated",
             "value": "Nothing answered before the scan stopped."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada respondió antes de que se detuviera el escaneo."
+          }
         }
       }
     },
@@ -1676,6 +2634,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nothing has changed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada ha cambiado"
           }
         }
       }
@@ -1688,6 +2652,12 @@
             "state": "translated",
             "value": "Nothing has changed for this device yet."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada ha cambiado aún para este dispositivo."
+          }
         }
       }
     },
@@ -1698,6 +2668,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nothing is installed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hay nada instalado"
           }
         }
       }
@@ -1710,6 +2686,12 @@
             "state": "translated",
             "value": "Now"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ahora"
+          }
         }
       }
     },
@@ -1720,6 +2702,12 @@
           "stringUnit": {
             "state": "new",
             "value": "%1$lld of %2$lld"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld de %2$lld"
           }
         }
       }
@@ -1732,6 +2720,12 @@
             "state": "translated",
             "value": "Off"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desactivado"
+          }
         }
       }
     },
@@ -1742,6 +2736,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Offline"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desconectado"
           }
         }
       }
@@ -1754,6 +2754,12 @@
             "state": "translated",
             "value": "offline"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "desconectado"
+          }
         }
       }
     },
@@ -1764,6 +2770,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Online"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En línea"
           }
         }
       }
@@ -1776,6 +2788,12 @@
             "state": "translated",
             "value": "Online Devices"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispositivos en línea"
+          }
         }
       }
     },
@@ -1786,6 +2804,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "online"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "en línea"
           }
         }
       }
@@ -1798,6 +2822,12 @@
             "state": "translated",
             "value": "Only this Mac sees this name. It wins over every name the device announces."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo esta Mac ve este nombre. Tiene prioridad sobre cualquier nombre que anuncie el dispositivo."
+          }
         }
       }
     },
@@ -1808,6 +2838,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Open"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir"
           }
         }
       }
@@ -1820,6 +2856,12 @@
             "state": "translated",
             "value": "Open Login Items…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir Ítems de inicio…"
+          }
         }
       }
     },
@@ -1830,6 +2872,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Open ports"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puertos abiertos"
           }
         }
       }
@@ -1842,6 +2890,12 @@
             "state": "translated",
             "value": "Open System Settings…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir Configuración del Sistema…"
+          }
         }
       }
     },
@@ -1852,6 +2906,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "OS fingerprinting and fast SYN port scans need raw network sockets, which macOS only grants to root. The engine is a small helper that runs only during scans and only sends results back to this app. Everything else works without it."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La identificación del sistema operativo y los escaneos SYN rápidos de puertos necesitan sockets de red sin procesar, que macOS solo concede a root. El motor es un pequeño asistente que solo se ejecuta durante los escaneos y solo envía resultados a esta app. Todo lo demás funciona sin él."
           }
         }
       }
@@ -1864,6 +2924,12 @@
             "state": "translated",
             "value": "Override"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personalizada"
+          }
         }
       }
     },
@@ -1874,6 +2940,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Partial"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parcial"
           }
         }
       }
@@ -1886,6 +2958,12 @@
             "state": "translated",
             "value": "Partial results"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resultados parciales"
+          }
         }
       }
     },
@@ -1896,6 +2974,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "permanent"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "permanente"
           }
         }
       }
@@ -1908,6 +2992,12 @@
             "state": "translated",
             "value": "port"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "puerto"
+          }
         }
       }
     },
@@ -1918,6 +3008,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ports"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puertos"
           }
         }
       }
@@ -1930,6 +3026,12 @@
             "state": "translated",
             "value": "Ports checked"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puertos revisados"
+          }
         }
       }
     },
@@ -1940,6 +3042,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Presence"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Presencia"
           }
         }
       }
@@ -1952,6 +3060,12 @@
             "state": "translated",
             "value": "presence"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "presencia"
+          }
         }
       }
     },
@@ -1962,6 +3076,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "private"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "privada"
           }
         }
       }
@@ -1974,6 +3094,12 @@
             "state": "translated",
             "value": "Privileged engine"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motor privilegiado"
+          }
         }
       }
     },
@@ -1984,6 +3110,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Queued"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En espera"
           }
         }
       }
@@ -1996,6 +3128,12 @@
             "state": "translated",
             "value": "%@ ran with partial results"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ terminó con resultados parciales"
+          }
         }
       }
     },
@@ -2006,6 +3144,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "randomized MAC"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MAC aleatoria"
           }
         }
       }
@@ -2018,6 +3162,12 @@
             "state": "translated",
             "value": "reassigned"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "reasignada"
+          }
         }
       }
     },
@@ -2028,6 +3178,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recent events"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eventos recientes"
           }
         }
       }
@@ -2040,6 +3196,12 @@
             "state": "translated",
             "value": "Remove"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar"
+          }
         }
       }
     },
@@ -2050,6 +3212,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Remove the privileged engine?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar el motor privilegiado?"
           }
         }
       }
@@ -2062,6 +3230,12 @@
             "state": "translated",
             "value": "Rename"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renombrar"
+          }
         }
       }
     },
@@ -2072,6 +3246,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rename Device"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renombrar dispositivo"
           }
         }
       }
@@ -2084,6 +3264,12 @@
             "state": "translated",
             "value": "Rename…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renombrar…"
+          }
         }
       }
     },
@@ -2094,6 +3280,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Renamed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renombrado"
           }
         }
       }
@@ -2106,6 +3298,12 @@
             "state": "translated",
             "value": "Resolving name…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolviendo nombre…"
+          }
         }
       }
     },
@@ -2116,6 +3314,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "responds to ping"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "responde a ping"
           }
         }
       }
@@ -2128,6 +3332,12 @@
             "state": "translated",
             "value": "results are still valid, just less complete"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "los resultados siguen siendo válidos, solo menos completos"
+          }
         }
       }
     },
@@ -2138,6 +3348,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reverse DNS"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS inverso"
           }
         }
       }
@@ -2150,6 +3366,12 @@
             "state": "translated",
             "value": "Review in Settings…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisar en Configuración…"
+          }
         }
       }
     },
@@ -2160,6 +3382,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "rotating MAC"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MAC rotativa"
           }
         }
       }
@@ -2172,6 +3400,12 @@
             "state": "translated",
             "value": "Run a scan to see what’s on your network."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haz un escaneo para ver qué hay en tu red."
+          }
         }
       }
     },
@@ -2182,6 +3416,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Running"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En curso"
           }
         }
       }
@@ -2194,6 +3434,12 @@
             "state": "translated",
             "value": "Running with partial results"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Con resultados parciales"
+          }
         }
       }
     },
@@ -2204,6 +3450,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save devices and events as JSON"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar dispositivos y eventos como JSON"
           }
         }
       }
@@ -2216,6 +3468,12 @@
             "state": "translated",
             "value": "Scan"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escaneo"
+          }
         }
       }
     },
@@ -2226,6 +3484,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scan Again"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escanear de nuevo"
           }
         }
       }
@@ -2238,6 +3502,12 @@
             "state": "translated",
             "value": "Scan automatically"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escanear automáticamente"
+          }
         }
       }
     },
@@ -2248,6 +3518,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "The scan completed but no devices replied. This usually means the Local Network permission is denied."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El escaneo terminó, pero ningún dispositivo respondió. Esto suele significar que el permiso de red local está denegado."
           }
         }
       }
@@ -2260,6 +3536,12 @@
             "state": "translated",
             "value": "Scan Network"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escanear la red"
+          }
         }
       }
     },
@@ -2270,6 +3552,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scan the network now"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escanear la red ahora"
           }
         }
       }
@@ -2282,6 +3570,12 @@
             "state": "translated",
             "value": "Scan Now"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escanear ahora"
+          }
         }
       }
     },
@@ -2292,6 +3586,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scan Ports"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escanear puertos"
           }
         }
       }
@@ -2304,6 +3604,12 @@
             "state": "translated",
             "value": "Scan for up to"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escanear durante un máximo de"
+          }
         }
       }
     },
@@ -2314,6 +3620,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scanned %@ · this session, not saved to history"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escaneado %@ · esta sesión, no se guarda en el historial"
           }
         }
       }
@@ -2326,6 +3638,12 @@
             "state": "translated",
             "value": "Scanning"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escaneando"
+          }
         }
       }
     },
@@ -2336,6 +3654,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scanning…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escaneando…"
           }
         }
       }
@@ -2348,6 +3672,12 @@
             "state": "translated",
             "value": "Scanning %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escaneando %@"
+          }
         }
       }
     },
@@ -2358,6 +3688,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scanning your network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escaneando tu red."
           }
         }
       }
@@ -2370,6 +3706,12 @@
             "state": "translated",
             "value": "Scans keep working without it; they lose the layer-2 sweep and SYN scanning."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los escaneos siguen funcionando sin él; pierden el barrido de capa 2 y el escaneo SYN."
+          }
         }
       }
     },
@@ -2380,6 +3722,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scans your network now, as Scan Now does in Zhen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escanea tu red ahora, como Escanear ahora en Zhen."
           }
         }
       }
@@ -2392,6 +3740,12 @@
             "state": "translated",
             "value": "Search devices"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar dispositivos"
+          }
         }
       }
     },
@@ -2402,6 +3756,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Settings"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuración"
           }
         }
       }
@@ -2414,6 +3774,12 @@
             "state": "translated",
             "value": "Setup"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparación"
+          }
         }
       }
     },
@@ -2424,6 +3790,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar"
           }
         }
       }
@@ -2436,6 +3808,12 @@
             "state": "translated",
             "value": "Show in Activity"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar en Actividad"
+          }
         }
       }
     },
@@ -2446,6 +3824,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show Details"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar detalles"
           }
         }
       }
@@ -2458,6 +3842,12 @@
             "state": "translated",
             "value": "Show Devices"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar dispositivos"
+          }
         }
       }
     },
@@ -2468,6 +3858,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show in Finder"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar en Finder"
           }
         }
       }
@@ -2480,6 +3876,12 @@
             "state": "translated",
             "value": "Show in System Settings…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar en Configuración del Sistema…"
+          }
         }
       }
     },
@@ -2490,6 +3892,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Signal"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Señal"
           }
         }
       }
@@ -2502,6 +3910,12 @@
             "state": "translated",
             "value": "since %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "desde %@"
+          }
         }
       }
     },
@@ -2512,6 +3926,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Some replies arrived late"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Algunas respuestas llegaron tarde"
           }
         }
       }
@@ -2524,6 +3944,12 @@
             "state": "translated",
             "value": "splits when the MAC rotates"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "se divide cuando la MAC rota"
+          }
         }
       }
     },
@@ -2535,6 +3961,12 @@
             "state": "translated",
             "value": "stabilised by Bonjour name"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "estabilizada por el nombre Bonjour"
+          }
         }
       }
     },
@@ -2545,6 +3977,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "stabilised by DHCP name"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "estabilizada por el nombre DHCP"
           }
         }
       }
@@ -2579,6 +4017,34 @@
               }
             }
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etapa %1$lld de %2$lld · %3$@ transcurrido · %#@devices@"
+          },
+          "substitutions": {
+            "devices": {
+              "argNum": 4,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg dispositivo hasta ahora"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg dispositivos hasta ahora"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2590,6 +4056,12 @@
             "state": "translated",
             "value": "Stop Scan"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detener escaneo"
+          }
         }
       }
     },
@@ -2600,6 +4072,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stop the scan. Devices found so far are kept."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detén el escaneo. Se conservan los dispositivos encontrados hasta ahora."
           }
         }
       }
@@ -2634,6 +4112,34 @@
               }
             }
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detenido después de %1$@ · %#@devices@"
+          },
+          "substitutions": {
+            "devices": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg dispositivo encontrado"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg dispositivos encontrados"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2644,6 +4150,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stopped before any port answered."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se detuvo antes de que respondiera algún puerto."
           }
         }
       }
@@ -2656,6 +4168,12 @@
             "state": "translated",
             "value": "Subnet"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subred"
+          }
         }
       }
     },
@@ -2666,6 +4184,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "e.g. 192.168.1.0/24"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "p. ej., 192.168.1.0/24"
           }
         }
       }
@@ -2678,6 +4202,12 @@
             "state": "translated",
             "value": "Subnet override"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subred personalizada"
+          }
         }
       }
     },
@@ -2688,6 +4218,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ (TCP fingerprint)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (huella TCP)"
           }
         }
       }
@@ -2700,6 +4236,12 @@
             "state": "translated",
             "value": "this Mac"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "esta Mac"
+          }
         }
       }
     },
@@ -2710,6 +4252,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today — %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoy — %@"
           }
         }
       }
@@ -2722,6 +4270,12 @@
             "state": "translated",
             "value": "Try another filter, or clear the search."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prueba otro filtro o borra la búsqueda."
+          }
         }
       }
     },
@@ -2732,6 +4286,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Unidentified device"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispositivo sin identificar"
           }
         }
       }
@@ -2744,6 +4304,12 @@
             "state": "translated",
             "value": "Unix-like (TTL)"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipo Unix (TTL)"
+          }
         }
       }
     },
@@ -2751,6 +4317,12 @@
       "extractionState": "manual",
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UPnP"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "UPnP"
@@ -2766,6 +4338,12 @@
             "state": "translated",
             "value": "Use the privileged engine"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar el motor privilegiado"
+          }
         }
       }
     },
@@ -2777,6 +4355,12 @@
             "state": "translated",
             "value": "Vendor"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fabricante"
+          }
         }
       }
     },
@@ -2786,6 +4370,12 @@
         "en": {
           "stringUnit": {
             "state": "new",
+            "value": "Zhen %1$@ (%2$@)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
             "value": "Zhen %1$@ (%2$@)"
           }
         }
@@ -2799,6 +4389,12 @@
             "state": "translated",
             "value": "Warning"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Advertencia"
+          }
         }
       }
     },
@@ -2806,6 +4402,12 @@
       "extractionState": "manual",
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Windows (TTL)"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Windows (TTL)"
@@ -2821,6 +4423,12 @@
             "state": "translated",
             "value": "Winner"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganador"
+          }
         }
       }
     },
@@ -2831,6 +4439,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Yesterday — %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayer — %@"
           }
         }
       }
@@ -2843,6 +4457,12 @@
             "state": "translated",
             "value": "You"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tú"
+          }
         }
       }
     },
@@ -2850,6 +4470,12 @@
       "extractionState": "manual",
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zhen"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Zhen"
@@ -2865,6 +4491,12 @@
             "state": "translated",
             "value": "Zhen is already scanning."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zhen ya está escaneando."
+          }
         }
       }
     },
@@ -2875,6 +4507,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Zhen history %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historial de Zhen %@"
           }
         }
       }

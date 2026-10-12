@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — part 2 done: accessibility, Shortcuts, symbol keys, DocC. Run ended.
+**Liveness:** 2026-10-11 — part 3 in progress: Spanish done; new-device notifications next.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -424,3 +424,42 @@ fixed), and every component link resolves. The catalogue adds nothing to the app
 | Unit | 74 tests, green |
 | UI, full suite | 39 passed; the screenshot test skipped itself |
 | Docs | `docbuild` clean |
+
+---
+
+# Part 3 — Spanish, and notice of new devices
+
+## Spanish
+
+This Mac's languages are `en-MX`, then `es-MX`. Spanish is the first translation, in
+neutral Latin-American Spanish, with macOS's own Spanish names for its places
+("Configuración del Sistema", "Ítems de inicio", "Mostrar en Finder").
+
+| Piece | Where |
+|---|---|
+| 248 strings, by symbol key; plurals as `one`/`other`; the three substitution strings keep their argument order | `Scripts/translations/es.json` |
+| A merge that refuses a missing key, an unknown key, or a placeholder that differs from the English | `Scripts/apply-translations.py es` |
+| The Local Network permission prompt | `Zhen/InfoPlist.xcstrings` |
+| `es` as a project region | `knownRegions` |
+
+**Gates:**
+- `LocalizationTests.spanishIsComplete` reads the built app's `en` and `es` tables.
+  Break: one key's `es` entry removed gave "untranslated: [renameDevice]".
+- `LocalizationTests.spanishPlurals` checks plurals, substitutions and their arguments.
+- `WindowSizeUITests.testSpanishFitsAtMinimum` runs the minimum window, Devices and
+  detail, in Spanish.
+- UI tests now pin `-AppleLanguages (en)`, so their English assertions do not depend on
+  the Mac's language order.
+
+**Bends:**
+- **"Nueva dirección" for `ipChanged`,** not "Dirección cambiada". At caption bold in
+  capitals, the latter would overrun the 140 pt event-kind column, which "ADDRESS CHANGED"
+  already fills to about 129 pt.
+- **Core's sentences stay English** in a Spanish window ("was Apple TV", the degradation
+  explanations). The app renders core's findings verbatim by design. Recorded in Known
+  rough edges.
+- **Siri phrases are English only.** An `AppShortcuts.xcstrings` would carry Spanish
+  phrases. Left for when someone can test them with Siri.
+
+**Seen in the Spanish captures:** at the minimum window the longer subtitles truncate,
+with the full text in the tooltip, as long English ones do.

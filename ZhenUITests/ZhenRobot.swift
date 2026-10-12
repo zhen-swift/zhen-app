@@ -24,7 +24,7 @@ struct ZhenRobot {
   @discardableResult
   static func launch(
     fixture: String = "home", look: Look? = nil, scanPace: Int = 40,
-    restoreState: Bool = false, extra: [String] = []
+    restoreState: Bool = false, language: String = "en", extra: [String] = []
   ) -> ZhenRobot {
     let app = XCUIApplication()
     // `-UITesting` takes no value, so it goes LAST. Anywhere else AppKit reads it as a
@@ -34,6 +34,9 @@ struct ZhenRobot {
     app.launchArguments = ["-Fixture", fixture, "-ScanPace", "\(scanPace)"]
       + (look?.arguments ?? [])
       + (restoreState ? ["-NSQuitAlwaysKeepsWindows", "YES", "-RestoreState"] : ["-ApplePersistenceIgnoreState", "YES"])
+      // The interface language, pinned: assertions read English words, and this Mac's
+      // second language is Spanish, which the app now speaks.
+      + ["-AppleLanguages", "(\(language))"]
       + extra
       + ["-UITesting"]
     app.launch()

@@ -108,6 +108,14 @@ descriptions, because the metadata processor reads them at build time. A string 
 in a view is extracted by the compiler as a new, automatic key; a catalogue with any
 automatic key has a literal that should have been a symbol.
 
+**Languages:** English (source) and Spanish. A translation lives in
+`Scripts/translations/<lang>.json`, by symbol key, and `Scripts/apply-translations.py
+<lang>` merges it into the catalogue. The script refuses a missing or unknown key and any
+placeholder that differs from the English. `Zhen/InfoPlist.xcstrings` translates the Local
+Network prompt. `LocalizationTests` checks the built app has every key in every language.
+UI tests pin `-AppleLanguages (en)`, and `WindowSizeUITests.testSpanishFitsAtMinimum` runs
+the minimum window in Spanish.
+
 ## Shortcuts
 
 `App/ZhenIntents.swift`: **Scan Network** (opens the app and scans, as ⌘R does) and
@@ -157,6 +165,10 @@ gate only a person can run. Phase-3 ledger and questions have the detail.
 - **Marketing captures need a clean desktop.** An XCUITest window screenshot is screen
   pixels. The Dock and notifications land in it, and a 1440 × 900 window does not fit
   above the Dock on a 1512 × 949 display (`Docs/SCREENSHOTS.md`).
+- **Event details and degradation explanations are core's English.** The app shows core's
+  sentences verbatim ("was Apple TV", "No packet-capture device could be opened…"), so a
+  Spanish window shows them in English. Translating them needs core to send the facts as
+  fields, not finished sentences.
 - **Not yet verified by a person:** Developer ID signing and notarisation, helper
   registration in Login Items, a mis-signed caller being refused, a real-LAN scan, and the
   main-thread trace. `Docs/process/PHASE-2-verification.md` steps 1–6.

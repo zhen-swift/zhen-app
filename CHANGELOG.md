@@ -17,6 +17,7 @@
 - fastlane lanes, the App Store screenshot pipeline and `Marketing/copy.json`.
 - Shortcuts: Scan Network and Count Online Devices, with Siri phrases.
 - Every string a symbol key in `Localizable.xcstrings`.
+- Spanish, including the Local Network permission prompt.
 
 ### Fixed
 - Scan Ports recorded a run of one address, after which every other device showed as

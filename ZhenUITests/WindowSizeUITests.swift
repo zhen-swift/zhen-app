@@ -39,6 +39,22 @@ final class WindowSizeUITests: XCTestCase {
     robot.key("f", [.command, .control])
   }
 
+  /// Spanish runs longer than English — "Escanear ahora", "Última vez visto", "Dispositivo
+  /// sin identificar" — and the minimum window is measured from the text. At the minimum,
+  /// in Spanish, nothing is clipped either.
+  @MainActor
+  func testSpanishFitsAtMinimum() {
+    let robot = ZhenRobot.launch(language: "es")
+    robot.waitFor("deviceTable")
+    XCTAssertTrue(robot.window.title.contains("dispositivos"), "not in Spanish: \(robot.window.title)")
+    robot.shrinkToMinimum()
+    assertNothingClipped(robot, at: "minimum, Spanish")
+    robot.capture("devices-minimum-es", in: self)
+    robot.openDevice("192.168.50.10")
+    assertInside(robot, ["detailName", "renameButton", "scanPortsButton", "sidebar"], at: "minimum, Spanish, detail")
+    robot.capture("detail-minimum-es", in: self)
+  }
+
   /// The detail and the live-scan takeover at the same two sizes.
   @MainActor
   func testDetailAndTakeoverFitAtBothSizes() {
