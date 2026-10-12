@@ -45,7 +45,10 @@
   "didNotAnswerThisTimeSo": "%@ no respondió esta vez, así que no se revisó ningún puerto.",
   "discovery": "Descubrimiento",
   "done": "Listo",
-  "eventCount": { "one": "%lld evento", "other": "%lld eventos" },
+  "eventCount": {
+    "one": "%lld evento",
+    "other": "%lld eventos"
+  },
   "eventsAppearHereWhenDevicesJoin": "Los eventos aparecen aquí cuando los dispositivos se conectan, se van o cambian.",
   "eventsPerHourOverHours": "Eventos por hora: %1$lld en %2$lld horas",
   "eventsTitle": "Eventos",
@@ -73,12 +76,18 @@
   "historyFile": "Archivo de historial",
   "historyNoLongerHasThisDevice": "El historial ya no tiene este dispositivo.",
   "holdsOnlyWhileLeaseDoes": "dura solo mientras dure la concesión",
-  "hostsAnswered": { "one": "%lld equipo respondió", "other": "%lld equipos respondieron" },
+  "hostsAnswered": {
+    "one": "%lld equipo respondió",
+    "other": "%lld equipos respondieron"
+  },
   "hour": "Hora",
   "howManyDevicesAnsweredZhensMost": "Cuántos dispositivos respondieron al escaneo más reciente de Zhen. Lee el historial; no escanea.",
   "identified": "Identificado",
   "identity": "Identidad",
-  "identityChanges": { "one": "%lld cambio de identidad", "other": "%lld cambios de identidad" },
+  "identityChanges": {
+    "one": "%lld cambio de identidad",
+    "other": "%lld cambios de identidad"
+  },
   "identityHistory": "Historial de identidad",
   "identityKey": "clave de identidad: %1$@, %2$@",
   "identityLower": "identidad",
@@ -92,7 +101,10 @@
   "keepEvents": "Conservar eventos durante",
   "keptForeverWhatMakesMergesPossible": "Se conserva siempre — es lo que hace posibles las fusiones",
   "knownBy": "Conocido como",
-  "last48HoursEvents": { "one": "Últimas 48 horas · %lld evento", "other": "Últimas 48 horas · %lld eventos" },
+  "last48HoursEvents": {
+    "one": "Últimas 48 horas · %lld evento",
+    "other": "Últimas 48 horas · %lld eventos"
+  },
   "lastScan": "Último escaneo %@",
   "lastScanCompletedWithPartialResults": {
     "one": "El último escaneo terminó con resultados parciales — %lld fuente no disponible",
@@ -123,11 +135,19 @@
   "n90Days": "90 días",
   "name": "Nombre",
   "nameQueryFlight": "consulta de nombre en curso",
-  "namesFound": { "one": "%lld nombre encontrado", "other": "%lld nombres encontrados" },
+  "namesFound": {
+    "one": "%lld nombre encontrado",
+    "other": "%lld nombres encontrados"
+  },
   "naming": "Nombres",
   "netbios": "NetBIOS",
   "networkDeviceTtl": "Dispositivo de red (TTL)",
   "neverScanned": "Nunca escaneado",
+  "newDeviceOnYourNetwork": "Nuevo dispositivo en tu red",
+  "newDevicesOnYourNetwork": {
+    "one": "%lld dispositivo nuevo en tu red",
+    "other": "%lld dispositivos nuevos en tu red"
+  },
   "noDeviceMatches": "Ningún dispositivo coincide con “%@”.",
   "noEventsMatch": "Ningún evento coincide con “%@”",
   "noEventsThisWindow": "No hay eventos de %@ en este periodo",
@@ -155,6 +175,9 @@
   "nothingHasChanged": "Nada ha cambiado",
   "nothingHasChangedThisDeviceYet": "Nada ha cambiado aún para este dispositivo.",
   "nothingInstalled": "No hay nada instalado",
+  "notificationsAreOffForZhen": "Las notificaciones están desactivadas para Zhen. Permítelas en Configuración del Sistema › Notificaciones.",
+  "notifyNewDeviceJoins": "Avisarme cuando se conecte un dispositivo nuevo",
+  "notifyNewDeviceJoinsDetail": "Después de cada escaneo de Zhen, para dispositivos que nunca había visto. No en el primer escaneo, cuando todos son nuevos.",
   "now": "Ahora",
   "of": "%1$lld de %2$lld",
   "off": "Desactivado",

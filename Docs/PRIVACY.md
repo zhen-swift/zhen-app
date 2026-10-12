@@ -13,6 +13,8 @@ Zhen looks at your local network on your Mac. It tells no one what it finds.
   shared with the `zhen` command line. It never leaves your Mac unless you export it
   (File › Export History…, or the Export button in Settings, which writes a JSON file
   where you choose).
+- **Notifications** (optional, off until you turn them on) are local: Notification Centre
+  on this Mac, naming the new device and its address.
 - **Names you give devices**, and your settings, are kept in the app's preferences on
   this Mac.
 - **Local Network permission** is macOS's prompt: Zhen asks for it to scan, and works

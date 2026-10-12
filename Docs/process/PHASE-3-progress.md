@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — part 3 in progress: Spanish done; new-device notifications next.
+**Liveness:** 2026-10-11 — part 3 done: Spanish, new-device notices. Run ended.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -463,3 +463,33 @@ neutral Latin-American Spanish, with macOS's own Spanish names for its places
 
 **Seen in the Spanish captures:** at the minimum window the longer subtitles truncate,
 with the full text in the tooltip, as long English ones do.
+
+## Notice of new devices
+
+"Scan automatically" existed, but nothing said when an unknown device joined, which is
+the moment a network watcher exists for. Settings › Scanning now has **Notify me when a
+new device joins**, off by default. Turning it on asks macOS for permission. If permission
+is refused, the switch turns itself back off and says where to allow it.
+
+The rule (`NewDeviceNotice`): a device is new when it is not among the identities known
+before the scan **and** history first saw it during the scan. A merge re-keys a device
+known for a year; a device back after a week is not new. Neither is announced. A history's
+first scan announces nothing; every device is new then. More than three new devices make
+one summary ("4 new devices on your network").
+
+**Fixture support:** `-NewDeviceOnScan` makes the fixture scanner's scan also find a
+guest phone at `192.168.50.44`, with MAC `00:00:5E:00:53:44` (documentation range).
+Opt-in, so no other test's counts change.
+
+| Gate | Break | Failure |
+|---|---|---|
+| `NewDeviceNoticeTests.endToEnd`: a fixture scan with the new device posts exactly one notice naming its address, and none with the setting off | the post loop removed | posted 0 of 1 |
+| `NewDeviceNoticeTests.whatCountsAsNew` | the first-scan guard removed | every device of a first scan announced |
+| `NewDeviceNoticeTests.summary` | — | four make one summary with the plural title |
+
+The notice strings are in English and Spanish (`es.json`, 253 keys).
+`SettingsUITests` and both accessibility audits pass with the new switch.
+
+**Limit:** notices come only from scans the app runs while open. Closing the window quits
+the app (one `Window`), so there is no background watching. A menu-bar presence would
+change that, and it is a product decision.

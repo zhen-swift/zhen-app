@@ -2246,6 +2246,64 @@
         }
       }
     },
+    "newDeviceOnYourNetwork": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New device on your network"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuevo dispositivo en tu red"
+          }
+        }
+      }
+    },
+    "newDevicesOnYourNetwork": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld new device on your network"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld new devices on your network"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dispositivo nuevo en tu red"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dispositivos nuevos en tu red"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "noDeviceMatches": {
       "extractionState": "manual",
       "localizations": {
@@ -2674,6 +2732,57 @@
           "stringUnit": {
             "state": "translated",
             "value": "No hay nada instalado"
+          }
+        }
+      }
+    },
+    "notificationsAreOffForZhen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications are off for Zhen. Allow them in System Settings › Notifications."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las notificaciones están desactivadas para Zhen. Permítelas en Configuración del Sistema › Notificaciones."
+          }
+        }
+      }
+    },
+    "notifyNewDeviceJoins": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notify me when a new device joins"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avisarme cuando se conecte un dispositivo nuevo"
+          }
+        }
+      }
+    },
+    "notifyNewDeviceJoinsDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "After each scan Zhen runs, for devices it has never seen before. Not on the first scan, when every device is new."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Después de cada escaneo de Zhen, para dispositivos que nunca había visto. No en el primer escaneo, cuando todos son nuevos."
           }
         }
       }

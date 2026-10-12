@@ -9,6 +9,7 @@ struct Preferences {
     static let deepScan = "deepScanNewDevices"
     static let retentionDays = "retentionDays"
     static let budgetSeconds = "scanBudgetSeconds"
+    static let notifyNewDevices = "notifyNewDevices"
   }
 
   /// The scan lengths Settings offers, in seconds. Core's default is 30.
@@ -21,6 +22,8 @@ struct Preferences {
   let retentionDays: Int
   /// How long a scan may take in all.
   let budget: Duration
+  /// Whether a device seen for the first time is announced. Off unless asked for.
+  let notifyNewDevices: Bool
 
   init(_ defaults: UserDefaults) {
     scanIntervalMinutes = defaults.integer(forKey: Key.scanInterval)
@@ -29,6 +32,7 @@ struct Preferences {
     retentionDays = defaults.integer(forKey: Key.retentionDays)
     let seconds = defaults.integer(forKey: Key.budgetSeconds)
     budget = .seconds(Self.budgets.contains(seconds) ? seconds : Self.defaultBudgetSeconds)
+    notifyNewDevices = defaults.bool(forKey: Key.notifyNewDevices)
   }
 
   /// A typed subnet, or nil when it is empty or not a network this app will scan.

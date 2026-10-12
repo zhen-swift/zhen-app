@@ -116,6 +116,22 @@ Network prompt. `LocalizationTests` checks the built app has every key in every 
 UI tests pin `-AppleLanguages (en)`, and `WindowSizeUITests.testSpanishFitsAtMinimum` runs
 the minimum window in Spanish.
 
+## New-device notices
+
+With "Notify me when a new device joins" on (off by default; macOS's permission is asked
+when it is switched on), each scan the app runs ends by comparing the devices it knew
+before with the devices history holds now. A device is new when both are true:
+- the app did not know it before the scan (by identity)
+- history first saw it during the scan
+
+Either alone is wrong: a merge re-keys an old device, and a device returning after a week
+is not new. A history's first scan announces nothing. More than three new devices make one
+summary. `NewDeviceNotice` holds the rule; `Notifier` is the seam (`LiveNotifier` posts
+through `UNUserNotificationCenter`, `FakeNotifier` records).
+
+Notices come only from scans the app runs while it is open, by hand or with "Scan
+automatically". Closing the window quits the app, so nothing watches in the background.
+
 ## Shortcuts
 
 `App/ZhenIntents.swift`: **Scan Network** (opens the app and scans, as ⌘R does) and

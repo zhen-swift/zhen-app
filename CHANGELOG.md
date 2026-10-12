@@ -18,6 +18,7 @@
 - Shortcuts: Scan Network and Count Online Devices, with Siri phrases.
 - Every string a symbol key in `Localizable.xcstrings`.
 - Spanish, including the Local Network permission prompt.
+- Optional notifications when a device Zhen has never seen joins the network.
 
 ### Fixed
 - Scan Ports recorded a run of one address, after which every other device showed as

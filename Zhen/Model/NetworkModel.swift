@@ -16,6 +16,7 @@ final class NetworkModel {
   @ObservationIgnored private let pipeline: ScanPipeline
   @ObservationIgnored let defaults: UserDefaults
   @ObservationIgnored let helper: any HelperService
+  @ObservationIgnored let notifier: any Notifier
   @ObservationIgnored private let clock: any Clock<Duration>
   @ObservationIgnored private let liveRunner: LiveScanRunner?
   /// The history file, when this launch uses one.
@@ -55,6 +56,7 @@ final class NetworkModel {
       self.pipeline = ScanPipeline(runner: runner)
       self.defaults = .standard
       self.helper = LiveHelperService()
+      self.notifier = LiveNotifier()
     case .fixture(let variant):
       let store = InMemoryHistoryStore()
       self.store = store
@@ -63,7 +65,7 @@ final class NetworkModel {
       let capture = (try? FixtureNetwork.capture()) ?? ScanReport(run: FixtureNetwork.emptyRun)
       self.pipeline = ScanPipeline(runner: FixtureScanRunner(
         store: store, capture: capture, variant: variant,
-        pace: environment.scanPace, clock: ContinuousClock()
+        pace: environment.scanPace, clock: ContinuousClock(), addsNewDevice: environment.newDeviceOnScan
       ))
       // A throwaway domain: a test can never change, or be changed by, real preferences.
       if let testDefaults {
@@ -80,6 +82,7 @@ final class NetworkModel {
         self.defaults = defaults
       }
       self.helper = FakeHelperService()
+      self.notifier = FakeNotifier()
     }
     self.clock = ContinuousClock()
     userNames = (defaults.dictionary(forKey: Keys.userNames) as? [String: String]) ?? [:]
@@ -198,6 +201,8 @@ final class NetworkModel {
   func performScan() async {
     guard scan.runToken != nil else { return }
     await liveRunner?.note(helper.state)
+    let knownBefore = Set(devices.map(\.id))
+    let started = Date.now
     let outcome = await scan.run(with: pipeline)
     switch outcome {
     case .finished(let completed):
@@ -209,6 +214,12 @@ final class NetworkModel {
       lastDegradations = [degradation]
     }
     await reload()
+    if Preferences(defaults).notifyNewDevices {
+      let arrivals = NewDeviceNotice.newDevices(devices, knownBefore: knownBefore, scanStarted: started)
+      for message in NewDeviceNotice.messages(for: arrivals) {
+        notifier.post(title: message.title, body: message.body, id: message.id)
+      }
+    }
   }
 
   /// Gives a device a name of its own. Local only: nothing is written back to the device.

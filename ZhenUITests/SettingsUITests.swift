@@ -24,7 +24,7 @@ final class SettingsUITests: XCTestCase {
         .matching(NSPredicate(format: "label ==[c] %@", section)).count > 0
       XCTAssertTrue(found, "no \(section) section")
     }
-    for control in ["scanIntervalPicker", "subnetOverrideField", "scanBudgetPicker", "deepScanToggle", "retentionPicker", "exportHistoryButton"] {
+    for control in ["scanIntervalPicker", "subnetOverrideField", "scanBudgetPicker", "deepScanToggle", "notifyNewDevicesToggle", "retentionPicker", "exportHistoryButton"] {
       XCTAssertTrue(robot.element(control).exists, "no \(control)")
     }
     XCTAssertTrue(robot.element("settings").staticTexts["Kept forever — it’s what makes merges possible"].exists)

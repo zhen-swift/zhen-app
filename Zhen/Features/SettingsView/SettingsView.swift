@@ -12,6 +12,9 @@ struct SettingsView: View {
   @AppStorage(Preferences.Key.retentionDays) private var retentionDays = 0
   @AppStorage(Preferences.Key.budgetSeconds) private var budgetSeconds = Preferences.defaultBudgetSeconds
   @State private var exporting: HistoryDocument?
+  @AppStorage(Preferences.Key.notifyNewDevices) private var notifyNewDevices = false
+  /// The person said yes here and macOS said no.
+  @State private var notificationsRefused = false
 
   var body: some View {
     Form {
@@ -45,6 +48,18 @@ struct SettingsView: View {
         }
         .accessibilityLabel(String(localized: .checkPortsEveryScan))
         .accessibilityIdentifier("deepScanToggle")
+        Toggle(isOn: $notifyNewDevices) {
+          Text(.notifyNewDeviceJoins)
+          Text(.notifyNewDeviceJoinsDetail)
+        }
+        .accessibilityLabel(String(localized: .notifyNewDeviceJoins))
+        .accessibilityIdentifier("notifyNewDevicesToggle")
+        if notificationsRefused {
+          Text(.notificationsAreOffForZhen)
+            .font(.subheadline)
+            .foregroundStyle(.statusWarningText)
+            .accessibilityIdentifier("notificationsRefused")
+        }
       } header: {
         Text(.scanning).sectionLabel()
       }
@@ -105,6 +120,17 @@ struct SettingsView: View {
     ) { _ in exporting = nil }
     .frame(width: .windowSize.settingsWidth, height: .windowSize.settingsHeight)
     .task(id: retentionDays) { await model.applyRetention(days: retentionDays) }
+    // Permission is asked when the person turns this on, never before: the prompt then
+    // arrives as the answer to something they did.
+    .onChange(of: notifyNewDevices) { _, on in
+      guard on else { notificationsRefused = false; return }
+      Task {
+        if !(await model.notifier.requestPermission()) {
+          notifyNewDevices = false
+          notificationsRefused = true
+        }
+      }
+    }
     .accessibilityElement(children: .contain)
     .accessibilityLabel(String(localized: .settings))
     .accessibilityIdentifier("settings")

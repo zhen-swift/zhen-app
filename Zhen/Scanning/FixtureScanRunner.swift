@@ -14,6 +14,8 @@ nonisolated struct FixtureScanRunner: ScanRunning {
   /// Time between events, so a person or a UI test can see the stream.
   let pace: Duration
   let clock: any Clock<Duration>
+  /// Whether a scan finds `guest` too: a device the fixture history has never seen.
+  var addsNewDevice = false
 
   func run(_ request: ScanRequest, progress: ProgressSink) async -> ScanOutcome {
     let started = Timestamp.now
@@ -22,7 +24,8 @@ nonisolated struct FixtureScanRunner: ScanRunning {
     // Only what the request covers: a port scan of one device replays that device. An
     // IPv6-only device has no IPv4 address to be inside a target, and a full scan finds it
     // anyway, the way discovery's neighbour reads do.
-    let devices = (latest?.devices ?? []).filter { device in
+    let replayed = (latest?.devices ?? []) + (addsNewDevice ? [Self.guest(from: capture)].compactMap(\.self) : [])
+    let devices = replayed.filter { device in
       request.network == nil || device.ipv4Addresses.contains(where: network.contains)
     }
     var stages: [StageTiming] = []
@@ -86,6 +89,22 @@ nonisolated struct FixtureScanRunner: ScanRunning {
     )
     let events = request.records ? await store.record(report) : []
     return .finished(CompletedScan(report: report, events: events))
+  }
+
+  /// A phone that has just joined: documentation-range MAC and an address no fixture run
+  /// has used, a Bonjour name, first seen now.
+  static func guest(from capture: ScanReport) -> Device? {
+    guard var guest = capture.devices.first(where: { $0.mac?.isLocallyAdministered == false }) ?? capture.devices.first else {
+      return nil
+    }
+    guest.addresses = [.v4(IPv4Address(raw: 0xC0A8_322C))]  // 192.168.50.44
+    guest.mac = MACAddress(raw: 0x0000_5E00_5344)            // 00:00:5E:00:53:44
+    guest.names = [NameCandidate(value: "Guest Phone", source: .mdns, rank: 1)]
+    guest.vendor = nil
+    guest.ports = []
+    guest.firstSeen = .now
+    guest.lastSeen = .now
+    return guest
   }
 
   /// What a deep scan of a fixture device with no recorded ports finds: the common ports,

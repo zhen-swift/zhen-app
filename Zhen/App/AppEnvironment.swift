@@ -34,6 +34,9 @@ nonisolated struct AppEnvironment: Sendable {
   /// `-WindowSize 1440x900`: the window's content size at launch, for App Store captures
   /// (AGENTS.md: the Mac capture is a 1440 × 900 window on a Retina display).
   var windowSize: CGSize?
+  /// `-NewDeviceOnScan`: the fixture scanner's next scan finds one device history has never
+  /// seen, so a test can watch a new-device notice end to end.
+  var newDeviceOnScan = false
   /// The process environment, handed to `HistoryLocation` so `ZHEN_HISTORY` still works.
   var processEnvironment: [String: String]
   /// When this launch began; fixtures are laid out relative to it.
@@ -78,6 +81,7 @@ nonisolated struct AppEnvironment: Sendable {
       increasedContrast: value(after: "-Contrast") == "increased",
       scanPace: .milliseconds(pace),
       windowSize: size,
+      newDeviceOnScan: arguments.contains("-NewDeviceOnScan"),
       processEnvironment: environment,
       launchedAt: now
     )
