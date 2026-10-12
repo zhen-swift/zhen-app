@@ -19,7 +19,7 @@ extension RootView {
               .accessibilityIdentifier("sidebarRoom-\(item.rawValue)")
           }
         } header: {
-          Text("Zhen").sectionLabel()
+          Text(.zhen).sectionLabel()
         }
       }
       .listStyle(.sidebar)

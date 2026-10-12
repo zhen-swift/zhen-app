@@ -20,7 +20,7 @@ extension DevicesView {
             .accessibilityIdentifier("partialRunTitle")
           Spacer()
           if !model.lastDegradations.isEmpty {
-            Button(isExpanded ? "Hide Details" : "Show Details") {
+            Button(String(localized: isExpanded ? .hideDetails : .showDetails)) {
               withAnimation(.spring(duration: 0.3)) { isExpanded.toggle() }
             }
             .buttonStyle(.link)
@@ -46,12 +46,12 @@ extension DevicesView {
       let problems = model.lastDegradations.count
       switch model.latestRun?.outcome {
       case .deadlineExpired?:
-        return String(localized: "Last scan ran out of time — results are partial")
+        return String(localized: .lastScanRanOutTimeResults)
       case .cancelled?:
-        return String(localized: "Last scan was stopped — results are partial")
+        return String(localized: .lastScanWasStoppedResultsAre)
       default:
         // Plural from the catalogue.
-        return String(localized: "Last scan completed with partial results — \(problems) sources unavailable")
+        return String(localized: .lastScanCompletedWithPartialResults(problems))
       }
     }
   }

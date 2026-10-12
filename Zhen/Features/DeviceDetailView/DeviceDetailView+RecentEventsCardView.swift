@@ -8,10 +8,10 @@ extension DeviceDetailView {
     let onShowAll: () -> Void
 
     var body: some View {
-      Card("Recent events") {
+      Card(.recentEvents) {
         VStack(alignment: .leading, spacing: .zero) {
           if events.isEmpty {
-            Text("Nothing has changed for this device yet.")
+            Text(.nothingHasChangedThisDeviceYet)
               .font(.body)
               .foregroundStyle(.textSecondary)
               .padding(.spacing.large)
@@ -22,7 +22,7 @@ extension DeviceDetailView {
             }
           }
           Divider()
-          Button("Show in Activity", action: onShowAll)
+          Button(String(localized: .showActivity), action: onShowAll)
             .buttonStyle(.link)
             .padding(.spacing.large)
             .accessibilityIdentifier("showInActivityButton")

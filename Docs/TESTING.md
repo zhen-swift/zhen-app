@@ -3,7 +3,7 @@
 | Layer | Where | Runs |
 |---|---|---|
 | Unit | `ZhenTests/`, Swift Testing | every rule: the pipeline's isolation and coalescing, the session, the table's identities and order, fixtures, scanning behaviour, detail derivations, settings, export, plurals, the built app's Info.plist and daemon plist |
-| UI | `ZhenUITests/`, XCUITest with the robot in `ZhenRobot.swift` | every room and flow end to end, by accessibility identifier; the harness gates (keyboard-only, window size range, restoration, four appearances, the all-unidentified acceptance case, an accessibility audit) |
+| UI | `ZhenUITests/`, XCUITest with the robot in `ZhenRobot.swift` | every room and flow end to end, by accessibility identifier; the harness gates (keyboard-only, window size range, restoration, four appearances, the all-unidentified acceptance case); two accessibility audits — the project's (every control has an identifier and a name) and Apple's `performAccessibilityAudit` on every screen and state |
 | Marketing | `ZhenUITests/AppStoreScreenshotUITests.swift` | asset capture, not correctness — skipped unless `ZHEN_SCREENSHOTS=1` |
 | Previews | `#Preview` on every view, fed by `Fixtures/PreviewContainer` | — |
 

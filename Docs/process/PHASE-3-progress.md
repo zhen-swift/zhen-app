@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — stages 1–5 done, closing checks done. Run ended.
+**Liveness:** 2026-10-11 — part 2 done: accessibility, Shortcuts, symbol keys, DocC. Run ended.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -271,3 +271,156 @@ Not pushed (Q3).
 - `PHASE-3-questions.md` Q1–Q7
 - `PHASE-2-verification.md` steps 1–6. Step 0, the quiet-desktop UI run, is done here.
 - clean marketing captures (Q5)
+
+---
+
+# Part 2 — the app-only follow-ups (2026-10-11, evening)
+
+JC: "continue with app changes; computer is unlocked; no other agents are running." The
+app-only items from the "what is missing" list. Skipped: designer round 3, which needs the
+designer, and translations. Hiding the Dock for clean marketing captures was not done; it
+is JC's system setting.
+
+The real history file changed during this part: SHA-256 `7600d79b`, modified 21:03, with
+`com.jctec.zhen.plist` recreated. That was JC scanning in the installed app, not this
+run. It is the new baseline, and the preferences are JC's and left alone.
+
+## Apple's accessibility audit
+
+`SystemAccessibilityAuditUITests` runs `performAccessibilityAudit(for: .all)` on Devices,
+Detail, Activity, the live scan and Settings, and on the empty, silent and partial
+fixtures. The first run reported 39 issues.
+
+**Fixed (ours):**
+- **No role:** every element made with `.accessibilityElement(children: .combine/.ignore)`
+  (name cells, identity cells, footer, found-host rows, event rows, stage cards, banner
+  rows, source rows) had "Unknown role". These now carry `.isStaticText`, and the dot,
+  meter and histogram `.isImage`.
+- **No name:** the device table, the found-so-far list and the Activity list. Now
+  "Devices", "Found so far" and "Events".
+- **The footer's dot said "Merged" to VoiceOver while a scan ran.** It used an event
+  tone's word. It now says Scanning, Partial results, Complete or Never scanned
+  (`NetworkModel.footerStatusLabel`).
+- **The partial-run strip's title failed contrast on the translucent `.bar`.** It now
+  sits on opaque `surfaceRaised`.
+- **White on the app's global accent measured 2.61:1 in dark mode** (1.88:1 in dark with
+  Increase Contrast). AppKit fills selections, switches and prominent buttons with the
+  global accent and draws white on top. The global accent was `AccentColor`, the accent
+  *text* colour, which is light in dark mode. It is now `SystemAccent`: `#6A58C9`
+  standard, 5.45:1; `#4E4194` with Increase Contrast, 8.37:1. The `accent` text token is
+  unchanged. `PaletteContrastTests.whiteOnSystemAccent`; break: dark set to `#A495E8`
+  gave 2.61.
+
+**Excused, matched exactly, each with its reason in the test:**
+- **Form pickers' "Action is missing":** AppKit's popup inside SwiftUI's `Form`;
+  `.pickerStyle(.menu)` made no difference.
+- **The emoji-and-symbols input item and the Touch Bar host:** the system's.
+- **Title-bar buttons:** 14 pt groups.
+- **Unnamed container groups:** window, split column, table cell, list section. Excused
+  only when something inside them is named; an empty unnamed group still fails.
+
+**Contrast is judged on measured pixels, WCAG 4.5:1.** The audit is stricter for small
+text, and its sampling varied run to run. It flagged "Minimal" at 4.86–5.60:1 measured,
+the `private` chip at 4.56:1 and the empty-state copy at 5.51:1, but none of them in
+every run. The test measures the element's own pixels (background is the commonest
+luminance, text the farthest from it) and fails under 4.5. Text scrolled out of the
+window is skipped: one "failure" at 4.21:1 was 25 pt below the window's edge, measuring
+whatever was behind it.
+
+**The selected sidebar row is excused, with its measured ratio logged.** It measured
+3.92:1. The attached screenshot showed it green: macOS fills a sidebar selection with the
+person's own system accent (this Mac's is green), and uses the app's only under
+Multicolour. That is the same reason phase 2 recorded for prominent buttons.
+
+**Two test-harness lessons:**
+- **Settings is audited only on its own window's elements.** The audit covers every
+  window, and the main window's table, behind Settings, "failed contrast" against
+  Settings' pixels. Minimising the main window did not help: a minimised window stays in
+  the tree with its old frames.
+- **Closing the main window quits the app.** With one `Window` scene, closing the last
+  window ends a SwiftUI app. That follows from stage 3's `Window`, and is normal for a
+  single-window Mac app. Recorded in ARCHITECTURE.
+
+| Gate | Break | Failure |
+|---|---|---|
+| `SystemAccessibilityAuditUITests.testEveryScreen` | `.isStaticText` removed from the name cell | "Unknown role — 'deviceName-192.168.50.1' …" on every row |
+| the same | the Activity list's name removed | "Element has no description — 'activityList'" |
+
+**Static text carries its words in the value, not the label.** Three UI tests read name
+cells through `.label` and got empty strings. `ZhenRobot.words` now joins the non-empty
+label and value, and those tests read `.text`.
+
+## Shortcuts
+
+`App/ZhenIntents.swift` adds two App Intents, with Siri phrases in an
+`AppShortcutsProvider`:
+- **Scan Network** opens the app and calls `NetworkModel.startScan()`, as ⌘R does. If a
+  scan is already running it answers so.
+- **Count Online Devices** reads history, loading it first after a cold launch, and
+  returns a number.
+
+`ZhenApp.init` registers the one model with `AppDependencyManager`. The built app's
+`Metadata.appintents` lists both actions and all three phrases. `IntentTests` drives
+each intent's `run(on:)` with a fixture model; break: `startScan()` dropped, so the scan
+never ran.
+
+## Symbol keys (Q4, resolved)
+
+Every user-facing string is now a symbol key in `Localizable.xcstrings`
+(`extractionState: manual`), used as `Text(.key)`, `String(localized: .key)`, or as the
+resource itself in this app's components, whose `LocalizedStringKey` parameters became
+`LocalizedStringResource`.
+
+A throwaway script did the conversion:
+1. Re-keyed 253 entries to camelCase symbols, keeping English values and plural forms.
+2. Rewrote 300 call sites by their context.
+
+Then by hand:
+- ternaries the script wrapped on one side only
+- plural strings with substitutions, whose symbols label that argument (`devices:`)
+- an event sentence that was two styled `Text`s interpolated, now an `AttributedString`
+  with token colours. `Text +` is deprecated on macOS 26, and the pair is not a string
+  to translate.
+- preview-only text, now `Text(verbatim:)`, or a real symbol where one exists
+- 20 numbered or unclear names, such as `online2` → `onlineLower` and `known` → `knownBy`.
+  The rename caught a key path (`\.lastSeen`) on the way, which was put back.
+
+**App Intents need literal resources.** The metadata processor refused generated
+symbols ("must be initialized with a call to its initializer or a string literal"), so
+the intents spell `LocalizedStringResource("scanNetwork", defaultValue: …)` with the
+same keys.
+
+**Check:** after a build and `xcstringstool sync`, the catalogue has 248 keys, none
+automatic (a literal that escaped would come back as one), and none unused.
+`PluralTests` now reads the symbols; break: `identityChanges`' `one` form removed gave
+"1 identity changes". `Scripts/catalog-plurals.py`, which re-keyed by English text, is
+removed.
+
+## The design system as DocC
+
+A3 asks for `ZhenDesign.docc`. The design system was built inside the app target, not as a
+`ZhenDesign` module (phase 1), so the catalogue is `Zhen/Zhen.docc`, documenting the app
+module. It contains:
+- `Zhen.md`, the landing page
+- `Foundations.md`: colour roles and floors, type, every metric token with its values,
+  symbols, motion
+- `Components.md`: each component, what it is for and not for, linked to its symbol page
+- the four articles A3 names:
+  - `BuildingAScreen` (Devices as the worked example)
+  - `StatesAndEmptiness` (every state on every screen)
+  - `Accessibility` (the contrast table and how the audits check it)
+  - `Corrections` (every deliberate difference from the artboards, collected from both
+    phase ledgers)
+- the six artboards
+
+`xcodebuild docbuild` is clean: no warning from the app or its catalogue (one doc comment
+fixed), and every component link resolves. The catalogue adds nothing to the app bundle.
+`bundle exec fastlane docs` copies the archive to `build/docs`.
+
+## Closing checks, part 2
+
+| Check | Result |
+|---|---|
+| Unit | 74 tests, green |
+| UI, full suite | 39 passed; the screenshot test skipped itself |
+| Docs | `docbuild` clean |

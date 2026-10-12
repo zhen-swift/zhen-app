@@ -75,7 +75,7 @@ extension NetworkModel {
 
   /// "Zhen history 2026-10-11".
   static var exportFilename: String {
-    String(localized: "Zhen history \(Date.now.formatted(.iso8601.year().month().day()))")
+    String(localized: .zhenHistory(Date.now.formatted(.iso8601.year().month().day())))
   }
 
   /// The history file's size in bytes; nil when this launch has none.

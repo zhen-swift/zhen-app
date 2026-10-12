@@ -33,7 +33,7 @@ extension ButtonStyle where Self == PressButtonStyle {
 /// Hold the mouse down on the link to see the spring.
 private struct PressButtonStylePreview: View {
   var body: some View {
-    Button("Open System Settings…") {}
+    Button(String(localized: .openSystemSettings)) {}
       .buttonStyle(.press)
       .foregroundStyle(.accent)
       .padding(.spacing.xLarge)

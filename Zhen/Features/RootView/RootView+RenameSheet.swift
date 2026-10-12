@@ -14,23 +14,23 @@ extension RootView {
     var body: some View {
       let device = model.device(id)
       Form {
-        TextField("Name", text: $name, prompt: Text(device?.device.displayName ?? "Unidentified device"))
+        TextField(String(localized: .name), text: $name, prompt: Text(device?.device.displayName ?? String(localized: .unidentifiedDevice)))
           .focused($fieldFocused)
           .onSubmit(confirm)
           .accessibilityIdentifier("renameField")
-        Text("Only this Mac sees this name. It wins over every name the device announces.")
+        Text(.onlyThisMacSeesThisName)
           .font(.subheadline)
           .foregroundStyle(.textSecondary)
       }
       .formStyle(.grouped)
-      .navigationTitle("Rename Device")
+      .navigationTitle(String(localized: .renameDevice))
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
-          Button("Cancel") { dismiss() }
+          Button(String(localized: .cancel)) { dismiss() }
             .accessibilityIdentifier("renameCancelButton")
         }
         ToolbarItem(placement: .confirmationAction) {
-          Button("Rename", action: confirm)
+          Button(String(localized: .rename), action: confirm)
           .accessibilityIdentifier("renameConfirmButton")
         }
       }

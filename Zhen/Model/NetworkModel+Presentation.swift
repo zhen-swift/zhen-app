@@ -30,23 +30,23 @@ extension NetworkModel {
 
   /// What the footer's dot means, in words: the dot's own tone word is an event's
   /// ("Merged" for the accent), which told VoiceOver a scan in progress was a merge.
-  var footerStatusLabel: LocalizedStringKey {
-    if scan.isRunning { return "Scanning" }
-    if latestRun == nil { return "Never scanned" }
-    return latestRunIsPartial ? "Partial results" : "Complete"
+  var footerStatusLabel: LocalizedStringResource {
+    if scan.isRunning { return .scanning }
+    if latestRun == nil { return .neverScanned }
+    return latestRunIsPartial ? .partialResults : .complete
   }
 
   func footerTitle(at now: Date) -> String {
-    if scan.isRunning { return String(localized: "Scanning…") }
+    if scan.isRunning { return String(localized: .scanningEllipsis) }
     guard let finished = latestRun?.finishedAt ?? latestRun?.startedAt else {
-      return String(localized: "Never scanned")
+      return String(localized: .neverScanned)
     }
     let date = Date(timeIntervalSince1970: finished.timeIntervalSince1970)
     // Under a minute reads "just now": the relative style said "in 0 sec." for a scan that
     // had just finished, the clocks a few milliseconds apart.
-    if now.timeIntervalSince(date) < 60 { return String(localized: "Last scan just now") }
+    if now.timeIntervalSince(date) < 60 { return String(localized: .lastScanJustNow) }
     let ago = date.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated))
-    return String(localized: "Last scan \(ago)")
+    return String(localized: .lastScan(ago))
   }
 
   /// "192.168.50.0/24 · en0".
@@ -57,7 +57,7 @@ extension NetworkModel {
     case let (network?, name?): return "\(network) · \(name)"
     case let (network?, nil): return network.description
     case let (nil, name?): return name
-    case (nil, nil): return String(localized: "No network yet")
+    case (nil, nil): return String(localized: .noNetworkYet)
     }
   }
 
@@ -73,6 +73,6 @@ extension NetworkModel {
   /// "13 devices · 11 online · 5 unidentified".
   var devicesSummary: String {
     let devices = devices.count
-    return String(localized: "\(devices) devices · \(onlineCount) online · \(unidentifiedCount) unidentified")
+    return String(localized: .devicesOnlineUnidentified(devices: devices, onlineCount, unidentifiedCount))
   }
 }

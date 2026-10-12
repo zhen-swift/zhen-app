@@ -43,14 +43,14 @@ extension StatusDot {
       }
     }
 
-    var label: LocalizedStringKey {
+    var label: LocalizedStringResource {
       switch self {
-      case .online: "Online"
-      case .offline: "Offline"
-      case .warning: "Warning"
-      case .info: "Changed"
-      case .accent: "Merged"
-      case .neutral: "Gone"
+      case .online: .online
+      case .offline: .offline
+      case .warning: .warning
+      case .info: .changed
+      case .accent: .merged
+      case .neutral: .gone
       }
     }
   }

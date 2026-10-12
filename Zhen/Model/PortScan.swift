@@ -27,8 +27,8 @@ nonisolated struct PortScan: Equatable, Sendable {
         return PortScan(state: .finished, ports: device.ports, at: .now)
       }
       let reason = scan.report.run.outcome == .cancelled
-        ? String(localized: "Stopped before any port answered.")
-        : String(localized: "\(address.description) did not answer this time, so no port was checked.")
+        ? String(localized: .stoppedBeforeAnyPortAnswered)
+        : String(localized: .didNotAnswerThisTimeSo(address.description))
       return PortScan(state: .failed(reason), ports: [], at: .now)
     }
   }

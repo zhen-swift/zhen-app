@@ -25,13 +25,13 @@ extension LiveScanView {
         Spacer()
         switch scan.phase {
         case .running:
-          Button("Stop Scan", systemImage: "stop.fill") { scan.stop() }
+          Button(String(localized: .stopScan), systemImage: "stop.fill") { scan.stop() }
             .accessibilityIdentifier("liveStopScanButton")
         case .stopped:
-          Button("Show Devices") { scan.dismiss() }
+          Button(String(localized: .showDevices)) { scan.dismiss() }
             .keyboardShortcut(.cancelAction)
             .accessibilityIdentifier("showDevicesButton")
-          PrimaryButton("Scan Again", systemImage: "arrow.clockwise", identifier: "scanAgainButton") {
+          PrimaryButton(.scanAgain, systemImage: "arrow.clockwise", identifier: "scanAgainButton") {
             scan.dismiss()
             model.scanAgain()
           }
@@ -43,7 +43,7 @@ extension LiveScanView {
 
     private var title: String {
       let target = model.scan.request.network ?? model.interface?.network
-      return target.map { String(localized: "Scanning \($0.description)") } ?? String(localized: "Scanning")
+      return target.map { String(localized: .scanningNetwork($0.description)) } ?? String(localized: .scanning)
     }
 
     private func subtitle(at now: Date) -> String {
@@ -52,10 +52,10 @@ extension LiveScanView {
       let clock = elapsed.formatted(.time(pattern: .minuteSecond))
       switch scan.phase {
       case .stopped(let after, let found):
-        return String(localized: "Stopped after \(after.formatted(.time(pattern: .minuteSecond))) · \(found) devices found")
+        return String(localized: .stoppedAfterDevicesFound(after.formatted(.time(pattern: .minuteSecond)), devices: found))
       default:
         let stages = ScanSession.stages.count { scan.stageStates[$0] != .skipped }
-        return String(localized: "Stage \(scan.currentStageNumber) of \(stages) · \(clock) elapsed · \(scan.found.count) devices so far")
+        return String(localized: .stageElapsedDevicesSoFar(scan.currentStageNumber, stages, clock, devices: scan.found.count))
       }
     }
   }

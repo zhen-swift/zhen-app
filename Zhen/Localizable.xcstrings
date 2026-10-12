@@ -1,71 +1,426 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "%@ %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ %2$@"
+  "sourceLanguage": "en",
+  "strings": {
+    "activity": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activity"
           }
         }
       }
     },
-    "%@ (TCP fingerprint)" : {
-
-    },
-    "%@ did not answer this time, so no port was checked." : {
-
-    },
-    "%@ ran with partial results" : {
-
-    },
-    "%@ — ^[%lld independent source](inflect: true)" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ — ^[%2$lld independent source](inflect: true)"
+    "activityFilter": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activity Filter"
           }
         }
       }
     },
-    "%@ — auto, from %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ — auto, from %2$@"
+    "address": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "address"
           }
         }
       }
     },
-    "%lld devices answered the latest scan." : {
-
+    "addressChanged": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Address changed"
+          }
+        }
+      }
     },
-    "%lld devices · %lld online · %lld unidentified" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@devices@ · %2$lld online · %3$lld unidentified"
+    "addressOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "address only"
+          }
+        }
+      }
+    },
+    "addresses": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Addresses"
+          }
+        }
+      }
+    },
+    "all": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        }
+      }
+    },
+    "allowZhenUnderSystemSettingsGeneral": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow “Zhen” under System Settings › General › Login Items to finish."
+          }
+        }
+      }
+    },
+    "alsoCheckCommonPortsEveryDevice": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also check common ports on every device that answers. Slower, and more visible on the network."
+          }
+        }
+      }
+    },
+    "appeared": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appeared"
+          }
+        }
+      }
+    },
+    "arpTableNoPingReply": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "in ARP table, no ping reply"
+          }
+        }
+      }
+    },
+    "askingBonjourUpnpNetbios": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asking Bonjour, UPnP and NetBIOS"
+          }
+        }
+      }
+    },
+    "assigned": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assigned"
+          }
+        }
+      }
+    },
+    "auto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "auto"
+          }
+        }
+      }
+    },
+    "autoFrom": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ — auto, from %2$@"
+          }
+        }
+      }
+    },
+    "backDevices": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to Devices"
+          }
+        }
+      }
+    },
+    "bonjour": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bonjour"
+          }
+        }
+      }
+    },
+    "bonjourName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bonjour name"
+          }
+        }
+      }
+    },
+    "cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "changed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Changed"
+          }
+        }
+      }
+    },
+    "checkPortsEveryScan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check ports on every scan"
+          }
+        }
+      }
+    },
+    "checkThisDevicesCommonPorts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check this device's common ports"
+          }
+        }
+      }
+    },
+    "checked": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checked %@"
+          }
+        }
+      }
+    },
+    "checkingCommonPorts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking common ports"
+          }
+        }
+      }
+    },
+    "checkingCommonPortsOn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking common ports on %@…"
+          }
+        }
+      }
+    },
+    "competingNamesSourceHighestTrustSource": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "competing names by source — highest-trust source wins"
+          }
+        }
+      }
+    },
+    "complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete"
+          }
+        }
+      }
+    },
+    "copyAddress": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy Address"
+          }
+        }
+      }
+    },
+    "copyMacAddress": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy MAC Address"
+          }
+        }
+      }
+    },
+    "countOnlineDevices": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count Online Devices"
+          }
+        }
+      }
+    },
+    "deepScan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deep scan"
+          }
+        }
+      }
+    },
+    "device": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device"
+          }
+        }
+      }
+    },
+    "deviceIdentityHistory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device identity history"
+          }
+        }
+      }
+    },
+    "deviceNotFound": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device not found"
+          }
+        }
+      }
+    },
+    "devices": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Devices"
+          }
+        }
+      }
+    },
+    "devicesAnsweredLatestScan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld devices answered the latest scan."
+          }
+        }
+      }
+    },
+    "devicesOnlineUnidentified": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%#@devices@ · %2$lld online · %3$lld unidentified"
           },
-          "substitutions" : {
-            "devices" : {
-              "argNum" : 1,
-              "formatSpecifier" : "lld",
-              "variations" : {
-                "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "%arg device"
+          "substitutions": {
+            "devices": {
+              "argNum": 1,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg device"
                     }
                   },
-                  "other" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "%arg devices"
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg devices"
                     }
                   }
                 }
@@ -75,21 +430,66 @@
         }
       }
     },
-    "%lld events" : {
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld event"
+    "dhcpName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DHCP name"
+          }
+        }
+      }
+    },
+    "didNotAnswerThisTimeSo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ did not answer this time, so no port was checked."
+          }
+        }
+      }
+    },
+    "discovery": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discovery"
+          }
+        }
+      }
+    },
+    "done": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "eventCount": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld event"
                 }
               },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld events"
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld events"
                 }
               }
             }
@@ -97,21 +497,319 @@
         }
       }
     },
-    "%lld hosts answered" : {
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld host answered"
+    "eventsAppearHereWhenDevicesJoin": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Events appear here when devices join, leave, or change."
+          }
+        }
+      }
+    },
+    "eventsPerHourOverHours": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Events per hour: %1$lld over %2$lld hours"
+          }
+        }
+      }
+    },
+    "eventsTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Events"
+          }
+        }
+      }
+    },
+    "every15Minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every 15 minutes"
+          }
+        }
+      }
+    },
+    "every5Minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every 5 minutes"
+          }
+        }
+      }
+    },
+    "everyHour": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every hour"
+          }
+        }
+      }
+    },
+    "export": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export…"
+          }
+        }
+      }
+    },
+    "exportHistory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export History…"
+          }
+        }
+      }
+    },
+    "filterDevice": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter by device"
+          }
+        }
+      }
+    },
+    "find": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find…"
+          }
+        }
+      }
+    },
+    "firstSeen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First seen"
+          }
+        }
+      }
+    },
+    "forever": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forever"
+          }
+        }
+      }
+    },
+    "foundSAgo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "found %lld s ago"
+          }
+        }
+      }
+    },
+    "foundSoFar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Found so far"
+          }
+        }
+      }
+    },
+    "foundSoFarNewestFirst": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Found so far · newest first"
+          }
+        }
+      }
+    },
+    "fromEarlierScanThatCheckedPorts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From an earlier scan that checked ports"
+          }
+        }
+      }
+    },
+    "gateway": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gateway"
+          }
+        }
+      }
+    },
+    "giveThisDeviceNameYourOwn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Give this device a name of your own"
+          }
+        }
+      }
+    },
+    "gone": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gone"
+          }
+        }
+      }
+    },
+    "hardwareMac": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hardware MAC"
+          }
+        }
+      }
+    },
+    "helperCanAndCannot": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It can: sweep this network at layer 2 (ARP), and SYN-scan ports on the devices found. It cannot: read files, run commands, or talk to anything but this app."
+          }
+        }
+      }
+    },
+    "helperMissingFromThisCopyZhen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The helper is missing from this copy of Zhen."
+          }
+        }
+      }
+    },
+    "hideDetails": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide Details"
+          }
+        }
+      }
+    },
+    "history": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "History"
+          }
+        }
+      }
+    },
+    "historyFile": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "History file"
+          }
+        }
+      }
+    },
+    "historyNoLongerHasThisDevice": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "History no longer has this device."
+          }
+        }
+      }
+    },
+    "holdsOnlyWhileLeaseDoes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "holds only while the lease does"
+          }
+        }
+      }
+    },
+    "hostsAnswered": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld host answered"
                 }
               },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld hosts answered"
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld hosts answered"
                 }
               }
             }
@@ -119,21 +817,66 @@
         }
       }
     },
-    "%lld identity changes" : {
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld identity change"
+    "hour": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hour"
+          }
+        }
+      }
+    },
+    "howManyDevicesAnsweredZhensMost": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How many devices answered Zhen's most recent scan. Reads history; does not scan."
+          }
+        }
+      }
+    },
+    "identified": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identified"
+          }
+        }
+      }
+    },
+    "identity": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identity"
+          }
+        }
+      }
+    },
+    "identityChanges": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld identity change"
                 }
               },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld identity changes"
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld identity changes"
                 }
               }
             }
@@ -141,21 +884,165 @@
         }
       }
     },
-    "%lld names found" : {
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld name found"
+    "identityHistory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identity history"
+          }
+        }
+      }
+    },
+    "identityKey": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "identity key: %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "identityLower": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "identity"
+          }
+        }
+      }
+    },
+    "independentSourceInflectTrue": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ — ^[%2$lld independent source](inflect: true)"
+          }
+        }
+      }
+    },
+    "installHelper": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install Helper…"
+          }
+        }
+      }
+    },
+    "installedWaitingYourApproval": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed · waiting for your approval"
+          }
+        }
+      }
+    },
+    "installedZhenScanEngine": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed · Zhen Scan Engine %@"
+          }
+        }
+      }
+    },
+    "installedZhenScanEngineNotAnswering": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed · Zhen Scan Engine (not answering yet)"
+          }
+        }
+      }
+    },
+    "ipAddressColumn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IP Address"
+          }
+        }
+      }
+    },
+    "ipAddressLabel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IP address"
+          }
+        }
+      }
+    },
+    "keepEvents": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep events for"
+          }
+        }
+      }
+    },
+    "keptForeverWhatMakesMergesPossible": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kept forever — it’s what makes merges possible"
+          }
+        }
+      }
+    },
+    "knownBy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Known by"
+          }
+        }
+      }
+    },
+    "last48HoursEvents": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Last 48 hours · %lld event"
                 }
               },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld names found"
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Last 48 hours · %lld events"
                 }
               }
             }
@@ -163,263 +1050,33 @@
         }
       }
     },
-    "%lld of %lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld of %2$lld"
+    "lastScan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last scan %@"
           }
         }
       }
     },
-    "30 days" : {
-
-    },
-    "443 · https" : {
-
-    },
-    "7 days" : {
-
-    },
-    "90 days" : {
-
-    },
-    "Activity" : {
-
-    },
-    "Activity Filter" : {
-
-    },
-    "Address changed" : {
-
-    },
-    "Addresses" : {
-
-    },
-    "All" : {
-
-    },
-    "Allow “Zhen” under System Settings › General › Login Items to finish." : {
-
-    },
-    "Also check common ports on every device that answers. Slower, and more visible on the network." : {
-
-    },
-    "Appeared" : {
-
-    },
-    "Asking Bonjour, UPnP and NetBIOS" : {
-
-    },
-    "Assigned" : {
-
-    },
-    "Back to Devices" : {
-
-    },
-    "Bonjour" : {
-
-    },
-    "Bonjour name" : {
-
-    },
-    "Bonjour · Sala de estar principal" : {
-
-    },
-    "Cancel" : {
-
-    },
-    "Changed" : {
-
-    },
-    "Check ports on every scan" : {
-
-    },
-    "Check this device's common ports" : {
-
-    },
-    "Checked %@" : {
-
-    },
-    "Checking common ports" : {
-
-    },
-    "Checking common ports on %@…" : {
-
-    },
-    "Complete" : {
-
-    },
-    "Copy Address" : {
-
-    },
-    "Copy MAC Address" : {
-
-    },
-    "Count Online Devices" : {
-
-    },
-    "DHCP name" : {
-
-    },
-    "Deep scan" : {
-
-    },
-    "Device" : {
-
-    },
-    "Device identity history" : {
-
-    },
-    "Device not found" : {
-
-    },
-    "Devices" : {
-
-    },
-    "Discovery" : {
-
-    },
-    "Done" : {
-
-    },
-    "Events" : {
-
-    },
-    "Events appear here when devices join, leave, or change." : {
-
-    },
-    "Events per hour: %lld over %lld hours" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Events per hour: %1$lld over %2$lld hours"
-          }
-        }
-      }
-    },
-    "Every 15 minutes" : {
-
-    },
-    "Every 5 minutes" : {
-
-    },
-    "Every hour" : {
-
-    },
-    "Export History…" : {
-
-    },
-    "Export…" : {
-
-    },
-    "Filter by device" : {
-
-    },
-    "Find…" : {
-
-    },
-    "First seen" : {
-
-    },
-    "Forever" : {
-
-    },
-    "Found so far" : {
-
-    },
-    "Found so far · newest first" : {
-
-    },
-    "From an earlier scan that checked ports" : {
-
-    },
-    "Gateway" : {
-
-    },
-    "Give this device a name of your own" : {
-
-    },
-    "Gone" : {
-
-    },
-    "Hide Details" : {
-
-    },
-    "History" : {
-
-    },
-    "History file" : {
-
-    },
-    "History no longer has this device." : {
-
-    },
-    "Hour" : {
-
-    },
-    "How many devices answered Zhen's most recent scan. Reads history; does not scan." : {
-
-    },
-    "IP Address" : {
-
-    },
-    "IP address" : {
-
-    },
-    "Identified" : {
-
-    },
-    "Identity" : {
-
-    },
-    "Identity history" : {
-
-    },
-    "In memory — this launch uses a fixture" : {
-
-    },
-    "Install Helper…" : {
-
-    },
-    "Installed · Zhen Scan Engine %@" : {
-
-    },
-    "Installed · Zhen Scan Engine (not answering yet)" : {
-
-    },
-    "Installed · waiting for your approval" : {
-
-    },
-    "It can: sweep this network at layer 2 (ARP), and SYN-scan ports on the devices found. It cannot: read files, run commands, or talk to anything but this app." : {
-
-    },
-    "Keep events for" : {
-
-    },
-    "Kept forever — it’s what makes merges possible" : {
-
-    },
-    "Known by" : {
-
-    },
-    "Last 48 hours · %lld events" : {
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Last 48 hours · %lld event"
+    "lastScanCompletedWithPartialResults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Last scan completed with partial results — %lld source unavailable"
                 }
               },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Last 48 hours · %lld events"
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Last scan completed with partial results — %lld sources unavailable"
                 }
               }
             }
@@ -427,27 +1084,297 @@
         }
       }
     },
-    "Last Seen" : {
-
+    "lastScanJustNow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last scan just now"
+          }
+        }
+      }
     },
-    "Last scan %@" : {
-
+    "lastScanRanOutTimeResults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last scan ran out of time — results are partial"
+          }
+        }
+      }
     },
-    "Last scan completed with partial results — %lld sources unavailable" : {
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Last scan completed with partial results — %lld source unavailable"
+    "lastScanWasStoppedResultsAre": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last scan was stopped — results are partial"
+          }
+        }
+      }
+    },
+    "lastSeenAgo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last seen %@"
+          }
+        }
+      }
+    },
+    "lastSeenColumn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last Seen"
+          }
+        }
+      }
+    },
+    "lastSeenLower": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "last seen"
+          }
+        }
+      }
+    },
+    "layer2SweepDidNotRun": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The layer-2 sweep did not run"
+          }
+        }
+      }
+    },
+    "left": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left"
+          }
+        }
+      }
+    },
+    "listening": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening…"
+          }
+        }
+      }
+    },
+    "localNetworkAccessAppearsDenied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Local Network access appears to be denied"
+          }
+        }
+      }
+    },
+    "mac": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MAC"
+          }
+        }
+      }
+    },
+    "macAddress": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MAC Address"
+          }
+        }
+      }
+    },
+    "macosDidNotRegisterHelper": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS did not register the helper: %@"
+          }
+        }
+      }
+    },
+    "macosDidNotRemoveHelper": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS did not remove the helper: %@"
+          }
+        }
+      }
+    },
+    "macosReportedStateThisVersionDoes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS reported a state this version does not know."
+          }
+        }
+      }
+    },
+    "matched": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "matched to %@"
+          }
+        }
+      }
+    },
+    "matchedKnownDevice": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "matched to a known device"
+          }
+        }
+      }
+    },
+    "memoryThisLaunchUsesFixture": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In memory — this launch uses a fixture"
+          }
+        }
+      }
+    },
+    "merged": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merged"
+          }
+        }
+      }
+    },
+    "minimal": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimal"
+          }
+        }
+      }
+    },
+    "n30Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 days"
+          }
+        }
+      }
+    },
+    "n7Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 days"
+          }
+        }
+      }
+    },
+    "n90Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "90 days"
+          }
+        }
+      }
+    },
+    "name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "nameQueryFlight": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "name query in flight"
+          }
+        }
+      }
+    },
+    "namesFound": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld name found"
                 }
               },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Last scan completed with partial results — %lld sources unavailable"
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld names found"
                 }
               }
             }
@@ -455,99 +1382,198 @@
         }
       }
     },
-    "Last scan just now" : {
-
+    "naming": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naming"
+          }
+        }
+      }
     },
-    "Last scan ran out of time — results are partial" : {
-
+    "netbios": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NetBIOS"
+          }
+        }
+      }
     },
-    "Last scan was stopped — results are partial" : {
-
+    "networkDeviceTtl": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network device (TTL)"
+          }
+        }
+      }
     },
-    "Last seen %@" : {
-
+    "neverScanned": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Never scanned"
+          }
+        }
+      }
     },
-    "Left" : {
-
+    "noDeviceMatches": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No device matches “%@”."
+          }
+        }
+      }
     },
-    "Listening…" : {
-
+    "noEventsMatch": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No events match “%@”"
+          }
+        }
+      }
     },
-    "Local Network access appears to be denied" : {
-
+    "noEventsThisWindow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No %@ events in this window"
+          }
+        }
+      }
     },
-    "MAC" : {
-
+    "noHardwareAddress": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hardware address"
+          }
+        }
+      }
     },
-    "MAC Address" : {
-
+    "noHardwareAddressLower": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no hardware address"
+          }
+        }
+      }
     },
-    "Merged" : {
-
+    "noIdentityChangesSeen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No identity changes seen"
+          }
+        }
+      }
     },
-    "Minimal" : {
-
+    "noMatches": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No matches"
+          }
+        }
+      }
     },
-    "Name" : {
-
+    "noNamesCouldRead": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No names could be read"
+          }
+        }
+      }
     },
-    "Naming" : {
-
+    "noNetworkYet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No network yet"
+          }
+        }
+      }
     },
-    "NetBIOS" : {
-
+    "noPortScanYet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No port scan yet"
+          }
+        }
+      }
     },
-    "Network device (TTL)" : {
-
+    "noScanYet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No scan yet"
+          }
+        }
+      }
     },
-    "Never scanned" : {
-
+    "noVendor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no vendor"
+          }
+        }
+      }
     },
-    "No %@ events in this window" : {
-
-    },
-    "No device matches “%@”." : {
-
-    },
-    "No events match “%@”" : {
-
-    },
-    "No hardware address" : {
-
-    },
-    "No identity changes seen" : {
-
-    },
-    "No matches" : {
-
-    },
-    "No names could be read" : {
-
-    },
-    "No network yet" : {
-
-    },
-    "No port scan yet" : {
-
-    },
-    "No scan yet" : {
-
-    },
-    "None of the %lld ports checked was open." : {
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "The %lld port checked was not open."
+    "nonePortsCheckedWasOpen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "The %lld port checked was not open."
                 }
               },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "None of the %lld ports checked was open."
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "None of the %lld ports checked was open."
                 }
               }
             }
@@ -555,236 +1581,998 @@
         }
       }
     },
-    "Not a network Zhen can scan. Use CIDR form, /16 or narrower. Until then, scans use the automatic network." : {
-
-    },
-    "Not created yet — no scan so far" : {
-
-    },
-    "Not installed." : {
-
-    },
-    "Not part of this scan" : {
-
-    },
-    "Not requested" : {
-
-    },
-    "Nothing answered" : {
-
-    },
-    "Nothing answered before the scan stopped." : {
-
-    },
-    "Nothing has changed" : {
-
-    },
-    "Nothing has changed for this device yet." : {
-
-    },
-    "Nothing is installed" : {
-
-    },
-    "Now" : {
-
-    },
-    "OS fingerprinting and fast SYN port scans need raw network sockets, which macOS only grants to root. The engine is a small helper that runs only during scans and only sends results back to this app. Everything else works without it." : {
-
-    },
-    "Off" : {
-
-    },
-    "Offline" : {
-
-    },
-    "Online" : {
-
-    },
-    "Online Devices" : {
-
-    },
-    "Only this Mac sees this name. It wins over every name the device announces." : {
-
-    },
-    "Open" : {
-
-    },
-    "Open Login Items…" : {
-
-    },
-    "Open System Settings…" : {
-
-    },
-    "Open ports" : {
-
-    },
-    "Override" : {
-
-    },
-    "Partial" : {
-
-    },
-    "Partial results" : {
-
-    },
-    "Ports" : {
-
-    },
-    "Ports checked" : {
-
-    },
-    "Presence" : {
-
-    },
-    "Privileged engine" : {
-
-    },
-    "Queued" : {
-
-    },
-    "Recent events" : {
-
-    },
-    "Remove" : {
-
-    },
-    "Remove the privileged engine?" : {
-
-    },
-    "Rename" : {
-
-    },
-    "Rename Device" : {
-
-    },
-    "Renamed" : {
-
-    },
-    "Rename…" : {
-
-    },
-    "Resolving name…" : {
-
-    },
-    "Reverse DNS" : {
-
-    },
-    "Review in Settings…" : {
-
-    },
-    "Run a scan to see what’s on your network." : {
-
-    },
-    "Running" : {
-
-    },
-    "Running with partial results" : {
-
-    },
-    "Save devices and events as JSON" : {
-
-    },
-    "Scan" : {
-
-    },
-    "Scan Again" : {
-
-    },
-    "Scan Network" : {
-
-    },
-    "Scan Now" : {
-
-    },
-    "Scan Ports" : {
-
-    },
-    "Scan automatically" : {
-
-    },
-    "Scan for up to" : {
-
-    },
-    "Scan the network now" : {
-
-    },
-    "Scanned %@ · this session, not saved to history" : {
-
-    },
-    "Scanning" : {
-
-    },
-    "Scanning %@" : {
-
-    },
-    "Scanning your network." : {
-
-    },
-    "Scanning…" : {
-
-    },
-    "Scans keep working without it; they lose the layer-2 sweep and SYN scanning." : {
-
-    },
-    "Scans your network now, as Scan Now does in Zhen." : {
-
-    },
-    "Search devices" : {
-
-    },
-    "Settings" : {
-
-    },
-    "Setup" : {
-
-    },
-    "Show" : {
-
-    },
-    "Show Details" : {
-
-    },
-    "Show Devices" : {
-
-    },
-    "Show in Activity" : {
-
-    },
-    "Show in Finder" : {
-
-    },
-    "Show in System Settings…" : {
-
-    },
-    "Signal" : {
-
-    },
-    "Some replies arrived late" : {
-
-    },
-    "Stage %lld of %lld · %@ elapsed · %lld devices so far" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stage %1$lld of %2$lld · %3$@ elapsed · %#@devices@"
+    "notAdvertised": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "— not advertised"
+          }
+        }
+      }
+    },
+    "notCreatedYetNoScanSo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not created yet — no scan so far"
+          }
+        }
+      }
+    },
+    "notInstalled": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not installed."
+          }
+        }
+      }
+    },
+    "notNetworkZhenCanScanUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not a network Zhen can scan. Use CIDR form, /16 or narrower. Until then, scans use the automatic network."
+          }
+        }
+      }
+    },
+    "notPartThisScan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not part of this scan"
+          }
+        }
+      }
+    },
+    "notRequested": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not requested"
+          }
+        }
+      }
+    },
+    "nothingAnswered": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing answered"
+          }
+        }
+      }
+    },
+    "nothingAnsweredBeforeScanStopped": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing answered before the scan stopped."
+          }
+        }
+      }
+    },
+    "nothingHasChanged": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing has changed"
+          }
+        }
+      }
+    },
+    "nothingHasChangedThisDeviceYet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing has changed for this device yet."
+          }
+        }
+      }
+    },
+    "nothingInstalled": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing is installed"
+          }
+        }
+      }
+    },
+    "now": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Now"
+          }
+        }
+      }
+    },
+    "of": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "off": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        }
+      }
+    },
+    "offline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline"
+          }
+        }
+      }
+    },
+    "offlineLower": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "offline"
+          }
+        }
+      }
+    },
+    "online": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online"
+          }
+        }
+      }
+    },
+    "onlineDevices": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online Devices"
+          }
+        }
+      }
+    },
+    "onlineLower": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "online"
+          }
+        }
+      }
+    },
+    "onlyThisMacSeesThisName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only this Mac sees this name. It wins over every name the device announces."
+          }
+        }
+      }
+    },
+    "open": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        }
+      }
+    },
+    "openLoginItems": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Login Items…"
+          }
+        }
+      }
+    },
+    "openPorts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open ports"
+          }
+        }
+      }
+    },
+    "openSystemSettings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open System Settings…"
+          }
+        }
+      }
+    },
+    "osFingerprintingFastSynPortScans": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OS fingerprinting and fast SYN port scans need raw network sockets, which macOS only grants to root. The engine is a small helper that runs only during scans and only sends results back to this app. Everything else works without it."
+          }
+        }
+      }
+    },
+    "override": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Override"
+          }
+        }
+      }
+    },
+    "partial": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partial"
+          }
+        }
+      }
+    },
+    "partialResults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partial results"
+          }
+        }
+      }
+    },
+    "permanent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "permanent"
+          }
+        }
+      }
+    },
+    "port": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "port"
+          }
+        }
+      }
+    },
+    "ports": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ports"
+          }
+        }
+      }
+    },
+    "portsChecked": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ports checked"
+          }
+        }
+      }
+    },
+    "presence": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Presence"
+          }
+        }
+      }
+    },
+    "presenceLower": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "presence"
+          }
+        }
+      }
+    },
+    "private": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "private"
+          }
+        }
+      }
+    },
+    "privilegedEngine": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privileged engine"
+          }
+        }
+      }
+    },
+    "queued": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queued"
+          }
+        }
+      }
+    },
+    "ranWithPartialResults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ran with partial results"
+          }
+        }
+      }
+    },
+    "randomizedMac": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "randomized MAC"
+          }
+        }
+      }
+    },
+    "reassigned": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "reassigned"
+          }
+        }
+      }
+    },
+    "recentEvents": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent events"
+          }
+        }
+      }
+    },
+    "remove": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove"
+          }
+        }
+      }
+    },
+    "removePrivilegedEngine": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove the privileged engine?"
+          }
+        }
+      }
+    },
+    "rename": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename"
+          }
+        }
+      }
+    },
+    "renameDevice": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename Device"
+          }
+        }
+      }
+    },
+    "renameEllipsis": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename…"
+          }
+        }
+      }
+    },
+    "renamed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renamed"
+          }
+        }
+      }
+    },
+    "resolvingName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolving name…"
+          }
+        }
+      }
+    },
+    "respondsPing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "responds to ping"
+          }
+        }
+      }
+    },
+    "resultsAreStillValidJustLess": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "results are still valid, just less complete"
+          }
+        }
+      }
+    },
+    "reverseDns": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reverse DNS"
+          }
+        }
+      }
+    },
+    "reviewSettings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review in Settings…"
+          }
+        }
+      }
+    },
+    "rotatingMac": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "rotating MAC"
+          }
+        }
+      }
+    },
+    "runScanSeeWhatsYourNetwork": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run a scan to see what’s on your network."
+          }
+        }
+      }
+    },
+    "running": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running"
+          }
+        }
+      }
+    },
+    "runningWithPartialResults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running with partial results"
+          }
+        }
+      }
+    },
+    "saveDevicesEventsJson": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save devices and events as JSON"
+          }
+        }
+      }
+    },
+    "scan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan"
+          }
+        }
+      }
+    },
+    "scanAgain": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan Again"
+          }
+        }
+      }
+    },
+    "scanAutomatically": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan automatically"
+          }
+        }
+      }
+    },
+    "scanCompletedButNoDevicesReplied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The scan completed but no devices replied. This usually means the Local Network permission is denied."
+          }
+        }
+      }
+    },
+    "scanNetwork": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan Network"
+          }
+        }
+      }
+    },
+    "scanNetworkNow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan the network now"
+          }
+        }
+      }
+    },
+    "scanNow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan Now"
+          }
+        }
+      }
+    },
+    "scanPorts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan Ports"
+          }
+        }
+      }
+    },
+    "scanUp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan for up to"
+          }
+        }
+      }
+    },
+    "scannedThisSessionNotSavedHistory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanned %@ · this session, not saved to history"
+          }
+        }
+      }
+    },
+    "scanning": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanning"
+          }
+        }
+      }
+    },
+    "scanningEllipsis": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanning…"
+          }
+        }
+      }
+    },
+    "scanningNetwork": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanning %@"
+          }
+        }
+      }
+    },
+    "scanningYourNetwork": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanning your network."
+          }
+        }
+      }
+    },
+    "scansKeepWorkingWithoutTheyLose": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scans keep working without it; they lose the layer-2 sweep and SYN scanning."
+          }
+        }
+      }
+    },
+    "scansYourNetworkNowScanNow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scans your network now, as Scan Now does in Zhen."
+          }
+        }
+      }
+    },
+    "searchDevices": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search devices"
+          }
+        }
+      }
+    },
+    "settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "setup": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setup"
+          }
+        }
+      }
+    },
+    "show": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        }
+      }
+    },
+    "showActivity": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show in Activity"
+          }
+        }
+      }
+    },
+    "showDetails": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Details"
+          }
+        }
+      }
+    },
+    "showDevices": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Devices"
+          }
+        }
+      }
+    },
+    "showFinder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show in Finder"
+          }
+        }
+      }
+    },
+    "showSystemSettings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show in System Settings…"
+          }
+        }
+      }
+    },
+    "signal": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signal"
+          }
+        }
+      }
+    },
+    "since": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "since %@"
+          }
+        }
+      }
+    },
+    "someRepliesArrivedLate": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Some replies arrived late"
+          }
+        }
+      }
+    },
+    "splitsWhenMacRotates": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "splits when the MAC rotates"
+          }
+        }
+      }
+    },
+    "stabilisedBonjourName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "stabilised by Bonjour name"
+          }
+        }
+      }
+    },
+    "stabilisedDhcpName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "stabilised by DHCP name"
+          }
+        }
+      }
+    },
+    "stageElapsedDevicesSoFar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stage %1$lld of %2$lld · %3$@ elapsed · %#@devices@"
           },
-          "substitutions" : {
-            "devices" : {
-              "argNum" : 4,
-              "formatSpecifier" : "lld",
-              "variations" : {
-                "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "%arg device so far"
+          "substitutions": {
+            "devices": {
+              "argNum": 4,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg device so far"
                     }
                   },
-                  "other" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "%arg devices so far"
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg devices so far"
                     }
                   }
                 }
@@ -794,35 +2582,52 @@
         }
       }
     },
-    "Stop Scan" : {
-
+    "stopScan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop Scan"
+          }
+        }
+      }
     },
-    "Stop the scan. Devices found so far are kept." : {
-
+    "stopScanDevicesFoundSoFar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop the scan. Devices found so far are kept."
+          }
+        }
+      }
     },
-    "Stopped after %@ · %lld devices found" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stopped after %1$@ · %#@devices@"
+    "stoppedAfterDevicesFound": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopped after %1$@ · %#@devices@"
           },
-          "substitutions" : {
-            "devices" : {
-              "argNum" : 2,
-              "formatSpecifier" : "lld",
-              "variations" : {
-                "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "%arg device found"
+          "substitutions": {
+            "devices": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg device found"
                     }
                   },
-                  "other" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "%arg devices found"
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg devices found"
                     }
                   }
                 }
@@ -832,203 +2637,248 @@
         }
       }
     },
-    "Stopped before any port answered." : {
-
-    },
-    "Subnet" : {
-
-    },
-    "Subnet override" : {
-
-    },
-    "The helper is missing from this copy of Zhen." : {
-
-    },
-    "The layer-2 sweep did not run" : {
-
-    },
-    "The scan completed but no devices replied. This usually means the Local Network permission is denied." : {
-
-    },
-    "Today — %@" : {
-
-    },
-    "Today — Sunday, Aug 31" : {
-
-    },
-    "Try another filter, or clear the search." : {
-
-    },
-    "UPnP" : {
-
-    },
-    "Unidentified device" : {
-
-    },
-    "Unix-like (TTL)" : {
-
-    },
-    "Use the privileged engine" : {
-
-    },
-    "Vendor" : {
-
-    },
-    "Warning" : {
-
-    },
-    "Windows (TTL)" : {
-
-    },
-    "Winner" : {
-
-    },
-    "Yesterday — %@" : {
-
-    },
-    "You" : {
-
-    },
-    "Zhen" : {
-
-    },
-    "Zhen %@ (%@)" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Zhen %1$@ (%2$@)"
+    "stoppedBeforeAnyPortAnswered": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopped before any port answered."
           }
         }
       }
     },
-    "Zhen history %@" : {
-
-    },
-    "Zhen is already scanning." : {
-
-    },
-    "address" : {
-
-    },
-    "address only" : {
-
-    },
-    "auto" : {
-
-    },
-    "competing names by source — highest-trust source wins" : {
-
-    },
-    "e.g. 192.168.1.0/24" : {
-
-    },
-    "found %lld s ago" : {
-
-    },
-    "hardware MAC" : {
-
-    },
-    "holds only while the lease does" : {
-
-    },
-    "identity" : {
-
-    },
-    "identity key: %@, %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "identity key: %1$@, %2$@"
+    "subnet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subnet"
           }
         }
       }
     },
-    "in ARP table, no ping reply" : {
-
+    "subnetExample": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e.g. 192.168.1.0/24"
+          }
+        }
+      }
     },
-    "last seen" : {
-
+    "subnetOverride": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subnet override"
+          }
+        }
+      }
     },
-    "macOS did not register the helper: %@" : {
-
+    "tcpFingerprint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (TCP fingerprint)"
+          }
+        }
+      }
     },
-    "macOS did not remove the helper: %@" : {
-
+    "thisMac": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "this Mac"
+          }
+        }
+      }
     },
-    "macOS reported a state this version does not know." : {
-
+    "today": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today — %@"
+          }
+        }
+      }
     },
-    "matched to %@" : {
-
+    "tryAnotherFilterClearSearch": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try another filter, or clear the search."
+          }
+        }
+      }
     },
-    "matched to a known device" : {
-
+    "unidentifiedDevice": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unidentified device"
+          }
+        }
+      }
     },
-    "name query in flight" : {
-
+    "unixLikeTtl": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unix-like (TTL)"
+          }
+        }
+      }
     },
-    "no hardware address" : {
-
+    "upnp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UPnP"
+          }
+        }
+      }
     },
-    "no vendor" : {
-
+    "usePrivilegedEngine": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the privileged engine"
+          }
+        }
+      }
     },
-    "offline" : {
-
+    "vendor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vendor"
+          }
+        }
+      }
     },
-    "online" : {
-
+    "versionLine": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Zhen %1$@ (%2$@)"
+          }
+        }
+      }
     },
-    "permanent" : {
-
+    "warning": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warning"
+          }
+        }
+      }
     },
-    "port" : {
-
+    "windowsTtl": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Windows (TTL)"
+          }
+        }
+      }
     },
-    "presence" : {
-
+    "winner": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Winner"
+          }
+        }
+      }
     },
-    "private" : {
-
+    "yesterday": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yesterday — %@"
+          }
+        }
+      }
     },
-    "randomized MAC" : {
-
+    "you": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You"
+          }
+        }
+      }
     },
-    "reassigned" : {
-
+    "zhen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zhen"
+          }
+        }
+      }
     },
-    "responds to ping" : {
-
+    "zhenAlreadyScanning": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zhen is already scanning."
+          }
+        }
+      }
     },
-    "results are still valid, just less complete" : {
-
-    },
-    "rotating MAC" : {
-
-    },
-    "since %@" : {
-
-    },
-    "splits when the MAC rotates" : {
-
-    },
-    "stabilised by Bonjour name" : {
-
-    },
-    "stabilised by DHCP name" : {
-
-    },
-    "this Mac" : {
-
-    },
-    "— not advertised" : {
-
-    },
-    "−52 dBm" : {
-
+    "zhenHistory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zhen history %@"
+          }
+        }
+      }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

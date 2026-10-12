@@ -7,14 +7,14 @@ extension DevicesView {
 
     var body: some View {
       if model.isBusy {
-        Button("Stop Scan", systemImage: "stop.fill") { model.stopScanning() }
-          .help("Stop the scan. Devices found so far are kept.")
+        Button(String(localized: .stopScan), systemImage: "stop.fill") { model.stopScanning() }
+          .help(String(localized: .stopScanDevicesFoundSoFar))
           .accessibilityIdentifier("stopScanButton")
       } else {
-        PrimaryButton("Scan Now", systemImage: "dot.radiowaves.left.and.right", identifier: "scanNowButton") {
+        PrimaryButton(.scanNow, systemImage: "dot.radiowaves.left.and.right", identifier: "scanNowButton") {
           model.startScan()
         }
-        .help("Scan the network now")
+        .help(String(localized: .scanNetworkNow))
       }
     }
   }

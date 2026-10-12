@@ -33,20 +33,20 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
     if let vendor = device.vendor { parts.append(vendor) }
     if device.vendor == nil {
       switch device.mac {
-      case .none: parts.append(String(localized: "no hardware address"))
+      case .none: parts.append(String(localized: .noHardwareAddressLower))
       case .some(let mac) where mac.isLocallyAdministered:
-        parts.append(String(localized: "randomized MAC"))
-        parts.append(String(localized: "no vendor"))
-      case .some: parts.append(String(localized: "no vendor"))
+        parts.append(String(localized: .randomizedMac))
+        parts.append(String(localized: .noVendor))
+      case .some: parts.append(String(localized: .noVendor))
       }
     }
     let via = Set(device.discoveredVia)
     if via.contains(.localInterface) {
-      parts.append(String(localized: "this Mac"))
+      parts.append(String(localized: .thisMac))
     } else if via.contains(.probeReply) || via.contains(.arpReply) {
-      parts.append(String(localized: "responds to ping"))
+      parts.append(String(localized: .respondsPing))
     } else if via.contains(.neighborTable) {
-      parts.append(String(localized: "in ARP table, no ping reply"))
+      parts.append(String(localized: .arpTableNoPingReply))
     }
     // Sentence case: only the first letter of the line is raised, so "ARP" and "MAC" and a
     // model string like "AppleTV5,3" keep their own capitals.
@@ -77,7 +77,7 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
   func matches(_ term: String) -> Bool {
     let term = term.trimmingCharacters(in: .whitespaces)
     guard !term.isEmpty else { return true }
-    return [name ?? String(localized: "Unidentified device"), subtitle, address, mac ?? ""]
+    return [name ?? String(localized: .unidentifiedDevice), subtitle, address, mac ?? ""]
       .contains { $0.localizedStandardContains(term) }
   }
 

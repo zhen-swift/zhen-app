@@ -11,11 +11,11 @@ struct StatusDot: View {
   let tone: Tone
   /// What it says to VoiceOver, when the tone's own word is not what this dot means. The
   /// footer's accent dot means "Scanning", not "Merged" (phase 3, system audit).
-  var label: LocalizedStringKey?
+  var label: LocalizedStringResource?
   @ScaledMetric(relativeTo: .body) private var size = IconSize.small
   @Environment(\.accessibilityDifferentiateWithoutColor) private var withoutColor
 
-  init(_ tone: Tone, label: LocalizedStringKey? = nil) {
+  init(_ tone: Tone, label: LocalizedStringResource? = nil) {
     self.tone = tone
     self.label = label
   }

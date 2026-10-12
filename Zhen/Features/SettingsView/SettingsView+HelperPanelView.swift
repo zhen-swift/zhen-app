@@ -17,12 +17,12 @@ extension SettingsView {
 
     var body: some View {
       VStack(alignment: .leading, spacing: .spacing.medium) {
-        Text("Use the privileged engine").font(.headline).foregroundStyle(.textPrimary)
-        Text("OS fingerprinting and fast SYN port scans need raw network sockets, which macOS only grants to root. The engine is a small helper that runs only during scans and only sends results back to this app. Everything else works without it.")
+        Text(.usePrivilegedEngine).font(.headline).foregroundStyle(.textPrimary)
+        Text(.osFingerprintingFastSynPortScans)
           .font(.subheadline)
           .foregroundStyle(.textSecondary)
           .fixedSize(horizontal: false, vertical: true)
-        Text("It can: sweep this network at layer 2 (ARP), and SYN-scan ports on the devices found. It cannot: read files, run commands, or talk to anything but this app.")
+        Text(.helperCanAndCannot)
           .font(.subheadline)
           .foregroundStyle(.textSecondary)
           .fixedSize(horizontal: false, vertical: true)
@@ -34,26 +34,26 @@ extension SettingsView {
             .accessibilityIdentifier("helperState")
         }
         if state == .requiresApproval {
-          Text("Allow “Zhen” under System Settings › General › Login Items to finish.")
+          Text(.allowZhenUnderSystemSettingsGeneral)
             .font(.subheadline)
             .foregroundStyle(.textSecondary)
         }
         HStack(spacing: .spacing.small) {
           switch state {
           case .notInstalled, .unavailable:
-            PrimaryButton("Install Helper…", systemImage: "lock.shield", identifier: "installHelperButton", action: install)
-            Button("Remove") { confirmingRemoval = true }
+            PrimaryButton(.installHelper, systemImage: "lock.shield", identifier: "installHelperButton", action: install)
+            Button(String(localized: .remove)) { confirmingRemoval = true }
               .disabled(true)
-              .help("Nothing is installed")
+              .help(String(localized: .nothingInstalled))
               .accessibilityIdentifier("removeHelperButton")
           case .requiresApproval:
-            PrimaryButton("Open Login Items…", systemImage: "gearshape", identifier: "openLoginItemsButton", action: openLoginItems)
-            Button("Remove") { confirmingRemoval = true }
+            PrimaryButton(.openLoginItems, systemImage: "gearshape", identifier: "openLoginItemsButton", action: openLoginItems)
+            Button(String(localized: .remove)) { confirmingRemoval = true }
               .accessibilityIdentifier("removeHelperButton")
           case .installed:
-            Button("Show in System Settings…", action: openLoginItems)
+            Button(String(localized: .showSystemSettings), action: openLoginItems)
               .accessibilityIdentifier("showInSystemSettingsButton")
-            Button("Remove") { confirmingRemoval = true }
+            Button(String(localized: .remove)) { confirmingRemoval = true }
               .accessibilityIdentifier("removeHelperButton")
           }
         }
@@ -67,11 +67,11 @@ extension SettingsView {
       .padding(.vertical, .spacing.xSmall)
       .onAppear { state = model.helper.state }
       .task(id: state) { answered = state == .installed ? await model.helper.version() : nil }
-      .confirmationDialog("Remove the privileged engine?", isPresented: $confirmingRemoval) {
-        Button("Remove", role: .destructive, action: remove)
+      .confirmationDialog(String(localized: .removePrivilegedEngine), isPresented: $confirmingRemoval) {
+        Button(String(localized: .remove), role: .destructive, action: remove)
           .accessibilityIdentifier("confirmRemoveHelperButton")
       } message: {
-        Text("Scans keep working without it; they lose the layer-2 sweep and SYN scanning.")
+        Text(.scansKeepWorkingWithoutTheyLose)
       }
     }
 
@@ -85,11 +85,11 @@ extension SettingsView {
 
     private var stateLine: String {
       switch state {
-      case .notInstalled: String(localized: "Not installed.")
-      case .requiresApproval: String(localized: "Installed · waiting for your approval")
+      case .notInstalled: String(localized: .notInstalled)
+      case .requiresApproval: String(localized: .installedWaitingYourApproval)
       case .installed:
-        answered.map { String(localized: "Installed · Zhen Scan Engine \($0)") }
-          ?? String(localized: "Installed · Zhen Scan Engine (not answering yet)")
+        answered.map { String(localized: .installedZhenScanEngine($0)) }
+          ?? String(localized: .installedZhenScanEngineNotAnswering)
       case .unavailable(let reason): reason
       }
     }
@@ -99,7 +99,7 @@ extension SettingsView {
         try model.helper.install()
         failure = nil
       } catch {
-        failure = String(localized: "macOS did not register the helper: \(error.localizedDescription)")
+        failure = String(localized: .macosDidNotRegisterHelper(error.localizedDescription))
       }
       state = model.helper.state
     }
@@ -115,7 +115,7 @@ extension SettingsView {
           try await model.helper.uninstall()
           failure = nil
         } catch {
-          failure = String(localized: "macOS did not remove the helper: \(error.localizedDescription)")
+          failure = String(localized: .macosDidNotRemoveHelper(error.localizedDescription))
         }
         state = model.helper.state
       }

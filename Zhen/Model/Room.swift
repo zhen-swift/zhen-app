@@ -7,10 +7,10 @@ enum Room: String, CaseIterable, Identifiable, Hashable, Codable {
 
   var id: Self { self }
 
-  var title: LocalizedStringKey {
+  var title: LocalizedStringResource {
     switch self {
-    case .devices: "Devices"
-    case .activity: "Activity"
+    case .devices: .devices
+    case .activity: .activity
     }
   }
 

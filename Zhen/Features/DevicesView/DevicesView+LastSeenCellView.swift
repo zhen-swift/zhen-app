@@ -16,7 +16,7 @@ extension DevicesView {
     }
 
     static func text(for item: DeviceItem, now: Date) -> String {
-      if item.isOnline { return String(localized: "Now") }
+      if item.isOnline { return String(localized: .now) }
       return item.lastSeen.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated))
     }
   }

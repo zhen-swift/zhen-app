@@ -35,8 +35,8 @@ extension ActivityView {
 
   var noMatchTitle: String {
     filter == .all
-      ? String(localized: "No events match “\(search)”")
-      : String(localized: "No \(filter.noun) events in this window")
+      ? String(localized: .noEventsMatch(search))
+      : String(localized: .noEventsThisWindow(filter.noun))
   }
 
   func days(_ events: [DerivedEvent], calendar: Calendar = .current) -> [Day] {
@@ -53,8 +53,8 @@ extension ActivityView {
   /// "Today — Sunday, Aug 31".
   static func title(for day: Date, calendar: Calendar) -> String {
     let date = day.formatted(.dateTime.weekday(.wide).month(.abbreviated).day())
-    if calendar.isDateInToday(day) { return String(localized: "Today — \(date)") }
-    if calendar.isDateInYesterday(day) { return String(localized: "Yesterday — \(date)") }
+    if calendar.isDateInToday(day) { return String(localized: .today(date)) }
+    if calendar.isDateInYesterday(day) { return String(localized: .yesterday(date)) }
     return date
   }
 }

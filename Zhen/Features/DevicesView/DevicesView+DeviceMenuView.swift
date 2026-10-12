@@ -12,15 +12,15 @@ extension DevicesView {
 
     var body: some View {
       let single = ids.count == 1 ? ids.first.flatMap(model.device) : nil
-      Button("Open", systemImage: "arrow.right.circle") {
+      Button(String(localized: .open), systemImage: "arrow.right.circle") {
         if let single { onOpen(single.id) }
       }
       .disabled(single == nil)
-      Button("Rename…", systemImage: "pencil") {
+      Button(String(localized: .renameEllipsis), systemImage: "pencil") {
         if let single { onRename(single.id) }
       }
       .disabled(single == nil)
-      Button("Scan Ports", systemImage: "network") {
+      Button(String(localized: .scanPorts), systemImage: "network") {
         // Opened first: the result shows on the device, not under the table.
         if let single {
           onOpen(single.id)
@@ -28,15 +28,15 @@ extension DevicesView {
         }
       }
       .disabled(single?.device.ipv4Addresses.isEmpty ?? true || model.isBusy)
-      Button("Show in Activity", systemImage: "waveform.path.ecg") {
+      Button(String(localized: .showActivity), systemImage: "waveform.path.ecg") {
         if let single { onShowActivity(single.name ?? single.address) }
       }
       .disabled(single == nil)
       Divider()
-      Button("Copy Address", systemImage: "doc.on.doc") {
+      Button(String(localized: .copyAddress), systemImage: "doc.on.doc") {
         copy(ids.compactMap { model.device($0)?.address })
       }
-      Button("Copy MAC Address", systemImage: "doc.on.doc") {
+      Button(String(localized: .copyMacAddress), systemImage: "doc.on.doc") {
         copy(ids.compactMap { model.device($0)?.mac })
       }
     }

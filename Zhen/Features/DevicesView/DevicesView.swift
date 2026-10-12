@@ -42,8 +42,8 @@ struct DevicesView: View {
         .overlay {
           if rows.isEmpty {
             ContentUnavailableView(
-              "No matches", systemImage: "magnifyingglass",
-              description: Text("No device matches “\(search)”.")
+              String(localized: .noMatches), systemImage: "magnifyingglass",
+              description: Text(.noDeviceMatches(search))
             )
             .accessibilityIdentifier("noMatches")
           }
@@ -55,9 +55,9 @@ struct DevicesView: View {
         }
       }
     }
-    .navigationTitle("Devices")
+    .navigationTitle(String(localized: .devices))
     .navigationSubtitle(model.devicesSummary)
-    .searchable(text: $search, placement: .toolbar, prompt: "Search devices")
+    .searchable(text: $search, placement: .toolbar, prompt: .searchDevices)
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
         ScanControlView()

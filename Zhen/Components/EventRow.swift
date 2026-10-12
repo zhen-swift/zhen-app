@@ -23,7 +23,7 @@ struct EventRow: View {
         .foregroundStyle(event.kind.textColor)
         .lineLimit(1)
         .frame(width: .dimension.eventKindLabel, alignment: .leading)
-      Text("\(Text(event.subject).foregroundStyle(.textPrimary)) \(Text(event.detail).foregroundStyle(.textSecondary))")
+      Text(Self.sentence(event))
         .font(.body)
         .fixedSize(horizontal: false, vertical: true)
       Spacer(minLength: .zero)
@@ -31,6 +31,18 @@ struct EventRow: View {
     .padding(.vertical, .spacing.xSmall)
     .accessibilityElement(children: .combine)
     .accessibilityAddTraits(.isStaticText)
+  }
+}
+
+extension EventRow {
+  /// The subject in the primary ink, the detail quieter: two strings core wrote, side by
+  /// side. Styled runs, not a format string — there is nothing here to translate.
+  static func sentence(_ event: DerivedEvent) -> AttributedString {
+    var subject = AttributedString(event.subject)
+    subject.foregroundColor = .textPrimary
+    var detail = AttributedString(" " + event.detail)
+    detail.foregroundColor = .textSecondary
+    return subject + detail
   }
 }
 

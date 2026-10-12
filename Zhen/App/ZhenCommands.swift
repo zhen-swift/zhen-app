@@ -20,58 +20,58 @@ struct ZhenCommands: Commands {
     }
 
     CommandGroup(replacing: .importExport) {
-      Button("Export History…") { window?.exportHistory() }
+      Button(String(localized: .exportHistory)) { window?.exportHistory() }
         .keyboardShortcut("s", modifiers: [.command, .shift])
         .disabled(window == nil)
     }
 
     CommandGroup(after: .pasteboard) {
       Divider()
-      Button("Find…") { window?.focusSearch() }
+      Button(String(localized: .find)) { window?.focusSearch() }
         .keyboardShortcut("f", modifiers: .command)
         .disabled(window == nil)
     }
 
-    CommandMenu("Scan") {
+    CommandMenu(String(localized: .scan)) {
       // Enabled state from the window when it has published (its focused value is re-sent
       // whenever the window redraws), from the model only before then. A `Commands` body
       // is not re-evaluated by @Observable alone: Stop Scan stayed disabled from launch.
-      Button("Scan Now") { model.startScan() }
+      Button(String(localized: .scanNow)) { model.startScan() }
         .keyboardShortcut("r", modifiers: .command)
         .disabled(window?.isScanning ?? model.isBusy)
-      Button("Stop Scan") { model.stopScanning() }
+      Button(String(localized: .stopScan)) { model.stopScanning() }
         .keyboardShortcut(".", modifiers: .command)
         .disabled(!(window?.isScanning ?? model.isBusy))
     }
 
-    CommandMenu("Device") {
-      Button("Open") { window?.openSelection() }
+    CommandMenu(String(localized: .device)) {
+      Button(String(localized: .open)) { window?.openSelection() }
         .keyboardShortcut("o", modifiers: .command)
         .disabled(window?.room != .devices || window?.selectionCount != 1)
-      Button("Back to Devices") { window?.goBack() }
+      Button(String(localized: .backDevices)) { window?.goBack() }
         .keyboardShortcut("[", modifiers: .command)
         .disabled(window?.canGoBack != true)
       Divider()
-      Button("Rename…") { window?.renameSelection() }
+      Button(String(localized: .renameEllipsis)) { window?.renameSelection() }
         .keyboardShortcut("e", modifiers: [.command, .shift])
         .disabled(window?.room != .devices || (window?.selectionCount != 1 && window?.canGoBack != true))
-      Button("Scan Ports") { window?.scanSelectionPorts() }
+      Button(String(localized: .scanPorts)) { window?.scanSelectionPorts() }
         .keyboardShortcut("r", modifiers: [.command, .shift])
         .disabled(window?.room != .devices || window?.isScanning == true || (window?.selectionCount != 1 && window?.canGoBack != true))
-      Button("Show in Activity") { window?.showSelectionInActivity() }
+      Button(String(localized: .showActivity)) { window?.showSelectionInActivity() }
         .keyboardShortcut("a", modifiers: [.command, .shift])
         .disabled(window?.room != .devices || (window?.selectionCount != 1 && window?.canGoBack != true))
       Divider()
-      Button("Copy Address") { window?.copyAddresses() }
+      Button(String(localized: .copyAddress)) { window?.copyAddresses() }
         .keyboardShortcut("c", modifiers: [.command, .shift])
         .disabled(window?.room != .devices || (window?.selectionCount == 0 && window?.canGoBack != true))
-      Button("Copy MAC Address") { window?.copyMACAddresses() }
+      Button(String(localized: .copyMacAddress)) { window?.copyMACAddresses() }
         .keyboardShortcut("c", modifiers: [.command, .option, .shift])
         .disabled(window?.room != .devices || (window?.selectionCount == 0 && window?.canGoBack != true))
     }
 
     CommandGroup(after: .sidebar) {
-      Picker("Activity Filter", selection: Binding(
+      Picker(String(localized: .activityFilter), selection: Binding(
         get: { window?.activityFilter ?? .all },
         set: { window?.setActivityFilter($0) }
       )) {

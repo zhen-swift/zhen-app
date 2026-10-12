@@ -14,7 +14,7 @@ struct LiveScanView: View {
     List {
       Section {
         if scan.found.isEmpty {
-          Text(scan.isRunning ? "Listening…" : "Nothing answered before the scan stopped.")
+          Text(scan.isRunning ? .listening : .nothingAnsweredBeforeScanStopped)
             .font(.body)
             .foregroundStyle(.textSecondary)
             .accessibilityIdentifier("liveScanListening")
@@ -24,13 +24,13 @@ struct LiveScanView: View {
           }
         }
       } header: {
-        Text("Found so far · newest first").sectionLabel()
+        Text(.foundSoFarNewestFirst).sectionLabel()
           .accessibilityAddTraits(.isHeader)
       }
     }
     .listStyle(.inset)
     .animation(.spring(duration: 0.3), value: scan.found.count)
-    .accessibilityLabel("Found so far")
+    .accessibilityLabel(String(localized: .foundSoFar))
     .accessibilityIdentifier("liveScanList")
     .safeAreaInset(edge: .top, spacing: .zero) {
       VStack(alignment: .leading, spacing: .spacing.large) {

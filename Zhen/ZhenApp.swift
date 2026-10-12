@@ -20,7 +20,7 @@ struct ZhenApp: App {
     // A single window, not a group: the scan runs from this window's task, and two windows
     // sharing one model would run it twice. It was a `WindowGroup` from stage A until
     // phase 3 despite this comment — ⌘N opened a second window (ledger, phase 3 stage 3).
-    Window("Zhen", id: "main") {
+    Window(String(localized: .zhen), id: "main") {
       RootView()
         // Screenshot mode: a fixed size the window must take, toolbar included — the slot
         // is the whole window. `defaultSize` alone lost to the frame AppKit had saved from

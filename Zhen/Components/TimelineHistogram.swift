@@ -19,16 +19,16 @@ struct TimelineHistogram: View {
     let busiest = buckets.map(\.count).max() ?? 0
     Chart(buckets) { bucket in
       BarMark(
-        x: .value("Hour", bucket.start, unit: .hour),
-        y: .value("Events", bucket.count)
+        x: .value(String(localized: .hour), bucket.start, unit: .hour),
+        y: .value(String(localized: .eventsTitle), bucket.count)
       )
       .foregroundStyle(.accent.opacity(bucket.count == busiest && busiest > 0 ? 1 : 0.6))
       .clipShape(.rect(cornerRadius: .cornerRadius.small / 2))
       if let hovered, Calendar.current.isDate(hovered, equalTo: bucket.start, toGranularity: .hour) {
-        RuleMark(x: .value("Hour", bucket.start, unit: .hour))
+        RuleMark(x: .value(String(localized: .hour), bucket.start, unit: .hour))
           .foregroundStyle(.clear)
           .annotation(position: .top) {
-            Text("\(bucket.count) events")
+            Text(.eventCount(bucket.count))
               .font(.caption)
               .foregroundStyle(.textPrimary)
               .padding(.spacing.xSmall)
@@ -50,7 +50,7 @@ struct TimelineHistogram: View {
     // histogram counting what the list has filtered out is two answers about one dataset.
     .accessibilityElement(children: .ignore)
     .accessibilityAddTraits(.isImage)
-    .accessibilityLabel("Events per hour: \(buckets.reduce(0) { $0 + $1.count }) over \(buckets.count) hours")
+    .accessibilityLabel(String(localized: .eventsPerHourOverHours(buckets.reduce(0) { $0 + $1.count }, buckets.count)))
   }
 
   /// Hourly buckets over `hours` ending at `end`, counting `dates`.

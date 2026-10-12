@@ -27,22 +27,22 @@ extension DevicesView {
 
       let words = Identification.allCases.map(IdentityCellView.word(for:))
       identity = max(
-        header(String(localized: "Identity")),
+        header(String(localized: .identity)),
         IconSize.medium + Spacing.small + TextMeasure.widest(words, .subheadline) + Spacing.medium
       )
       address = max(
-        header(String(localized: "IP Address")),
+        header(String(localized: .ipAddressColumn)),
         TextMeasure.widest(rows.map(\.address), .callout, monospaced: true) + Spacing.medium
       )
       let chip = rows.contains(where: \.isPrivateMAC)
-        ? Spacing.small + TextMeasure.width(String(localized: "private"), .caption) + 2 * Spacing.small
+        ? Spacing.small + TextMeasure.width(String(localized: .private), .caption) + 2 * Spacing.small
         : 0
       mac = max(
-        header(String(localized: "MAC Address")),
+        header(String(localized: .macAddress)),
         TextMeasure.widest(rows.map { $0.mac ?? "—" }, .callout, monospaced: true) + chip + Spacing.medium
       )
       lastSeen = max(
-        header(String(localized: "Last Seen")),
+        header(String(localized: .lastSeenColumn)),
         TextMeasure.widest(rows.map { LastSeenCellView.text(for: $0, now: now) }, .headline) + Spacing.medium
       )
     }

@@ -8,13 +8,13 @@ enum ActivityFilter: String, CaseIterable, Identifiable, Hashable {
 
   var id: Self { self }
 
-  var title: LocalizedStringKey {
+  var title: LocalizedStringResource {
     switch self {
-    case .all: "All"
-    case .presence: "Presence"
-    case .identity: "Identity"
-    case .ports: "Ports"
-    case .addresses: "Addresses"
+    case .all: .all
+    case .presence: .presence
+    case .identity: .identity
+    case .ports: .ports
+    case .addresses: .addresses
     }
   }
 
@@ -22,10 +22,10 @@ enum ActivityFilter: String, CaseIterable, Identifiable, Hashable {
   var noun: String {
     switch self {
     case .all: ""
-    case .presence: String(localized: "presence")
-    case .identity: String(localized: "identity")
-    case .ports: String(localized: "port")
-    case .addresses: String(localized: "address")
+    case .presence: String(localized: .presenceLower)
+    case .identity: String(localized: .identityLower)
+    case .ports: String(localized: .port)
+    case .addresses: String(localized: .address)
     }
   }
 

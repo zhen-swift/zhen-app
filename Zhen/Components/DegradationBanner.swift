@@ -12,7 +12,7 @@ struct DegradationBanner: View {
   @Environment(\.openSettings) private var openSettings
 
   var body: some View {
-    Card("Running with partial results", caption: String(localized: "results are still valid, just less complete")) {
+    Card(.runningWithPartialResults, caption: String(localized: .resultsAreStillValidJustLess)) {
       VStack(alignment: .leading, spacing: .zero) {
         ForEach(degradations.enumerated(), id: \.offset) { index, degradation in
           let copy = DegradationCopy(degradation)
@@ -59,11 +59,11 @@ struct DegradationBanner: View {
 }
 
 extension DegradationCopy.Action {
-  var title: LocalizedStringKey {
+  var title: LocalizedStringResource {
     switch self {
-    case .openLocalNetworkSettings: "Open System Settings…"
-    case .scanAgain: "Scan Again"
-    case .reviewHelperSettings: "Review in Settings…"
+    case .openLocalNetworkSettings: .openSystemSettings
+    case .scanAgain: .scanAgain
+    case .reviewHelperSettings: .reviewSettings
     }
   }
 }

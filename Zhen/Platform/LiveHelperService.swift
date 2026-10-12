@@ -15,8 +15,8 @@ struct LiveHelperService: HelperService {
     case .notRegistered: .notInstalled
     case .requiresApproval: .requiresApproval
     case .enabled: .installed
-    case .notFound: .unavailable(String(localized: "The helper is missing from this copy of Zhen."))
-    @unknown default: .unavailable(String(localized: "macOS reported a state this version does not know."))
+    case .notFound: .unavailable(String(localized: .helperMissingFromThisCopyZhen))
+    @unknown default: .unavailable(String(localized: .macosReportedStateThisVersionDoes))
     }
   }
 

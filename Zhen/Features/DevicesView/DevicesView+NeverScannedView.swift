@@ -7,11 +7,11 @@ extension DevicesView {
 
     var body: some View {
       ContentUnavailableView {
-        Label("No scan yet", systemImage: "dot.radiowaves.left.and.right")
+        Label(String(localized: .noScanYet), systemImage: "dot.radiowaves.left.and.right")
       } description: {
-        Text("Run a scan to see what’s on your network.")
+        Text(.runScanSeeWhatsYourNetwork)
       } actions: {
-        PrimaryButton("Scan Now", systemImage: "dot.radiowaves.left.and.right", identifier: "emptyScanNowButton") {
+        PrimaryButton(.scanNow, systemImage: "dot.radiowaves.left.and.right", identifier: "emptyScanNowButton") {
           model.startScan()
         }
       }

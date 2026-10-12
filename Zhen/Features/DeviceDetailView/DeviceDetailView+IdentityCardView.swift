@@ -15,16 +15,16 @@ extension DeviceDetailView {
     let changes: [DerivedEvent]
 
     var body: some View {
-      Card("Identity history", caption: caption) {
+      Card(.identityHistory, caption: caption) {
         VStack(alignment: .leading, spacing: .zero) {
           HStack(spacing: .spacing.medium) {
             StatusDot(.accent)
-            Text(item.mac ?? String(localized: "No hardware address"))
+            Text(item.mac ?? String(localized: .noHardwareAddress))
               .font(.callout.monospaced())
               .foregroundStyle(.textPrimary)
-            if item.isPrivateMAC { Chip("private") }
+            if item.isPrivateMAC { Chip(.private) }
             Spacer()
-            Text(String(localized: "since \(item.firstSeen.formatted(date: .abbreviated, time: .omitted))"))
+            Text(String(localized: .since(item.firstSeen.formatted(date: .abbreviated, time: .omitted))))
               .font(.subheadline)
               .foregroundStyle(.textSecondary)
           }
@@ -65,8 +65,8 @@ extension DeviceDetailView {
       // The plural is the catalogue's (`Localizable.xcstrings`): `^[…](inflect: true)` is
       // rendered literally by `String(localized:)`, which the stage-2 screenshot showed.
       let seen = count == 0
-        ? String(localized: "No identity changes seen")
-        : String(localized: "\(count) identity changes")
+        ? String(localized: .noIdentityChangesSeen)
+        : String(localized: .identityChanges(count))
       return "\(item.identityCaption) · \(seen)"
     }
   }

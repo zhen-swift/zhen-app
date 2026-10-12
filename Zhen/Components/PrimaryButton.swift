@@ -6,12 +6,12 @@ import SwiftUI
 /// label; this exists so the call sites say what the control is for, and carry an
 /// identifier and a symbol, not to restyle it.
 struct PrimaryButton: View {
-  let title: LocalizedStringKey
+  let title: LocalizedStringResource
   let systemImage: String
   let identifier: String
   let action: () -> Void
 
-  init(_ title: LocalizedStringKey, systemImage: String, identifier: String, action: @escaping () -> Void) {
+  init(_ title: LocalizedStringResource, systemImage: String, identifier: String, action: @escaping () -> Void) {
     self.title = title
     self.systemImage = systemImage
     self.identifier = identifier
@@ -28,7 +28,7 @@ struct PrimaryButton: View {
 }
 
 #Preview("Primary button") {
-  PrimaryButton("Scan Now", systemImage: "dot.radiowaves.left.and.right", identifier: "preview") {}
+  PrimaryButton(.scanNow, systemImage: "dot.radiowaves.left.and.right", identifier: "preview") {}
     .padding(.spacing.xLarge)
     .background(.surface)
 }

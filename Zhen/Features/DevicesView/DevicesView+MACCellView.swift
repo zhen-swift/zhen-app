@@ -13,7 +13,7 @@ extension DevicesView {
           .foregroundStyle(.textSecondary)
           .lineLimit(1)
         if item.isPrivateMAC {
-          Chip("private")
+          Chip(.private)
         }
       }
     }

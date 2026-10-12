@@ -4,10 +4,10 @@ import SwiftUI
 /// looks like a bug; a dash looks like an answer.
 struct KeyValueGrid: View {
   struct Pair: Identifiable {
-    let label: LocalizedStringKey
+    let label: LocalizedStringResource
     let value: String?
     var isAddress = false
-    var chip: LocalizedStringKey?
+    var chip: LocalizedStringResource?
     let id: String
   }
 
@@ -37,9 +37,9 @@ struct KeyValueGrid: View {
 
 #Preview("Key-value grid — dark") {
   KeyValueGrid(pairs: [
-    .init(label: "IP address", value: "192.168.50.37", isAddress: true, id: "ip"),
-    .init(label: "MAC", value: "6A:5C:00:00:00:05", isAddress: true, chip: "private", id: "mac"),
-    .init(label: "Vendor", value: nil, id: "vendor"),
+    .init(label: .ipAddressLabel, value: "192.168.50.37", isAddress: true, id: "ip"),
+    .init(label: .mac, value: "6A:5C:00:00:00:05", isAddress: true, chip: .private, id: "mac"),
+    .init(label: .vendor, value: nil, id: "vendor"),
   ])
   .padding(.spacing.xLarge)
   .background(.surface)

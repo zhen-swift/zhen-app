@@ -15,6 +15,8 @@
 - The app icon, from the design mark.
 - `Localizable.xcstrings` with plural forms.
 - fastlane lanes, the App Store screenshot pipeline and `Marketing/copy.json`.
+- Shortcuts: Scan Network and Count Online Devices, with Siri phrases.
+- Every string a symbol key in `Localizable.xcstrings`.
 
 ### Fixed
 - Scan Ports recorded a run of one address, after which every other device showed as
@@ -26,3 +28,7 @@
 - ⌘N opened a second window that ran every scan again.
 - Show in Activity kept whatever filter was selected.
 - Status that differed only by colour; "1 identity changes"; "Last scan in 0 sec.".
+- VoiceOver: combined elements had no role, two lists had no name, and the footer called a
+  running scan "Merged".
+- White text on the app's accent measured 2.61:1 in dark mode, where macOS draws
+  selections and switches; the system controls now use a darker accent.

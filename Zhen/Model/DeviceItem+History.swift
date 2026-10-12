@@ -48,22 +48,22 @@ nonisolated extension DeviceItem {
     let network = IPv4Network(base: device.ipv4Addresses.first ?? IPv4Address(raw: 0), prefix: 32)
     let kinds = HostIdentifier.candidates(for: device, in: network).map(\.kind)
     let key: String = switch kinds.first {
-    case .universalMAC?: String(localized: "hardware MAC")
-    case .randomizedMAC?: String(localized: "rotating MAC")
-    case .mdnsInstance?: String(localized: "Bonjour name")
-    case .dhcpHostname?: String(localized: "DHCP name")
-    case .ipLease?, nil: String(localized: "address only")
+    case .universalMAC?: String(localized: .hardwareMac)
+    case .randomizedMAC?: String(localized: .rotatingMac)
+    case .mdnsInstance?: String(localized: .bonjourName)
+    case .dhcpHostname?: String(localized: .dhcpName)
+    case .ipLease?, nil: String(localized: .addressOnly)
     }
     let holding: String = switch device.identityStability {
-    case .strong: String(localized: "permanent")
+    case .strong: String(localized: .permanent)
     case .moderate:
       kinds.contains(.mdnsInstance)
-        ? String(localized: "stabilised by Bonjour name")
-        : String(localized: "stabilised by DHCP name")
-    case .weak: String(localized: "splits when the MAC rotates")
-    case .ephemeral: String(localized: "holds only while the lease does")
+        ? String(localized: .stabilisedBonjourName)
+        : String(localized: .stabilisedDhcpName)
+    case .weak: String(localized: .splitsWhenMacRotates)
+    case .ephemeral: String(localized: .holdsOnlyWhileLeaseDoes)
     }
-    return String(localized: "identity key: \(key), \(holding)")
+    return String(localized: .identityKey(key, holding))
   }
 }
 

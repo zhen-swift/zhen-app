@@ -15,12 +15,12 @@ extension DevicesView {
           .accessibilityHidden(true)
         VStack(alignment: .leading, spacing: .spacing.xxSmall) {
           HStack(spacing: .spacing.small) {
-            Text(item.name ?? String(localized: "Unidentified device"))
+            Text(item.name ?? String(localized: .unidentifiedDevice))
               .font(.body)
               .foregroundStyle(.textPrimary)
               .lineLimit(1)
             if item.isReassigned {
-              Chip("reassigned")
+              Chip(.reassigned)
             }
           }
           Text(item.subtitle)
@@ -38,11 +38,11 @@ extension DevicesView {
 
     /// The row as a person would say it: name, state, address, when.
     private var sentence: String {
-      let name = item.name ?? String(localized: "Unidentified device")
-      let state = item.isOnline ? String(localized: "online") : String(localized: "offline")
+      let name = item.name ?? String(localized: .unidentifiedDevice)
+      let state = item.isOnline ? String(localized: .onlineLower) : String(localized: .offlineLower)
       let identity = IdentityCellView.word(for: item.identification).lowercased()
       let seen = LastSeenCellView.text(for: item, now: now)
-      return "\(name), \(state), \(identity), \(item.address), \(String(localized: "last seen")) \(seen)"
+      return "\(name), \(state), \(identity), \(item.address), \(String(localized: .lastSeenLower)) \(seen)"
     }
   }
 }

@@ -2,10 +2,10 @@ import SwiftUI
 
 /// A short tag beside a name or an address: `private`, `GATEWAY`, `WINNER`.
 struct Chip: View {
-  let title: LocalizedStringKey
+  let title: LocalizedStringResource
   let style: Style
 
-  init(_ title: LocalizedStringKey, style: Style = .neutral) {
+  init(_ title: LocalizedStringResource, style: Style = .neutral) {
     self.title = title
     self.style = style
   }
@@ -40,11 +40,11 @@ private struct ChipPreview: View {
     VStack(alignment: .leading, spacing: .spacing.medium) {
       HStack(spacing: .spacing.small) {
         Text(verbatim: "ER7206").foregroundStyle(.textPrimary)
-        Chip("Gateway", style: .accent)
+        Chip(.gateway, style: .accent)
       }
       HStack(spacing: .spacing.small) {
         Text(verbatim: "F2:3A:91:6B:0D:44").font(.callout.monospaced()).foregroundStyle(.textTertiary)
-        Chip("private")
+        Chip(.private)
       }
     }
     .padding(.spacing.xLarge)

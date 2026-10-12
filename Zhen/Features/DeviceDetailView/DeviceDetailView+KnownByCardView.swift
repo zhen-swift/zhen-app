@@ -8,10 +8,10 @@ extension DeviceDetailView {
     let item: DeviceItem
 
     var body: some View {
-      Card("Known by", caption: String(localized: "competing names by source — highest-trust source wins")) {
+      Card(.knownBy, caption: String(localized: .competingNamesSourceHighestTrustSource)) {
         VStack(alignment: .leading, spacing: .zero) {
           if let userName = item.userName {
-            SourceRowView(source: String(localized: "You"), value: userName, isWinner: true)
+            SourceRowView(source: String(localized: .you), value: userName, isWinner: true)
             Divider()
           }
           ForEach(item.nameOffers.enumerated(), id: \.offset) { index, offer in

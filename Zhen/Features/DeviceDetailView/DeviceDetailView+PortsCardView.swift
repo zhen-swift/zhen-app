@@ -9,12 +9,12 @@ extension DeviceDetailView {
     @Environment(NetworkModel.self) private var model
 
     var body: some View {
-      Card("Open ports", caption: caption) {
+      Card(.openPorts, caption: caption) {
         VStack(alignment: .leading, spacing: .spacing.medium) {
           if let session, session.state == .running {
             HStack(spacing: .spacing.small) {
               ProgressView().controlSize(.small)
-              Text("Checking common ports on \(item.address)…")
+              Text(.checkingCommonPortsOn(item.address))
                 .font(.body)
                 .foregroundStyle(.textSecondary)
             }
@@ -39,15 +39,15 @@ extension DeviceDetailView {
       if ports.isEmpty {
         if session?.state != .running {
           HStack {
-            Text("No port scan yet").font(.body).foregroundStyle(.textSecondary)
+            Text(.noPortScanYet).font(.body).foregroundStyle(.textSecondary)
             Spacer()
-            Button("Scan Ports") { model.scanPorts(item.id) }
+            Button(String(localized: .scanPorts)) { model.scanPorts(item.id) }
               .disabled(item.device.ipv4Addresses.isEmpty || model.isBusy)
               .accessibilityIdentifier("cardScanPortsButton")
           }
         }
       } else if open.isEmpty {
-        Text(String(localized: "None of the \(ports.count) ports checked was open."))
+        Text(String(localized: .nonePortsCheckedWasOpen(ports.count)))
           .font(.body)
           .foregroundStyle(.textSecondary)
           .accessibilityIdentifier("noOpenPorts")
@@ -85,14 +85,14 @@ extension DeviceDetailView {
     /// rather than pass off the last-seen time as a scan time, which it used to.
     private var caption: String? {
       if let session, session.state == .finished {
-        return String(localized: "Scanned \(session.at.formatted(date: .omitted, time: .shortened)) · this session, not saved to history")
+        return String(localized: .scannedThisSessionNotSavedHistory(session.at.formatted(date: .omitted, time: .shortened)))
       }
       guard !item.device.ports.isEmpty else { return nil }
       if let run = model.latestRun, run.checkedPorts, item.isOnline, let finished = run.finishedAt {
         let date = Date(timeIntervalSince1970: finished.timeIntervalSince1970)
-        return String(localized: "Checked \(date.formatted(.relative(presentation: .numeric)))")
+        return String(localized: .checked(date.formatted(.relative(presentation: .numeric))))
       }
-      return String(localized: "From an earlier scan that checked ports")
+      return String(localized: .fromEarlierScanThatCheckedPorts)
     }
 
     private func product(_ port: PortObservation) -> String? {

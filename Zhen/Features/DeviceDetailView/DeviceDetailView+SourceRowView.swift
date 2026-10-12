@@ -15,10 +15,10 @@ extension DeviceDetailView {
           .font(.subheadline)
           .foregroundStyle(.textSecondary)
           .frame(minWidth: .dimension.eventKindLabel, alignment: .leading)
-        Text(value ?? String(localized: "— not advertised"))
+        Text(value ?? String(localized: .notAdvertised))
           .font(.body)
           .foregroundStyle(value == nil ? .textSecondary : .textPrimary)
-        if isWinner { Chip("Winner", style: .accent) }
+        if isWinner { Chip(.winner, style: .accent) }
         Spacer()
       }
       .padding(.horizontal, .spacing.large)

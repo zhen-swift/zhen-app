@@ -15,8 +15,8 @@ struct ActivityView: View {
     Group {
       if model.eventsInWindow.isEmpty {
         ContentUnavailableView(
-          "Nothing has changed", systemImage: "waveform.path.ecg",
-          description: Text("Events appear here when devices join, leave, or change.")
+          String(localized: .nothingHasChanged), systemImage: "waveform.path.ecg",
+          description: Text(.eventsAppearHereWhenDevicesJoin)
         )
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("activityEmpty")
@@ -34,13 +34,13 @@ struct ActivityView: View {
           }
         }
         .listStyle(.inset)
-        .accessibilityLabel("Events")
+        .accessibilityLabel(String(localized: .eventsTitle))
         .accessibilityIdentifier("activityList")
         .overlay {
           if events.isEmpty {
             ContentUnavailableView(
               noMatchTitle, systemImage: "line.3.horizontal.decrease.circle",
-              description: Text("Try another filter, or clear the search.")
+              description: Text(.tryAnotherFilterClearSearch)
             )
             .accessibilityIdentifier("activityNoMatch")
           }
@@ -50,9 +50,9 @@ struct ActivityView: View {
         }
       }
     }
-    .navigationTitle("Activity")
-    .navigationSubtitle(String(localized: "Last 48 hours · \(model.eventsInWindow.count) events"))
-    .searchable(text: $search, placement: .toolbar, prompt: "Filter by device")
+    .navigationTitle(String(localized: .activity))
+    .navigationSubtitle(String(localized: .last48HoursEvents(model.eventsInWindow.count)))
+    .searchable(text: $search, placement: .toolbar, prompt: .filterDevice)
   }
 }
 

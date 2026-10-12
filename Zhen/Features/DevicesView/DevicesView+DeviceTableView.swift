@@ -17,23 +17,23 @@ extension DevicesView {
       TimelineView(.everyMinute) { context in
         let widths = ColumnWidths(rows: rows, now: context.date)
         Table(rows, selection: $selection, sortOrder: $sortOrder) {
-          TableColumn("Name", value: \.nameSortKey) { item in
+          TableColumn(String(localized: .name), value: \.nameSortKey) { item in
             NameCellView(item: item, now: context.date)
           }
           .width(min: .windowSize.nameMinimum)
-          TableColumn("Identity", value: \.identificationRank) { item in
+          TableColumn(String(localized: .identity), value: \.identificationRank) { item in
             IdentityCellView(identification: item.identification)
           }
           .width(widths.identity)
-          TableColumn("IP Address", value: \.addressSortKey) { item in
+          TableColumn(String(localized: .ipAddressColumn), value: \.addressSortKey) { item in
             AddressCellView(item: item)
           }
           .width(widths.address)
-          TableColumn("MAC Address", value: \.macSortKey) { item in
+          TableColumn(String(localized: .macAddress), value: \.macSortKey) { item in
             MACCellView(item: item)
           }
           .width(widths.mac)
-          TableColumn("Last Seen", value: \.lastSeen) { item in
+          TableColumn(String(localized: .lastSeenColumn), value: \.lastSeen) { item in
             LastSeenCellView(item: item, now: context.date)
           }
           .width(widths.lastSeen)
@@ -54,7 +54,7 @@ extension DevicesView {
           return .handled
         }
       }
-      .accessibilityLabel("Devices")
+      .accessibilityLabel(String(localized: .devices))
       .accessibilityIdentifier("deviceTable")
     }
   }

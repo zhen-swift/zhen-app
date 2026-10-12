@@ -27,15 +27,15 @@ struct DeviceDetailView: View {
           }
           .padding(.spacing.xLarge)
         }
-        .navigationTitle(item.name ?? String(localized: "Unidentified device"))
+        .navigationTitle(item.name ?? String(localized: .unidentifiedDevice))
         .navigationSubtitle(item.address)
         .toolbar {
           ToolbarItemGroup(placement: .primaryAction) {
-            Button("Rename…", systemImage: "pencil") { onRename(item.id) }
-              .help("Give this device a name of your own")
+            Button(String(localized: .renameEllipsis), systemImage: "pencil") { onRename(item.id) }
+              .help(String(localized: .giveThisDeviceNameYourOwn))
               .accessibilityIdentifier("renameButton")
-            Button("Scan Ports", systemImage: "network") { scanPorts(item) }
-              .help("Check this device's common ports")
+            Button(String(localized: .scanPorts), systemImage: "network") { scanPorts(item) }
+              .help(String(localized: .checkThisDevicesCommonPorts))
               .disabled(item.device.ipv4Addresses.isEmpty || model.isBusy)
               .accessibilityIdentifier("scanPortsButton")
           }
@@ -44,8 +44,8 @@ struct DeviceDetailView: View {
         .accessibilityIdentifier("deviceDetail")
       } else {
         ContentUnavailableView(
-          "Device not found", systemImage: "questionmark.circle",
-          description: Text("History no longer has this device.")
+          String(localized: .deviceNotFound), systemImage: "questionmark.circle",
+          description: Text(.historyNoLongerHasThisDevice)
         )
       }
     }

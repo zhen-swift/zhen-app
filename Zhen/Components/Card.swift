@@ -5,11 +5,11 @@ import SwiftUI
 /// A caption teaches what the card holds without a tooltip or a manual: "Known by ·
 /// competing names by source — highest-trust source wins".
 struct Card<Content: View>: View {
-  let title: LocalizedStringKey?
+  let title: LocalizedStringResource?
   let caption: String?
   let content: Content
 
-  init(_ title: LocalizedStringKey? = nil, caption: String? = nil, @ViewBuilder content: () -> Content) {
+  init(_ title: LocalizedStringResource? = nil, caption: String? = nil, @ViewBuilder content: () -> Content) {
     self.title = title
     self.caption = caption
     self.content = content()
@@ -44,8 +44,8 @@ struct Card<Content: View>: View {
 }
 
 #Preview("Card — dark") {
-  Card("Known by", caption: "competing names by source — highest-trust source wins") {
-    Text("Bonjour · Sala de estar principal").padding(.spacing.large)
+  Card(.knownBy, caption: "competing names by source — highest-trust source wins") {
+    Text(verbatim: "Bonjour · Sala de estar principal").padding(.spacing.large)
   }
   .padding(.spacing.xLarge)
   .background(.surface)
@@ -53,8 +53,8 @@ struct Card<Content: View>: View {
 }
 
 #Preview("Card — light") {
-  Card("Open ports", caption: "last deep scan 22 min ago") {
-    Text("443 · https").padding(.spacing.large)
+  Card(.openPorts, caption: "Checked 22 min ago") {
+    Text(verbatim: "443 · https").padding(.spacing.large)
   }
   .padding(.spacing.xLarge)
   .background(.surface)

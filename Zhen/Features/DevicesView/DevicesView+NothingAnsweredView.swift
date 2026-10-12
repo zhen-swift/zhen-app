@@ -11,15 +11,15 @@ extension DevicesView {
     var body: some View {
       VStack(spacing: .spacing.large) {
         ContentUnavailableView {
-          Label("Nothing answered", systemImage: "antenna.radiowaves.left.and.right.slash")
+          Label(String(localized: .nothingAnswered), systemImage: "antenna.radiowaves.left.and.right.slash")
         } description: {
-          Text("The scan completed but no devices replied. This usually means the Local Network permission is denied.")
+          Text(.scanCompletedButNoDevicesReplied)
         } actions: {
-          Button("Open System Settings…") {
+          Button(String(localized: .openSystemSettings)) {
             if let url = SystemSettings.localNetwork { openURL(url) }
           }
           .accessibilityIdentifier("openLocalNetworkSettingsButton")
-          Button("Scan Again") { model.startScan() }
+          Button(String(localized: .scanAgain)) { model.startScan() }
             .accessibilityIdentifier("scanAgainButton")
         }
         if !model.lastDegradations.isEmpty {

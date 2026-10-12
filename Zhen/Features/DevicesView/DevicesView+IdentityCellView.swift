@@ -23,9 +23,9 @@ extension DevicesView {
 
     static func word(for identification: Identification) -> String {
       switch identification {
-      case .identified: String(localized: "Identified")
-      case .partial: String(localized: "Partial")
-      case .minimal: String(localized: "Minimal")
+      case .identified: String(localized: .identified)
+      case .partial: String(localized: .partial)
+      case .minimal: String(localized: .minimal)
       }
     }
   }

@@ -12,7 +12,7 @@ struct StageCard: View {
     case skipped
   }
 
-  let title: LocalizedStringKey
+  let title: LocalizedStringResource
   let detail: String
   let state: State
 
@@ -51,10 +51,10 @@ struct StageCard: View {
 
   private var stateDescription: String {
     switch state {
-    case .queued: String(localized: "Queued")
-    case .running: String(localized: "Running")
-    case .done: String(localized: "Done")
-    case .skipped: String(localized: "Not part of this scan")
+    case .queued: String(localized: .queued)
+    case .running: String(localized: .running)
+    case .done: String(localized: .done)
+    case .skipped: String(localized: .notPartThisScan)
     }
   }
 }
@@ -97,9 +97,9 @@ extension StageCard {
 
 #Preview("Stage cards — dark") {
   HStack(spacing: .spacing.medium) {
-    StageCard(title: "Discovery", detail: "13 hosts answered", state: .done)
-    StageCard(title: "Naming", detail: "Asking Bonjour, UPnP, NetBIOS", state: .running(0.4))
-    StageCard(title: "Deep scan", detail: "Not requested", state: .skipped)
+    StageCard(title: .discovery, detail: "13 hosts answered", state: .done)
+    StageCard(title: .naming, detail: "Asking Bonjour, UPnP and NetBIOS", state: .running(0.4))
+    StageCard(title: .deepScan, detail: "Not requested", state: .skipped)
   }
   .padding(.spacing.xLarge)
   .background(.surface)

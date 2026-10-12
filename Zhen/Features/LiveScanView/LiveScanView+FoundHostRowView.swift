@@ -18,9 +18,9 @@ extension LiveScanView {
           if let name = host.facts.displayName {
             Text(name).font(.body).foregroundStyle(.textPrimary)
           } else if namingPending {
-            Text("Resolving name…").font(.body).italic().foregroundStyle(.textSecondary)
+            Text(.resolvingName).font(.body).italic().foregroundStyle(.textSecondary)
           } else {
-            Text("Unidentified device").font(.body).foregroundStyle(.textPrimary)
+            Text(.unidentifiedDevice).font(.body).foregroundStyle(.textPrimary)
           }
           TimelineView(.periodic(from: .now, by: 1)) { context in
             Text(detail(at: context.date))
@@ -43,15 +43,15 @@ extension LiveScanView {
 
     private func detail(at now: Date) -> String {
       let seconds = Int(max(0, now.timeIntervalSince(host.foundAt)))
-      var parts = [String(localized: "found \(seconds) s ago")]
+      var parts = [String(localized: .foundSAgo(seconds))]
       if let mac = host.facts.mac { parts.append(mac.description) }
       if let vendor = host.facts.vendor { parts.append(vendor) }
       if let known {
-        parts.append(known.name.map { String(localized: "matched to \($0)") } ?? String(localized: "matched to a known device"))
+        parts.append(known.name.map { String(localized: .matched($0)) } ?? String(localized: .matchedKnownDevice))
       }
       // Last, so the facts already in hand are not hidden behind the one still coming.
       if host.facts.displayName == nil, namingPending {
-        parts.append(String(localized: "name query in flight"))
+        parts.append(String(localized: .nameQueryFlight))
       }
       return parts.joined(separator: " · ")
     }

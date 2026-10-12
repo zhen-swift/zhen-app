@@ -39,7 +39,11 @@ test`) and `screenshots.yml` have never run on GitHub, and `macos-26` and Ruby `
 runner are untested assumptions. **Instead:** the lanes ran locally (`fastlane unit`
 green, JUnit and `.xcresult` written).
 
-## Q4 — String keys are the English text, not symbol keys (stage 5)
+## Q4 — String keys are the English text, not symbol keys (stage 5) — **resolved in part 2**
+
+Moved to symbol keys after all: 248 of them, every call site converted, no automatic key
+left. Kept below as it was asked.
+
 
 AGENTS.md asks for `Localizable.xcstrings` with symbol keys (`extractionState: manual`),
 used as `Text(.key)`. The catalogue here is filled from the compiler's extraction: 243

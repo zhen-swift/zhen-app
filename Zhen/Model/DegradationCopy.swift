@@ -24,21 +24,21 @@ nonisolated struct DegradationCopy: Hashable, Sendable {
     consequence = Self.forTheApp(degradation.reason)
     let reason = degradation.reason
     if reason.contains("Local Network") && degradation.stage == .discovery {
-      cause = String(localized: "Local Network access appears to be denied")
+      cause = String(localized: .localNetworkAccessAppearsDenied)
       action = .openLocalNetworkSettings
     } else if reason.contains("Local Network") {
-      cause = String(localized: "No names could be read")
+      cause = String(localized: .noNamesCouldRead)
       action = .openLocalNetworkSettings
     } else if reason.contains("privileged helper") {
       // Core's sentences for a helper that is absent or refused both name it; the remedy
       // for either is in Zhen's Settings, not System Settings.
-      cause = String(localized: "The layer-2 sweep did not run")
+      cause = String(localized: .layer2SweepDidNotRun)
       action = .reviewHelperSettings
     } else if reason.contains("timed out") {
-      cause = String(localized: "Some replies arrived late")
+      cause = String(localized: .someRepliesArrivedLate)
       action = nil
     } else {
-      cause = String(localized: "\(degradation.stage.label) ran with partial results")
+      cause = String(localized: .ranWithPartialResults(degradation.stage.label))
       action = degradation.recoverable ? .scanAgain : nil
     }
   }

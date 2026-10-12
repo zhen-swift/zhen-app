@@ -2,12 +2,12 @@ import SwiftUI
 import ZhenCore
 
 extension LiveScanView {
-  static func title(of stage: Stage) -> LocalizedStringKey {
+  static func title(of stage: Stage) -> LocalizedStringResource {
     switch stage {
-    case .setup: "Setup"
-    case .discovery: "Discovery"
-    case .naming: "Naming"
-    case .deepScan: "Deep scan"
+    case .setup: .setup
+    case .discovery: .discovery
+    case .naming: .naming
+    case .deepScan: .deepScan
     }
   }
 
@@ -24,15 +24,15 @@ extension LiveScanView {
   private func summary(of stage: Stage, state: ScanSession.StageState) -> String {
     let scan = model.scan
     switch (stage, state) {
-    case (_, .skipped): return String(localized: "Not requested")
-    case (_, .queued): return String(localized: "Queued")
-    case (.discovery, _): return String(localized: "\(scan.found.count) hosts answered")
+    case (_, .skipped): return String(localized: .notRequested)
+    case (_, .queued): return String(localized: .queued)
+    case (.discovery, _): return String(localized: .hostsAnswered(scan.found.count))
     case (.naming, .done):
       let named = scan.found.count { !$0.facts.allNames.isEmpty }
-      return String(localized: "\(named) names found")
-    case (.naming, _): return String(localized: "Asking Bonjour, UPnP and NetBIOS")
-    case (.deepScan, .done): return String(localized: "Ports checked")
-    case (.deepScan, _): return String(localized: "Checking common ports")
+      return String(localized: .namesFound(named))
+    case (.naming, _): return String(localized: .askingBonjourUpnpNetbios)
+    case (.deepScan, .done): return String(localized: .portsChecked)
+    case (.deepScan, _): return String(localized: .checkingCommonPorts)
     case (.setup, _): return ""
     }
   }

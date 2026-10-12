@@ -3,13 +3,13 @@ import ZhenCore
 
 extension DerivedEvent.Kind {
   /// The small capitals beside an event.
-  var label: LocalizedStringKey {
+  var label: LocalizedStringResource {
     switch self {
-    case .appeared: "Appeared"
-    case .disappeared: "Left"
-    case .ipChanged: "Address changed"
-    case .renamed: "Renamed"
-    case .merged: "Merged"
+    case .appeared: .appeared
+    case .disappeared: .left
+    case .ipChanged: .addressChanged
+    case .renamed: .renamed
+    case .merged: .merged
     }
   }
 

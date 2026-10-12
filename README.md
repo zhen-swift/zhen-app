@@ -38,6 +38,7 @@ zhen-core 0.6.0). A version is a promise the engine has to keep on purpose.
 |---|---|
 | `AGENTS.md` | The house rules: how the app is written |
 | `Docs/ARCHITECTURE.md` | How it fits together, and its known rough edges |
+| `Zhen/Zhen.docc` | The design system as DocC — `bundle exec fastlane docs` |
 | `Docs/TESTING.md` · `Docs/CI.md` · `Docs/SCREENSHOTS.md` | Tests, CI, and the artwork pipeline |
 | `Docs/APP_STORE.md` · `Docs/PRIVACY.md` | Distribution, and what the app does with what it sees |
 | `Docs/process/` | The build record: each phase's ledger, questions and verification steps |

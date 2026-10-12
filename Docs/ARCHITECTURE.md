@@ -50,7 +50,8 @@ emits far faster than 60 Hz. `ScanPipelineTests` constructs the pipeline from a
 
 - **One `Window`**, not a `WindowGroup`. Each scan runs from that window's
   `.task(id: scan.runToken)`, so a second window would run every scan twice.
-  `CommandsUITests.testThereIsOneWindow` pins it.
+  `CommandsUITests.testThereIsOneWindow` pins it. As with any single-`Window` SwiftUI app,
+  closing the window quits Zhen.
 - **`Settings { }`**, ⌘,. Its content gets `.defaultAppStorage(model.defaults)` at the
   scene, never inside the view: a view's own `@AppStorage` reads what its parent
   provides.
@@ -83,6 +84,36 @@ helper through `SMAppService.daemon`. Without the helper every screen works; it 
 layer-2 ARP sweep and SYN scanning. The binary itself is built and embedded by
 `Scripts/release.sh` (see Known rough edges).
 
+## Design-system documentation
+
+`Zhen/Zhen.docc` is the design system as DocC:
+- Foundations: tokens, contrast and type
+- Components
+- Building a screen
+- States and emptiness
+- Accessibility
+- Corrections: every deliberate difference from the artboards
+
+The six artboards are in its resources. Build it with Product ▸ Build Documentation, or
+`bundle exec fastlane docs`.
+
+## Strings
+
+Every user-facing string is a symbol key in `Zhen/Localizable.xcstrings`
+(`extractionState: manual`), used as `Text(.scanNow)` or `String(localized: .scanNow)`. A
+counted string has plural forms in the catalogue, for example `.identityChanges(count)`.
+Controls without a resource initialiser take `String(localized:)`. Three places spell the
+key out as `LocalizedStringResource("key", defaultValue:)`: the App Intents' titles and
+descriptions, because the metadata processor reads them at build time. A string literal
+in a view is extracted by the compiler as a new, automatic key; a catalogue with any
+automatic key has a literal that should have been a symbol.
+
+## Shortcuts
+
+`App/ZhenIntents.swift`: **Scan Network** (opens the app and scans, as ⌘R does) and
+**Count Online Devices** (reads history; returns a number), with Siri phrases. Both act
+on the app's one `NetworkModel`, registered with `AppDependencyManager`.
+
 ## Tests and fixtures
 
 Under `-UITesting` and `-ShowcaseData`, and in the unit-test host, the app runs on the
@@ -99,9 +130,6 @@ defaults domain, so no test can see or change real history or preferences.
   installed launchd plist.
 - **No SwiftData.** History is core's NDJSON file, shared with the command line. A
   database beside it would make the app's history a second opinion.
-- **String keys are the English text**, not symbol keys. `Localizable.xcstrings` is filled
-  from the compiler's extraction (`Scripts/catalog-plurals.py`). Moving 243 strings to
-  symbol keys is a mechanical change of its own (phase 3, Q4).
 
 ## Known rough edges
 

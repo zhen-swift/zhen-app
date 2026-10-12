@@ -15,7 +15,7 @@ extension DeviceDetailView {
           .background(.surfaceRaised, in: .rect(cornerRadius: .cornerRadius.xLarge))
           .accessibilityHidden(true)
         VStack(alignment: .leading, spacing: .spacing.xSmall) {
-          Text(item.name ?? String(localized: "Unidentified device"))
+          Text(item.name ?? String(localized: .unidentifiedDevice))
             .font(.title2.bold())
             .foregroundStyle(.textPrimary)
             .accessibilityIdentifier("detailName")
@@ -35,23 +35,23 @@ extension DeviceDetailView {
 
     private var status: String {
       item.isOnline
-        ? String(localized: "Online")
-        : String(localized: "Last seen \(item.lastSeen.formatted(.relative(presentation: .numeric)))")
+        ? String(localized: .online)
+        : String(localized: .lastSeenAgo(item.lastSeen.formatted(.relative(presentation: .numeric))))
     }
 
     /// "AppleTV5,3 · Unix-like (TTL) · Identified — 2 independent sources".
     private var summary: String {
       var parts = [item.subtitle]
       switch item.device.osHint {
-      case .unixLike?: parts.append(String(localized: "Unix-like (TTL)"))
-      case .windows?: parts.append(String(localized: "Windows (TTL)"))
-      case .networkDevice?: parts.append(String(localized: "Network device (TTL)"))
+      case .unixLike?: parts.append(String(localized: .unixLikeTtl))
+      case .windows?: parts.append(String(localized: .windowsTtl))
+      case .networkDevice?: parts.append(String(localized: .networkDeviceTtl))
       case nil: break
       }
-      if let family = item.device.osFingerprint?.family { parts.append(String(localized: "\(family) (TCP fingerprint)")) }
+      if let family = item.device.osFingerprint?.family { parts.append(String(localized: .tcpFingerprint(family))) }
       let sources = item.device.identificationEvidence.independentSources
       let word = DevicesView.IdentityCellView.word(for: item.identification)
-      parts.append(sources > 0 ? String(AttributedString(localized: "\(word) — ^[\(sources) independent source](inflect: true)").characters) : word)
+      parts.append(sources > 0 ? String(AttributedString(localized: .independentSourceInflectTrue(word, sources)).characters) : word)
       return parts.joined(separator: " · ")
     }
   }

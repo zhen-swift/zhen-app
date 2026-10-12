@@ -38,8 +38,10 @@ final class NetworkModel {
   /// The device whose ports are being scanned. The window's `.task(id:)` runs it.
   private(set) var portScanTarget: PortScanTarget?
 
-  /// - Parameter defaults: a test's own domain. Fixture models otherwise share one, which
-  ///   each clears when it is made — fine for one app, a race between parallel tests.
+  /// - Parameters:
+  ///   - environment: what this launch is: live, or a fixture.
+  ///   - testDefaults: a test's own domain. Fixture models otherwise share one, which each
+  ///     clears when it is made — fine for one app, a race between parallel tests.
   init(environment: AppEnvironment, defaults testDefaults: UserDefaults? = nil) {
     self.environment = environment
     switch environment.dataSource {

@@ -10,7 +10,7 @@ extension ActivityView {
 
     var body: some View {
       VStack(alignment: .leading, spacing: .spacing.medium) {
-        Picker("Show", selection: $filter) {
+        Picker(String(localized: .show), selection: $filter) {
           ForEach(ActivityFilter.allCases) { item in
             Text(item.title)
               .tag(item)
