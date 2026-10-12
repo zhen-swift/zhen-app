@@ -2,57 +2,96 @@ import SwiftUI
 import ZhenCore
 
 extension DeviceDetailView {
-  /// Open ports from the last deep scan that reached this device.
+  /// Open ports: from a port scan run on this device this session, or else from the last
+  /// scan in history that checked them.
   struct PortsCardView: View {
     let item: DeviceItem
     @Environment(NetworkModel.self) private var model
 
     var body: some View {
       Card("Open ports", caption: caption) {
-        if item.device.ports.isEmpty {
-          HStack {
-            Text("No port scan yet").font(.body).foregroundStyle(.textSecondary)
-            Spacer()
-            Button("Scan Ports") {
-              if let address = item.device.ipv4Addresses.first {
-                model.startScan(deepScan: true, network: IPv4Network(base: address, prefix: 32))
-              }
+        VStack(alignment: .leading, spacing: .spacing.medium) {
+          if let session, session.state == .running {
+            HStack(spacing: .spacing.small) {
+              ProgressView().controlSize(.small)
+              Text("Checking common ports on \(item.address)…")
+                .font(.body)
+                .foregroundStyle(.textSecondary)
             }
-            .disabled(item.device.ipv4Addresses.isEmpty || model.scan.isRunning)
-            .accessibilityIdentifier("cardScanPortsButton")
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("portScanProgress")
+          } else if case .failed(let reason)? = session?.state {
+            Text(reason)
+              .font(.body)
+              .foregroundStyle(.textSecondary)
+              .accessibilityIdentifier("portScanFailure")
           }
-          .padding(.spacing.large)
-        } else if item.device.openPorts.isEmpty {
-          Text(String(localized: "None of the \(item.device.ports.count) ports checked was open."))
-            .font(.body)
-            .foregroundStyle(.textSecondary)
-            .padding(.spacing.large)
-        } else {
-          Grid(alignment: .leading, horizontalSpacing: .spacing.xxLarge, verticalSpacing: .spacing.small) {
-            ForEach(item.device.openPorts, id: \.self) { port in
-              GridRow {
-                Text(verbatim: "\(String(port.port))/\(port.proto.rawValue)")
-                  .font(.callout.monospaced())
-                  .foregroundStyle(.textPrimary)
-                Text(port.service?.name ?? "—")
-                  .font(.body)
-                  .foregroundStyle(.textPrimary)
-                Text(product(port) ?? "—")
-                  .font(.subheadline)
-                  .foregroundStyle(.textSecondary)
-              }
-            }
-          }
-          .padding(.spacing.large)
+          content
         }
+        .padding(.spacing.large)
       }
       .accessibilityElement(children: .contain)
       .accessibilityIdentifier("portsCard")
     }
 
+    @ViewBuilder private var content: some View {
+      if ports.isEmpty {
+        if session?.state != .running {
+          HStack {
+            Text("No port scan yet").font(.body).foregroundStyle(.textSecondary)
+            Spacer()
+            Button("Scan Ports") { model.scanPorts(item.id) }
+              .disabled(item.device.ipv4Addresses.isEmpty || model.isBusy)
+              .accessibilityIdentifier("cardScanPortsButton")
+          }
+        }
+      } else if open.isEmpty {
+        Text(String(localized: "None of the \(ports.count) ports checked was open."))
+          .font(.body)
+          .foregroundStyle(.textSecondary)
+          .accessibilityIdentifier("noOpenPorts")
+      } else {
+        Grid(alignment: .leading, horizontalSpacing: .spacing.xxLarge, verticalSpacing: .spacing.small) {
+          ForEach(open, id: \.self) { port in
+            GridRow {
+              Text(verbatim: "\(String(port.port))/\(port.proto.rawValue)")
+                .font(.callout.monospaced())
+                .foregroundStyle(.textPrimary)
+              Text(port.service?.name ?? "—")
+                .font(.body)
+                .foregroundStyle(.textPrimary)
+              Text(product(port) ?? "—")
+                .font(.subheadline)
+                .foregroundStyle(.textSecondary)
+            }
+          }
+        }
+      }
+    }
+
+    private var session: PortScan? { model.portScans[item.id] }
+
+    /// The session's ports once it has some, history's otherwise.
+    private var ports: [PortObservation] {
+      if let session, !session.ports.isEmpty { return session.ports }
+      return item.device.ports
+    }
+
+    private var open: [PortObservation] { ports.filter { $0.state == .open } }
+
+    /// When these ports were checked. History does not stamp ports, so the time is known
+    /// only when the latest run checked them and saw this device; otherwise it says so
+    /// rather than pass off the last-seen time as a scan time, which it used to.
     private var caption: String? {
+      if let session, session.state == .finished {
+        return String(localized: "Scanned \(session.at.formatted(date: .omitted, time: .shortened)) · this session, not saved to history")
+      }
       guard !item.device.ports.isEmpty else { return nil }
-      return String(localized: "last deep scan \(item.lastSeen.formatted(.relative(presentation: .numeric)))")
+      if let run = model.latestRun, run.checkedPorts, item.isOnline, let finished = run.finishedAt {
+        let date = Date(timeIntervalSince1970: finished.timeIntervalSince1970)
+        return String(localized: "Checked \(date.formatted(.relative(presentation: .numeric)))")
+      }
+      return String(localized: "From an earlier scan that checked ports")
     }
 
     private func product(_ port: PortObservation) -> String? {

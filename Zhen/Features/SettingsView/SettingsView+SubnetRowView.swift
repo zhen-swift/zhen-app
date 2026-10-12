@@ -17,7 +17,7 @@ extension SettingsView {
           .accessibilityLabel("Subnet override")
           .accessibilityIdentifier("subnetOverrideField")
         if !subnet.isEmpty, Preferences.network(subnet) == nil {
-          Text("Not a network Zhen can scan. Use CIDR form, /16 or narrower.")
+          Text("Not a network Zhen can scan. Use CIDR form, /16 or narrower. Until then, scans use the automatic network.")
             .font(.subheadline)
             .foregroundStyle(.statusWarningText)
             .accessibilityIdentifier("subnetOverrideError")

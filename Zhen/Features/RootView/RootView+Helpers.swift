@@ -6,7 +6,7 @@ extension RootView {
   var actions: WindowActions {
     WindowActions(
       room: room,
-      isScanning: model.scan.isRunning,
+      isScanning: model.isBusy,
       selectionCount: selection.count,
       canGoBack: !path.isEmpty,
       showRoom: { room = $0 },
@@ -56,10 +56,13 @@ extension RootView {
     if !lines.isEmpty { Pasteboard.copy(lines.joined(separator: "\n")) }
   }
 
-  /// A deep scan of one device: its own /32, ports included.
+  /// A port scan of one device, shown on its detail.
   func scanSelectionPorts() {
-    guard let id = singleSelection, let address = model.device(id)?.device.ipv4Addresses.first else { return }
-    model.startScan(deepScan: true, network: IPv4Network(base: address, prefix: 32))
+    guard let id = singleSelection else { return }
+    // Opened, so the progress and the result are on screen: the scan no longer takes
+    // over the window, and from the table it would otherwise run out of sight.
+    if path.isEmpty { path.append(.device(id)) }
+    model.scanPorts(id)
   }
 
   func rename(_ id: DeviceItem.ID) {

@@ -12,8 +12,7 @@ extension DeviceDetailView {
   }
 
   func scanPorts(_ item: DeviceItem) {
-    guard let address = item.device.ipv4Addresses.first else { return }
-    model.startScan(deepScan: true, network: IPv4Network(base: address, prefix: 32))
+    model.scanPorts(item.id)
   }
 
   /// The device-kind symbol for the header tile.

@@ -35,8 +35,8 @@ struct DeviceDetailView: View {
               .help("Give this device a name of your own")
               .accessibilityIdentifier("renameButton")
             Button("Scan Ports", systemImage: "network") { scanPorts(item) }
-              .help("Scan this device again, ports included")
-              .disabled(item.device.ipv4Addresses.isEmpty || model.scan.isRunning)
+              .help("Check this device's common ports")
+              .disabled(item.device.ipv4Addresses.isEmpty || model.isBusy)
               .accessibilityIdentifier("scanPortsButton")
           }
         }

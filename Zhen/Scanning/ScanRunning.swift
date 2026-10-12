@@ -10,6 +10,10 @@ nonisolated struct ScanRequest: Sendable, Hashable {
   var budget: Duration = .seconds(30)
   /// Whether to probe common ports on the hosts that answered.
   var deepScan: Bool = false
+  /// Whether the run goes into history. A port scan of one device does not: history
+  /// judges presence by the latest run, so a /32 run recorded there would report every
+  /// other device as gone (ledger, phase 3 stage 1).
+  var records: Bool = true
 }
 
 /// How a scan ended.

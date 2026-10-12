@@ -32,10 +32,10 @@ struct ZhenCommands: Commands {
       // is not re-evaluated by @Observable alone: Stop Scan stayed disabled from launch.
       Button("Scan Now") { model.startScan() }
         .keyboardShortcut("r", modifiers: .command)
-        .disabled(window?.isScanning ?? model.scan.isRunning)
-      Button("Stop Scan") { model.scan.stop() }
+        .disabled(window?.isScanning ?? model.isBusy)
+      Button("Stop Scan") { model.stopScanning() }
         .keyboardShortcut(".", modifiers: .command)
-        .disabled(!(window?.isScanning ?? model.scan.isRunning))
+        .disabled(!(window?.isScanning ?? model.isBusy))
     }
 
     CommandMenu("Device") {

@@ -21,11 +21,13 @@ extension DevicesView {
       }
       .disabled(single == nil)
       Button("Scan Ports", systemImage: "network") {
-        if let address = single?.device.ipv4Addresses.first {
-          model.startScan(deepScan: true, network: .init(base: address, prefix: 32))
+        // Opened first: the result shows on the device, not under the table.
+        if let single {
+          onOpen(single.id)
+          model.scanPorts(single.id)
         }
       }
-      .disabled(single?.device.ipv4Addresses.isEmpty ?? true || model.scan.isRunning)
+      .disabled(single?.device.ipv4Addresses.isEmpty ?? true || model.isBusy)
       Button("Show in Activity", systemImage: "waveform.path.ecg") {
         if let single { onShowActivity(single.name ?? single.address) }
       }

@@ -33,7 +33,7 @@ extension LiveScanView {
             .accessibilityIdentifier("showDevicesButton")
           PrimaryButton("Scan Again", systemImage: "arrow.clockwise", identifier: "scanAgainButton") {
             scan.dismiss()
-            model.startScan(deepScan: scan.request.deepScan, network: scan.request.network)
+            model.scanAgain()
           }
         case .idle:
           EmptyView()

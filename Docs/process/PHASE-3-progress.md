@@ -1,0 +1,124 @@
+**Liveness:** 2026-10-11 — stage 1 done; stage 2 next.
+
+# Phase 3 — fill in what phase 2 left thin, progress
+
+JC tried the phase-2 release and found a lot still missing. This run fills it in, with the
+same rules as phase 2 (`zhen-agents/rules/house-rules.md` == `AGENTS.md`, the phase-2
+brief's working rules): no stopping to ask, every gate shown failing on a deliberate break
+before it is recorded as passing, every design bend recorded here with the measurement
+that forced it. Questions: `PHASE-3-questions.md`.
+
+**JC's choices for this run (2026-10-11):** the app only, with zhen-core frozen at 0.6.0;
+all four areas (device detail depth, scanning behaviour, settings and housekeeping, the
+release/store layer); UI tests may run, with the desktop kept free.
+
+Branch `phase-3`, off `phase-2` at `f1ef1f8`. Not pushed.
+
+**To resume:** read the liveness line, then the last stage section. Unit gates run with
+`xcodebuild -project Zhen.xcodeproj -scheme Zhen -destination 'platform=macOS' test
+-only-testing:ZhenTests`; UI gates name their test. Deliberate breaks were run with a
+throwaway script that applied one edit, ran the named test and restored the file.
+
+The real history file (`~/Library/Application Support/zhen/history.ndjson`) is never opened
+by a test. Its SHA-256 begins `d735909a`, checked at the start of the run.
+
+## Stage 1 — the scanning bugs
+
+Found by reading the code against zhen-core 0.6.0 after JC's test, not by any gate phase 2
+had: each of these was a wrong answer on screen with every test green.
+
+### 1. Scan Ports took the whole network offline
+
+Every Scan Ports entry point ran `startScan(deepScan: true, network: /32)`. `ScanRunner`
+records every run it finishes. Core judges presence by the latest run alone
+(`HistoryLedger.devices()`: `isPresent = lastRunID == latestRun.id`) and emits `disappeared`
+for every record the run did not see. So one Scan Ports made the /32 the latest run,
+reported every other device as gone, set the footer to `x.x.x.x/32`, and re-keyed device
+IDs to the /32 (`DeviceItem.identity` reads the latest run's network).
+
+**Fix, app-only:** `HistoryStore` is a public protocol. `ProbeOnlyStore` passes reads through
+to the real store and makes `record` a no-op. A per-device port scan runs a `ScanRunner`
+over it (`ScanRequest.records = false`), and its ports go into `NetworkModel.portScans`,
+which lasts for the session. The scan no longer takes over the window: Scan Ports opens the
+device and the Ports card shows progress, then the result.
+
+**Bend:** a single-device port scan is **not kept in history**. The card says so ("Scanned
+14:02 · this session, not saved to history"). A full scan with ports on saves them, and
+clears the session's results. The durable fix needs core: a port-scan API that is not a run,
+or presence judged per scanned subnet (Q1).
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| Other devices stay present; latest run, events unchanged | `ScanningBehaviourTests.portScanKeepsTheNetwork` | `records: true` in `performPortScan`: `onlineCount 1 == 11`, latest run changed, events 18 vs 8 |
+| The live runner never writes on a probe-only request | `ScanningBehaviourTests.liveRunnerProbeOnly` | `make(store)` instead of `ProbeOnlyStore`: latest run and presence both changed |
+| On screen: counts unchanged after a port scan | `DeviceDetailUITests.testPortScanLeavesTheRestOnline` | `records: true`: title read "13 devices · 1 online" against "· 11 online". **The first break did not fail it.** The model never reread history after a port scan, so the damage stayed invisible until the next reload. `performPortScan` now rereads, and the break fails it. |
+| ⇧⌘R opens the device, shows progress, ⌘. stops it in place | `CommandsUITests.testDeviceShortcuts` (rewritten: it used to assert the /32 takeover) | the stage-F breaks in this test still hold; this part is new behaviour asserted directly |
+
+### 2. Installing the helper did nothing until a relaunch
+
+`LiveScanRunner` built one `ScanRunner` and kept it for the app's lifetime. Core decides at
+construction whether the helper's capture device is there.
+
+Rebuilding per scan was the first fix, and **measurement refused it**. A scratch harness
+timed `ScanRunner(store:)` five times on this Mac, without scanning:
+
+| Capture | Build time |
+|---|---|
+| `helperThenDirect` (default) | 3.15–3.20 s |
+| `ZHEN_CAPTURE=direct` | 0.24–0.71 ms |
+
+The 3.2 s is `HelperClient.timeoutMilliseconds = 3_000`. This Mac still has a helper
+registered by the monorepo-era build, whose bundle is gone, so launchd's spawn fails and
+the connection waits out the timeout. Rebuilt per scan, every scan would have paid it.
+
+**Fix:** keep the engine until the helper's state changes (`LiveScanRunner.note(_:)`,
+called before each scan with `HelperService.state`). It is also dropped after a scan that
+finds nothing, which is what a network change looks like. Engines are built lazily: the
+probe-only one only when a port scan needs it.
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| Same helper state: one build. Changed state: a fresh one | `ScanningBehaviourTests.freshEngineOnHelperChange` | first version (rebuild per scan, `freshEnginePerScan`): `latest ?? make(…)` gave `built 1 == 2`. Current: `note` without the reset gave `built 1 == 2` |
+
+### 3. A scan run in a terminal never reached the open window
+
+The app read history at launch and after its own scans. `LogHistoryStore` re-reads the file
+on every call, so the gap was only that nothing ever asked.
+
+**Fix:** `HistoryWatcher` polls the file's inode, size and modification time once a second.
+`NetworkModel.watchHistory()`, a `.task` on the window, rereads history on each change.
+
+**Bend: polling, not a vnode source.** Compaction replaces the file by rename, so a source
+on the old inode goes silent at the moment history changes most, and before the first
+scan there is no file to watch. Re-arming across both is a state machine; one `stat` a
+second is not.
+
+A race, caught by the gate: the watcher took its baseline inside its polling task, so a
+write landing before the first poll was never reported. The test failed once in two full
+runs. The baseline is now taken when the stream is made, and `watchHistory` reloads once
+after making it.
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| Another process's write reaches the model | `ScanningBehaviourTests.terminalScanAppears` (writes after the watch is under way) | `continuation.yield()` removed: devices stayed `[]` |
+| Append, replace by rename, and a file appearing are each reported | `ScanningBehaviourTests.watcherSeesEachKindOfChange` | the same break: all three `reported(n)` false |
+
+The first version of the second test awaited the stream with no timeout, and the break hung
+the run. It now counts reports against a deadline.
+
+### 4. Smaller
+
+- **"Deep-scan new devices" probed every device on every scan.** Core's port stage is one
+  switch per run. **Bend:** relabelled "Check ports on every scan"; the defaults key is
+  unchanged. Limiting it to new devices needs core (Q1).
+- **The scan budget was always 30 s.** It is now a Settings picker (10, 20, 30, 60 s; any
+  other value falls back to 30), read by both kinds of scan.
+  `ScanningBehaviourTests.budget`.
+- **Retention was applied only while Settings was open.** It is now also applied at
+  `load()`, so it holds for every run a launch records.
+- **The subnet override's error** now says what happens meanwhile: scans use the
+  automatic network.
+- **Scan Again** reruns the stopped request exactly (`NetworkModel.scanAgain`). It used to
+  call the /32-capable entry point that no longer exists.
+
+Unit suite: 58 tests, green three runs in a row after the race fix.

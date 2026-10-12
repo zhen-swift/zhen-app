@@ -1,7 +1,7 @@
 import Foundation
 
 /// Where the privileged helper stands with the system.
-enum HelperState: Equatable {
+nonisolated enum HelperState: Equatable, Sendable {
   case notInstalled
   /// Registered with launchd, waiting for the person to allow it in Login Items. Its own
   /// state: there is nothing left to install, and the useful button opens the pane.

@@ -37,6 +37,24 @@ final class DeviceDetailUITests: XCTestCase {
     robot.capture("detail-unidentified", in: self)
   }
 
+  /// Phase 3, stage 1: a port scan of one device used to record a /32 run, after which
+  /// every other device read as offline.
+  @MainActor
+  func testPortScanLeavesTheRestOnline() {
+    let robot = ZhenRobot.launch(scanPace: 50)
+    robot.waitFor("deviceTable")
+    let before = robot.window.title
+    robot.openDevice("192.168.50.25")
+    // By key: the card's own button sits below the fold at the default window size.
+    robot.key("r", [.command, .shift])
+    robot.waitFor("noOpenPorts")
+    let caption = robot.element("portsCard").staticTexts.allElementsBoundByIndex.map(\.text)
+    XCTAssertTrue(caption.contains { $0.contains("this session") }, "the result does not say it is unsaved: \(caption)")
+    robot.key("[", .command)
+    robot.waitFor("deviceTable")
+    XCTAssertEqual(robot.window.title, before, "a port scan changed the network's counts")
+  }
+
   @MainActor
   func testRenameIsLocalAndWins() {
     let robot = ZhenRobot.launch()

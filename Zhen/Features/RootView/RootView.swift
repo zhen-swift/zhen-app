@@ -48,6 +48,8 @@ struct RootView: View {
       restore()
     }
     .task(id: model.scan.runToken) { await model.performScan() }
+    .task(id: model.portScanTarget) { await model.performPortScan() }
+    .task { await model.watchHistory() }
     .task(id: scanInterval) { await model.scanAutomatically(every: scanInterval) }
     .onChange(of: selection) { storedSelection = Self.encode(selection) }
     .onChange(of: path) { storedPath = Self.encode(path) }

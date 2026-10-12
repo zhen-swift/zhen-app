@@ -9,6 +9,7 @@ struct SettingsView: View {
   @AppStorage(Preferences.Key.subnetOverride) private var subnet = ""
   @AppStorage(Preferences.Key.deepScan) private var deepScan = false
   @AppStorage(Preferences.Key.retentionDays) private var retentionDays = 0
+  @AppStorage(Preferences.Key.budgetSeconds) private var budgetSeconds = Preferences.defaultBudgetSeconds
 
   var body: some View {
     Form {
@@ -24,11 +25,21 @@ struct SettingsView: View {
         .accessibilityLabel("Scan automatically")
         .accessibilityIdentifier("scanIntervalPicker")
         SubnetRowView(subnet: $subnet)
+        Picker("Scan for up to", selection: $budgetSeconds) {
+          ForEach(Preferences.budgets, id: \.self) { seconds in
+            Text(Duration.seconds(seconds).formatted(.units(allowed: [.seconds, .minutes], width: .wide))).tag(seconds)
+          }
+        }
+        .accessibilityLabel("Scan for up to")
+        .accessibilityIdentifier("scanBudgetPicker")
+        // Was "Deep-scan new devices". Core's port stage is one switch per run and probes
+        // every host that answered; zhen-core 0.6.0 cannot limit it to new ones, so the
+        // label now says what the switch does (ledger, phase 3 stage 1).
         Toggle(isOn: $deepScan) {
-          Text("Deep-scan new devices")
+          Text("Check ports on every scan")
           Text("Also check common ports on every device that answers. Slower, and more visible on the network.")
         }
-        .accessibilityLabel("Deep-scan new devices")
+        .accessibilityLabel("Check ports on every scan")
         .accessibilityIdentifier("deepScanToggle")
       } header: {
         Text("Scanning").sectionLabel()

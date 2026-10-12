@@ -65,8 +65,15 @@ final class CommandsUITests: XCTestCase {
     robot.press("a", [.command, .shift], expecting: "activityList")
     robot.press("1", .command, expecting: "deviceTable")
     robot.selectRowByKeyboard()
-    robot.press("r", [.command, .shift], expecting: "liveScan")
-    XCTAssertTrue(robot.element("liveScanTitle").text.hasSuffix("/32"), "Scan Ports scanned \(robot.element("liveScanTitle").text)")
-    robot.press(".", .command, expecting: "showDevicesButton")
+    // Scan Ports opens the device and checks it there: no takeover, no /32 run. Slow
+    // enough that Stop has something to stop.
+    robot.app.terminate()
+    let slow = ZhenRobot.launch(scanPace: 3_000)
+    slow.waitFor("deviceTable")
+    slow.selectRowByKeyboard()
+    slow.press("r", [.command, .shift], expecting: "portScanProgress")
+    XCTAssertTrue(slow.element("deviceDetail").exists)
+    XCTAssertFalse(slow.element("liveScan").exists, "a port scan took over the window")
+    slow.press(".", .command, expecting: "portScanFailure")
   }
 }

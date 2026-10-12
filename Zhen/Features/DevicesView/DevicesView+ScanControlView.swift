@@ -6,8 +6,8 @@ extension DevicesView {
     @Environment(NetworkModel.self) private var model
 
     var body: some View {
-      if model.scan.isRunning {
-        Button("Stop Scan", systemImage: "stop.fill") { model.scan.stop() }
+      if model.isBusy {
+        Button("Stop Scan", systemImage: "stop.fill") { model.stopScanning() }
           .help("Stop the scan. Devices found so far are kept.")
           .accessibilityIdentifier("stopScanButton")
       } else {

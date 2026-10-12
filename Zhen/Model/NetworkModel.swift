@@ -18,6 +18,8 @@ final class NetworkModel {
   @ObservationIgnored let helper: any HelperService
   @ObservationIgnored private let clock: any Clock<Duration>
   @ObservationIgnored private let liveRunner: LiveScanRunner?
+  /// The history file, when this launch uses one.
+  @ObservationIgnored let historyURL: URL?
 
   private(set) var devices: [DeviceItem] = []
   private(set) var events: [DerivedEvent] = []
@@ -30,6 +32,11 @@ final class NetworkModel {
   private(set) var interface: NetworkInterface?
   /// Names given in this app, by device.
   private(set) var userNames: [DeviceItem.ID: String] = [:]
+  /// Port scans of single devices run in this session, by device. Not in history: see
+  /// `ProbeOnlyStore`. A full scan with ports on supersedes them.
+  private(set) var portScans: [DeviceItem.ID: PortScan] = [:]
+  /// The device whose ports are being scanned. The window's `.task(id:)` runs it.
+  private(set) var portScanTarget: PortScanTarget?
 
   init(environment: AppEnvironment) {
     self.environment = environment
@@ -38,6 +45,7 @@ final class NetworkModel {
       let url = HistoryLocation.resolve(environment: environment.processEnvironment)
       let store: any HistoryStore = url.map { LogHistoryStore(url: $0) } ?? InMemoryHistoryStore()
       let runner = LiveScanRunner(store: store)
+      self.historyURL = url
       self.store = store
       self.liveRunner = runner
       self.pipeline = ScanPipeline(runner: runner)
@@ -46,6 +54,7 @@ final class NetworkModel {
     case .fixture(let variant):
       let store = InMemoryHistoryStore()
       self.store = store
+      self.historyURL = nil
       self.liveRunner = nil
       let capture = (try? FixtureNetwork.capture()) ?? ScanReport(run: FixtureNetwork.emptyRun)
       self.pipeline = ScanPipeline(runner: FixtureScanRunner(
@@ -78,8 +87,23 @@ final class NetworkModel {
     } else if let liveRunner, interface == nil {
       interface = await liveRunner.interface()
     }
+    // Retention is a property of the store, not of the Settings window: applied here, it
+    // holds for every run this launch records, Settings opened or not.
+    await applyRetention(days: Preferences(defaults).retentionDays)
     await reload()
     hasLoaded = true
+  }
+
+  /// Rereads history whenever the file changes, for as long as the calling task lives: a
+  /// scan run in a terminal appears in the open window.
+  func watchHistory() async {
+    guard let historyURL else { return }
+    let changes = HistoryWatcher.changes(of: historyURL)
+    // Anything written before the watch began is read now; anything after, as it lands.
+    await reload()
+    for await _ in changes {
+      await reload()
+    }
   }
 
   /// Rereads history. Cheap: the store is an actor holding one ledger.
@@ -92,15 +116,53 @@ final class NetworkModel {
     if let run, let saved = recalledDegradations(for: run.id) { lastDegradations = saved }
   }
 
+  /// Whether a scan of any kind is running. One at a time: both would contend for the
+  /// same capture device and the same descriptor budget.
+  var isBusy: Bool { scan.isRunning || portScanTarget != nil }
+
   /// Starts a scan with the person's settings; the window's `.task(id: scan.runToken)` runs it.
   func startScan() {
+    guard portScanTarget == nil else { return }
     let preferences = Preferences(defaults)
-    scan.start(ScanRequest(network: preferences.subnetOverride, deepScan: preferences.deepScan))
+    scan.start(ScanRequest(
+      network: preferences.subnetOverride, budget: preferences.budget, deepScan: preferences.deepScan
+    ))
   }
 
-  /// Starts a scan of a particular network, ports or not: Scan Ports on one device.
-  func startScan(deepScan: Bool, network: IPv4Network?) {
-    scan.start(ScanRequest(network: network, deepScan: deepScan))
+  /// Runs the stopped scan again, exactly as it was asked for.
+  func scanAgain() {
+    guard portScanTarget == nil else { return }
+    scan.start(scan.request)
+  }
+
+  /// Stops whichever scan is running.
+  func stopScanning() {
+    scan.stop()
+    portScanTarget = nil
+  }
+
+  /// Scans one device's ports, without taking over the window or writing history.
+  func scanPorts(_ id: DeviceItem.ID) {
+    guard !isBusy, let address = device(id)?.device.ipv4Addresses.first else { return }
+    portScans[id] = PortScan(state: .running, ports: portScans[id]?.ports ?? [], at: .now)
+    portScanTarget = PortScanTarget(id: id, address: address)
+  }
+
+  /// Runs the port scan `scanPorts` asked for. Called from the window's task, so closing
+  /// the window or Stop Scan cancels it; what had answered is kept either way.
+  func performPortScan() async {
+    guard let target = portScanTarget else { return }
+    let request = ScanRequest(
+      network: IPv4Network(base: target.address, prefix: 32),
+      budget: Preferences(defaults).budget, deepScan: true, records: false
+    )
+    await liveRunner?.note(helper.state)
+    let outcome = await pipeline.run(request) { _ in }
+    portScans[target.id] = PortScan.result(of: outcome, for: target.address)
+    if portScanTarget == target { portScanTarget = nil }
+    // History should not have moved. Reread anyway: if it did, the window says so rather
+    // than show a network the file no longer describes.
+    await reload()
   }
 
   /// Scans every `minutes`, for as long as the calling task lives. Zero is off.
@@ -121,11 +183,14 @@ final class NetworkModel {
   /// window or stopping the scan cancels it.
   func performScan() async {
     guard scan.runToken != nil else { return }
+    await liveRunner?.note(helper.state)
     let outcome = await scan.run(with: pipeline)
     switch outcome {
     case .finished(let completed):
       lastDegradations = completed.report.degradations
       remember(lastDegradations, for: completed.report.run.id)
+      // History now holds ports at least as fresh as anything scanned this session.
+      if scan.request.deepScan { portScans = [:] }
     case .unavailable(let degradation):
       lastDegradations = [degradation]
     }

@@ -18,8 +18,13 @@ nonisolated struct FixtureScanRunner: ScanRunning {
   func run(_ request: ScanRequest, progress: ProgressSink) async -> ScanOutcome {
     let started = Timestamp.now
     let latest = FixtureNetwork.history(variant == .empty ? .home : variant, capture: capture, now: .now).last
-    let devices = latest?.devices ?? []
     let network = request.network ?? capture.run.target
+    // Only what the request covers: a port scan of one device replays that device. An
+    // IPv6-only device has no IPv4 address to be inside a target, and a full scan finds it
+    // anyway, the way discovery's neighbour reads do.
+    let devices = (latest?.devices ?? []).filter { device in
+      request.network == nil || device.ipv4Addresses.contains(where: network.contains)
+    }
     var stages: [StageTiming] = []
     var announced = 0
 
@@ -68,12 +73,23 @@ nonisolated struct FixtureScanRunner: ScanRunning {
       devices: found.map { device in
         var seen = device
         seen.lastSeen = finished
+        if request.deepScan, seen.ports.isEmpty, let address = seen.ipv4Addresses.first {
+          seen.ports = Self.closedPorts(at: address)
+        }
         return seen
       },
       degradations: degradations
     )
-    let events = await store.record(report)
+    let events = request.records ? await store.record(report) : []
     return .finished(CompletedScan(report: report, events: events))
+  }
+
+  /// What a deep scan of a fixture device with no recorded ports finds: the common ports,
+  /// every one closed. A real scan of a quiet device says the same.
+  static func closedPorts(at address: IPv4Address) -> [PortObservation] {
+    [22, 80, 443, 445, 548].map {
+      PortObservation(port: $0, proto: .tcp, state: .closed, address: .v4(address))
+    }
   }
 
   /// Waits one beat. False when the scan was stopped.
