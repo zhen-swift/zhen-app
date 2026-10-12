@@ -2,11 +2,17 @@ import SwiftUI
 import ZhenCore
 
 extension DeviceDetailView {
-  /// Which key identifies this device, and how it has changed. The one place identity-key
-  /// stability appears: a person who opened this card is asking exactly that.
+  /// Which key identifies this device, and how its identity has changed: the current
+  /// hardware address, then every merge, rename and address move, newest first. The one
+  /// place identity-key stability appears: a person who opened this card is asking
+  /// exactly that.
+  ///
+  /// A3 asks for one row per MAC with a date range. zhen-core 0.6.0 keeps only the
+  /// current MAC on a device, and its merge event says how many records joined, not which
+  /// addresses they had — so the rows are the changes core did record (ledger, phase 3).
   struct IdentityCardView: View {
     let item: DeviceItem
-    let merges: [DerivedEvent]
+    let changes: [DerivedEvent]
 
     var body: some View {
       Card("Identity history", caption: caption) {
@@ -23,17 +29,28 @@ extension DeviceDetailView {
               .foregroundStyle(.textSecondary)
           }
           .padding(.spacing.large)
-          ForEach(merges) { merge in
+          .accessibilityElement(children: .combine)
+          .accessibilityIdentifier("identityCurrent")
+          ForEach(changes) { change in
             Divider()
-            HStack(spacing: .spacing.medium) {
+            HStack(alignment: .firstTextBaseline, spacing: .spacing.medium) {
               StatusDot(.neutral)
-              Text(merge.detail).font(.subheadline).foregroundStyle(.textSecondary)
+              Text(change.kind.label)
+                .font(.caption.bold())
+                .textCase(.uppercase)
+                .foregroundStyle(.textSecondary)
+                .frame(width: .dimension.eventKindLabel, alignment: .leading)
+              Text(change.detail.trimmingPrefix("· "))
+                .font(.subheadline)
+                .foregroundStyle(.textPrimary)
               Spacer()
-              Text(merge.date, format: .dateTime.month().day().hour().minute())
+              Text(change.date, format: .dateTime.month().day().hour().minute())
                 .font(.subheadline)
                 .foregroundStyle(.textSecondary)
             }
             .padding(.spacing.large)
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("identityChange-\(change.kind)")
           }
         }
       }
@@ -42,18 +59,15 @@ extension DeviceDetailView {
     }
 
     private var caption: String {
-      // The lease key's value depends on the network; its kind, which is all this reads, does not.
-      let network = IPv4Network(base: item.device.ipv4Addresses.first ?? IPv4Address(raw: 0), prefix: 32)
-      let key = HostIdentifier.candidates(for: item.device, in: network).first?.kind
-      let described: String = switch key {
-      case .universalMAC?: String(localized: "hardware MAC")
-      case .randomizedMAC?: String(localized: "rotating MAC")
-      case .mdnsInstance?: String(localized: "Bonjour name")
-      case .dhcpHostname?: String(localized: "DHCP name")
-      case .ipLease?, nil: String(localized: "address only")
+      let count = changes.count
+      // Spelled out: `^[…](inflect: true)` is rendered literally by `String(localized:)`
+      // without a catalog entry, which the stage-2 screenshot showed.
+      let seen = switch count {
+      case 0: String(localized: "No identity changes seen")
+      case 1: String(localized: "1 identity change")
+      default: String(localized: "\(count) identity changes")
       }
-      let changes = merges.isEmpty ? String(localized: "No identity changes seen") : String(localized: "\(merges.count) merges")
-      return String(localized: "identity key: \(described), stability \(item.device.identityStability.rawValue) · \(changes)")
+      return "\(item.identityCaption) · \(seen)"
     }
   }
 }

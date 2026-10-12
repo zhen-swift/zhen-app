@@ -17,7 +17,7 @@ extension DeviceDetailView {
               .padding(.spacing.large)
           } else {
             ForEach(events) { event in
-              EventRow(event: event)
+              EventRow(event: event, showsDate: !Calendar.current.isDateInToday(event.date))
                 .padding(.horizontal, .spacing.large)
             }
           }

@@ -70,8 +70,12 @@ extension RootView {
   }
 
   /// Shows Activity searched for one device.
+  ///
+  /// The segment goes back to All: arriving from a device with Presence left selected
+  /// showed only part of that device's history, with nothing on screen saying why.
   func showActivity(for name: String) {
     room = .activity
+    activityFilter = .all
     Task { @MainActor in search = name }
   }
 

@@ -45,6 +45,8 @@ final class ScanSession {
   private(set) var startedAt: Date?
   private(set) var finishedAt: Date?
   private(set) var stageStates: [Stage: StageState] = [:]
+  /// How long each finished stage took, as core measured it.
+  private(set) var stageDurations: [Stage: Duration] = [:]
   /// Hosts in the order they answered, and where each one is. Kept oldest-first so an
   /// arrival is an append and an update a lookup: newest-first storage made every batch
   /// re-index every row, and 50 000 hosts took 88 s to apply (`ScanSessionTests`).
@@ -87,6 +89,7 @@ final class ScanSession {
     positions = [:]
     degradations = []
     publishedBatches = 0
+    stageDurations = [:]
     stageStates = Dictionary(uniqueKeysWithValues: Self.stages.map {
       ($0, $0 == .deepScan && !request.deepScan ? .skipped : .queued)
     })
@@ -141,6 +144,7 @@ final class ScanSession {
         if total > 0 { stageStates[stage] = .running(fraction: Double(completed) / Double(total)) }
       case .stageFinished(let timing):
         stageStates[timing.stage] = .done
+        stageDurations[timing.stage] = .milliseconds(timing.elapsedMillis)
       case .hostFound(let facts), .hostUpdated(let facts):
         if let at = positions[facts.ip] {
           arrivals[at].facts = facts

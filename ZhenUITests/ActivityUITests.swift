@@ -49,6 +49,20 @@ final class ActivityUITests: XCTestCase {
     XCTAssertTrue(robot.element("activityHistogram").exists, "the histogram went away")
   }
 
+  /// Phase 3, stage 2: Show in Activity used to keep whatever segment was selected, so a
+  /// device's history arrived filtered by something nobody chose for it.
+  @MainActor
+  func testShowInActivityStartsFromAll() {
+    let robot = ZhenRobot.launch()
+    robot.press("2", .command, expecting: "activityList")
+    robot.press("4", [.command, .option], expecting: "activityNoMatch")
+    robot.press("1", .command, expecting: "deviceTable")
+    robot.selectRowByKeyboard()
+    robot.press("a", [.command, .shift], expecting: "activityList")
+    XCTAssertFalse(robot.element("activityNoMatch").exists, "arrived under the Ports segment, showing nothing")
+    XCTAssertGreaterThan(eventRows(robot), 0)
+  }
+
   @MainActor
   func testNothingHasChanged() {
     let robot = ZhenRobot.launch(fixture: "empty")

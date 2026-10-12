@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — stage 1 done; stage 2 next.
+**Liveness:** 2026-10-11 — stages 1–2 done; stage 3 next.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -122,3 +122,28 @@ the run. It now counts reports against a deadline.
   call the /32-capable entry point that no longer exists.
 
 Unit suite: 58 tests, green three runs in a row after the race fix.
+
+## Stage 2 — device detail depth
+
+| Change | Where | Gate |
+|---|---|---|
+| **Known by lists every name each source offered.** It showed one per source (`.min()`), which hid exactly the losing names that make the card worth having (APP-PLAN §6). A repeated value at different ranks is one offer. Later offers from the same source leave the source column blank | `DeviceItem.nameOffers`, `KnownByCardView`, `SourceRowView` | `DetailDepthTests.everyCandidate`. Break: `.prefix(1)` gave `["Living Room"]` against `["Living Room", "AirPlay Speaker"]` |
+| **Identity caption is A3's sentence.** It was "stability moderate", a raw value. It is now "identity key: rotating MAC, stabilised by Bonjour name" | `DeviceItem.identityCaption` | `DetailDepthTests.identityCaption` asserts no raw `Stability` value appears |
+| **Identity history rows are every merge, rename and address move**, dated, under the current MAC | `IdentityCardView`, `DerivedEvent.Kind.isIdentityChange` | `DetailDepthTests.identityKinds` |
+| **Recent events carry a date** for anything not from today. Activity keeps time only, under its day headers | `EventRow(showsDate:)` | seen in the detail capture |
+| **Ports caption tells the truth** (stage 1): the session scan's time, or the latest run's when it checked ports and saw the device, else "From an earlier scan that checked ports". It used to print last-seen as the scan time | `PortsCardView.caption`, `ScanRun.checkedPorts` | — |
+| **Live scan rows show MAC, vendor, and "matched to …"** when history knows the host by its MAC. An address alone matches only when neither side has a MAC | `FoundHostRowView`, `NetworkModel.knownDevice(for:)` | `DetailDepthTests.knownDeviceMatch`. Break: match by address gave the gateway's record for a stranger at its address |
+| **Finished stages show their time**, core's `elapsedMillis`: "13 hosts answered · 1.2 s". The fixture scanner now reports each stage's own time, as core does, not time since the scan began | `ScanSession.stageDurations`, `LiveScanView.detail(of:)` | `DetailDepthTests.stageDurations` |
+| **A helper degradation offers "Review in Settings…"**, which opens Zhen's Settings. Before, it offered Scan Again, which does nothing for a missing helper | `DegradationCopy.Action.reviewHelperSettings`, `DegradationBanner` | `DetailDepthTests.helperDegradation`, with core's helper-absent sentence verbatim. Break: the branch never matched, so the action came back `.scanAgain` |
+| **Show in Activity starts from All.** It kept whatever segment was selected, so a device could arrive under Ports showing nothing | `RootView.showActivity` | `ActivityUITests.testShowInActivityStartsFromAll`. Break: the reset removed, so it failed with "arrived under the Ports segment, showing nothing" |
+| **Partial-run strip says "N sources unavailable"** (A3's copy) | `PartialRunNoticeView` | `DevicesUITests.testPartialRunSaysSoAfterTheFact` |
+
+**Bends:**
+- **Identity history is not one row per MAC.** A3 asks for that, with date ranges. zhen-core 0.6.0 keeps only the current MAC on a `Device`. Its `merged` event says "was tracked as two devices", not which addresses those were. So the rows are the identity changes core did record. One row per MAC needs core to keep prior MACs (Q1).
+- **The `reassigned` chip stays on the name line**, not on its own line under the subtitle as A3 asks. A3 measured width; a third line costs height instead. That would make the reassigned row the only three-line row in a `Table` whose acceptance gate (`AcceptanceUITests`) requires every row to be the same height. On the name line it costs no height. It shares only with the name, and "Unidentified device" plus the chip fits the 200 pt NAME minimum.
+
+**Caught by a screenshot, not a gate:** `^[N identity change](inflect: true)` rendered literally in the caption. `String(localized:)` without a catalog entry does not inflect. The partial-run strip had the same markup. Both are now spelled out per count until `Localizable.xcstrings` (stage 5). The header's "1 independent source" uses `AttributedString(localized:)`, which does inflect, and was correct.
+
+**Seen, not fixed here:** a `devices-partial` capture came out half-drawn, with placeholder rows and an empty sidebar. The test's assertions read accessibility and passed. This is phase 2's Q7 again, a capture taken mid-redraw. It belongs to stage 5's screenshot work.
+
+UI: `ActivityUITests`, `DeviceDetailUITests`, `DevicesUITests`, `LiveScanUITests`, 17 tests, all green. Unit: 65 green.

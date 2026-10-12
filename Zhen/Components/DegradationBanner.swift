@@ -9,6 +9,7 @@ struct DegradationBanner: View {
   let degradations: [Degradation]
   let onScanAgain: () -> Void
   @Environment(\.openURL) private var openURL
+  @Environment(\.openSettings) private var openSettings
 
   var body: some View {
     Card("Running with partial results", caption: String(localized: "results are still valid, just less complete")) {
@@ -50,6 +51,8 @@ struct DegradationBanner: View {
       if let url = SystemSettings.localNetwork { openURL(url) }
     case .scanAgain:
       onScanAgain()
+    case .reviewHelperSettings:
+      openSettings()
     }
   }
 }
@@ -59,6 +62,7 @@ extension DegradationCopy.Action {
     switch self {
     case .openLocalNetworkSettings: "Open System Settings…"
     case .scanAgain: "Scan Again"
+    case .reviewHelperSettings: "Review in Settings…"
     }
   }
 }

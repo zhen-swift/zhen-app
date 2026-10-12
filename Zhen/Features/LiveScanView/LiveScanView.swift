@@ -20,7 +20,7 @@ struct LiveScanView: View {
             .accessibilityIdentifier("liveScanListening")
         } else {
           ForEach(scan.found) { host in
-            FoundHostRowView(host: host, namingPending: scan.isNamingPending)
+            FoundHostRowView(host: host, namingPending: scan.isNamingPending, known: model.knownDevice(for: host.facts))
           }
         }
       } header: {

@@ -12,6 +12,8 @@ nonisolated struct DegradationCopy: Hashable, Sendable {
   enum Action: Hashable, Sendable {
     case openLocalNetworkSettings
     case scanAgain
+    /// Zhen's own Settings, where the helper is installed, approved and removed.
+    case reviewHelperSettings
   }
 
   let cause: String
@@ -27,6 +29,11 @@ nonisolated struct DegradationCopy: Hashable, Sendable {
     } else if reason.contains("Local Network") {
       cause = String(localized: "No names could be read")
       action = .openLocalNetworkSettings
+    } else if reason.contains("privileged helper") {
+      // Core's sentences for a helper that is absent or refused both name it; the remedy
+      // for either is in Zhen's Settings, not System Settings.
+      cause = String(localized: "The layer-2 sweep did not run")
+      action = .reviewHelperSettings
     } else if reason.contains("timed out") {
       cause = String(localized: "Some replies arrived late")
       action = nil

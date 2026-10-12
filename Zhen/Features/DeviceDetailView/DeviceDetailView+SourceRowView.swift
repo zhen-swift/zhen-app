@@ -1,15 +1,17 @@
 import SwiftUI
 
 extension DeviceDetailView {
-  /// One source and what it offered.
+  /// One source and one thing it offered. A source's second offer and after leave the
+  /// source column blank, so the eye reads them as the same source.
   struct SourceRowView: View {
     let source: String
     let value: String?
     let isWinner: Bool
+    var showsSource = true
 
     var body: some View {
       HStack(spacing: .spacing.medium) {
-        Text(source)
+        Text(showsSource ? source : "")
           .font(.subheadline)
           .foregroundStyle(.textSecondary)
           .frame(minWidth: .dimension.eventKindLabel, alignment: .leading)
@@ -20,9 +22,9 @@ extension DeviceDetailView {
         Spacer()
       }
       .padding(.horizontal, .spacing.large)
-      .padding(.vertical, .spacing.medium)
+      .padding(.vertical, showsSource ? .spacing.medium : .spacing.xSmall)
       .accessibilityElement(children: .combine)
-      .accessibilityIdentifier("knownBy-\(source)")
+      .accessibilityIdentifier(showsSource ? "knownBy-\(source)" : "knownBy-\(source)-\(value ?? "")")
     }
   }
 }

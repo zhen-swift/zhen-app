@@ -49,6 +49,15 @@ extension NetworkModel {
     }
   }
 
+  /// The device history already has for a host that just answered, when that is known
+  /// rather than guessed: the same hardware address. An address alone matches only where
+  /// neither side has a MAC — a lease changes hands, and A3 forbids claiming two records
+  /// are one machine on the strength of a shared address.
+  func knownDevice(for facts: HostFacts) -> DeviceItem? {
+    if let mac = facts.mac { return devices.first { $0.device.mac == mac } }
+    return devices.first { $0.device.mac == nil && $0.device.ipv4Addresses.contains(facts.ip) }
+  }
+
   /// "13 devices · 11 online · 5 unidentified".
   var devicesSummary: String {
     let devices = devices.count

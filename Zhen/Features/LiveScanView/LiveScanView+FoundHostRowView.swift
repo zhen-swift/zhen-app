@@ -8,6 +8,8 @@ extension LiveScanView {
   struct FoundHostRowView: View {
     let host: ScanSession.FoundHost
     let namingPending: Bool
+    /// The device history already has for this host, if any.
+    let known: DeviceItem?
 
     var body: some View {
       HStack(spacing: .spacing.medium) {
@@ -44,10 +46,13 @@ extension LiveScanView {
       if host.facts.displayName == nil, namingPending {
         return found + " · " + String(localized: "name query in flight")
       }
-      if let mac = host.facts.mac {
-        return found + " · " + mac.description
+      var parts = [found]
+      if let mac = host.facts.mac { parts.append(mac.description) }
+      if let vendor = host.facts.vendor { parts.append(vendor) }
+      if let known {
+        parts.append(known.name.map { String(localized: "matched to \($0)") } ?? String(localized: "matched to a known device"))
       }
-      return found
+      return parts.joined(separator: " · ")
     }
   }
 }

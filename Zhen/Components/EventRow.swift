@@ -5,10 +5,14 @@ import ZhenCore
 /// the rest quieter, because the name is what the eye hunts for.
 struct EventRow: View {
   let event: DerivedEvent
+  /// Whether the time carries its date. Activity groups rows under day headers and leaves
+  /// it off; a short list with no headers, like the detail's, needs it for anything older
+  /// than today.
+  var showsDate = false
 
   var body: some View {
     HStack(alignment: .firstTextBaseline, spacing: .spacing.medium) {
-      Text(event.date, format: .dateTime.hour().minute())
+      Text(event.date, format: showsDate ? .dateTime.month(.abbreviated).day().hour().minute() : .dateTime.hour().minute())
         .font(.callout.monospaced())
         .foregroundStyle(.textSecondary)
       StatusDot(event.kind.tone)

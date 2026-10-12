@@ -36,6 +36,7 @@ nonisolated struct FixtureScanRunner: ScanRunning {
       progress(.stageProgress(.discovery, completed: index + 1, total: devices.count))
     }
     stages.append(StageTiming(stage: .discovery, elapsedMillis: Self.elapsed(since: started)))
+    var stageStart = Timestamp.now
     progress(.stageFinished(stages[stages.count - 1]))
 
     let degradations = FixtureNetwork.degradations(variant, capture: capture)
@@ -46,7 +47,8 @@ nonisolated struct FixtureScanRunner: ScanRunning {
         guard await pause() else { break }
         progress(.hostUpdated(Self.facts(device, named: true)))
       }
-      stages.append(StageTiming(stage: .naming, elapsedMillis: Self.elapsed(since: started)))
+      stages.append(StageTiming(stage: .naming, elapsedMillis: Self.elapsed(since: stageStart)))
+      stageStart = .now
       progress(.stageFinished(stages[stages.count - 1]))
     }
     for degradation in degradations where degradation.stage == .discovery { progress(.degraded(degradation)) }
@@ -54,7 +56,7 @@ nonisolated struct FixtureScanRunner: ScanRunning {
     if request.deepScan, !Task.isCancelled, !devices.isEmpty {
       progress(.stageStarted(.deepScan))
       _ = await pause()
-      stages.append(StageTiming(stage: .deepScan, elapsedMillis: Self.elapsed(since: started)))
+      stages.append(StageTiming(stage: .deepScan, elapsedMillis: Self.elapsed(since: stageStart)))
       progress(.stageFinished(stages[stages.count - 1]))
     }
 

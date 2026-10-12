@@ -13,7 +13,17 @@ extension LiveScanView {
 
   func detail(of stage: Stage) -> String {
     let scan = model.scan
-    switch (stage, scan.stageStates[stage] ?? .queued) {
+    let state = scan.stageStates[stage] ?? .queued
+    let line = summary(of: stage, state: state)
+    // "13 hosts answered · 1.2 s": a finished stage says what it cost.
+    guard state == .done, let took = scan.stageDurations[stage] else { return line }
+    let seconds = took.formatted(.units(allowed: [.seconds], width: .narrow, fractionalPart: .show(length: 1)))
+    return "\(line) · \(seconds)"
+  }
+
+  private func summary(of stage: Stage, state: ScanSession.StageState) -> String {
+    let scan = model.scan
+    switch (stage, state) {
     case (_, .skipped): return String(localized: "Not requested")
     case (_, .queued): return String(localized: "Queued")
     case (.discovery, _): return String(localized: "\(scan.found.count) hosts answered")
