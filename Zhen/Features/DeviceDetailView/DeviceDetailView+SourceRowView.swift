@@ -24,6 +24,7 @@ extension DeviceDetailView {
       .padding(.horizontal, .spacing.large)
       .padding(.vertical, showsSource ? .spacing.medium : .spacing.xSmall)
       .accessibilityElement(children: .combine)
+      .accessibilityAddTraits(.isStaticText)
       .accessibilityIdentifier(showsSource ? "knownBy-\(source)" : "knownBy-\(source)-\(value ?? "")")
     }
   }

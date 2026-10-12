@@ -35,7 +35,7 @@ final class DevicesUITests: XCTestCase {
     robot.waitFor("deviceTable")
     robot.waitFor("partialRunNotice")
     XCTAssertTrue(robot.element("partialRunTitle").text.contains("partial"))
-    XCTAssertTrue(robot.element("scanStatus").words.hasPrefix("Warning"), "the footer dot is not amber: \(robot.element("scanStatus").words)")
+    XCTAssertTrue(robot.element("scanStatus").words.hasPrefix("Partial results"), "the footer dot is not amber: \(robot.element("scanStatus").words)")
     robot.element("partialRunDisclosure").click()
     robot.waitFor("degradationBanner")
     robot.capture("devices-partial", in: self)
@@ -56,7 +56,7 @@ final class DevicesUITests: XCTestCase {
     robot.waitFor("deviceTable")
     // Default: online first, the offline rows last.
     let names = robot.rows.compactMap { row in
-      row.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH 'deviceName-'")).firstMatch.label
+      row.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH 'deviceName-'")).firstMatch.text
     }.filter { !$0.isEmpty }
     let firstOffline = names.firstIndex { $0.contains(", offline,") } ?? names.count
     XCTAssertGreaterThan(firstOffline, 0)

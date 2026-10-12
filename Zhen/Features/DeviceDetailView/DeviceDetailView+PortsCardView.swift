@@ -19,6 +19,7 @@ extension DeviceDetailView {
                 .foregroundStyle(.textSecondary)
             }
             .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isStaticText)
             .accessibilityIdentifier("portScanProgress")
           } else if case .failed(let reason)? = session?.state {
             Text(reason)

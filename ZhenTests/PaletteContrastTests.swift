@@ -103,6 +103,19 @@ struct PaletteContrastTests {
     }
   }
 
+  /// AppKit draws the sidebar's selection, a prominent button and a switch in the app's
+  /// global accent, with white on top — not `onAccent`, whatever the design says. The
+  /// global accent was `AccentColor`, the accent *text* colour, light in dark mode: white
+  /// on it measured 2.61:1, and the system audit caught the sidebar (phase 3, part 2). It
+  /// is now `SystemAccent`, a fill, and this holds it to white text.
+  @Test("White text on the system's accent clears 4.5:1, and 7:1 with Increase Contrast", arguments: Look.allCases)
+  func whiteOnSystemAccent(_ look: Look) {
+    let accent = components(.systemAccent, look)
+    let l = accent.map { $0 <= 0.04045 ? $0 / 12.92 : pow(($0 + 0.055) / 1.055, 2.4) }
+    let measured = 1.05 / (0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2] + 0.05)
+    #expect(measured >= (look.isIncreased ? 7 : 4.5), "white on systemAccent, \(look): \(measured)")
+  }
+
   @Test("Increase Contrast really resolves different colours", arguments: [Look.light, .dark])
   func increasedIsNotStandardTwice(_ look: Look) {
     // If the high-contrast variant were never served, every 7:1 check above would be

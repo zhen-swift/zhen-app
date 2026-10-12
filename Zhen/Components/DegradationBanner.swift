@@ -37,6 +37,7 @@ struct DegradationBanner: View {
           }
           .padding(.spacing.large)
           .accessibilityElement(children: .combine)
+          .accessibilityAddTraits(.isStaticText)
           .accessibilityIdentifier("degradation-\(index)")
         }
       }

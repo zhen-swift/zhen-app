@@ -38,6 +38,7 @@ struct StageCard: View {
         .strokeBorder(isRunning ? .accent : .cardBorder, lineWidth: isRunning ? .borderWidth.focus : .borderWidth.hairline)
     }
     .accessibilityElement(children: .combine)
+    .accessibilityAddTraits(.isStaticText)
     .accessibilityValue(stateDescription)
   }
 

@@ -35,7 +35,9 @@ extension DevicesView {
       }
       .padding(.horizontal, .spacing.xLarge)
       .padding(.vertical, .spacing.small)
-      .background(.bar)
+      // Opaque: on the translucent bar the title measured under 4.5:1 wherever the rows
+      // beneath it showed through (phase 3, system audit).
+      .background(.surfaceRaised)
       .accessibilityElement(children: .contain)
       .accessibilityIdentifier("partialRunNotice")
     }

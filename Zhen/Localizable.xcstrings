@@ -40,6 +40,9 @@
         }
       }
     },
+    "%lld devices answered the latest scan." : {
+
+    },
     "%lld devices · %lld online · %lld unidentified" : {
       "localizations" : {
         "en" : {
@@ -245,10 +248,16 @@
     "Checking common ports on %@…" : {
 
     },
+    "Complete" : {
+
+    },
     "Copy Address" : {
 
     },
     "Copy MAC Address" : {
+
+    },
+    "Count Online Devices" : {
 
     },
     "DHCP name" : {
@@ -318,6 +327,9 @@
     "Forever" : {
 
     },
+    "Found so far" : {
+
+    },
     "Found so far · newest first" : {
 
     },
@@ -346,6 +358,9 @@
 
     },
     "Hour" : {
+
+    },
+    "How many devices answered Zhen's most recent scan. Reads history; does not scan." : {
 
     },
     "IP Address" : {
@@ -585,6 +600,9 @@
     "Online" : {
 
     },
+    "Online Devices" : {
+
+    },
     "Only this Mac sees this name. It wins over every name the device announces." : {
 
     },
@@ -604,6 +622,9 @@
 
     },
     "Partial" : {
+
+    },
+    "Partial results" : {
 
     },
     "Ports" : {
@@ -669,6 +690,9 @@
     "Scan Again" : {
 
     },
+    "Scan Network" : {
+
+    },
     "Scan Now" : {
 
     },
@@ -693,13 +717,22 @@
     "Scanning %@" : {
 
     },
+    "Scanning your network." : {
+
+    },
     "Scanning…" : {
 
     },
     "Scans keep working without it; they lose the layer-2 sweep and SYN scanning." : {
 
     },
+    "Scans your network now, as Scan Now does in Zhen." : {
+
+    },
     "Search devices" : {
+
+    },
+    "Settings" : {
 
     },
     "Setup" : {
@@ -870,6 +903,9 @@
       }
     },
     "Zhen history %@" : {
+
+    },
+    "Zhen is already scanning." : {
 
     },
     "address" : {

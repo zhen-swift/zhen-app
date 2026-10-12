@@ -49,6 +49,7 @@ struct TimelineHistogram: View {
     // The total is stated so it can be checked against the list it summarises: a
     // histogram counting what the list has filtered out is two answers about one dataset.
     .accessibilityElement(children: .ignore)
+    .accessibilityAddTraits(.isImage)
     .accessibilityLabel("Events per hour: \(buckets.reduce(0) { $0 + $1.count }) over \(buckets.count) hours")
   }
 

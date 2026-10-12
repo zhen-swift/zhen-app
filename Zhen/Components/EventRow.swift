@@ -30,6 +30,7 @@ struct EventRow: View {
     }
     .padding(.vertical, .spacing.xSmall)
     .accessibilityElement(children: .combine)
+    .accessibilityAddTraits(.isStaticText)
   }
 }
 

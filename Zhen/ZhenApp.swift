@@ -2,11 +2,19 @@
 // dev.jc.<app>: they are baked into the helper's code-signing requirement and the installed
 // launchd plist. Recorded as a deviation in the architecture document.
 
+import AppIntents
 import SwiftUI
 
 @main
 struct ZhenApp: App {
-  @State private var model = NetworkModel(environment: .current)
+  @State private var model: NetworkModel
+
+  init() {
+    let model = NetworkModel(environment: .current)
+    _model = State(initialValue: model)
+    // The one model, for App Intents too: a Shortcut's Scan Network is the toolbar's.
+    AppDependencyManager.shared.add(dependency: model)
+  }
 
   var body: some Scene {
     // A single window, not a group: the scan runs from this window's task, and two windows

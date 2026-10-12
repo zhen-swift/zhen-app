@@ -68,6 +68,6 @@ final class DeviceDetailUITests: XCTestCase {
     XCTAssertTrue(robot.element("knownBy-You").words.contains("Winner"))
     XCTAssertEqual(robot.element("detailName").text, "Hall camera")
     robot.press("[", .command, expecting: "deviceTable")
-    XCTAssertTrue(robot.element("deviceName-192.168.50.25").label.hasPrefix("Hall camera"))
+    XCTAssertTrue(robot.element("deviceName-192.168.50.25").text.hasPrefix("Hall camera"))
   }
 }

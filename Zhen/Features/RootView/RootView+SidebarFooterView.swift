@@ -13,7 +13,7 @@ extension RootView {
       VStack(alignment: .leading, spacing: .spacing.xxSmall) {
         Divider()
         HStack(spacing: .spacing.small) {
-          StatusDot(model.footerTone)
+          StatusDot(model.footerTone, label: model.footerStatusLabel)
           TimelineView(.everyMinute) { context in
             Text(model.footerTitle(at: context.date))
               .font(.subheadline)
@@ -31,6 +31,7 @@ extension RootView {
       .padding(.horizontal, .spacing.medium)
       .padding(.bottom, .spacing.medium)
       .accessibilityElement(children: .combine)
+      .accessibilityAddTraits(.isStaticText)
       .accessibilityIdentifier("scanStatus")
     }
   }

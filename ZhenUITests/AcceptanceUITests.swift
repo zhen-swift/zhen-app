@@ -36,7 +36,7 @@ final class AcceptanceUITests: XCTestCase {
         XCTAssertGreaterThan(cell.frame.width, 20, "row \(index) has a collapsed column at \(size)")
       }
       let name = row.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH 'deviceName-'")).firstMatch
-      XCTAssertTrue(name.label.hasPrefix("Unidentified device"), "row \(index) names itself '\(name.label)'")
+      XCTAssertTrue(name.text.hasPrefix("Unidentified device"), "row \(index) names itself '\(name.text)'")
     }
   }
 }

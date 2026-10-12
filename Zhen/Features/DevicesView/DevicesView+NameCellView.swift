@@ -31,6 +31,7 @@ extension DevicesView {
         }
       }
       .accessibilityElement(children: .ignore)
+      .accessibilityAddTraits(.isStaticText)
       .accessibilityLabel(sentence)
       .accessibilityIdentifier("deviceName-\(item.address)")
     }

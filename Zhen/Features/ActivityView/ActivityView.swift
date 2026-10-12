@@ -34,6 +34,7 @@ struct ActivityView: View {
           }
         }
         .listStyle(.inset)
+        .accessibilityLabel("Events")
         .accessibilityIdentifier("activityList")
         .overlay {
           if events.isEmpty {

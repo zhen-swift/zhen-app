@@ -37,6 +37,7 @@ extension LiveScanView {
       .padding(.vertical, .spacing.xSmall)
       .transition(.move(edge: .top).combined(with: .opacity))
       .accessibilityElement(children: .combine)
+      .accessibilityAddTraits(.isStaticText)
       .accessibilityIdentifier("foundHost-\(host.facts.ip)")
     }
 

@@ -58,7 +58,7 @@ final class LiveScanUITests: XCTestCase {
     XCTAssertTrue(robot.element("degradationBanner").waitForExistence(timeout: 25), "the degradation never reached the live scan")
     XCTAssertTrue(robot.table.waitForExistence(timeout: 30), "the scan never handed back")
     robot.waitFor("partialRunNotice")
-    XCTAssertTrue(robot.element("scanStatus").words.hasPrefix("Warning"), "a green dot over an incomplete scan")
+    XCTAssertTrue(robot.element("scanStatus").words.hasPrefix("Partial results"), "a green dot over an incomplete scan")
     robot.element("partialRunDisclosure").clickCentre()
     robot.waitFor("degradationBanner")
     XCTAssertTrue(robot.element("degradation-1").words.contains("No names could be read"), robot.element("degradation-1").words)

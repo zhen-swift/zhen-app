@@ -32,6 +32,7 @@ struct SignalMeter: View {
     }
     .frame(width: size, height: size, alignment: .bottom)
     .accessibilityElement()
+    .accessibilityAddTraits(.isImage)
     .accessibilityLabel(label)
     .accessibilityValue("\(lit) of \(bars)")
   }

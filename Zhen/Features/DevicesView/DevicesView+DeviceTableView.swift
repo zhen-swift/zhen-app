@@ -54,6 +54,7 @@ extension DevicesView {
           return .handled
         }
       }
+      .accessibilityLabel("Devices")
       .accessibilityIdentifier("deviceTable")
     }
   }

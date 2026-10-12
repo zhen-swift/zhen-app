@@ -25,10 +25,12 @@ struct LiveScanView: View {
         }
       } header: {
         Text("Found so far · newest first").sectionLabel()
+          .accessibilityAddTraits(.isHeader)
       }
     }
     .listStyle(.inset)
     .animation(.spring(duration: 0.3), value: scan.found.count)
+    .accessibilityLabel("Found so far")
     .accessibilityIdentifier("liveScanList")
     .safeAreaInset(edge: .top, spacing: .zero) {
       VStack(alignment: .leading, spacing: .spacing.large) {

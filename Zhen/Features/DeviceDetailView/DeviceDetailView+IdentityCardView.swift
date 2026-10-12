@@ -30,6 +30,7 @@ extension DeviceDetailView {
           }
           .padding(.spacing.large)
           .accessibilityElement(children: .combine)
+          .accessibilityAddTraits(.isStaticText)
           .accessibilityIdentifier("identityCurrent")
           ForEach(changes) { change in
             Divider()
@@ -50,6 +51,7 @@ extension DeviceDetailView {
             }
             .padding(.spacing.large)
             .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isStaticText)
             .accessibilityIdentifier("identityChange-\(change.kind)")
           }
         }

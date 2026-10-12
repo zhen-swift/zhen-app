@@ -9,11 +9,15 @@ import SwiftUI
 /// draws its own symbol.
 struct StatusDot: View {
   let tone: Tone
+  /// What it says to VoiceOver, when the tone's own word is not what this dot means. The
+  /// footer's accent dot means "Scanning", not "Merged" (phase 3, system audit).
+  var label: LocalizedStringKey?
   @ScaledMetric(relativeTo: .body) private var size = IconSize.small
   @Environment(\.accessibilityDifferentiateWithoutColor) private var withoutColor
 
-  init(_ tone: Tone) {
+  init(_ tone: Tone, label: LocalizedStringKey? = nil) {
     self.tone = tone
+    self.label = label
   }
 
   var body: some View {
@@ -31,7 +35,8 @@ struct StatusDot: View {
     }
     .frame(width: size, height: size)
     .accessibilityElement()
-    .accessibilityLabel(tone.label)
+    .accessibilityAddTraits(.isImage)
+    .accessibilityLabel(label ?? tone.label)
   }
 }
 

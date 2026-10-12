@@ -175,7 +175,9 @@ struct ZhenRobot {
 extension XCUIElement {
   /// Everything an element says, label and value together: a combined element keeps its
   /// children's text in one or the other depending on the control.
-  var words: String { [label, (value as? String) ?? ""].joined(separator: " ") }
+  /// Label and value together. A static text (phase 3's roles) carries its words in the
+  /// value with an empty label, so neither alone is enough, and an empty one adds nothing.
+  var words: String { [label, (value as? String) ?? ""].filter { !$0.isEmpty }.joined(separator: " ") }
 
   /// Clicks the middle of an element that accessibility reports as not hittable — table
   /// rows and headers on macOS 26.

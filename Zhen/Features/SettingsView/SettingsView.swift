@@ -24,6 +24,7 @@ struct SettingsView: View {
         }
         // A grouped Form draws the label as its own element; without this the control
         // itself is nameless to accessibility — the audit found all four (stage F).
+        .pickerStyle(.menu)
         .accessibilityLabel("Scan automatically")
         .accessibilityIdentifier("scanIntervalPicker")
         SubnetRowView(subnet: $subnet)
@@ -32,6 +33,7 @@ struct SettingsView: View {
             Text(Duration.seconds(seconds).formatted(.units(allowed: [.seconds, .minutes], width: .wide))).tag(seconds)
           }
         }
+        .pickerStyle(.menu)
         .accessibilityLabel("Scan for up to")
         .accessibilityIdentifier("scanBudgetPicker")
         // Was "Deep-scan new devices". Core's port stage is one switch per run and probes
@@ -54,6 +56,7 @@ struct SettingsView: View {
           Text("90 days").tag(90)
           Text("Forever").tag(0)
         }
+        .pickerStyle(.menu)
         .accessibilityLabel("Keep events for")
         .accessibilityIdentifier("retentionPicker")
         LabeledContent("Device identity history") {
@@ -103,6 +106,7 @@ struct SettingsView: View {
     .frame(width: .windowSize.settingsWidth, height: .windowSize.settingsHeight)
     .task(id: retentionDays) { await model.applyRetention(days: retentionDays) }
     .accessibilityElement(children: .contain)
+    .accessibilityLabel("Settings")
     .accessibilityIdentifier("settings")
   }
 }

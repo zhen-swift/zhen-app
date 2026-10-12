@@ -18,6 +18,7 @@ extension DevicesView {
           .foregroundStyle(identification == .identified ? .textPrimary : .textSecondary)
       }
       .accessibilityElement(children: .combine)
+      .accessibilityAddTraits(.isStaticText)
     }
 
     static func word(for identification: Identification) -> String {

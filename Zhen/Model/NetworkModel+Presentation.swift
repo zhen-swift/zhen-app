@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import ZhenCore
 
 /// What the screens say about the model, worked out once here rather than in each view.
@@ -25,6 +26,14 @@ extension NetworkModel {
     if scan.isRunning { return .accent }
     if latestRun == nil { return .offline }
     return latestRunIsPartial ? .warning : .online
+  }
+
+  /// What the footer's dot means, in words: the dot's own tone word is an event's
+  /// ("Merged" for the accent), which told VoiceOver a scan in progress was a merge.
+  var footerStatusLabel: LocalizedStringKey {
+    if scan.isRunning { return "Scanning" }
+    if latestRun == nil { return "Never scanned" }
+    return latestRunIsPartial ? "Partial results" : "Complete"
   }
 
   func footerTitle(at now: Date) -> String {
