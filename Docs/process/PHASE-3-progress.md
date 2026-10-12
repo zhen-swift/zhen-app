@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — part 3 done: Spanish, new-device notices. Run ended.
+**Liveness:** 2026-10-11 — part 4: menu bar mode done.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -493,3 +493,34 @@ The notice strings are in English and Spanish (`es.json`, 253 keys).
 **Limit:** notices come only from scans the app runs while open. Closing the window quits
 the app (one `Window`), so there is no background watching. A menu-bar presence would
 change that, and it is a product decision.
+
+---
+
+# Part 4 — keep watching from the menu bar
+
+Automatic scans and new-device notices both stopped when the window closed. Closing the
+window quits the app, and the window's tasks ran the scans. That made both features good
+only while you were looking. The fix is opt-in, off by default, so the app behaves exactly
+as before unless the person asks.
+
+| Piece | Where |
+|---|---|
+| The setting: "Keep watching from the menu bar" | Settings › Scanning; `Preferences.keepInMenuBar` |
+| The item: status line, devices summary, Scan Now or Stop Scan, Open Zhen, Settings…, Quit Zhen | `MenuBarExtra(isInserted:)`, `MenuBarContentView` |
+| The app outlives its window only in this mode | `AppDelegate.applicationShouldTerminateAfterLastWindowClosed` |
+| One host for the scan tasks | `ScanHost`: active on the window when off, on the menu bar label when on |
+
+**Why the label:** the menu bar item's label view lives as long as the app does, which a
+window does not. The label reads the setting itself rather than trusting that it is on
+screen, in case a hidden item's view still exists. The switch is disabled mid-scan so a
+running scan never changes host.
+
+| Gate | Break | Failure |
+|---|---|---|
+| `MenuBarUITests.testOnTheMenuBarItemScansWithTheWindowClosed`: with the mode on, ⌘W the window, then Scan Now from the item. The app is still running, and Open Zhen shows "Last scan just now" | the label host made inactive | the footer stuck at "Scanning…": no host ran the scan |
+| `MenuBarUITests.testOffClosingTheWindowQuits` | the delegate always says keep running | "with the menu bar off, the app outlived its window" |
+
+**A timing flake, found and fixed:** `SystemAccessibilityAuditUITests.testEveryScreen`
+failed twice in a row on "showDevicesButton never appeared after ⌘.". The audit of the
+live scan took 18 s, and at 900 ms a step the fixture scan ended first, so Stop had
+nothing to stop. It now runs at 2 500 ms a step.

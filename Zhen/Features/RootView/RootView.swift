@@ -18,7 +18,7 @@ struct RootView: View {
   /// The export being saved, while its panel is up.
   @State var exporting: HistoryDocument?
   @FocusState var searchFocused: Bool
-  @AppStorage(Preferences.Key.scanInterval) var scanInterval = 0
+  @AppStorage(Preferences.Key.keepInMenuBar) var keepInMenuBar = false
 
   var body: some View {
     NavigationSplitView {
@@ -50,10 +50,8 @@ struct RootView: View {
       await model.load()
       restore()
     }
-    .task(id: model.scan.runToken) { await model.performScan() }
-    .task(id: model.portScanTarget) { await model.performPortScan() }
-    .task { await model.watchHistory() }
-    .task(id: scanInterval) { await model.scanAutomatically(every: scanInterval) }
+    // The window runs scans unless the menu bar item does (`ScanHost`).
+    .scanHost(model, isActive: !keepInMenuBar)
     .onChange(of: selection) { storedSelection = Self.encode(selection) }
     .onChange(of: path) { storedPath = Self.encode(path) }
     .onChange(of: room) {

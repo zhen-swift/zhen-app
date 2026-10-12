@@ -10,6 +10,7 @@ struct Preferences {
     static let retentionDays = "retentionDays"
     static let budgetSeconds = "scanBudgetSeconds"
     static let notifyNewDevices = "notifyNewDevices"
+    static let keepInMenuBar = "keepInMenuBar"
   }
 
   /// The scan lengths Settings offers, in seconds. Core's default is 30.
@@ -24,6 +25,9 @@ struct Preferences {
   let budget: Duration
   /// Whether a device seen for the first time is announced. Off unless asked for.
   let notifyNewDevices: Bool
+  /// Whether Zhen stays in the menu bar, scanning, after its window closes. Off unless
+  /// asked for.
+  let keepInMenuBar: Bool
 
   init(_ defaults: UserDefaults) {
     scanIntervalMinutes = defaults.integer(forKey: Key.scanInterval)
@@ -33,6 +37,7 @@ struct Preferences {
     let seconds = defaults.integer(forKey: Key.budgetSeconds)
     budget = .seconds(Self.budgets.contains(seconds) ? seconds : Self.defaultBudgetSeconds)
     notifyNewDevices = defaults.bool(forKey: Key.notifyNewDevices)
+    keepInMenuBar = defaults.bool(forKey: Key.keepInMenuBar)
   }
 
   /// A typed subnet, or nil when it is empty or not a network this app will scan.

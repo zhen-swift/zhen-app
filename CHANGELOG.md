@@ -19,6 +19,8 @@
 - Every string a symbol key in `Localizable.xcstrings`.
 - Spanish, including the Local Network permission prompt.
 - Optional notifications when a device Zhen has never seen joins the network.
+- Optional menu bar presence: automatic scans and notices continue with the window
+  closed.
 
 ### Fixed
 - Scan Ports recorded a run of one address, after which every other device showed as

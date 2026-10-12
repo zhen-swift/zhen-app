@@ -1579,6 +1579,40 @@
         }
       }
     },
+    "keepWatchingFromMenuBar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep watching from the menu bar"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seguir vigilando desde la barra de menús"
+          }
+        }
+      }
+    },
+    "keepWatchingFromMenuBarDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zhen stays in the menu bar when its window is closed, so automatic scans and new-device notices carry on."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zhen se queda en la barra de menús cuando cierras su ventana, así que los escaneos automáticos y los avisos de dispositivos nuevos continúan."
+          }
+        }
+      }
+    },
     "keptForeverWhatMakesMergesPossible": {
       "extractionState": "manual",
       "localizations": {
@@ -3008,6 +3042,23 @@
         }
       }
     },
+    "openZhen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Zhen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir Zhen"
+          }
+        }
+      }
+    },
     "osFingerprintingFastSynPortScans": {
       "extractionState": "manual",
       "localizations": {
@@ -3225,6 +3276,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "En espera"
+          }
+        }
+      }
+    },
+    "quitZhen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit Zhen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salir de Zhen"
           }
         }
       }
@@ -3871,6 +3939,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Configuración"
+          }
+        }
+      }
+    },
+    "settingsEllipsis": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuración…"
           }
         }
       }

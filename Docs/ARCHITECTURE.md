@@ -50,8 +50,17 @@ emits far faster than 60 Hz. `ScanPipelineTests` constructs the pipeline from a
 
 - **One `Window`**, not a `WindowGroup`. Each scan runs from that window's
   `.task(id: scan.runToken)`, so a second window would run every scan twice.
-  `CommandsUITests.testThereIsOneWindow` pins it. As with any single-`Window` SwiftUI app,
-  closing the window quits Zhen.
+  `CommandsUITests.testThereIsOneWindow` pins it. Closing the window quits Zhen, as a
+  single-window app should, unless the person keeps it in the menu bar (below).
+- **`MenuBarExtra`**, inserted only with "Keep watching from the menu bar" on. It shows
+  status, Scan Now or Stop, Open Zhen, Settings and Quit. `AppDelegate` then keeps the app
+  alive after its window closes.
+- **Who runs the scans: `ScanHost`.** Scans run from a view's `.task(id:)`, so cancelling
+  one is that view going away. The scan, port-scan, history-watch and automatic-scan tasks
+  are one modifier, active on exactly one view: the window when the menu bar mode is off,
+  the menu bar item when it is on. Two active hosts would run every scan twice. The switch
+  is disabled mid-scan, so a scan never changes host while it runs.
+  `MenuBarUITests` pins both halves.
 - **`Settings { }`**, ⌘,. Its content gets `.defaultAppStorage(model.defaults)` at the
   scene, never inside the view: a view's own `@AppStorage` reads what its parent
   provides.
@@ -129,8 +138,8 @@ is not new. A history's first scan announces nothing. More than three new device
 summary. `NewDeviceNotice` holds the rule; `Notifier` is the seam (`LiveNotifier` posts
 through `UNUserNotificationCenter`, `FakeNotifier` records).
 
-Notices come only from scans the app runs while it is open, by hand or with "Scan
-automatically". Closing the window quits the app, so nothing watches in the background.
+Notices come only from scans the app runs, by hand or with "Scan automatically". With
+"Keep watching from the menu bar" on, those continue after the window closes.
 
 ## Shortcuts
 

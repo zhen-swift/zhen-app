@@ -49,7 +49,7 @@ final class SystemAccessibilityAuditUITests: XCTestCase {
         guard let element = issue.element else {
           // A structural finding with no element: the window chrome's parent/child check.
           if issue.auditType == .parentChild { return true }
-          XCTFail("\(screen): \(issue.auditType) — \(issue.compactDescription) — no element")
+          XCTFail("\(screen): \(issue.auditType) — \(issue.compactDescription) — no element — \(issue.detailedDescription)")
           return true
         }
         if self.excused.contains(where: {
@@ -143,7 +143,9 @@ final class SystemAccessibilityAuditUITests: XCTestCase {
 
   @MainActor
   func testEveryScreen() {
-    let robot = ZhenRobot.launch(scanPace: 900)
+    // Slow enough that the scan is still running after the audit of it, which takes up to
+    // 18 s: at 900 ms a step the scan finished first, and Stop had nothing to stop.
+    let robot = ZhenRobot.launch(scanPace: 2_500)
     robot.waitFor("deviceTable")
     audit(robot, "Devices")
     robot.openDevice("192.168.50.10")

@@ -8,10 +8,16 @@ import SwiftUI
 @main
 struct ZhenApp: App {
   @State private var model: NetworkModel
+  @NSApplicationDelegateAdaptor private var delegate: AppDelegate
+  @AppStorage(Preferences.Key.keepInMenuBar) private var keepInMenuBar = false
 
   init() {
     let model = NetworkModel(environment: .current)
     _model = State(initialValue: model)
+    // The scene's storage must be the model's: a fixture launch never touches the real
+    // preferences (phase 3, stage 4).
+    _keepInMenuBar = AppStorage(wrappedValue: false, Preferences.Key.keepInMenuBar, store: model.defaults)
+    AppDelegate.preferences = model.defaults
     // The one model, for App Intents too: a Shortcut's Scan Network is the toolbar's.
     AppDependencyManager.shared.add(dependency: model)
   }
@@ -40,6 +46,18 @@ struct ZhenApp: App {
     .windowResizability(model.environment.windowSize == nil ? .contentMinSize : .contentSize)
     .commands {
       ZhenCommands(model: model)
+    }
+
+    // Only with "Keep watching from the menu bar" on. It then hosts the scans, and the app
+    // outlives its window (`AppDelegate`).
+    MenuBarExtra(isInserted: $keepInMenuBar) {
+      MenuBarContentView()
+        .environment(model)
+        .defaultAppStorage(model.defaults)
+    } label: {
+      MenuBarLabelView()
+        .environment(model)
+        .defaultAppStorage(model.defaults)
     }
 
     Settings {

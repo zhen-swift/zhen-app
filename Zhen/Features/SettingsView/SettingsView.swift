@@ -13,6 +13,7 @@ struct SettingsView: View {
   @AppStorage(Preferences.Key.budgetSeconds) private var budgetSeconds = Preferences.defaultBudgetSeconds
   @State private var exporting: HistoryDocument?
   @AppStorage(Preferences.Key.notifyNewDevices) private var notifyNewDevices = false
+  @AppStorage(Preferences.Key.keepInMenuBar) private var keepInMenuBar = false
   /// The person said yes here and macOS said no.
   @State private var notificationsRefused = false
 
@@ -54,6 +55,14 @@ struct SettingsView: View {
         }
         .accessibilityLabel(String(localized: .notifyNewDeviceJoins))
         .accessibilityIdentifier("notifyNewDevicesToggle")
+        Toggle(isOn: $keepInMenuBar) {
+          Text(.keepWatchingFromMenuBar)
+          Text(.keepWatchingFromMenuBarDetail)
+        }
+        // Not mid-scan: the scan would move between hosts while it ran.
+        .disabled(model.isBusy)
+        .accessibilityLabel(String(localized: .keepWatchingFromMenuBar))
+        .accessibilityIdentifier("keepInMenuBarToggle")
         if notificationsRefused {
           Text(.notificationsAreOffForZhen)
             .font(.subheadline)
