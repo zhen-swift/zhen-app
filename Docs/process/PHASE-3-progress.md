@@ -1,4 +1,4 @@
-**Liveness:** 2026-10-11 — stages 1–5 done; closing checks next.
+**Liveness:** 2026-10-11 — stages 1–5 done, closing checks done. Run ended.
 
 # Phase 3 — fill in what phase 2 left thin, progress
 
@@ -246,3 +246,28 @@ cleared at the end of this run, after the last UI test (stage 5).
   the engine never streams one. They now reach the report only.
 - **Clean marketing captures cannot come from this desktop.** The Dock and a notification
   were in every capture (Q5). Nothing rendered is committed.
+
+## Closing checks
+
+| Check | Result |
+|---|---|
+| Unit suite | 71 tests, green |
+| Full UI suite, quiet desktop | 37 passed; `AppStoreScreenshotUITests` skipped itself, as designed |
+| Real history untouched | SHA-256 still begins `d735909a`. No test opened it; the live tests used a scratch file |
+| No real network data committed | The fixture is unchanged since phase 2's verified copy (`git diff f1ef1f8` is empty for `home-network.json`). This phase's diff holds no `10.10.20.x` address, and no MAC outside the documentation (`00:00:5E:00:53:xx`) and fixture-private (`x2:5C:…`) ranges, except `F2:3A:91:6B:0D:44`: an artboard sample in `Chip.swift`'s preview since phase 1, covered by phase 2's `--verify`. It had been pulled into the catalogue, and is now `Text(verbatim:)` and out of it. Nothing rendered from the desktop captures is committed. **`--verify` itself could not be rerun:** the raw capture lived in the session scratch area, which was cleared at JC's request before this phase began |
+| Release build | `Scripts/release.sh "Developer ID Application: … (S8662L649U)" --no-notarize`: signatures, runtime, team, helper identity and daemon plist PASS. Installed to `/Applications/Zhen.app` with the helper, `AppIcon.icns` and `Localizable.stringsdict`. Launched once on a scratch history: window "Devices – 0 devices · 0 online · 0 unidentified" |
+| Preferences | The real `com.jctec.zhen` domain, which UI tests had written to before the stage-4 fix, the fixture domain and the unit tests' domains are all cleared. No `zhen` preference file remains |
+
+**Commits on `phase-3`:**
+- `ab8b4d6` stage 1
+- `e8a0510` stage 2
+- `490b116` stage 3
+- `ac4d864` stage 4
+- `50f3f05`, `445e4cf`, `c0727cf` stage 5
+
+Not pushed (Q3).
+
+**Left for JC:**
+- `PHASE-3-questions.md` Q1–Q7
+- `PHASE-2-verification.md` steps 1–6. Step 0, the quiet-desktop UI run, is done here.
+- clean marketing captures (Q5)
