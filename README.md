@@ -30,7 +30,7 @@ Scripts/release.sh - --no-notarize      # an ad-hoc release build with the helpe
 ```
 
 The app depends on the engine by version, never by path (`Package.resolved` pins
-zhen-core 0.6.0). A version is a promise the engine has to keep on purpose.
+zhen-core 0.7.0). A version is a promise the engine has to keep on purpose.
 
 ## Documentation
 

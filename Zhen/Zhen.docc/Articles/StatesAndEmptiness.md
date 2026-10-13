@@ -37,9 +37,9 @@ here is a modal: a scan that lost a source is still a useful scan.
 | Unidentified | an ordinary detail: "Unidentified device", the `questionmark.circle` tile, every name source "— not advertised" |
 | Never port-scanned | "No port scan yet" with Scan Ports |
 | Port scan running | progress in the ports card; the window is not taken over |
-| Port scan this session | the ports, captioned "this session, not saved to history" |
+| Port scan finished | the ports, kept in history, captioned with when they were checked |
 | Port scan found nothing | the reason: stopped, or the device did not answer |
-| No identity changes | the current MAC and "No identity changes seen" |
+| One hardware address | its row, "since …", and "1 hardware address" in the caption |
 | Offline | a hollow dot and "Last seen …"; every action still available |
 
 ### Activity

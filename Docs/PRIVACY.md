@@ -6,10 +6,11 @@ Zhen looks at your local network on your Mac. It tells no one what it finds.
   connection to any server.
 - **What it sends** is the scan: probes to addresses on the network you choose (by
   default your Mac's own), and Bonjour, UPnP, NetBIOS and reverse-DNS queries on that
-  network. Turn on "Check ports on every scan" and it also connects to common ports on
-  the devices that answered. A port scan of one device does the same for that device.
-- **What it keeps** is history: devices, their names and addresses, and the events
-  between scans, in `~/Library/Application Support/zhen/history.ndjson`. That file is
+  network. Turn on "Deep-scan new devices" and it also connects to common ports on each
+  device the first time it answers. A port scan of one device does the same for that
+  device.
+- **What it keeps** is history: devices, their names, addresses, hardware addresses and
+  ports, and the events between scans, in `~/Library/Application Support/zhen/history.ndjson`. That file is
   shared with the `zhen` command line. It never leaves your Mac unless you export it
   (File › Export History…, or the Export button in Settings, which writes a JSON file
   where you choose).

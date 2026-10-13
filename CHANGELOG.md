@@ -7,8 +7,7 @@
   and a `Settings` scene (phase 2).
 - A port scan of one device that shows its result on the device and leaves the rest of
   the network as it was.
-- Every name each source offered, in Known by; identity history as merges, renames and
-  moves; dates on older events; MAC, vendor and known-device matches while scanning;
+- Every name each source offered, in Known by; dates on older events; MAC, vendor and known-device matches while scanning;
   stage times.
 - Export History… (File, ⇧⌘S, and Settings) as JSON.
 - Settings: scan length, the app's version, the history file's size and Show in Finder.
@@ -21,8 +20,15 @@
 - Optional notifications when a device Zhen has never seen joins the network.
 - Optional menu bar presence: automatic scans and notices continue with the window
   closed.
+- On zhen-core 0.7.0: a port scan of one device is kept in history and survives a
+  relaunch; Activity's Ports segment shows ports opening and closing; "Deep-scan new
+  devices" checks only devices seen for the first time; identity history is one row per
+  hardware address, with how it joined and when; an Xcode build embeds the privileged
+  helper.
 
 ### Fixed
+- fastlane refused the whole Fastfile because a lane was named `docs`; it is `docc`.
+- The Local Network advice no longer tells the app its grant may be under the terminal.
 - Scan Ports recorded a run of one address, after which every other device showed as
   offline.
 - Installing the helper had no effect until the app was relaunched.

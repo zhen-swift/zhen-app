@@ -50,14 +50,11 @@ ledgers (`Docs/process/`).
   and a green dot over an incomplete scan is a lie of omission.
 - **The Local Network copy is hedged** ("appears to be denied"): the grant cannot be
   queried, only inferred.
-- **"Check ports on every scan"**, not "Deep-scan new devices": zhen-core's port stage is
-  one switch per run.
 
 ### The detail
 
-- **Identity history lists merges, renames and moves**, not one row per MAC: zhen-core
-  keeps only the current MAC.
 - **"Name query in flight" names no protocol**: core reports which stage runs, not which
   query is outstanding for a host.
-- **A port scan of one device is kept for the session**, and says so: recorded as a run,
-  it marked every other device offline.
+- **A port scan of one device on an offline device shows no ports**: its old address may
+  be another device's now, and a port answer carries no hardware address to tell them
+  apart.

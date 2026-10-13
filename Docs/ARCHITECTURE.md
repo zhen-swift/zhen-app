@@ -1,7 +1,8 @@
 # Architecture
 
 Zhen.app is a SwiftUI front end over [zhen-core](https://github.com/zhen-swift/zhen-core),
-linked as a Swift package by version (`Package.resolved` pins 0.6.0). It never runs the
+linked as a Swift package by version (`upToNextMinorVersion` from 0.7.0; `Package.resolved`
+pins 0.7.0). It never runs the
 `zhen` command line and never parses its output. The house rules are `../AGENTS.md`;
 where this document and they disagree, they win.
 
@@ -39,7 +40,7 @@ emits far faster than 60 Hz. `ScanPipelineTests` constructs the pipeline from a
 |---|---|
 | `App/` | `AppEnvironment` (the one reader of launch arguments and the environment), `ZhenCommands` (the menu bar), the launch appearance |
 | `Model/` | `NetworkModel` (one per app: devices, events, latest run, the scan and port scans), `ScanSession` (a scan as it happens), `DeviceItem` (a `Device` flattened for the table), `Preferences`, presentation extensions |
-| `Scanning/` | `ScanRunning` and its two conformances: `LiveScanRunner` over core's `ScanRunner`, and `FixtureScanRunner`, which replays the committed fixture. Also `ScanPipeline` and `ProbeOnlyStore` |
+| `Scanning/` | `ScanRunning` and its two conformances: `LiveScanRunner` over core's `ScanRunner`, and `FixtureScanRunner`, which replays the committed fixture. Also `ScanPipeline` |
 | `Features/` | One folder per screen: `RootView` (window, sidebar, footer), `DevicesView` (the `Table`), `DeviceDetailView`, `LiveScanView`, `ActivityView`, `SettingsView` |
 | `Components/` | The design system's pieces: `Card`, `StatusDot`, `Chip`, `StageCard`, `DegradationBanner`, `EventRow`, `TimelineHistogram`, … |
 | `Platform/` | AppKit and system edges: pasteboard, Finder, System Settings URLs, `LiveHelperService` (`SMAppService`), `HistoryWatcher` |
@@ -73,16 +74,20 @@ emits far faster than 60 Hz. `ScanPipelineTests` constructs the pipeline from a
 ## Scanning
 
 - **A scan.** `NetworkModel.startScan()` builds a `ScanRequest` from `Preferences`:
-  network, budget, ports or not. The window's task runs it through the pipeline.
+  network, budget, and the port stage — `.newHosts` when "Deep-scan new devices" is on,
+  core's `PortStage`, where "new" is history's answer. The window's task runs it through the pipeline.
   `ScanSession` folds the batches, and the model rereads history at the end.
   Degradations are kept per run, so a partial run still says so after a relaunch.
-- **A port scan of one device.** `NetworkModel.scanPorts(_:)` scans that device's /32 with
-  `records: false`. `LiveScanRunner` runs it over `ProbeOnlyStore`, which reads history and
-  never writes it. History judges presence by the latest run alone, so a recorded /32 would
-  mark every other device gone. The result lives in `NetworkModel.portScans` for the session.
-- **The engine.** `LiveScanRunner` keeps core's `ScanRunner` until the helper's state
-  changes, or a scan finds nothing. Core decides at construction whether the helper's
-  capture device is there.
+- **A port scan of one device.** `NetworkModel.scanPorts(_:)` asks for a port probe, not a
+  scan: `ScanRunning.probePorts`, through core's `ScanRunner.probePorts` and
+  `HistoryStore.recordPorts`. Core folds the ports into the device history holds and
+  records no run, so every other device stays as it was and the result survives a
+  relaunch. An offline device's old address is not trusted: what answers there is not
+  shown as its ports, and core does not record it. `NetworkModel.portScans` holds only
+  whether a probe is running and why one found nothing.
+- **The engine.** `LiveScanRunner` builds core's `ScanRunner` for each scan, asking the
+  helper for a capture device only when this app has installed it (`HelperState.installed`).
+  Core bounds that check at 750 ms, so nothing is cached between scans.
 
 ## The privileged helper
 
@@ -90,8 +95,10 @@ emits far faster than 60 Hz. `ScanPipelineTests` constructs the pipeline from a
 `AssociatedBundleIdentifiers = [com.jctec.zhen]` so Login Items shows "Zhen" with the icon.
 `HelperPlistTests` reads the built app's copy. Settings registers and unregisters the
 helper through `SMAppService.daemon`. Without the helper every screen works; it adds the
-layer-2 ARP sweep and SYN scanning. The binary itself is built and embedded by
-`Scripts/release.sh` (see Known rough edges).
+layer-2 ARP sweep and SYN scanning. The binary is zhen-core's `zhen-helper` product: the
+Zhen target depends on it and the Embed Helper phase copies it to
+`Contents/MacOS/zhen-helper`, where the plist's `BundleProgram` points. `Scripts/release.sh`
+signs it as `com.jctec.zhen.helper` before re-sealing the app.
 
 ## Design-system documentation
 
@@ -166,27 +173,26 @@ defaults domain, so no test can see or change real history or preferences.
 
 ## Known rough edges
 
-Each of these is a workaround for zhen-core 0.6.0, which this app did not change, or a
-gate only a person can run. Phase-3 ledger and questions have the detail.
+Each of these is something core or the platform does not do yet, or a gate only a person
+can run. zhen-core 0.7.0 removed six earlier entries — unsaved port scans, "check ports on
+every scan", the empty Ports segment, identity history by change rather than by MAC, the
+helper missing from Xcode builds, and the 3 s stale-registration wait. The
+`CORE-0.7.0-progress.md` ledger has the detail.
 
-- **Single-device port scans are not saved.** They are kept for the session only, and the
-  card says so. A full scan with "Check ports on every scan" saves ports to history. The
-  durable fix is a port-scan call in core that is not a run, or presence judged within the
-  scanned subnet.
-- **"Check ports on every scan" means every device.** Core's port stage is one switch per
-  run; "new devices only" needs core.
-- **The Activity Ports segment is always empty.** Core derives no port events
-  (`DerivedEvent.Kind` has none).
-- **Identity history is not one row per MAC.** Core keeps only the current MAC, and its
-  merge event does not name the absorbed addresses. The card lists the merges, renames and
-  moves core did record.
-- **The helper binary is not in an Xcode build.** zhen-core declares no product for
-  `zhen-helper`. `Scripts/release.sh` builds it from the pinned checkout and embeds it
-  (phase 2, defect E1). An Xcode-built app can register the daemon, but launchd finds no
-  program.
-- **A stale helper registration costs 3 s.** When a registration exists but does not
-  answer, core's helper check waits out its 3 s timeout. Every engine build pays it, which
-  is why the engine is kept between scans.
+- **A port probe's time is not in history.** History keeps ports, not when a probe checked
+  them, so after a relaunch the ports card says "From an earlier scan that checked ports"
+  rather than the probe's time. Within the session it says when.
+- **An Xcode-built helper is signed ad hoc.** Xcode signs the embedded helper on copy
+  under a derived identifier, which the helper's code requirement would refuse. Only
+  `Scripts/release.sh`'s signature (`com.jctec.zhen.helper`, Developer ID) satisfies it,
+  so registration is still a release-build check.
+- **Identity history before 0.7.0 is one row.** A record written by an older core kept one
+  MAC; its row starts at the record's first-seen. A rotation before 0.7.0 was not written
+  down and cannot be shown.
+- **A merge recorded before 0.7.0 may show twice in Activity.** Core logged each merge
+  twice until 0.7.0; the duplicate event is still in an older history file.
+- **An older `zhen` erases what 0.7.0 adds.** A 0.6.0 command line rewriting the shared
+  history file drops port events and MAC history (zhen-core's questions, Q1).
 - **Marketing captures need a clean desktop.** An XCUITest window screenshot is screen
   pixels. The Dock and notifications land in it, and a 1440 × 900 window does not fit
   above the Dock on a 1512 × 949 display (`Docs/SCREENSHOTS.md`).

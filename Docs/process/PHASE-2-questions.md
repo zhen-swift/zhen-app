@@ -80,3 +80,9 @@ living-room Apple TV by its real Bonjour name as a sample, and `A1` gives a samp
 whose text contains the gateway's. Both were published before this run and are design
 prose, not data. **Instead:** left as they are — rewriting your appendices is outside this
 brief. If you want the repository to hold no real names, those two lines are the ones.
+
+## Resolved 2026-10-13 — Q3, the Ports segment
+
+zhen-core 0.7.0 derives `portOpened` and `portClosed` (only transitions involving `open`).
+The segment now holds them, in A2's warning amber, and the fixture stages one of each on
+the router. `ActivityTests.portsSegment` is the gate. See `CORE-0.7.0-progress.md`.
