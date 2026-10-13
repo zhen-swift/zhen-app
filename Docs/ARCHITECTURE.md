@@ -104,7 +104,7 @@ layer-2 ARP sweep and SYN scanning. The binary itself is built and embedded by
 - Corrections: every deliberate difference from the artboards
 
 The six artboards are in its resources. Build it with Product ▸ Build Documentation, or
-`bundle exec fastlane docs`.
+`bundle exec fastlane docc`.
 
 ## Strings
 

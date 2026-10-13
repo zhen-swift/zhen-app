@@ -6,7 +6,7 @@
 #   bundle exec fastlane ui            UI only
 #   bundle exec fastlane screenshots   marketing captures, then `marketing`
 #   bundle exec fastlane marketing     re-render artwork from committed captures
-#   bundle exec fastlane docs          the DocC archive (Zhen/Zhen.docc) → build/docs
+#   bundle exec fastlane docc          the DocC archive (Zhen/Zhen.docc) → build/docs
 #   bundle exec fastlane release identity:"Developer ID Application: …" profile:zhen-notary
 
 default_platform(:mac)
@@ -19,7 +19,7 @@ SIGNING = "CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="
 
 platform :mac do
   # One place every test lane goes through, so they cannot drift apart.
-  private_lane :run_tests do |options|
+  private_lane :run_suite do |options|
     scan(
       project: PROJECT,
       scheme: SCHEME,
@@ -36,17 +36,17 @@ platform :mac do
 
   desc "Unit and UI tests (the marketing captures skip themselves)"
   lane :test do
-    run_tests
+    run_suite
   end
 
   desc "Unit tests only"
   lane :unit do
-    run_tests(only: ["ZhenTests"])
+    run_suite(only: ["ZhenTests"])
   end
 
   desc "UI tests only"
   lane :ui do
-    run_tests(only: ["ZhenUITests"])
+    run_suite(only: ["ZhenUITests"])
   end
 
   desc "App Store and README captures from -ShowcaseData, then the artwork"
@@ -70,7 +70,7 @@ platform :mac do
   end
 
   desc "The design system's DocC archive, from Zhen/Zhen.docc"
-  lane :docs do
+  lane :docc do
     Dir.chdir("..") do
       sh("xcodebuild docbuild -project #{PROJECT} -scheme #{SCHEME} -destination 'platform=macOS' " \
          "-derivedDataPath build/docs-dd #{SIGNING}")
