@@ -1,0 +1,88 @@
+# Zhen's lanes. Local commands are exactly CI's commands (AGENTS.md, CI); the only CI-only
+# setting is SPM_CACHE_PATH. A macOS app: every lane runs on this Mac, no simulator.
+#
+#   bundle exec fastlane test          unit + UI, results in fastlane/test_output
+#   bundle exec fastlane unit          unit only
+#   bundle exec fastlane ui            UI only
+#   bundle exec fastlane screenshots   marketing captures, then `marketing`
+#   bundle exec fastlane marketing     re-render artwork from committed captures
+#   bundle exec fastlane docc          the DocC archive (Zhen/Zhen.docc) → build/docs
+#   bundle exec fastlane release identity:"Developer ID Application: …" profile:zhen-notary
+
+default_platform(:mac)
+
+PROJECT = "Zhen.xcodeproj"
+SCHEME = "Zhen"
+OUTPUT = "fastlane/test_output"
+# Ad-hoc signing: forks have no team, and a UI test needs a runnable, signed app.
+SIGNING = "CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="
+
+platform :mac do
+  # One place every test lane goes through, so they cannot drift apart.
+  private_lane :run_suite do |options|
+    scan(
+      project: PROJECT,
+      scheme: SCHEME,
+      destination: "platform=macOS",
+      only_testing: options[:only],
+      output_directory: OUTPUT,
+      output_types: "junit",
+      result_bundle: true,
+      cloned_source_packages_path: ENV["SPM_CACHE_PATH"],
+      xcargs: SIGNING,
+      fail_build: true
+    )
+  end
+
+  desc "Unit and UI tests (the marketing captures skip themselves)"
+  lane :test do
+    run_suite
+  end
+
+  desc "Unit tests only"
+  lane :unit do
+    run_suite(only: ["ZhenTests"])
+  end
+
+  desc "UI tests only"
+  lane :ui do
+    run_suite(only: ["ZhenUITests"])
+  end
+
+  desc "App Store and README captures from -ShowcaseData, then the artwork"
+  lane :screenshots do
+    result = File.expand_path("../#{OUTPUT}/Screenshots.xcresult", __dir__)
+    sh("rm -rf '#{result}'")
+    Dir.chdir("..") do
+      sh(
+        "TEST_RUNNER_ZHEN_SCREENSHOTS=1 xcodebuild test -project #{PROJECT} -scheme #{SCHEME} " \
+        "-destination 'platform=macOS' -only-testing:ZhenUITests/AppStoreScreenshotUITests " \
+        "-resultBundlePath '#{result}' #{SIGNING}"
+      )
+      sh("Scripts/export-screenshots.sh '#{result}' fastlane/screenshots/macOS")
+    end
+    marketing
+  end
+
+  desc "Re-render the artwork from captures, without capturing"
+  lane :marketing do
+    Dir.chdir("..") { sh("swift Scripts/generate_appstore_assets.swift") }
+  end
+
+  desc "The design system's DocC archive, from Zhen/Zhen.docc"
+  lane :docc do
+    Dir.chdir("..") do
+      sh("xcodebuild docbuild -project #{PROJECT} -scheme #{SCHEME} -destination 'platform=macOS' " \
+         "-derivedDataPath build/docs-dd #{SIGNING}")
+      sh("rm -rf build/docs && mkdir -p build/docs && cp -R build/docs-dd/Build/Products/Debug/Zhen.doccarchive build/docs/")
+    end
+    UI.success("Open build/docs/Zhen.doccarchive in Xcode, or Product ▸ Build Documentation")
+  end
+
+  desc "Developer ID build with the helper, notarised (Scripts/release.sh)"
+  lane :release do |options|
+    identity = options[:identity] || UI.user_error!("identity:\"Developer ID Application: …\" is required")
+    profile = options[:profile] || "zhen-notary"
+    Dir.chdir("..") { sh("Scripts/release.sh", identity, profile) }
+  end
+end

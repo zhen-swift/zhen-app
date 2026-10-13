@@ -1,0 +1,96 @@
+name: CI
+
+# Fast feedback on every pull request and every push to main: the token check, then
+# `bundle exec fastlane test` — the same command a person runs locally.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Read-only, and nothing here needs more. The default token can write to the repository,
+# and a pull request from a fork runs this file.
+permissions:
+  contents: read
+
+# A newer push to a pull request makes the older run worthless. A push to main does not:
+# every commit there keeps its own result.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  tokens:
+    # First, because it is seconds long and it is the rule the previous app broke most:
+    # 351 lines of colour in code and 18 computed views, none of them checked.
+    name: Tokens — no literals in a view
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+
+      # The self-test before the check. The rules are POSIX regexes written on a Mac's BSD
+      # grep and run here on GNU grep; a pattern one of them reads differently would make the
+      # check below pass on nothing. This proves every rule still fires on this runner.
+      - name: Self-test
+        run: ./Scripts/check-tokens.sh --self-test
+
+      - name: Check the app's sources
+        run: ./Scripts/check-tokens.sh
+
+  docs:
+    # Prose has no compiler. Every repository path the documents name must exist; the
+    # check is seconds long and runs on every change, since any change can stale a page.
+    name: Docs — the paths resolve
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: check-docs
+        run: ./Scripts/check-docs.sh
+
+  app:
+    # The app's own tests, unit and UI. Phase 1's "CI green" never ran them: this job is
+    # what makes it mean the suite passed.
+    name: App — build and test the Zhen scheme
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Xcode
+        run: |
+          sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
+          xcodebuild -version
+
+      # The plist is generated from zhen-core; a stale one is a Bonjour type browsed and
+      # never declared, which fails silently at runtime. Fail here instead.
+      - name: NSBonjourServices matches zhen-core
+        run: ./Scripts/generate-bonjour-services.sh --check
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+
+      # SwiftPM's checkouts, keyed on the lock file. SPM_CACHE_PATH reaches `scan`'s
+      # cloned_source_packages_path, or the cache is never read.
+      - uses: actions/cache@v6
+        with:
+          path: .spm
+          key: spm-${{ hashFiles('Zhen.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+
+      # Exactly the local command. Ad-hoc signing is in the lane: forks have no team.
+      - name: Test
+        env:
+          SPM_CACHE_PATH: ${{ github.workspace }}/.spm
+        run: bundle exec fastlane test
+
+      - name: Keep the results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-output
+          path: fastlane/test_output
+          retention-days: 14

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  The privileged helper's launchd job, copied by the "Embed Launch Daemon" build phase to
+  Contents/Library/LaunchDaemons/ — exactly where SMAppService.daemon(plistName:) looks.
+
+  Label and the Mach service name must equal ZhenPrivilege's HelperIdentity.label, or the
+  connection fails as error 108 and names the wrong thing. BundleProgram is resolved from the
+  bundle root.
+
+  AssociatedBundleIdentifiers is why Login Items shows "Zhen" with the app's icon instead of
+  a bare reverse-DNS label. Nothing checks it at build time — registration succeeds without
+  it — so HelperPlistTests reads the BUILT app's copy and pins all of the above to core.
+-->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.jctec.zhen.helper</string>
+	<key>BundleProgram</key>
+	<string>Contents/MacOS/zhen-helper</string>
+	<key>MachServices</key>
+	<dict>
+		<key>com.jctec.zhen.helper</key>
+		<true/>
+	</dict>
+	<key>AssociatedBundleIdentifiers</key>
+	<array>
+		<string>com.jctec.zhen</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,11 @@
+# Line endings: normalise on commit, so a checkout on another platform does not
+# produce a diff of the whole tree.
+* text=auto eol=lf
+
+# Binary, so git never tries to merge or diff them as text.
+*.png binary
+*.bin binary
+*.xcscheme text eol=lf
+
+# Documentation is the point here, not a rounding error in the language bar.
+*.md linguist-documentation=false

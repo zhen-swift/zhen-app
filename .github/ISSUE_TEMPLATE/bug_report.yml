@@ -1,0 +1,58 @@
+name: Bug report
+description: The app behaves differently from what its documentation says.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If the problem is in what a scan finds — a device missing, a wrong name, a
+        port — rather than in how the app shows it, it probably belongs to the engine:
+        [zhen-core](https://github.com/zhen-swift/zhen-core/issues/new/choose). Not
+        sure? File it here; it will be moved.
+
+        Screenshots help. Redact addresses, names and hardware addresses if you would
+        rather not publish your network.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected instead
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen
+      description: The room, the window size and appearance, and what you clicked or typed.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "Zhen › About Zhen, or the commit hash for a build from source."
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: macOS version and hardware
+      placeholder: "26.6.2, Mac16,9"
+    validations:
+      required: true
+  - type: dropdown
+    id: helper
+    attributes:
+      label: Is the privileged helper installed?
+      options:
+        - "No"
+        - "Yes — installed from Settings"
+        - "I don't know"
+    validations:
+      required: true
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: Local Network permission
+      description: >-
+        Denial returns zero results rather than an error, so an empty scan is
+        usually this. System Settings → Privacy & Security → Local Network.
+      options:
+        - label: I have confirmed Zhen is allowed

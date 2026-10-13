@@ -1,0 +1,49 @@
+# ── Secrets ─────────────────────────────────────────────────────────────────
+# Nothing in this project needs credentials, but the guard stays, because the cost
+# of it being here and unnecessary is nothing and the cost of it being absent once
+# is permanent.
+.env
+*.pem
+*.p12
+
+# ── Swift and SwiftPM ───────────────────────────────────────────────────────
+.build/
+.swiftpm/
+*.doccarchive
+
+# Package.resolved is committed: the app resolves zhen-core by a version range, and the lock
+# file is what pins the exact release (AGENTS.md: pinned to a version, never a branch). It
+# lives in Zhen.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/.
+
+# ── Xcode ───────────────────────────────────────────────────────────────────
+# Zhen.xcodeproj is Xcode's (folder-synchronised groups) and IS committed.
+# Per-user state and build products are not.
+xcuserdata/
+DerivedData/
+# A workspace at the root would be a second container; the project's own is committed.
+/*.xcworkspace
+
+# ── Build products ──────────────────────────────────────────────────────────
+build/
+
+# Rasterised icons at the repository root. Design/marks/03-z/ is the source; a
+# checked-in PNG at the root is a second answer to the question "what does the mark
+# look like", and it is the one that goes stale without anybody noticing.
+/icon-*.png
+
+
+# ── macOS ───────────────────────────────────────────────────────────────────
+.DS_Store
+
+
+
+# Test results: uploaded by CI, never committed.
+fastlane/test_output/
+
+# fastlane: gems, raw captures and generated reports. Raw captures are committed only
+# from a clean desktop, to AppStoreSimulatorCaptures/ (Docs/SCREENSHOTS.md).
+vendor/bundle/
+.bundle/
+fastlane/screenshots/
+fastlane/report.xml
+fastlane/README.md

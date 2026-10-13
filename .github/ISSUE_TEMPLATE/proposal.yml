@@ -1,0 +1,27 @@
+name: Proposal
+description: A change to what the app shows or how it behaves.
+labels: [proposal]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What is difficult or impossible today. Not the solution yet.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you propose
+    validations:
+      required: true
+  - type: textarea
+    id: cost
+    attributes:
+      label: What it costs
+      description: >-
+        Every screen element competes for attention, and the house rules prefer a
+        platform control to a custom one (AGENTS.md). Say what this replaces or
+        pushes aside, and whether it needs something zhen-core does not report yet.
+    validations:
+      required: true
