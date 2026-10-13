@@ -37,8 +37,8 @@ struct LocalizationTests {
 
   @Test("Spanish plurals and substitutions resolve, with their arguments")
   func spanishPlurals() {
-    #expect(Self.spanish(.identityChanges(1)) == "1 cambio de identidad")
-    #expect(Self.spanish(.identityChanges(3)) == "3 cambios de identidad")
+    #expect(Self.spanish(.hardwareAddressesSeen(1)) == "1 dirección de hardware")
+    #expect(Self.spanish(.hardwareAddressesSeen(3)) == "3 direcciones de hardware")
     #expect(Self.spanish(.devicesOnlineUnidentified(devices: 1, 1, 0)) == "1 dispositivo · 1 en línea · 0 sin identificar")
     #expect(Self.spanish(.stoppedAfterDevicesFound("0:05", devices: 2)) == "Detenido después de 0:05 · 2 dispositivos encontrados")
     #expect(Self.spanish(.scanNow) == "Escanear ahora")

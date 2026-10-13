@@ -46,7 +46,7 @@ struct ScanSessionTests {
   @Test("Stage events drive the cards; a repeated degradation is shown once")
   func stagesAndDegradations() {
     let session = ScanSession()
-    session.start(ScanRequest(deepScan: true))
+    session.start(ScanRequest(ports: .newHosts))
     let degradation = Degradation(stage: .naming, reason: "x", recoverable: false)
     session.apply([
       .stageStarted(.discovery), .stageProgress(.discovery, completed: 1, total: 4),

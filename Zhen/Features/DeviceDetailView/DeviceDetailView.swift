@@ -18,7 +18,7 @@ struct DeviceDetailView: View {
         ScrollView {
           VStack(alignment: .leading, spacing: .spacing.large) {
             HeaderView(item: item)
-            IdentityCardView(item: item, changes: events(for: item).filter(\.kind.isIdentityChange))
+            IdentityCardView(item: item)
             KnownByCardView(item: item)
             PortsCardView(item: item)
             RecentEventsCardView(events: Array(events(for: item).prefix(5))) {

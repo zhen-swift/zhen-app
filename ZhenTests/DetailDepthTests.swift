@@ -58,13 +58,31 @@ struct DetailDepthTests {
     }
   }
 
-  @Test("Identity changes are merges, renames and moves; presence is not identity")
-  func identityKinds() {
-    #expect(DerivedEvent.Kind.merged.isIdentityChange)
-    #expect(DerivedEvent.Kind.renamed.isIdentityChange)
-    #expect(DerivedEvent.Kind.ipChanged.isIdentityChange)
-    #expect(!DerivedEvent.Kind.appeared.isIdentityChange)
-    #expect(!DerivedEvent.Kind.disappeared.isIdentityChange)
+  /// Gate. Break: build the rows from `device.mac` alone in `DeviceItem.identityRows` —
+  /// the one current MAC zhen-core 0.6.0 kept.
+  @Test("Identity history is one row per MAC: the current one first, each with its reason and span")
+  func identityRowsPerMAC() throws {
+    let capture = try FixtureNetwork.capture()
+    var device = try #require(capture.devices.first { $0.mac?.isLocallyAdministered == true })
+    let now = try #require(device.mac)
+    let earlier = MACAddress(raw: now.raw ^ 0x0000_0000_00FF)
+    device.mac = now
+    let day: Int64 = 86_400_000
+    let base = device.lastSeen.millisecondsSinceEpoch - 10 * day
+    let stored = StoredDevice(device: device, isPresent: true, macHistory: [
+      MACSighting(mac: earlier, firstSeen: Timestamp(millisecondsSinceEpoch: base),
+                  lastSeen: Timestamp(millisecondsSinceEpoch: base + 3 * day), link: .original),
+      MACSighting(mac: now, firstSeen: Timestamp(millisecondsSinceEpoch: base + 4 * day),
+                  lastSeen: device.lastSeen, link: .rotation(by: .mdnsInstance)),
+    ])
+    let row = try #require(DeviceItem.rows(from: [stored], network: capture.run.target).first)
+    let rows = row.identityRows
+    #expect(rows.map(\.mac) == [now.description, earlier.description])
+    #expect(rows.map(\.isCurrent) == [true, false])
+    #expect(rows[0].reason == "rotated · recognised by its Bonjour name")
+    #expect(rows[1].reason == "first address")
+    #expect(rows[0].span.hasPrefix("since "))
+    #expect(!rows[1].span.hasPrefix("since "), "a past address shows a span, not a start")
   }
 
   /// Gate. Break: drop the `privileged helper` branch in `DegradationCopy.init`.

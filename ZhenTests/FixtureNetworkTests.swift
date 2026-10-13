@@ -40,6 +40,7 @@ struct FixtureNetworkTests {
     }
   }
 
+  /// Gate. Break: drop the router's port staging in `FixtureNetwork.Script.device`.
   @Test("48 hours of history derive every event kind the store can emit but merged")
   func historyDerivesEvents() async {
     let store = InMemoryHistoryStore()
@@ -47,7 +48,8 @@ struct FixtureNetworkTests {
       _ = await store.record(report)
     }
     let kinds = Set(await store.events().map(\.kind))
-    #expect(kinds.isSuperset(of: [.appeared, .disappeared, .ipChanged, .renamed]))
+    #expect(kinds.isSuperset(of: [.appeared, .disappeared, .ipChanged, .renamed, .portOpened, .portClosed]),
+            "missing: \(Set<DerivedEvent.Kind>([.appeared, .disappeared, .ipChanged, .renamed, .portOpened, .portClosed]).subtracting(kinds))")
     let devices = await store.devices()
     #expect(devices.contains { !$0.isPresent }, "some devices must be offline in the latest run")
   }
@@ -63,12 +65,15 @@ struct FixtureNetworkTests {
     }
   }
 
-  @Test("The silent variant degrades with core's Local Network sentence")
+  /// Gate. Break: `.appleLocalNetwork` in `FixtureNetwork.degradations` — the command
+  /// line's wording, which the app used to cut a sentence out of at runtime.
+  @Test("The silent variant degrades with core's Local Network sentence, worded for an app")
   func silentVariant() {
     let degradations = FixtureNetwork.degradations(.silent, capture: capture)
     #expect(degradations.count == 1)
     let copy = DegradationCopy(degradations[0])
     #expect(copy.action == .openLocalNetworkSettings)
+    #expect(copy.consequence == degradations[0].reason, "the app re-worded core's finding")
     #expect(!copy.consequence.contains("terminal application"), "the app repeats advice meant for the CLI")
     #expect(copy.consequence.contains("Privacy & Security › Local Network"))
   }

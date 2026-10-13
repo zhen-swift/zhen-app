@@ -28,6 +28,17 @@ struct ActivityTests {
     #expect(parts == events.count, "segments overlap or drop events")
   }
 
+  /// Gate. Break: `case .ports: false` in `ActivityFilter.includes` — the always-empty
+  /// segment zhen-core 0.6.0 left (PHASE-2-questions Q3).
+  @Test("The Ports segment shows port events, and only port events")
+  func portsSegment() {
+    let ports = ActivityView.filtered(events, by: .ports, search: "")
+    #expect(!ports.isEmpty, "the Ports segment is empty")
+    #expect(ports.allSatisfy { $0.kind == .portOpened || $0.kind == .portClosed })
+    #expect(Set(ports.map(\.kind)) == [.portOpened, .portClosed])
+    #expect(ports.contains { $0.detail.hasPrefix("80/tcp open at ") }, "\(ports.map(\.detail))")
+  }
+
   @Test("Search narrows by device, and composes with the segment")
   func search() {
     let speaker = ActivityView.filtered(events, by: .all, search: "speakerconnect")

@@ -91,7 +91,7 @@ final class ScanSession {
     publishedBatches = 0
     stageDurations = [:]
     stageStates = Dictionary(uniqueKeysWithValues: Self.stages.map {
-      ($0, $0 == .deepScan && !request.deepScan ? .skipped : .queued)
+      ($0, $0 == .deepScan && request.ports == .off ? .skipped : .queued)
     })
     runToken = UUID()
   }

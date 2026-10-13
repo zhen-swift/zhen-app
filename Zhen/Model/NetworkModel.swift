@@ -43,8 +43,8 @@ final class NetworkModel {
   /// Old ID → new ID, for devices whose ID changed this session: an open detail page or a
   /// stored path still finds its device.
   @ObservationIgnored private var aliases: [DeviceItem.ID: DeviceItem.ID] = [:]
-  /// Port scans of single devices run in this session, by device. Not in history: see
-  /// `ProbeOnlyStore`. A full scan with ports on supersedes them.
+  /// Port scans of single devices run in this session, by device: whether one is running,
+  /// and why one found nothing. What they found is in history, where core folded it.
   private(set) var portScans: [DeviceItem.ID: PortScan] = [:]
   /// The device whose ports are being scanned. The window's `.task(id:)` runs it.
   private(set) var portScanTarget: PortScanTarget?
@@ -53,18 +53,23 @@ final class NetworkModel {
   ///   - environment: what this launch is: live, or a fixture.
   ///   - testDefaults: a test's own domain. Fixture models otherwise share one, which each
   ///     clears when it is made — fine for one app, a race between parallel tests.
-  init(environment: AppEnvironment, defaults testDefaults: UserDefaults? = nil) {
+  ///   - engine: for a live launch, what builds the scanner. zhen-core's `ScanRunner`
+  ///     unless a test is driving the real history file with a stand-in engine.
+  init(
+    environment: AppEnvironment, defaults testDefaults: UserDefaults? = nil,
+    engine: LiveScanRunner.Factory? = nil
+  ) {
     self.environment = environment
     switch environment.dataSource {
     case .live:
       let url = HistoryLocation.resolve(environment: environment.processEnvironment)
       let store: any HistoryStore = url.map { LogHistoryStore(url: $0) } ?? InMemoryHistoryStore()
-      let runner = LiveScanRunner(store: store)
+      let runner = engine.map { LiveScanRunner(store: store, make: $0) } ?? LiveScanRunner(store: store)
       self.historyURL = url
       self.store = store
       self.liveRunner = runner
       self.pipeline = ScanPipeline(runner: runner)
-      self.defaults = .standard
+      self.defaults = testDefaults ?? .standard
       self.helper = LiveHelperService()
       self.notifier = LiveNotifier()
     case .fixture(let variant):
@@ -160,7 +165,7 @@ final class NetworkModel {
     guard portScanTarget == nil else { return }
     let preferences = Preferences(defaults)
     scan.start(ScanRequest(
-      network: preferences.subnetOverride, budget: preferences.budget, deepScan: preferences.deepScan
+      network: preferences.subnetOverride, budget: preferences.budget, ports: preferences.portStage
     ))
   }
 
@@ -176,27 +181,26 @@ final class NetworkModel {
     portScanTarget = nil
   }
 
-  /// Scans one device's ports, without taking over the window or writing history.
+  /// Scans one device's ports, without taking over the window or recording a run.
   func scanPorts(_ id: DeviceItem.ID) {
-    guard !isBusy, let address = device(id)?.device.ipv4Addresses.first else { return }
+    guard !isBusy, let item = device(id), let address = item.device.ipv4Addresses.first else { return }
     portScans[id] = PortScan(state: .running, ports: portScans[id]?.ports ?? [], at: .now)
-    portScanTarget = PortScanTarget(id: id, address: address, mac: device(id)?.device.mac)
+    portScanTarget = PortScanTarget(id: id, address: address, isOnline: item.isOnline)
   }
 
   /// Runs the port scan `scanPorts` asked for. Called from the window's task, so closing
   /// the window or Stop Scan cancels it; what had answered is kept either way.
+  ///
+  /// A probe, not a run: zhen-core folds the ports into the device history holds and
+  /// leaves every other device as it was, so the result survives a relaunch.
   func performPortScan() async {
     guard let target = portScanTarget else { return }
-    let request = ScanRequest(
-      network: IPv4Network(base: target.address, prefix: 32),
-      budget: Preferences(defaults).budget, deepScan: true, records: false
-    )
     await liveRunner?.note(helper.state)
-    let outcome = await pipeline.run(request) { _ in }
-    portScans[target.id] = PortScan.result(of: outcome, for: target.address, expecting: target.mac)
+    let outcome = await pipeline.probePorts(PortProbeRequest(
+      addresses: [.v4(target.address)], budget: Preferences(defaults).budget
+    ))
+    portScans[target.id] = PortScan.result(of: outcome, for: target.address, isOnline: target.isOnline)
     if portScanTarget == target { portScanTarget = nil }
-    // History should not have moved. Reread anyway: if it did, the window says so rather
-    // than show a network the file no longer describes.
     await reload()
   }
 
@@ -227,7 +231,7 @@ final class NetworkModel {
     case .finished(let completed):
       remember(completed.report.degradations, for: completed.report.run.id)
       // History now holds ports at least as fresh as anything scanned this session.
-      if scan.request.deepScan { portScans = [:] }
+      if scan.request.ports != .off { portScans = [:] }
     case .unavailable(let degradation):
       unavailable = degradation
     }
@@ -254,7 +258,8 @@ final class NetworkModel {
     saveNames()
     devices = devices.map {
       $0.id == id ? DeviceItem(id: $0.id, device: $0.device, isOnline: $0.isOnline,
-                               userName: userNames[id], isReassigned: $0.isReassigned) : $0
+                               userName: userNames[id], isReassigned: $0.isReassigned,
+                               macHistory: $0.macHistory) : $0
     }
   }
 

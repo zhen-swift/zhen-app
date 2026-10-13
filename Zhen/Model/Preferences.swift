@@ -19,7 +19,9 @@ struct Preferences {
 
   let scanIntervalMinutes: Int
   let subnetOverride: IPv4Network?
-  let deepScan: Bool
+  /// Whether a device seen for the first time has its common ports checked. A port stage
+  /// limited to new devices is zhen-core 0.7.0's `PortStage.newHosts`.
+  let deepScanNewDevices: Bool
   let retentionDays: Int
   /// How long a scan may take in all.
   let budget: Duration
@@ -32,13 +34,16 @@ struct Preferences {
   init(_ defaults: UserDefaults) {
     scanIntervalMinutes = defaults.integer(forKey: Key.scanInterval)
     subnetOverride = defaults.string(forKey: Key.subnetOverride).flatMap(Self.network)
-    deepScan = defaults.bool(forKey: Key.deepScan)
+    deepScanNewDevices = defaults.bool(forKey: Key.deepScan)
     retentionDays = defaults.integer(forKey: Key.retentionDays)
     let seconds = defaults.integer(forKey: Key.budgetSeconds)
     budget = .seconds(Self.budgets.contains(seconds) ? seconds : Self.defaultBudgetSeconds)
     notifyNewDevices = defaults.bool(forKey: Key.notifyNewDevices)
     keepInMenuBar = defaults.bool(forKey: Key.keepInMenuBar)
   }
+
+  /// The port stage a scan asks for.
+  var portStage: PortStage { deepScanNewDevices ? .newHosts : .off }
 
   /// A typed subnet, or nil when it is empty or not a network this app will scan.
   static func network(_ text: String) -> IPv4Network? {

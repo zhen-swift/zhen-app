@@ -40,14 +40,13 @@ struct SettingsView: View {
         .pickerStyle(.menu)
         .accessibilityLabel(String(localized: .scanUp))
         .accessibilityIdentifier("scanBudgetPicker")
-        // Was "Deep-scan new devices". Core's port stage is one switch per run and probes
-        // every host that answered; zhen-core 0.6.0 cannot limit it to new ones, so the
-        // label now says what the switch does (ledger, phase 3 stage 1).
+        // A3's "Deep-scan new devices", which it is again: zhen-core 0.7.0 can limit the
+        // port stage to devices history has never seen (`PortStage.newHosts`).
         Toggle(isOn: $deepScan) {
-          Text(.checkPortsEveryScan)
-          Text(.alsoCheckCommonPortsEveryDevice)
+          Text(.deepScanNewDevices)
+          Text(.deepScanNewDevicesDetail)
         }
-        .accessibilityLabel(String(localized: .checkPortsEveryScan))
+        .accessibilityLabel(String(localized: .deepScanNewDevices))
         .accessibilityIdentifier("deepScanToggle")
         Toggle(isOn: $notifyNewDevices) {
           Text(.notifyNewDeviceJoins)

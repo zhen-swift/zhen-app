@@ -2,8 +2,8 @@ import SwiftUI
 import ZhenCore
 
 extension DeviceDetailView {
-  /// Open ports: from a port scan run on this device this session, or else from the last
-  /// scan in history that checked them.
+  /// Open ports: from history, which holds the last scan or port probe that checked them.
+  /// While a probe of this device runs, the card shows that instead.
   struct PortsCardView: View {
     let item: DeviceItem
     @Environment(NetworkModel.self) private var model
@@ -85,7 +85,7 @@ extension DeviceDetailView {
     /// rather than pass off the last-seen time as a scan time, which it used to.
     private var caption: String? {
       if let session, session.state == .finished {
-        return String(localized: .scannedThisSessionNotSavedHistory(session.at.formatted(date: .omitted, time: .shortened)))
+        return String(localized: .checked(session.at.formatted(.relative(presentation: .numeric))))
       }
       guard !item.device.ports.isEmpty else { return nil }
       if let run = model.latestRun, run.checkedPorts, item.isOnline, let finished = run.finishedAt {

@@ -8,12 +8,8 @@ nonisolated struct ScanRequest: Sendable, Hashable {
   var network: IPv4Network?
   /// Total time allowed.
   var budget: Duration = .seconds(30)
-  /// Whether to probe common ports on the hosts that answered.
-  var deepScan: Bool = false
-  /// Whether the run goes into history. A port scan of one device does not: history
-  /// judges presence by the latest run, so a /32 run recorded there would report every
-  /// other device as gone (ledger, phase 3 stage 1).
-  var records: Bool = true
+  /// Which of the hosts that answered to probe for common ports.
+  var ports: PortStage = .off
 }
 
 /// How a scan ended.
@@ -26,11 +22,29 @@ nonisolated enum ScanOutcome: Sendable {
   case unavailable(Degradation)
 }
 
-/// Something that can run one scan.
+/// A port probe of addresses history already holds. Not a scan: no discovery, no naming,
+/// and no run recorded — core folds the ports into the devices it reached and leaves the
+/// rest of the network as it was.
+nonisolated struct PortProbeRequest: Sendable, Hashable {
+  var addresses: [IPAddress]
+  /// Total time allowed.
+  var budget: Duration = .seconds(30)
+}
+
+/// How a port probe ended.
+nonisolated enum PortProbeOutcome: Sendable {
+  /// It ran; the result says what answered, complete or not.
+  case finished(CompletedPortScan)
+  /// It could not start: no usable interface.
+  case unavailable(Degradation)
+}
+
+/// Something that can run one scan, or one port probe.
 ///
 /// The seam between the app and the engine. The live conformance drives zhen-core's
 /// `ScanRunner`; the fixture conformance replays the committed network. Neither is
 /// main-actor isolated, and `ScanPipeline` is what keeps them off it.
 nonisolated protocol ScanRunning: Sendable {
   func run(_ request: ScanRequest, progress: ProgressSink) async -> ScanOutcome
+  func probePorts(_ request: PortProbeRequest, progress: ProgressSink) async -> PortProbeOutcome
 }

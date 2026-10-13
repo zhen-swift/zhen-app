@@ -66,13 +66,3 @@ nonisolated extension DeviceItem {
     return String(localized: .identityKey(key, holding))
   }
 }
-
-nonisolated extension DerivedEvent.Kind {
-  /// Whether this kind is about who a device is, rather than whether it is here.
-  var isIdentityChange: Bool {
-    switch self {
-    case .merged, .renamed, .ipChanged: true
-    case .appeared, .disappeared: false
-    }
-  }
-}

@@ -9,28 +9,19 @@ import ZhenScan
 /// Part 7: the defects the code review found.
 @MainActor
 struct ReviewFixTests {
-  /// Gate. Break: drop `builtOn != network` from `LiveScanRunner.note`.
-  @Test("Moving to another network builds a fresh engine; staying keeps the one built")
+  /// Gate. Break: keep the engine between scans in `LiveScanRunner` — the one built on the
+  /// old network then scans it from the new one.
+  @Test("Every scan builds its engine, so a move to another network is never scanned as the old one")
   func networkChange() async throws {
     let capture = try FixtureNetwork.capture()
     let built = Mutex(0)
-    let runner = LiveScanRunner(store: InMemoryHistoryStore()) { store throws(PlatformError) in
+    let runner = LiveScanRunner(store: InMemoryHistoryStore()) { store, _ throws(PlatformError) in
       built.withLock { $0 += 1 }
       return CountingEngine(store: store, report: capture)
     }
-    await runner.note(.notInstalled, network: "en0|home")
     _ = await runner.run(ScanRequest(), progress: ProgressSink { _ in })
-    await runner.note(.notInstalled, network: "en0|home")
     _ = await runner.run(ScanRequest(), progress: ProgressSink { _ in })
-    #expect(built.withLock { $0 } == 1)
-    await runner.note(.notInstalled, network: "en0|office")
-    _ = await runner.run(ScanRequest(), progress: ProgressSink { _ in })
-    #expect(built.withLock { $0 } == 2, "the engine built on the old network scanned the new one")
-  }
-
-  @Test("This Mac's fingerprint is readable and stable between two reads")
-  func fingerprint() {
-    #expect(NetworkFingerprint.current() == NetworkFingerprint.current())
+    #expect(built.withLock { $0 } == 2, "the second scan reused the first scan's engine")
   }
 
   /// Gate. Break: drop `if !isExecuting { phase = .idle }` from `ScanSession.stop`.
@@ -43,18 +34,17 @@ struct ReviewFixTests {
     #expect(!session.isRunning, "stuck running with no host")
   }
 
-  /// Gate. Break: return the scanned device's ports without checking its MAC.
-  @Test("Ports found at an address now held by another device are not shown as this one's")
+  /// Gate. Break: drop the `isOnline` guard in `PortScan.result`.
+  @Test("Ports found at an offline device's address are not shown as this one's")
   func portsOfAnotherDevice() throws {
     let capture = try FixtureNetwork.capture()
     let device = try #require(capture.devices.first { !$0.ports.isEmpty && $0.mac != nil })
     let address = try #require(device.ipv4Addresses.first)
-    let report = ScanReport(run: capture.run, devices: [device], degradations: [])
-    let outcome = ScanOutcome.finished(CompletedScan(report: report, events: []))
-    #expect(PortScan.result(of: outcome, for: address, expecting: device.mac).state == .finished)
-    let someoneElse = MACAddress(raw: 0x0000_5E00_53FF)
-    if case .failed = PortScan.result(of: outcome, for: address, expecting: someoneElse).state {} else {
-      Issue.record("another device's ports were kept")
+    let result = PortScanResult(ports: [.v4(address): device.ports])
+    let outcome = PortProbeOutcome.finished(CompletedPortScan(result: result, events: []))
+    #expect(PortScan.result(of: outcome, for: address, isOnline: true).state == .finished)
+    if case .failed = PortScan.result(of: outcome, for: address, isOnline: false).state {} else {
+      Issue.record("ports answering at an offline device's old address were shown as its own")
     }
   }
 

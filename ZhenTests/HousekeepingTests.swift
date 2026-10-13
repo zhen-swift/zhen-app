@@ -67,11 +67,11 @@ struct HousekeepingTests {
 /// Phase 3, stage 5: counted strings take their plural from `Localizable.xcstrings`.
 @MainActor
 struct PluralTests {
-  /// Gate. Break: drop the `one` variation of `identityChanges` from the catalogue.
+  /// Gate. Break: drop the `one` variation of `hardwareAddressesSeen` from the catalogue.
   @Test("One of a thing is singular, through the catalogue")
   func singular() {
-    #expect(String(localized: .identityChanges(1)) == "1 identity change")
-    #expect(String(localized: .identityChanges(2)) == "2 identity changes")
+    #expect(String(localized: .hardwareAddressesSeen(1)) == "1 hardware address")
+    #expect(String(localized: .hardwareAddressesSeen(2)) == "2 hardware addresses")
     #expect(String(localized: .devicesOnlineUnidentified(devices: 1, 1, 0)) == "1 device · 1 online · 0 unidentified")
     #expect(String(localized: .stoppedAfterDevicesFound("0:05", devices: 1)) == "Stopped after 0:05 · 1 device found")
   }

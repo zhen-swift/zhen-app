@@ -2,57 +2,34 @@ import SwiftUI
 import ZhenCore
 
 extension DeviceDetailView {
-  /// Which key identifies this device, and how its identity has changed: the current
-  /// hardware address, then every merge, rename and address move, newest first. The one
-  /// place identity-key stability appears: a person who opened this card is asking
-  /// exactly that.
-  ///
-  /// A3 asks for one row per MAC with a date range. zhen-core 0.6.0 keeps only the
-  /// current MAC on a device, and its merge event says how many records joined, not which
-  /// addresses they had — so the rows are the changes core did record (ledger, phase 3).
+  /// Which key identifies this device, and every hardware address it has presented: one
+  /// row per MAC, with how it joined and when it was seen (A3). The one place
+  /// identity-key stability appears: a person who opened this card is asking exactly that.
   struct IdentityCardView: View {
     let item: DeviceItem
-    let changes: [DerivedEvent]
 
     var body: some View {
       Card(.identityHistory, caption: caption) {
         VStack(alignment: .leading, spacing: .zero) {
-          HStack(spacing: .spacing.medium) {
-            StatusDot(.accent)
-            Text(item.mac ?? String(localized: .noHardwareAddress))
-              .font(.callout.monospaced())
-              .foregroundStyle(.textPrimary)
-            if item.isPrivateMAC { Chip(.private) }
-            Spacer()
-            Text(String(localized: .since(item.firstSeen.formatted(date: .abbreviated, time: .omitted))))
-              .font(.subheadline)
-              .foregroundStyle(.textSecondary)
-          }
-          .padding(.spacing.large)
-          .accessibilityElement(children: .combine)
-          .accessibilityAddTraits(.isStaticText)
-          .accessibilityIdentifier("identityCurrent")
-          ForEach(changes) { change in
-            Divider()
-            HStack(alignment: .firstTextBaseline, spacing: .spacing.medium) {
-              StatusDot(.neutral)
-              Text(change.kind.label)
-                .font(.caption.bold())
-                .textCase(.uppercase)
-                .foregroundStyle(.textSecondary)
-                .frame(width: .dimension.eventKindLabel, alignment: .leading)
-              Text(change.detail.trimmingPrefix("· "))
-                .font(.subheadline)
+          if item.identityRows.isEmpty {
+            HStack(spacing: .spacing.medium) {
+              StatusDot(.accent)
+              Text(.noHardwareAddress)
+                .font(.callout)
                 .foregroundStyle(.textPrimary)
               Spacer()
-              Text(change.date, format: .dateTime.month().day().hour().minute())
+              Text(String(localized: .since(item.firstSeen.formatted(date: .abbreviated, time: .omitted))))
                 .font(.subheadline)
                 .foregroundStyle(.textSecondary)
             }
             .padding(.spacing.large)
             .accessibilityElement(children: .combine)
             .accessibilityAddTraits(.isStaticText)
-            .accessibilityIdentifier("identityChange-\(change.kind)")
+            .accessibilityIdentifier("identityCurrent")
+          }
+          ForEach(item.identityRows.enumerated(), id: \.element.id) { index, row in
+            if index > 0 { Divider() }
+            RowView(row: row)
           }
         }
       }
@@ -61,13 +38,7 @@ extension DeviceDetailView {
     }
 
     private var caption: String {
-      let count = changes.count
-      // The plural is the catalogue's (`Localizable.xcstrings`): `^[…](inflect: true)` is
-      // rendered literally by `String(localized:)`, which the stage-2 screenshot showed.
-      let seen = count == 0
-        ? String(localized: .noIdentityChangesSeen)
-        : String(localized: .identityChanges(count))
-      return "\(item.identityCaption) · \(seen)"
+      "\(item.identityCaption) · \(String(localized: .hardwareAddressesSeen(item.identityRows.count)))"
     }
   }
 }

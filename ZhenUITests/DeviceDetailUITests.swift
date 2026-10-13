@@ -38,7 +38,8 @@ final class DeviceDetailUITests: XCTestCase {
   }
 
   /// Phase 3, stage 1: a port scan of one device used to record a /32 run, after which
-  /// every other device read as offline.
+  /// every other device read as offline. With zhen-core 0.7.0 it is kept in history as
+  /// ports, not as a run, and the card says when it was checked.
   @MainActor
   func testPortScanLeavesTheRestOnline() {
     let robot = ZhenRobot.launch(scanPace: 50)
@@ -49,7 +50,7 @@ final class DeviceDetailUITests: XCTestCase {
     robot.key("r", [.command, .shift])
     robot.waitFor("noOpenPorts")
     let caption = robot.element("portsCard").staticTexts.allElementsBoundByIndex.map(\.text)
-    XCTAssertTrue(caption.contains { $0.contains("this session") }, "the result does not say it is unsaved: \(caption)")
+    XCTAssertTrue(caption.contains { $0.hasPrefix("Checked") }, "the result does not say when it was checked: \(caption)")
     robot.key("[", .command)
     robot.waitFor("deviceTable")
     XCTAssertEqual(robot.window.title, before, "a port scan changed the network's counts")

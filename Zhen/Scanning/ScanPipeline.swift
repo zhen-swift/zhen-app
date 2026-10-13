@@ -64,6 +64,15 @@ nonisolated struct ScanPipeline: Sendable {
   }
 }
 
+/// Runs a port probe off the main actor. No progress is published: a probe of one device
+/// shows a spinner on its card, not a scan screen.
+extension ScanPipeline {
+  @concurrent
+  func probePorts(_ request: PortProbeRequest) async -> PortProbeOutcome {
+    await runner.probePorts(request, progress: ProgressSink { _ in })
+  }
+}
+
 /// Events between two ticks. A class only because `Mutex` cannot be captured by the
 /// escaping sink closure; the lock is what makes it `Sendable`, no annotation needed.
 nonisolated final class EventBuffer: Sendable {

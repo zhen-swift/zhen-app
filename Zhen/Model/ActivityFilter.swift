@@ -34,9 +34,7 @@ enum ActivityFilter: String, CaseIterable, Identifiable, Hashable {
     case .all: true
     case .presence: kind == .appeared || kind == .disappeared
     case .identity: kind == .renamed || kind == .merged
-    // zhen-core 0.6.0 derives no port events; the segment is kept with its frozen copy
-    // and says so honestly when empty (PHASE-2-questions Q3).
-    case .ports: false
+    case .ports: kind == .portOpened || kind == .portClosed
     case .addresses: kind == .ipChanged
     }
   }

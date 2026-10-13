@@ -19,6 +19,8 @@ nonisolated struct DeviceItem: Identifiable, Hashable, Sendable {
   let userName: String?
   /// It is absent, and a device that did answer now holds its address.
   let isReassigned: Bool
+  /// Every hardware address it has presented, oldest first — history, from the store.
+  var macHistory: [MACSighting] = []
 
   /// The name to show, or nil for an unidentified device.
   var name: String? { userName ?? device.displayName }
@@ -146,7 +148,7 @@ nonisolated extension DeviceItem {
       let reassigned = !entry.isPresent && entry.device.ipv4Addresses.contains { heldNow.contains($0) }
       return DeviceItem(
         id: id, device: entry.device, isOnline: entry.isPresent,
-        userName: userNames[id], isReassigned: reassigned
+        userName: userNames[id], isReassigned: reassigned, macHistory: entry.macHistory
       )
     }
   }

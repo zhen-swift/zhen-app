@@ -41,7 +41,7 @@ final class LiveSmokeUITests: XCTestCase {
     robot.key("r", [.command, .shift])
     let finished = NSPredicate { _, _ in
       robot.element("noOpenPorts").exists || robot.element("portScanFailure").exists
-        || robot.element("portsCard").staticTexts.allElementsBoundByIndex.contains { $0.text.contains("this session") }
+        || robot.element("portsCard").staticTexts.allElementsBoundByIndex.contains { $0.text.hasPrefix("Checked") }
     }
     XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: finished, object: nil)], timeout: 60), .completed,
                    "the port scan never finished")

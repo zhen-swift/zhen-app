@@ -137,40 +137,6 @@
         }
       }
     },
-    "alsoCheckCommonPortsEveryDevice": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Also check common ports on every device that answers. Slower, and more visible on the network."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "También revisa los puertos comunes en cada dispositivo que responde. Más lento y más visible en la red."
-          }
-        }
-      }
-    },
-    "anotherDeviceAnswersAt": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Another device answers at %@ now, so its ports are not shown here."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ahora responde otro dispositivo en %@, así que sus puertos no se muestran aquí."
-          }
-        }
-      }
-    },
     "appeared": {
       "extractionState": "manual",
       "localizations": {
@@ -358,23 +324,6 @@
         }
       }
     },
-    "checkPortsEveryScan": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Check ports on every scan"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Revisar puertos en cada escaneo"
-          }
-        }
-      }
-    },
     "checkThisDevicesCommonPorts": {
       "extractionState": "manual",
       "localizations": {
@@ -541,6 +490,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Escaneo profundo"
+          }
+        }
+      }
+    },
+    "deepScanNewDevices": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deep-scan new devices"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escaneo profundo de dispositivos nuevos"
+          }
+        }
+      }
+    },
+    "deepScanNewDevicesDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check common ports on a device the first time it answers. Slower, and more visible on the network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisa los puertos comunes de un dispositivo la primera vez que responde. Más lento y más visible en la red."
           }
         }
       }
@@ -1123,6 +1106,47 @@
         }
       }
     },
+    "hardwareAddressesSeen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld hardware address"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld hardware addresses"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dirección de hardware"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld direcciones de hardware"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "hardwareMac": {
       "extractionState": "manual",
       "localizations": {
@@ -1364,47 +1388,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Identidad"
-          }
-        }
-      }
-    },
-    "identityChanges": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld identity change"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld identity changes"
-                }
-              }
-            }
-          }
-        },
-        "es": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld cambio de identidad"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld cambios de identidad"
-                }
-              }
-            }
           }
         }
       }
@@ -1967,6 +1950,57 @@
         }
       }
     },
+    "macFirstAddress": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "first address"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "primera dirección"
+          }
+        }
+      }
+    },
+    "macMergedShared": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "joined · shared a %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "unido · compartía un %@"
+          }
+        }
+      }
+    },
+    "macRotatedRecognisedBy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "rotated · recognised by its %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "rotó · reconocido por su %@"
+          }
+        }
+      }
+    },
     "macosDidNotRegisterHelper": {
       "extractionState": "manual",
       "localizations": {
@@ -2440,23 +2474,6 @@
         }
       }
     },
-    "noIdentityChangesSeen": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No identity changes seen"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No se han visto cambios de identidad"
-          }
-        }
-      }
-    },
     "noMatches": {
       "extractionState": "manual",
       "localizations": {
@@ -2923,6 +2940,23 @@
         }
       }
     },
+    "offlineSoPortsNotItsOwn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This device is offline, so whatever answers at %@ may be another device. Its ports are not shown or saved here."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este dispositivo está desconectado, así que lo que responda en %@ puede ser otro dispositivo. Sus puertos no se muestran ni se guardan aquí."
+          }
+        }
+      }
+    },
     "online": {
       "extractionState": "manual",
       "localizations": {
@@ -3174,6 +3208,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "puerto"
+          }
+        }
+      }
+    },
+    "portClosed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Port closed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puerto cerrado"
+          }
+        }
+      }
+    },
+    "portOpened": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Port opened"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puerto abierto"
           }
         }
       }
@@ -3803,23 +3871,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Escanear durante un máximo de"
-          }
-        }
-      }
-    },
-    "scannedThisSessionNotSavedHistory": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Scanned %@ · this session, not saved to history"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Escaneado %@ · esta sesión, no se guarda en el historial"
           }
         }
       }

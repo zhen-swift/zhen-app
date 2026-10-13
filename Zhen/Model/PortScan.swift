@@ -17,25 +17,29 @@ nonisolated struct PortScan: Equatable, Sendable {
   /// When it started, or when it finished once it has.
   var at: Date
 
-  /// What a finished scan of one address amounts to.
+  /// What a finished probe of one address amounts to.
   ///
-  /// `mac` is the hardware address of the device asked about. An offline device's address
-  /// may belong to another device now; whatever answers there is not this device, and its
-  /// ports were once shown as this one's (review, part 7).
-  static func result(of outcome: ScanOutcome, for address: IPv4Address, expecting mac: MACAddress? = nil) -> PortScan {
+  /// `isOnline` is whether the latest run saw the device. An offline device's address may
+  /// belong to another device now; whatever answers there is not known to be this one, so
+  /// its ports are not shown as this device's (review, part 7) — and core, which has no
+  /// hardware address in a port answer to check, refuses to record them for it too.
+  static func result(of outcome: PortProbeOutcome, for address: IPv4Address, isOnline: Bool) -> PortScan {
     switch outcome {
     case .unavailable(let degradation):
       return PortScan(state: .failed(degradation.reason), ports: [], at: .now)
     case .finished(let scan):
-      if let device = scan.report.devices.first(where: { $0.ipv4Addresses.contains(address) }) {
-        if let mac, let answered = device.mac, answered != mac {
-          return PortScan(state: .failed(String(localized: .anotherDeviceAnswersAt(address.description))), ports: [], at: .now)
-        }
-        if !device.ports.isEmpty {
-          return PortScan(state: .finished, ports: device.ports, at: .now)
-        }
+      guard isOnline else {
+        return PortScan(state: .failed(String(localized: .offlineSoPortsNotItsOwn(address.description))), ports: [], at: .now)
       }
-      let reason = scan.report.run.outcome == .cancelled
+      let ports = (scan.result.ports[.v4(address)] ?? []).map { observation in
+        var stamped = observation
+        if stamped.address == nil { stamped.address = .v4(address) }
+        return stamped
+      }
+      if !ports.isEmpty {
+        return PortScan(state: .finished, ports: ports.sorted(by: PortObservation.canonicalOrder), at: .now)
+      }
+      let reason = scan.result.outcome == .cancelled
         ? String(localized: .stoppedBeforeAnyPortAnswered)
         : String(localized: .didNotAnswerThisTimeSo(address.description))
       return PortScan(state: .failed(reason), ports: [], at: .now)
@@ -47,7 +51,7 @@ nonisolated struct PortScan: Equatable, Sendable {
 nonisolated struct PortScanTarget: Hashable, Sendable {
   let id: DeviceItem.ID
   let address: IPv4Address
-  /// The device's hardware address, when it has one: what answers must match it.
-  let mac: MACAddress?
+  /// Whether the latest run saw the device: an offline device's address may be another's.
+  let isOnline: Bool
   let token = UUID()
 }

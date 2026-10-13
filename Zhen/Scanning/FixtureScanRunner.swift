@@ -21,9 +21,8 @@ nonisolated struct FixtureScanRunner: ScanRunning {
     let started = Timestamp.now
     let latest = FixtureNetwork.history(variant == .empty ? .home : variant, capture: capture, now: .now).last
     let network = request.network ?? capture.run.target
-    // Only what the request covers: a port scan of one device replays that device. An
-    // IPv6-only device has no IPv4 address to be inside a target, and a full scan finds it
-    // anyway, the way discovery's neighbour reads do.
+    // Only what the request covers. An IPv6-only device has no IPv4 address to be inside a
+    // target, and a full scan finds it anyway, the way discovery's neighbour reads do.
     let replayed = (latest?.devices ?? []) + (addsNewDevice ? [Self.guest(from: capture)].compactMap(\.self) : [])
     let devices = replayed.filter { device in
       request.network == nil || device.ipv4Addresses.contains(where: network.contains)
@@ -58,7 +57,11 @@ nonisolated struct FixtureScanRunner: ScanRunning {
     }
     for degradation in degradations where degradation.stage == .discovery { progress(.degraded(degradation)) }
 
-    if request.deepScan, !Task.isCancelled, !devices.isEmpty {
+    // Which devices the port stage probes, decided the way core decides it: "new" is a
+    // device history has no first-seen for.
+    let known = await store.firstSeen(for: devices.map { Self.facts($0, named: true) }, in: network)
+    let probed = Set(request.ports.targets(among: devices.compactMap(\.ipv4Addresses.first), known: known))
+    if !probed.isEmpty, !Task.isCancelled {
       progress(.stageStarted(.deepScan))
       _ = await pause()
       stages.append(StageTiming(stage: .deepScan, elapsedMillis: Self.elapsed(since: stageStart)))
@@ -80,15 +83,34 @@ nonisolated struct FixtureScanRunner: ScanRunning {
       devices: found.map { device in
         var seen = device
         seen.lastSeen = finished
-        if request.deepScan, seen.ports.isEmpty, let address = seen.ipv4Addresses.first {
-          seen.ports = Self.closedPorts(at: address)
+        if let address = seen.ipv4Addresses.first, probed.contains(address) {
+          if seen.ports.isEmpty { seen.ports = Self.closedPorts(at: address) }
+        } else {
+          // Not probed this run, so it carries no port observations, as from the engine.
+          seen.ports = []
         }
         return seen
       },
       degradations: degradations
     )
-    let events = request.records ? await store.record(report) : []
-    return .finished(CompletedScan(report: report, events: events))
+    return .finished(CompletedScan(report: report, events: await store.record(report)))
+  }
+
+  /// A port probe of addresses the fixture knows: what the latest fixture run recorded for
+  /// the device at each, or the common ports closed when it recorded none — folded into
+  /// the store the way core folds one, as ports and not as a run.
+  func probePorts(_ request: PortProbeRequest, progress: ProgressSink) async -> PortProbeOutcome {
+    let latest = FixtureNetwork.history(variant == .empty ? .home : variant, capture: capture, now: .now).last
+    var ports: [IPAddress: [PortObservation]] = [:]
+    for case .v4(let address) in request.addresses {
+      guard await pause() else { break }
+      guard let device = latest?.devices.first(where: { $0.ipv4Addresses.contains(address) }) else { continue }
+      ports[.v4(address)] = (device.ports.isEmpty ? Self.closedPorts(at: address) : device.ports)
+        .filter { $0.address == nil || $0.address == .v4(address) }
+    }
+    let result = PortScanResult(ports: ports, outcome: Task.isCancelled ? .cancelled : .complete)
+    let events = await store.recordPorts(result, targeted: request.addresses, at: .now)
+    return .finished(CompletedPortScan(result: result, events: events))
   }
 
   /// A phone that has just joined: documentation-range MAC and an address no fixture run

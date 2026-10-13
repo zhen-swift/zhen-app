@@ -25,16 +25,22 @@ struct SettingsTests {
     let read = Preferences(defaults)
     #expect(read.scanIntervalMinutes == 15)
     #expect(read.subnetOverride?.description == "192.168.7.0/24")
-    #expect(read.deepScan)
+    #expect(read.deepScanNewDevices)
+    #expect(read.portStage == .newHosts, "\"Deep-scan new devices\" probes more than new devices")
   }
 
-  @Test("Scan Now uses them: deep scan and the override reach the request")
+  /// Gate. Break: map the toggle to `.everyHost` in `Preferences.portStage` — the
+  /// relabelled "Check ports on every scan" that zhen-core 0.6.0 forced.
+  @Test("Scan Now uses them: deep scan of new devices and the override reach the request")
   func scanUsesPreferences() {
     let model = PreviewContainer.model(.home)
+    model.startScan()
+    #expect(model.scan.request.ports == .off, "a port stage nobody asked for")
+    model.stopScanning()
     model.defaults.set(true, forKey: Preferences.Key.deepScan)
     model.defaults.set("192.168.7.0/24", forKey: Preferences.Key.subnetOverride)
     model.startScan()
-    #expect(model.scan.request.deepScan)
+    #expect(model.scan.request.ports == .newHosts)
     #expect(model.scan.request.network?.description == "192.168.7.0/24")
     model.defaults.removeObject(forKey: Preferences.Key.deepScan)
     model.defaults.removeObject(forKey: Preferences.Key.subnetOverride)

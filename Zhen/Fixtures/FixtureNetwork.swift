@@ -58,7 +58,8 @@ nonisolated enum FixtureNetwork {
 
   /// The degradations the latest run of a variant carries, as the scanner would report them.
   ///
-  /// Built with zhen-core's own heuristics, so the sentences are the engine's, not ours.
+  /// Built with zhen-core's own heuristics, so the sentences are the engine's, not ours —
+  /// worded for an app, as the engine words them inside one.
   static func degradations(_ variant: Variant, capture: ScanReport) -> [Degradation] {
     switch variant {
     case .home, .unidentified, .empty:
@@ -71,12 +72,12 @@ nonisolated enum FixtureNetwork {
           NameSourceActivity(source: .netbios, answered: 0, failed: false),
         ],
         hostsProbed: capture.devices.count,
-        advice: .appleLocalNetwork
+        advice: .appleLocalNetworkInApp
       )
       return capture.degradations + [silent].compactMap { $0 }
     case .silent:
       let denial = LocalNetworkDenialHeuristic.evaluate(
-        repliesSeen: 0, probesSent: 254, neighborEntries: 9, advice: .appleLocalNetwork
+        repliesSeen: 0, probesSent: 254, neighborEntries: 9, advice: .appleLocalNetworkInApp
       )
       return [denial].compactMap { $0 }
     }
@@ -102,7 +103,7 @@ nonisolated enum FixtureNetwork {
 
 nonisolated extension FixtureNetwork {
   /// The 48 hours behind the capture: one change per run, so each event in Activity has a
-  /// single, explainable cause.
+  /// single, explainable cause. The router's ports carry the two port events.
   struct Script {
     let capture: ScanReport
     let now: Date
@@ -138,6 +139,7 @@ nonisolated extension FixtureNetwork {
       let television = hosts.firstIndex { $0.names.contains { $0.model != nil } }
       let leaver = hosts.firstIndex { $0.mac?.isLocallyAdministered == false && $0.names.isEmpty && $0.discoveredVia == [.neighborTable] }
       let quiet = hosts.indices.last { hosts[$0].ipv4Addresses.isEmpty && hosts[$0].mac?.isLocallyAdministered == false }
+      let router = hosts.firstIndex { $0.ports.contains { $0.port == 80 && $0.state == .open } }
 
       if index == lateArrival, run < 2 { return nil }
       if index == lastArrival, run < 7 { return nil }
@@ -156,6 +158,22 @@ nonisolated extension FixtureNetwork {
         device.names = device.names.map {
           NameCandidate(value: "Apple TV", source: $0.source, rank: $0.rank, model: $0.model)
         }
+      }
+      if index == router, let v4 = device.ipv4Addresses.first {
+        // 80/tcp answered closed in the first run and open from the second: a "port
+        // opened". 8080/tcp was open until the latest run, which found it closed: a "port
+        // closed". Runs 1 and 10 carry no other change.
+        if run < 1 {
+          device.ports = device.ports.map { port in
+            guard port.port == 80 else { return port }
+            var closed = port
+            closed.state = .closed
+            closed.service = nil
+            return closed
+          }
+        }
+        device.ports.append(PortObservation(port: 8080, proto: .tcp, state: run < 10 ? .open : .closed, address: .v4(v4)))
+        device.ports.sort(by: PortObservation.canonicalOrder)
       }
       let seen = timestamp(run)
       device.lastSeen = seen

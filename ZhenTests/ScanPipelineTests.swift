@@ -33,6 +33,13 @@ nonisolated final class ProbeRunner: ScanRunning {
     }
     return .unavailable(Degradation(stage: .setup, reason: "probe", recoverable: true))
   }
+
+  let probedOnMainThread = Mutex<Bool?>(nil)
+
+  func probePorts(_ request: PortProbeRequest, progress: ProgressSink) async -> PortProbeOutcome {
+    probedOnMainThread.withLock { $0 = pthread_main_np() != 0 }
+    return .unavailable(Degradation(stage: .setup, reason: "probe", recoverable: true))
+  }
 }
 
 /// Wraps the app's own fixture scanner and counts progress events emitted on the main thread.
@@ -51,6 +58,13 @@ nonisolated final class ThreadRecordingRunner: ScanRunning {
       if pthread_main_np() != 0 { onMain.withLock { $0 += 1 } }
       progress(event)
     })
+  }
+
+  let probedOnMain = Mutex<Bool?>(nil)
+
+  func probePorts(_ request: PortProbeRequest, progress: ProgressSink) async -> PortProbeOutcome {
+    probedOnMain.withLock { $0 = pthread_main_np() != 0 }
+    return await inner.probePorts(request, progress: progress)
   }
 }
 
@@ -85,9 +99,27 @@ struct ScanPipelineTests {
       pace: .zero, clock: ContinuousClock()
     )
     let recording = ThreadRecordingRunner(fixture)
-    _ = await Self.makePipeline(recording).run(ScanRequest(deepScan: true)) { _ in }
+    _ = await Self.makePipeline(recording).run(ScanRequest(ports: .everyHost)) { _ in }
     #expect(recording.total.withLock { $0 } > 10)
     #expect(recording.onMain.withLock { $0 } == 0, "the app's scanner emitted on the main thread")
+  }
+
+  /// Gate. Break: drop `@concurrent` from `ScanPipeline.probePorts` — a plain
+  /// `nonisolated async` function runs on its caller's actor, and the caller is the window.
+  @Test("Driven from the main actor, a port probe runs off the main thread")
+  func probeRunsOffMain() async throws {
+    let runner = ProbeRunner()
+    _ = await Self.makePipeline(runner).probePorts(PortProbeRequest(addresses: []))
+    #expect(runner.probedOnMainThread.withLock { $0 } == false)
+
+    let capture = try FixtureNetwork.capture()
+    let fixture = FixtureScanRunner(
+      store: InMemoryHistoryStore(), capture: capture, variant: .home, pace: .zero, clock: ContinuousClock()
+    )
+    let recording = ThreadRecordingRunner(fixture)
+    let address = try #require(capture.devices.first?.ipv4Addresses.first)
+    _ = await Self.makePipeline(recording).probePorts(PortProbeRequest(addresses: [.v4(address)]))
+    #expect(recording.probedOnMain.withLock { $0 } == false, "the app's port probe ran on the main thread")
   }
 
   /// Gate: coalescing. 100 000 events in about half a second is ~200 000 per second, three

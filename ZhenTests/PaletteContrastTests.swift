@@ -1,6 +1,7 @@
 import AppKit
 import SwiftUI
 import Testing
+import ZhenCore
 
 @testable import Zhen
 
@@ -11,6 +12,10 @@ import Testing
 // The values come from Docs/process/evidence/derive-palette.py. This suite does not trust
 // that script: it reads the compiled catalogue back, so a colorset edited by hand fails here.
 // Scripts/check-palette.py checks the same pairs from the shipped Assets.car.
+//
+// The arithmetic is zhen-core's `Contrast`, the WCAG 2 helper the house rules put in Core.
+// This suite owns the catalogue — which pairs are drawn, and the floors they must clear —
+// and nothing about the formula.
 
 /// The four appearances an asset colour resolves under.
 enum Look: String, CaseIterable, CustomTestStringConvertible {
@@ -39,16 +44,15 @@ func hex(_ c: [Double]) -> Int {
   c.reduce(0) { $0 << 8 | Int(($1 * 255).rounded()) }
 }
 
-/// WCAG 2. The same formula as ZhenCore's `Contrast`, which the app moves to once a
-/// zhen-core release contains it (zhen-core#5).
+/// A catalogue colour as zhen-core's `SRGBColor`.
+func srgb(_ resource: ColorResource, _ look: Look) -> SRGBColor {
+  let c = components(resource, look)
+  return SRGBColor(red: c[0], green: c[1], blue: c[2])
+}
+
+/// The ratio a view would draw this pair at, by zhen-core's `Contrast`.
 func contrast(_ a: ColorResource, _ b: ColorResource, _ look: Look) -> Double {
-  func luminance(_ c: [Double]) -> Double {
-    let l = c.map { $0 <= 0.04045 ? $0 / 12.92 : pow(($0 + 0.055) / 1.055, 2.4) }
-    return 0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2]
-  }
-  let x = luminance(components(a, look))
-  let y = luminance(components(b, look))
-  return (max(x, y) + 0.05) / (min(x, y) + 0.05)
+  Contrast.ratio(srgb(a, look), srgb(b, look))
 }
 
 struct Pair: CustomTestStringConvertible {
@@ -110,10 +114,9 @@ struct PaletteContrastTests {
   /// is now `SystemAccent`, a fill, and this holds it to white text.
   @Test("White text on the system's accent clears 4.5:1, and 7:1 with Increase Contrast", arguments: Look.allCases)
   func whiteOnSystemAccent(_ look: Look) {
-    let accent = components(.systemAccent, look)
-    let l = accent.map { $0 <= 0.04045 ? $0 / 12.92 : pow(($0 + 0.055) / 1.055, 2.4) }
-    let measured = 1.05 / (0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2] + 0.05)
-    #expect(measured >= (look.isIncreased ? 7 : 4.5), "white on systemAccent, \(look): \(measured)")
+    let measured = Contrast.ratio(SRGBColor(red: 1, green: 1, blue: 1), srgb(.systemAccent, look))
+    let floor: Contrast.Level = look.isIncreased ? .aaa : .aa
+    #expect(measured >= floor.minimumRatio, "white on systemAccent, \(look): \(measured)")
   }
 
   @Test("Increase Contrast really resolves different colours", arguments: [Look.light, .dark])

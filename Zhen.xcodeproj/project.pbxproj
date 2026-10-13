@@ -10,6 +10,7 @@
 		BAF25A90929912BA8CB8FBBF /* ZhenCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1B417D090B1D07A91103FA /* ZhenCore */; };
 		C172F36BA8767423C41086E4 /* ZhenScan in Frameworks */ = {isa = PBXBuildFile; productRef = D5818EF3CE50B07BBF9458FC /* ZhenScan */; };
 		D4E0392ADDB0F46AAD8F273F /* ZhenPrivilege in Frameworks */ = {isa = PBXBuildFile; productRef = 070E7AE6E4415407A08EDDCC /* ZhenPrivilege */; };
+		5E1A0C0D2F00000000000021 /* ZhenDarwin in Frameworks */ = {isa = PBXBuildFile; productRef = 5E1A0C0D2F00000000000022 /* ZhenDarwin */; };
 		5E1A0C0D2F00000000000012 /* com.jctec.zhen.helper.plist in Embed Launch Daemon */ = {isa = PBXBuildFile; fileRef = 5E1A0C0D2F00000000000010 /* com.jctec.zhen.helper.plist */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 				BAF25A90929912BA8CB8FBBF /* ZhenCore in Frameworks */,
 				C172F36BA8767423C41086E4 /* ZhenScan in Frameworks */,
 				D4E0392ADDB0F46AAD8F273F /* ZhenPrivilege in Frameworks */,
+				5E1A0C0D2F00000000000021 /* ZhenDarwin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +165,7 @@
 				7B1B417D090B1D07A91103FA /* ZhenCore */,
 				D5818EF3CE50B07BBF9458FC /* ZhenScan */,
 				070E7AE6E4415407A08EDDCC /* ZhenPrivilege */,
+				5E1A0C0D2F00000000000022 /* ZhenDarwin */,
 			);
 			productName = Zhen;
 			productReference = 8BCD5BC4CDFDF0918087C782;
@@ -564,8 +567,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/zhen-swift/zhen-core.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.7.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -580,6 +583,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
 			productName = ZhenScan;
+		};
+		5E1A0C0D2F00000000000022 /* ZhenDarwin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			productName = ZhenDarwin;
 		};
 		070E7AE6E4415407A08EDDCC /* ZhenPrivilege */ = {
 			isa = XCSwiftPackageProductDependency;

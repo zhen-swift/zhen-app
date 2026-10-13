@@ -10,15 +10,20 @@ extension DerivedEvent.Kind {
     case .ipChanged: .addressChanged
     case .renamed: .renamed
     case .merged: .merged
+    case .portOpened: .portOpened
+    case .portClosed: .portClosed
     }
   }
 
+  /// Port events are A2's warning amber, both ways: a port changing is the thing on this
+  /// screen most likely to need doing something about.
   var tone: StatusDot.Tone {
     switch self {
     case .appeared: .online
     case .disappeared: .neutral
     case .ipChanged: .info
     case .renamed, .merged: .accent
+    case .portOpened, .portClosed: .warning
     }
   }
 
@@ -29,6 +34,7 @@ extension DerivedEvent.Kind {
     case .disappeared: .textSecondary
     case .ipChanged: .statusInfoText
     case .renamed, .merged: .accent
+    case .portOpened, .portClosed: .statusWarningText
     }
   }
 }
