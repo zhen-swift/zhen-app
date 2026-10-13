@@ -12,7 +12,7 @@ let package = Package(
   name: "MisSignedCaller",
   platforms: [.macOS(.v26)],
   dependencies: [
-    .package(url: "https://github.com/zhen-swift/zhen-core.git", exact: "0.6.0"),
+    .package(url: "https://github.com/zhen-swift/zhen-core.git", exact: "0.7.0"),
   ],
   targets: [
     .executableTarget(

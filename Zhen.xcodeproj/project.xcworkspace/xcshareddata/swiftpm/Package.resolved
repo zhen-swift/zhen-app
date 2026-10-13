@@ -15,7 +15,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/zhen-swift/zhen-core.git",
       "state" : {
-        "revision" : "9a2310ab83127e4e70cf62dbb420af70c1b4a504",
+        "revision" : "de54b96784b0e1691857eedaab12ee6099252690",
         "version" : "0.7.0"
       }
     }

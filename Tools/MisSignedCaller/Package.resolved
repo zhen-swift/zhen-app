@@ -1,5 +1,5 @@
 {
-  "originHash" : "9a2dd2aaa6bf496b61adf614dcd3b2d57f17e3663f829a800005b2e535027242",
+  "originHash" : "2fbd9092584e847b1866f156cc918eb30af867286336247f72563312242e639d",
   "pins" : [
     {
       "identity" : "swift-argument-parser",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/zhen-swift/zhen-core.git",
       "state" : {
-        "revision" : "ae0fc58ffa08b747678387e61e5dcd25f00af0ef",
-        "version" : "0.6.0"
+        "revision" : "de54b96784b0e1691857eedaab12ee6099252690",
+        "version" : "0.7.0"
       }
     }
   ],
