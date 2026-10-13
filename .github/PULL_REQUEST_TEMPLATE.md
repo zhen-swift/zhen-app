@@ -7,6 +7,7 @@
 
 - [ ] `bundle exec fastlane test` passes (unit and UI tests); CI runs the same command
 - [ ] `./Scripts/check-tokens.sh` passes: no literal colour, size or spacing in a view
+- [ ] `./Scripts/check-docs.sh` passes: every path the documents name exists
 - [ ] `./Scripts/generate-bonjour-services.sh --check` passes if zhen-core's version changed
 - [ ] A test that guards a rule was shown failing on a deliberate break first. The break:
 - [ ] `Docs/` and the **Unreleased** section of `CHANGELOG.md` are updated if behaviour changed

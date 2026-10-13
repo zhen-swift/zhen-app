@@ -33,7 +33,8 @@
   SECURITY say what is true now, and issue and pull-request templates are new.
 - CI runs with a read-only token, every job has a timeout, and a run on `main` is never
   cancelled by a newer one. The screenshots workflow says so when there are no captures
-  instead of uploading empty artifacts.
+  instead of uploading empty artifacts. A `docs` job checks that every path the
+  documents name exists (`Scripts/check-docs.sh`, zhen-core's check, adapted).
 
 ### Fixed
 - fastlane refused the whole Fastfile because a lane was named `docs`; it is `docc`.

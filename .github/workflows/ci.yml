@@ -39,6 +39,17 @@ jobs:
       - name: Check the app's sources
         run: ./Scripts/check-tokens.sh
 
+  docs:
+    # Prose has no compiler. Every repository path the documents name must exist; the
+    # check is seconds long and runs on every change, since any change can stale a page.
+    name: Docs — the paths resolve
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: check-docs
+        run: ./Scripts/check-docs.sh
+
   app:
     # The app's own tests, unit and UI. Phase 1's "CI green" never ran them: this job is
     # what makes it mean the suite passed.
