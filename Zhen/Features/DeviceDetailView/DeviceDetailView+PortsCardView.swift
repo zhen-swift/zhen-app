@@ -27,7 +27,7 @@ extension DeviceDetailView {
               .foregroundStyle(.textSecondary)
               .accessibilityIdentifier("portScanFailure")
           }
-          content
+          PortList(item: item, ports: ports, isScanning: session?.state == .running)
         }
         .padding(.spacing.large)
       }
@@ -35,9 +35,41 @@ extension DeviceDetailView {
       .accessibilityIdentifier("portsCard")
     }
 
-    @ViewBuilder private var content: some View {
+    private var session: PortScan? { model.portScans[item.id] }
+
+    /// The session's ports once it has some, history's otherwise.
+    private var ports: [PortObservation] {
+      if let session, !session.ports.isEmpty { return session.ports }
+      return item.device.ports
+    }
+
+    /// When these ports were checked. History does not stamp ports, so the time is known
+    /// only when the latest run checked them and saw this device; otherwise it says so
+    /// rather than pass off the last-seen time as a scan time, which it used to.
+    private var caption: String? {
+      if let session, session.state == .finished {
+        return String(localized: .checked(session.at.formatted(.relative(presentation: .numeric))))
+      }
+      guard !item.device.ports.isEmpty else { return nil }
+      if let run = model.latestRun, run.checkedPorts, item.isOnline, let finished = run.finishedAt {
+        let date = Date(timeIntervalSince1970: finished.timeIntervalSince1970)
+        return String(localized: .checked(date.formatted(.relative(presentation: .numeric))))
+      }
+      return String(localized: .fromEarlierScanThatCheckedPorts)
+    }
+  }
+
+  /// What the card says about the ports themselves: none checked yet, none open, or the
+  /// open ones with what answered on each.
+  struct PortList: View {
+    let item: DeviceItem
+    let ports: [PortObservation]
+    let isScanning: Bool
+    @Environment(NetworkModel.self) private var model
+
+    var body: some View {
       if ports.isEmpty {
-        if session?.state != .running {
+        if !isScanning {
           HStack {
             Text(.noPortScanYet).font(.body).foregroundStyle(.textSecondary)
             Spacer()
@@ -70,30 +102,7 @@ extension DeviceDetailView {
       }
     }
 
-    private var session: PortScan? { model.portScans[item.id] }
-
-    /// The session's ports once it has some, history's otherwise.
-    private var ports: [PortObservation] {
-      if let session, !session.ports.isEmpty { return session.ports }
-      return item.device.ports
-    }
-
     private var open: [PortObservation] { ports.filter { $0.state == .open } }
-
-    /// When these ports were checked. History does not stamp ports, so the time is known
-    /// only when the latest run checked them and saw this device; otherwise it says so
-    /// rather than pass off the last-seen time as a scan time, which it used to.
-    private var caption: String? {
-      if let session, session.state == .finished {
-        return String(localized: .checked(session.at.formatted(.relative(presentation: .numeric))))
-      }
-      guard !item.device.ports.isEmpty else { return nil }
-      if let run = model.latestRun, run.checkedPorts, item.isOnline, let finished = run.finishedAt {
-        let date = Date(timeIntervalSince1970: finished.timeIntervalSince1970)
-        return String(localized: .checked(date.formatted(.relative(presentation: .numeric))))
-      }
-      return String(localized: .fromEarlierScanThatCheckedPorts)
-    }
 
     private func product(_ port: PortObservation) -> String? {
       guard let service = port.service else { return nil }

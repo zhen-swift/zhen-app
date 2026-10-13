@@ -23,11 +23,18 @@ Requires macOS 26. Distributed with Developer ID, notarised, outside the Mac App
 
 ## Building
 
+You need macOS 26, Xcode 26, and Ruby 4.0 with Bundler for the fastlane lanes.
+
 ```
-open Zhen.xcodeproj                     # the Zhen scheme
-bundle exec fastlane test               # unit + UI tests
+bundle config set --local path vendor/bundle && bundle install   # once
+bundle exec fastlane test               # unit + UI tests, signed ad hoc: no team needed
+open Zhen.xcodeproj                     # the Zhen scheme; pick your own team under Signing
 Scripts/release.sh - --no-notarize      # an ad-hoc release build with the helper embedded
 ```
+
+The lanes sign ad hoc, so they work in a fork with no Apple Developer account. Running
+from Xcode uses automatic signing, which needs a team of your own selected on the Zhen
+target. `CONTRIBUTING.md` has the rest.
 
 The app depends on the engine by version, never by path (`Package.resolved` pins
 zhen-core 0.7.0). A version is a promise the engine has to keep on purpose.
@@ -41,13 +48,12 @@ zhen-core 0.7.0). A version is a promise the engine has to keep on purpose.
 | `Zhen/Zhen.docc` | The design system as DocC — `bundle exec fastlane docc` |
 | `Docs/TESTING.md` · `Docs/CI.md` · `Docs/SCREENSHOTS.md` | Tests, CI, and the artwork pipeline |
 | `Docs/APP_STORE.md` · `Docs/PRIVACY.md` | Distribution, and what the app does with what it sees |
-| `Docs/process/` | The build record: each phase's ledger, questions and verification steps |
 
 ## History
 
-The app moved to its own repository on 2026-10-03, and was rebuilt from zero from
-2026-10-07 (`Docs/plans/REBUILD-plan.md`). Its history here begins on 2026-09-26; anything
-earlier is in the archived monorepo this repository was split from.
+The app and the engine began in one repository and were split on 2026-10-03; the app was
+then rebuilt from zero, from 2026-10-07, on the design system documented in
+`Zhen/Zhen.docc`.
 
 ## Licence
 

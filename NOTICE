@@ -1,8 +1,9 @@
-Zhen
+Zhen for Mac, by zhen-swift — https://github.com/zhen-swift
 Copyright 2026 Juan Carlos Estévez Rodríguez
 
-This product includes software developed as part of the Zhen project
-(https://github.com/zhen-swift).
+This product includes Zhen for Mac, developed by zhen-swift
+(https://github.com/zhen-swift/zhen-app), and the Zhen engine
+(https://github.com/zhen-swift/zhen-core).
 
 Licensed under the Apache License, Version 2.0. See LICENSE for the full text.
 
@@ -10,20 +11,22 @@ Licensed under the Apache License, Version 2.0. See LICENSE for the full text.
 
 THIRD-PARTY COMPONENTS
 
-Zhen links two dependencies, both from Apple and both under the Apache
-License 2.0. Keeping the count that low is deliberate: every addition is a
-supply chain this project then owns.
+The app has one dependency, and the engine it depends on has one more. Keeping
+the count that low is deliberate: every addition is a supply chain this project
+then owns.
+
+  zhen-core               https://github.com/zhen-swift/zhen-core
+                          Copyright 2026 Juan Carlos Estévez Rodríguez
+                          Apache License 2.0
+                          The engine. Linked as libraries (ZhenCore, ZhenScan,
+                          ZhenDarwin, ZhenPrivilege), and its zhen-helper
+                          executable is embedded in the app bundle.
 
   swift-argument-parser   https://github.com/apple/swift-argument-parser
                           Copyright Apple Inc. and the Swift project authors
                           Apache License 2.0
-                          Linked by the command-line tool.
+                          Resolved as a dependency of zhen-core's command-line
+                          tool. Not linked into the app or the helper.
 
-  swift-docc-plugin       https://github.com/apple/swift-docc-plugin
-                          Copyright Apple Inc. and the Swift project authors
-                          Apache License 2.0
-                          A build-tool plugin only. It contributes documentation
-                          subcommands and links nothing into any shipped binary.
-
-Nothing else is vendored, bundled or statically linked. Zhen spawns no
+Nothing else is vendored, bundled or statically linked. The app spawns no
 subprocesses and depends on no external binaries at runtime.

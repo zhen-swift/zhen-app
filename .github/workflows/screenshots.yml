@@ -14,29 +14,51 @@ on:
   push:
     tags: ['v*']
 
+permissions:
+  contents: read
+
 jobs:
   render:
     name: Render artwork from committed captures
     runs-on: macos-26
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
-      - uses: ruby/setup-ruby@v1
+
+      # Until the first captures are committed there is nothing to render, and a run that
+      # uploads empty artifacts looks like a run that worked. Say so and stop instead.
+      - name: Captures committed?
+        id: captures
+        run: |
+          if compgen -G "AppStoreSimulatorCaptures/macOS/*.png" > /dev/null; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No captures in AppStoreSimulatorCaptures/macOS — take them locally with 'bundle exec fastlane screenshots' (Docs/SCREENSHOTS.md). Nothing rendered."
+          fi
+
+      - if: steps.captures.outputs.present == 'true'
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '4.0'
           bundler-cache: true
       - name: Render
+        if: steps.captures.outputs.present == 'true'
         run: bundle exec fastlane marketing
-      - uses: actions/upload-artifact@v4
+      - if: steps.captures.outputs.present == 'true'
+        uses: actions/upload-artifact@v7
         with:
           name: appstore-assets
           path: AppStoreAssets
           retention-days: 30
-      - uses: actions/upload-artifact@v4
+      - if: steps.captures.outputs.present == 'true'
+        uses: actions/upload-artifact@v7
         with:
           name: readme-artwork
           path: Docs/assets
           retention-days: 30
-      - uses: actions/upload-artifact@v4
+      - if: steps.captures.outputs.present == 'true'
+        uses: actions/upload-artifact@v7
         with:
           name: raw-captures
           path: AppStoreSimulatorCaptures

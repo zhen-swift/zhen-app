@@ -80,10 +80,13 @@ Said out loud, because "we did not get to it" is more useful than silence:
 - **No sandbox.** A network scanner cannot be sandboxed — the App Sandbox has no
   entitlement covering raw sockets, and sandboxed multicast needs a managed entitlement.
   This is a decision, not an oversight, and it is why the app is not an App Store app.
-- **Ad-hoc signing.** Distribution needs a Developer ID certificate, hardened runtime and
-  notarization. The local build signs ad-hoc, which is enough for a stable identity
-  across launches and not enough for anyone else to trust the binary.
-- **The privileged helper does not exist in this build.** When it does, it will verify
-  its caller's code signature from the connection audit token — a Mach service is
-  reachable by anything running as the user, and without that check a privileged helper
-  is a privilege-escalation gadget with our name on it.
+- **Builds from source are signed ad hoc.** Released builds are signed with a Developer
+  ID, use the hardened runtime and are notarised (`Docs/APP_STORE.md`). An ad-hoc build
+  has a stable identity across launches and nothing anyone else can trust.
+- **The privileged helper trusts only a signed caller.** The app embeds zhen-core's
+  `zhen-helper` as a launch daemon that a person installs from Settings and approves in
+  Login Items. A Mach service is reachable by anything running as the user, so the
+  helper pins its caller's code signature on every connection
+  (`setCodeSigningRequirement`), and the app pins the helper's in turn. Without that, a
+  privileged helper would be a privilege-escalation gadget with our name on it. An
+  ad-hoc build cannot satisfy the requirement, so it cannot use a released helper.

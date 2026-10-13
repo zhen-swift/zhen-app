@@ -26,8 +26,18 @@
   hardware address, with how it joined and when; an Xcode build embeds the privileged
   helper.
 
+### Changed
+- Ready to be public. The build record (phase ledgers, agent prompts, verification lists)
+  and the design artboards left the repository; they described a real home network. The
+  docs index, README, CONTRIBUTING (set-up, signing without a team, licence), NOTICE and
+  SECURITY say what is true now, and issue and pull-request templates are new.
+- CI runs with a read-only token, every job has a timeout, and a run on `main` is never
+  cancelled by a newer one. The screenshots workflow says so when there are no captures
+  instead of uploading empty artifacts.
+
 ### Fixed
 - fastlane refused the whole Fastfile because a lane was named `docs`; it is `docc`.
+- CI's token check failed on a computed view in the Ports card; it is a view of its own.
 - The Local Network advice no longer tells the app its grant may be under the terminal.
 - Scan Ports recorded a run of one address, after which every other device showed as
   offline.

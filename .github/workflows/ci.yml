@@ -9,9 +9,16 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Read-only, and nothing here needs more. The default token can write to the repository,
+# and a pull request from a fork runs this file.
+permissions:
+  contents: read
+
+# A newer push to a pull request makes the older run worthless. A push to main does not:
+# every commit there keeps its own result.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   tokens:
@@ -19,6 +26,7 @@ jobs:
     # 351 lines of colour in code and 18 computed views, none of them checked.
     name: Tokens — no literals in a view
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
 
@@ -57,7 +65,7 @@ jobs:
 
       # SwiftPM's checkouts, keyed on the lock file. SPM_CACHE_PATH reaches `scan`'s
       # cloned_source_packages_path, or the cache is never read.
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: .spm
           key: spm-${{ hashFiles('Zhen.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
@@ -70,7 +78,7 @@ jobs:
 
       - name: Keep the results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-output
           path: fastlane/test_output

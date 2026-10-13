@@ -1,0 +1,17 @@
+version: 2
+updates:
+  # zhen-core and what it brings, as the Xcode project resolves them. Raising zhen-core's
+  # minor version is still a deliberate pull request (CONTRIBUTING); this keeps the pin
+  # visible when a release lands.
+  - package-ecosystem: swift
+    directory: "/"
+    schedule:
+      interval: monthly
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+  - package-ecosystem: bundler
+    directory: "/"
+    schedule:
+      interval: monthly
