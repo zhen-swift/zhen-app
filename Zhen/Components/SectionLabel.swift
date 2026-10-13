@@ -41,8 +41,8 @@ extension View {
 private struct SectionLabelPreview: View {
   var body: some View {
     VStack(alignment: .leading, spacing: .spacing.xSmall) {
-      Text("Zhen").sectionLabel()
-      Text("Today — Sunday, Aug 31").sectionLabel()
+      Text(.zhen).sectionLabel()
+      Text(verbatim: "Today — Sunday, Aug 31").sectionLabel()
     }
     .padding(.spacing.xLarge)
     .background(.surfaceRaised)

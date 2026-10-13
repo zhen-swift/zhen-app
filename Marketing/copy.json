@@ -1,0 +1,132 @@
+{
+  "_comment": "The single source for App Store and README artwork. Each screenshot id is the contract with AppStoreScreenshotUITests: a capture named <id> must exist. Colours are [r, g, b] 0–255. Copy changes need no Swift edits.",
+  "app": {
+    "name": "Zhen",
+    "tagline": "Every device on your network, named — or honestly unnamed."
+  },
+  "palettes": {
+    "slate": {
+      "top": [
+        52,
+        59,
+        70
+      ],
+      "bottom": [
+        30,
+        34,
+        41
+      ],
+      "title": [
+        243,
+        244,
+        246
+      ],
+      "subtitle": [
+        142,
+        205,
+        179
+      ]
+    },
+    "mint": {
+      "top": [
+        142,
+        205,
+        179
+      ],
+      "bottom": [
+        96,
+        168,
+        140
+      ],
+      "title": [
+        30,
+        34,
+        41
+      ],
+      "subtitle": [
+        52,
+        59,
+        70
+      ]
+    },
+    "paper": {
+      "top": [
+        246,
+        247,
+        249
+      ],
+      "bottom": [
+        226,
+        229,
+        234
+      ],
+      "title": [
+        30,
+        34,
+        41
+      ],
+      "subtitle": [
+        77,
+        96,
+        89
+      ]
+    }
+  },
+  "targets": [
+    {
+      "name": "macOS",
+      "captureDir": "macOS",
+      "canvas": [
+        2880,
+        1800
+      ],
+      "capture": [
+        2880,
+        1800
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "id": "01-devices",
+      "title": "Your whole network, in one list",
+      "subtitle": "Names, vendors and addresses — and the devices that won't say who they are, shown as plainly as the rest.",
+      "palette": "slate"
+    },
+    {
+      "id": "02-device-detail",
+      "title": "Every name it's known by",
+      "subtitle": "See which source won, and every name that lost.",
+      "palette": "mint"
+    },
+    {
+      "id": "03-live-scan",
+      "title": "Watch it answer",
+      "subtitle": "Hosts stream in as they reply. Nothing is thrown away when you stop.",
+      "palette": "slate"
+    },
+    {
+      "id": "04-activity",
+      "title": "What changed, and when",
+      "subtitle": "Arrivals, departures, renames and address moves over the last 48 hours.",
+      "palette": "paper"
+    },
+    {
+      "id": "05-unidentified",
+      "title": "Unnamed is still a device",
+      "subtitle": "A private Wi-Fi address and no name is a normal row, with everything that is known about it.",
+      "palette": "paper"
+    }
+  ],
+  "readme": {
+    "hero": {
+      "size": [
+        2400,
+        1000
+      ],
+      "screenshot": "01-devices",
+      "palette": "slate"
+    },
+    "featureWidth": 620
+  }
+}

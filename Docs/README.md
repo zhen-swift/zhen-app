@@ -3,8 +3,13 @@
 | | |
 |---|---|
 | `../AGENTS.md` | The house rules: **how** the app is written. Wins over every document here |
+| `ARCHITECTURE.md` | **How the app fits together**, its deviations from the house rules, and its known rough edges |
+| `TESTING.md` · `CI.md` · `SCREENSHOTS.md` | Test layers and commands; the workflows; the artwork pipeline |
+| `APP_STORE.md` · `PRIVACY.md` | Distribution (Developer ID, not the Mac App Store), and what the app does with what it sees |
+| `process/PHASE-3-progress.md` | **Phase 3's ledger:** the scanning bugs, detail depth, housekeeping, phase 2's open gates closed, and the store layer. `PHASE-3-questions.md` beside it is JC's |
 | `plans/REBUILD-plan.md` | **Start here.** Why the app is being demolished and rebuilt, and in what order |
 | `Design/` | The six artboards the design was measured from, `01-devices-dark.png` through `06-settings.png`. `../Design/artboards-2026-10-01.pdf` is the same six as one export |
+| `process/PHASE-2-progress.md` | **Phase 2's ledger:** every stage, every gate with what it was shown failing on, every design bend with its measurement. `PHASE-2-questions.md` beside it is JC's to answer; `PHASE-2-verification.md` is JC's to run |
 | `process/REBUILD-progress.md` | The rebuild's ledger: every step, its gate and its evidence. `REBUILD-questions.md` beside it holds what is JC's to decide |
 | `process/REBUILD-phase-1-report.md` | **Phases 0 and 1, summarised:** what was built, the gates with their numbers, what platform controls cover, and what the artboards ask that the house rules do not allow |
 | `process/DESIGN-FINDINGS.md` | What the old app's tests measured — contrast, symbols, keyboard — extracted before they were deleted. Phase 1's case list |

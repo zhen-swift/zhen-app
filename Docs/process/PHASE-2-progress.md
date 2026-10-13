@@ -1,0 +1,517 @@
+**Liveness:** 2026-10-10 — stages A–G done (E and F with recorded gaps); H not run, by the brief's own rule. Run ended; report below.
+
+# Phase 2 — build the whole app, progress
+
+The ledger for `zhen-agents/briefs/app-build-the-whole-thing.md`. Rules:
+`zhen-agents/rules/house-rules.md` (== `AGENTS.md`). Questions for JC, read once at the end:
+`PHASE-2-questions.md`. What only JC can run: `PHASE-2-verification.md` (stage G).
+
+**To resume:** read the liveness line, then the last stage section. Every gate below names
+its test; `xcodebuild -project Zhen.xcodeproj -scheme Zhen -destination 'platform=macOS' test`
+runs all of them. Deliberate breaks were run with a throwaway script that applied one edit,
+ran the named tests and restored the file; the outputs are quoted, trimmed, under each gate.
+
+Branch `phase-2`, off `main` at `57e4b27`. Not pushed (see Q1).
+
+## Decisions taken (the brief's defaults, not re-litigated)
+
+| # | Decision | Where it shows |
+|---|---|---|
+| 1 | Sandbox off, hardened runtime on | `ENABLE_APP_SANDBOX = NO`; `InfoPlistTests.appIsNotSandboxed` |
+| 2 | Two rooms, Devices and Activity | `Model/Room.swift` |
+| 3 | Settings is a `Settings { }` scene, ⌘, | `ZhenApp.swift` |
+| 4 | Device detail is a pushed destination | `Route.device`, `navigationDestination` in `RootView` |
+| 5 | Live scan replaces the Devices content and hands back | `DevicesView` body, `ScanSession.Phase` |
+| 6 | Activity: segmented `Picker`, Presence / Addresses copy, device filter in `.searchable` | `ActivityFilter`, `ActivityView` |
+| 7 | Sidebar selection: system highlight | `RootView.SidebarView` — no custom tint |
+| 8 | `Docs/` stays capitalised | **Deviation from the house rules' `docs/`, recorded here in one line: APFS is case-insensitive and `Docs/` already holds 30+ files.** The rule itself lives in `zhen-agents/`, outside this repository, so amending it is Q4 |
+| 9 | Default sort: status, then last seen descending | `DeviceItem.defaultOrder` |
+| 10 | Offline = ring + last-seen weight, never dimming | `NameCellView` (hollow `StatusDot`), `LastSeenCellView` (semibold primary when offline) |
+
+Also defaulted: the app is a single `Window`, not a `WindowGroup` — the scan runs from the
+window's `.task(id:)`, and two windows over one model would run it twice. Bundle ids stay
+`com.jctec.zhen` / `com.jctec.zhen.helper` (the brief's `AssociatedBundleIdentifiers`
+value), against the house rules' `dev.jc.<app>`.
+
+## Provisional — waiting on the designer's round 3
+
+Every metric is a token, so round 3 changes a token, not a layout:
+`Utilities/Dimension.swift` (event-kind column 140, histogram 64, device tile 44, table
+intercell 17), `Utilities/WindowSize.swift` (sidebar 180–220, NAME minimum 200, Settings
+560 × 640), and the type ramp, which is phase 1's text-style map unchanged. Row height is
+the `Table`'s own (40 pt with a two-line name cell, measured from accessibility frames);
+A1's 52 is not reachable without hand-building rows, which is the mistake this app was
+demolished for.
+
+## Stage A — the foundation · done
+
+### A1 · The project tells the truth
+
+Read back from the build, not from the project file:
+
+    $ xcodebuild -target Zhen -showBuildSettings | grep …
+        ENABLE_APP_SANDBOX = NO
+        ENABLE_HARDENED_RUNTIME = YES
+        INFOPLIST_FILE = Zhen/Info.plist
+        SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor
+        SWIFT_STRICT_CONCURRENCY = complete
+        SWIFT_TREAT_WARNINGS_AS_ERRORS = YES
+    $ codesign -dv Zhen.app      →  flags=0x10000(runtime)
+    $ codesign -d --entitlements - Zhen.app   →  only com.apple.security.get-task-allow (Debug)
+
+No entitlements file, no sandbox keys. `NSLocalNetworkUsageDescription` is a build setting
+(`INFOPLIST_KEY_…`), in plain words.
+
+`NSBonjourServices` cannot be a build setting (arrays are not supported), so it is a
+partial `Zhen/Info.plist` merged with the generated keys, **written by
+`Scripts/generate-bonjour-services.sh`** from `BonjourVocabulary.serviceTypes` in the
+zhen-core release the project resolves (17 types, rank order). `--check` fails on a stale
+plist; CI runs it. The plist is excluded from the synchronised group's resources.
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| Built app's `NSBonjourServices` == `BonjourVocabulary.browsedTypes` | `InfoPlistTests.bonjourServicesMatchTheVocabulary` | `_hue._tcp` deleted from the plist → `Expectation failed: (declared → [… 16 types …]) == (BonjourVocabulary.browsedTypes → [… "_hue._tcp" …])` |
+| Unsandboxed at runtime | `InfoPlistTests.appIsNotSandboxed` | `ENABLE_APP_SANDBOX = YES` (Debug) → `APP_SANDBOX_CONTAINER_ID → "com.jctec.zhen"` |
+
+### A2 · The fixture network
+
+Captured 2026-10-10 16:34 from this Mac on en0, default route into 10.10.20.0/24 (the home
+LAN; checked before running), with **zhen 0.6.0 built from the tag into scratch** — the installed `zhen` was 0.5.0
+and the app decodes 0.6.0's schema. Two runs, unprivileged: `scan --json` and
+`scan --json --deep --scan-type connect`. `ZHEN_HISTORY` pointed at a scratch file; the real
+store's SHA-256 was `d735909a…d239a` before and after (and after every later step).
+Raw output stays in the session scratch directory, outside the repository.
+
+The real LAN already holds the acceptance case: 13 hosts, **5 with a randomised MAC and no
+name** (vendor is null for every host — 0.6.0 has no OUI lookup), 3 named over Bonjour
+(one long Spanish name, one with a typographic apostrophe), 2 offering open ports. None
+had to be added.
+
+Transform: `Scripts/anonymise-scan.py` (stdlib Python, run with `-I`), output
+`Zhen/Fixtures/home-network.json`. MACs → RFC 7042 documentation block (universal) or
+synthetic locally-administered; IPv4 → `192.168.50.x`, order kept, gateway `.1`; link-local
+IPv6 rebuilt from the rewritten MAC when EUI-64, else synthetic; names by class from a pool
+(no real→synthetic table, which would publish the real values); TLS subjects and banners
+only when they are bare product strings; filtered ports dropped; times moved to
+2026-01-01. Byte-stable: two runs → identical SHA-1 `26bd21f5…`.
+
+| Gate | How | Shown failing on |
+|---|---|---|
+| No raw identifier survives | `anonymise-scan.py --verify raw fixture` — 37 raw MACs, addresses, names, run id | the raw report checked against itself → `37 of 37 raw identifiers appear in the fixture — FAIL` (the output names the kind and length, never the value) |
+| Decodes, holds the acceptance case, only synthetic ids | `FixtureNetworkTests` | — (assertions over committed data) |
+
+History: `FixtureNetwork.history` lays 11 runs over 48 hours, one change per run, and folds
+them through `InMemoryHistoryStore` — so every event in Activity was derived by core's
+ledger: appeared ×3, left ×3, address changed, renamed. `merged` is not staged (Q5).
+Variants: `home`, `unidentified` (every name, vendor, model stripped, every MAC randomised),
+`empty`, `partial` (deadline + core's own name-silence sentence), `silent` (zero devices +
+core's Local Network sentence, built with `LocalNetworkDenialHeuristic`).
+
+**Bend — fixture location.** The superseded 2A brief said "a test-target resource plus a
+preview container". The fixture is an **app** resource: `-UITesting` and `-ShowcaseData`
+launch the app itself, which must find it. It is synthetic, so shipping it costs 13 KB.
+
+### A3 · The harness
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| Keyboard-only | `KeyboardUITests` (3 flows: Devices + detail + search; Activity + filters; scan + stop + Settings) | room shortcuts removed → `activityList never appeared after ⌘-key 2 ×3` |
+| Window size range | `WindowSizeUITests` — minimum and full screen: pinned elements and every cell inside the window, no column under 20 pt, sidebar ≥ its minimum | the declared 860 minimum restored → `sidebar (57, 154, 222, 421) leaves the window (165, 102, 862, 534)` — F2 itself |
+| Restoration | `RestorationUITests` — ⌘Q, relaunch: window size, open device, room | `restore()` not called → `deviceDetail never appeared` after relaunch |
+| Four appearances | `AppearanceUITests` — Devices, Activity, detail, Settings × light / dark / lightIncreased / darkIncreased, kept as attachments; dark surface < 0.25, light > 0.75, Increase Contrast changes pixels | pinned scheme ignored → `the light capture is not light (surface luminance 0.2085)` |
+| Acceptance case | `AcceptanceUITests` — all-unidentified fixture at default and minimum: one row height, 5 columns ≥ 20 pt each, every name "Unidentified device" | unidentified name left blank → `row 0 names itself ', online, minimal, …'` |
+| Scan off the main actor | `ScanPipelineTests` — compile: a synchronous `nonisolated` function constructs `ScanPipeline`. Run: driven from the main actor, the app's fixture scanner emits 0 of its events on the main thread | compile: `@MainActor struct ScanPipeline` → `error: call to main actor-isolated initializer 'init(runner:interval:clock:)' in a synchronous nonisolated context`. Run: the scanner hops (`await MainActor.run { progress(…) }`) → `onMain → 11 == 0` failed |
+
+**Two breaks that did not fail the off-main gate, and why — measured, not assumed.**
+(1) Dropping `@concurrent` from `ScanPipeline.run`: an experiment showed a nonsending
+function's code runs on the main actor (`direct=true`), but the body of a `withTaskGroup`
+inside it does not (`viaGroup=false`) — the pipeline's task group already moves the scan
+off. `@concurrent` stays as the stated intent. (2) Dropping `nonisolated` from
+`FixtureScanRunner`: a type that states `Sendable` does not take the target's MainActor
+default, and the dangerous spellings (`@MainActor` on the type or on `run`) do not compile
+against the nonisolated protocol. So the type checker holds those lines; the runtime gate
+holds the one it cannot see, a hop inside the scanner.
+
+**Also not a break of the acceptance claim:** letting the subtitle wrap (removing its
+`lineLimit(1)`). The test still passed — a SwiftUI `Table` gives every row one height by
+construction, so wrapping text is clipped, not grown. The break that matters for that
+claim is an unidentified row that says nothing, and that one fails.
+
+### A4 · CI can run it
+
+`ci.yml` keeps the Linux token job and adds `app` on `macos-26`: select the newest Xcode
+26, `generate-bonjour-services.sh --check`, then `xcodebuild test` on the `Zhen` scheme
+with ad-hoc signing (`CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM=`, so
+forks run it unchanged), uploading `fastlane/test_output` always. The same flags were run
+here: 21 unit tests + the launch UI test pass. **Never run on GitHub** — the branch is not
+pushed (Q1). Green on a runner is unverified; this says so rather than claiming it.
+
+### Findings worth keeping (each cost a failed run)
+
+- **A valueless launch flag must come last.** `-UITesting -Fixture home` is read by AppKit
+  as the default `UITesting = "-Fixture"` plus a stray `home`, which it treats as a
+  document to open — and an app opening a document skips its untitled window. Symptom:
+  "the main window never appeared", process idle, `NSDiscardWindowsOnDocumentOpen` in the
+  log. The robot puts `-UITesting` last.
+- **SwiftUI's `Table` is an outline to accessibility** on macOS 26; its rows report
+  disabled and refuse `click()`. Tests query by identifier, and select by keyboard or by a
+  coordinate inside the row (never in the keyboard gate).
+- **Return does not reach `contextMenu(primaryAction:)`** — only a double-click does.
+  Return is handled with `.onKeyPress(.return)` on the table.
+- **⌘F did not focus `.searchable`** on its own; a Find… command sets `searchFocused`.
+- **Window state leaks across `-ApplePersistenceIgnoreState` launches** (AppKit writes it
+  to a temporary location and the next flagged launch reads it). Under fixtures the app
+  now restores only with `-RestoreState`, and resets before its first `await`, or a fast
+  shortcut from the test is undone by a late reset.
+- **These UI tests run on a desktop in use.** Another app's menu-bar popover took key focus
+  mid-run and swallowed an Esc. The robot activates the app before each key, and re-sends
+  an idempotent shortcut up to three times when the menu item was disabled during
+  re-activation. A missing shortcut still fails all three (re-shown failing after the
+  change). Recordings of the failures show the whole screen, so result bundles stay in
+  scratch and nothing from them is committed.
+- **A whole-screen fallback in a test captured other apps.** The Settings capture now
+  finds the window holding the settings form, and fails rather than fall back.
+
+### Design bends, each with what forced it
+
+| Bend | Measurement |
+|---|---|
+| Window minimum is computed (sidebar 220 + 8 inset + measured table), not declared | at a declared 860 the table needed 1 087: cells ran to x 1160 in a window ending at 1027, then the split view pushed the sidebar off-window (gate output above) |
+| Link-local IPv6 shown without `%en0` in the table (full form in the tooltip and detail) | the scope made the address column 220 pt wide — the widest column, on rows that are a minority |
+| Table rows are 40 pt, not A1's 52 | `Table`'s own row height with a two-line cell, measured from accessibility frames; a hand-built row is out of scope by the brief |
+| Event kind column 140, not "fits" | at 120, "ADDRESS CHANGED" overran by ~9 pt and pushed that row's sentence out of line (screenshot, activity-light) |
+| Column headers are the system's, not A1's 11 pt tracked capitals | `TableColumn` titles are drawn by AppKit's header; restyling them means abandoning `Table` |
+| Prominent buttons and the Activity picker follow the person's accent | `.borderedProminent` and segmented pickers take the system accent (green on this Mac, `AppleAccentColor = 3`); the app's accent token stays purple in chips, meters and links. Same reasoning as decision 7 |
+| Toolbar Scan Now keeps its words (`.labelStyle(.titleAndIcon)`) | a toolbar drew it as a lone glyph, and it is the room's one primary action |
+| A2's ConfidenceMeter is phase 1's `SignalMeter`, given an `init(Identification)` and its own accessibility name ("Identity") | the brief: reconcile, don't duplicate |
+| Subtitle is sentence case with its own capitals ("in ARP table", "AppleTV5,3") | lower-casing every part after the first wrote "arp" |
+| No `Color(hex:)`-style tokens added; two token enums added (`Dimension`, `WindowSize`) | `check-tokens.sh`: 83 files, 0 literals, 0 allow-comments |
+
+### Code that landed ahead of its stage
+
+The harness needs screens to drive, so the Devices table, the detail, the live-scan
+takeover, Activity and Settings were written in this stage. Their own gates (coalescing
+excepted, which is A3's off-main sibling and already passes) are run and recorded at
+stages B–F; nothing here claims them.
+
+## Stage B — Devices and detail · done
+
+`Table` with `KeyPathComparator` sort, `Set<DeviceItem.ID>` selection,
+`contextMenu(forSelectionType:primaryAction:)`, `.searchable`, `.toolbar` — built in A,
+proven here. Columns measured from the rows on screen, NAME takes the rest (A's bends).
+Detail: one column of four cards — identity history, Known by, open ports, recent events —
+no Omada column and nothing laid out around its absence.
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| Identity, order, subtitle, reassignment, link-local form, measured columns, search | `DeviceItemTests` (10) | **the address sort failed on a real bug** (below) before it was fixed |
+| Sorting by a column, both directions | `DevicesUITests.testSortingAndSearch` | the same bug: `.10, .13, .28, .31, .1, .16 …` under "IP Address ↑" (screenshot) |
+| Never scanned: empty state with Scan Now, footer says so | `testNeverScanned` | footer title blanked → `the footer is never empty` |
+| First run streams rows; never a spinner over an empty table; hands back | `testFirstScanStreamsRowsNeverASpinner` | batches held to the end (interval 1 h) → the first host did not arrive while discovery ran |
+| Loaded from a partial run: amber footer dot + persistent notice opening the degradation rows | `testPartialRunSaysSoAfterTheFact` | `latestRunIsPartial` forced false → `partialRunNotice never appeared` |
+| Nothing answered: named, actionable, not an empty list | `testNothingAnsweredIsExplained` | Local Network sentence not recognised → no "appears to be denied" cause |
+| Context menu mirrors the Device menu | `testContextMenuMirrorsTheDeviceMenu` | "Scan Ports" renamed → `the context menu has no Scan Ports` |
+| Four blocks, winner chipped, losers shown, port as `5000/tcp`, rename among events | `DeviceDetailUITests.testFourBlocksForANamedDevice` | Known by removed → `knownByCard is missing` |
+| An unidentified device's detail is normal: every source says "— not advertised", Scan Ports offered | `testUnidentifiedDeviceIsANormalDetail` | absence rendered as "" → `Assigned hides its absence` |
+| Rename is local and wins, in detail and table | `testRenameIsLocalAndWins` | name not kept → `knownBy-You` never appeared |
+| The app does not repeat CLI-only advice | `FixtureNetworkTests.silentVariant` | `forTheApp` bypassed → the sentence "…under the terminal application…" present |
+
+Two breaks first failed to compile (warnings are errors: an unused binding) and were
+re-spelled so the build succeeded and the test failed — a compile error proves nothing
+about the gate. One break **passed**: deleting "Scan Ports" from the context menu, because
+`app.menuItems["Scan Ports"]` also matched the menu bar's Device ▸ Scan Ports. The test
+now requires each item to be on screen, and fails on the same break.
+
+### Bugs the gates found
+
+- **Address sort was not numeric.** `KeyPathComparator` over a `String` uses
+  localized-standard comparison, which reads digit runs as numbers: the hex key `…8320a`
+  (.10) sorted before `…83201` (.1). The key is now core's own `Comparable` `IPAddress`,
+  and the MAC key the MAC's raw value, which had the same trap.
+- **`extension DeviceItem` without `nonisolated`** compiled, and crashed the first time a
+  nonisolated test called `DeviceItem.rows` — in a MainActor-default target an extension's
+  members take the default even when the type is `nonisolated`. Every extension of a
+  nonisolated type is now marked.
+- **The rename field did not have focus** when the sheet opened; typing went nowhere. It
+  takes focus, and Return confirms.
+- **"Resolving name…" after Stop.** A stopped scan still said a name query was in flight.
+  `isNamingPending` is false unless the scan is running.
+- **Core's Local Network remedy ends with CLI advice** (Q6); the app drops that sentence.
+
+### Bends
+
+| Bend | Why |
+|---|---|
+| Before history loads, Devices shows nothing (`Color.clear`), not a spinner | "never a spinner over an empty table"; the load takes milliseconds |
+| Return opens a row through `.onKeyPress`, not the primary action | measured in A: Return never reaches `primaryAction` |
+| Rename keeps the name in this app's defaults, keyed by device identity | A3: local only, source "You", always the winner. The command line does not see it — the history file has no field for it (see stage F) |
+| The unidentified detail's header tile is `questionmark.circle` | A1's `unknown` symbol; the kind is guessed only from a model or name, never from nothing |
+
+### Test-robot changes, and why
+
+Rows, headers and context menus are clicked at their centre (accessibility calls them not
+hittable). Opening a row and opening a context menu re-try up to three times after
+activating the app, for the same reason as A's shortcuts: the desktop is in use, and
+another app's window was seen over Zhen mid-run (Q7).
+
+## Stage C — Live scan · done
+
+Replaces the Devices content while a scan runs: "Scanning 192.168.50.0/24", "Stage n of m ·
+0:07 elapsed · 4 devices so far", three `StageCard`s (Discovery, Naming, Deep scan — the
+last "Not requested" unless asked), the `DegradationBanner` when anything degraded, and
+"Found so far · newest first". A host that naming has not reached reads *Resolving name…*
+in italic secondary, with "found 4 s ago · name query in flight". Header, stages and banner
+are pinned; only the list scrolls (A3).
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| **Coalescing**, at the view model: 50 000 hosts in 0.4 s reach `ScanSession` in ≤ one batch per 16 ms frame, none lost, applied in < 3 s | `ScanSessionTests.coalescesIntoTheViewModel` (and A's pipeline gate) | tick of 50 µs → `publishedBatches 69 <= frames + 2 → 28` failed; `apply` searching linearly again → `elapsed 150.9 s < 3 s` failed |
+| **Degradations do not evaporate**: a run that degrades during naming still shows it on Devices after the hand-back — amber footer, notice, the same rows | `LiveScanUITests.testDegradationsSurviveTheHandBack` | `lastDegradations = []` at hand-back → the notice had nothing to disclose (`partialRunDisclosure` absent) |
+| Starting → "Listening…", stages queued, deep scan not requested | `testStartingThenNamingThenHandBack` | — (asserted on the way) |
+| Mid-naming placeholder | same | placeholder replaced by "Unidentified device" → assertion at line 22 |
+| Done → hands back to Devices, no dismissal | same | phase left `.stopped` at completion → `the scan never handed back` |
+| Stopped → results kept, "Stopped after 0:0x · n devices found", Scan Again restarts, nothing claims a name in flight | `testStoppedKeepsWhatItFound`; `ScanSessionTests.stoppedKeepsResults` | arrivals cleared on stop → `stopping discarded the results` (first attempt failed a step early on a dropped shortcut; re-run, then the unbroken test re-run green) |
+| Session rules: arrival order, in-place updates, stage states, degradation de-duplication, hand-back | `ScanSessionTests` (6) | — |
+
+### Found by the gates
+
+- **`apply` was quadratic.** Coalescing held the batch count to display rate, and each
+  batch then cost O(n²): a linear search inside the batch and a re-index of every row.
+  50 000 hosts took **88 s** on the main actor — the frame-time tail the gate exists for,
+  moved inside the batch. Hosts are now stored in arrival order with a position index
+  (`found` is the reversed view): 0.47 s. The gate asserts the time, and fails at 150 s
+  with the linear search put back.
+- **Scan Now was disabled right after launch** — the window had not yet published its
+  focused value, so ⌘R did nothing. Scanning belongs to the app (one window, one model):
+  Scan Now and Stop Scan now act on the model; room and device commands still reach the
+  window through `@FocusedValue`. Bend recorded below.
+
+### Bends
+
+| Bend | Why |
+|---|---|
+| Scan Now / Stop Scan in the menu bar act on the model, not through `@FocusedValue` | measured: right after launch the focused value is nil and the shortcut is dropped. The house rule protects multi-window apps from acting on the wrong window; this app has one window |
+| "Name query in flight" names no protocol per host | core's progress events say which stage runs, not which query is outstanding for a host; the card says "Asking Bonjour, UPnP and NetBIOS", which is what the naming stage does |
+| A window's `hasKeyboardFocus` is not used by the robot | measured: it reads 0 even when the window is key |
+
+## Stage D — Activity · done
+
+Segmented `Picker` with the frozen copy (All, Presence, Identity, Ports, Addresses), ⌥⌘1–5
+in the View menu; device filtering is the search field. `TimelineHistogram` is Swift Charts
+`BarMark`, 48 hourly buckets, busiest bar at full accent, labels every six hours, hover for
+a count, no axis. Events grouped by day under "TODAY — SATURDAY 10 OCT". Filter and
+histogram pinned; the days scroll. The list and the histogram are drawn from one function,
+`ActivityView.filtered(_:by:search:)`.
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| **The filter drives both**: under All, Presence, Identity, Addresses the histogram's total equals the rows listed | `ActivityUITests.testFilterDrivesListAndHistogram` | histogram fed the unfiltered window → `Presence: list shows 6, histogram counts 8` |
+| Filter with no match keeps the segments and the histogram, says "No port events in this window" | `testFilterWithNoMatchKeepsItsContext` | histogram hidden when the filter is empty → `the histogram went away` |
+| Nothing at all → "Nothing has changed" | `testNothingHasChanged` | the empty state bypassed → `activityEmpty never appeared` |
+| Segments partition the events; search composes with them | `ActivityTests.segments`, `.search` | Presence also taking address changes → `.ipChanged` in Presence, and 9 parts for 8 events |
+| 48 buckets count the window and nothing outside it | `ActivityTests.buckets` | — |
+| Under two hours of history the histogram hides | `ActivityTests.histogramThreshold` | threshold 0 → shown at 1 h 59 m |
+| Today / Yesterday titles | `ActivityTests.days` | — |
+
+### Bends
+
+| Bend | Why |
+|---|---|
+| The histogram is one accessibility element whose **label** carries the total | Swift Charts exposes a container of bars, and a generic element on macOS has no accessibility value (probe: `value=Optional()`). A2 calls the bars a rhythm; the total is what is worth saying, and it is what the gate checks against the list |
+| Activity is a `List` with day sections, not a `Table` | events are sentences read in time order, not records compared by column; there is nothing to select or sort, and `Table` has no day grouping |
+| The Ports segment stays and is always empty | core 0.6.0 derives no port events (Q3); decision 6 froze the copy, and the empty state says the true thing |
+| Event kind label "Left" for `disappeared` | the artboard's "Disappeared" is 2.4× the column at caption bold; "Left" is the word the detail uses ("last answered at …") |
+
+## Stage E — Settings and the helper · done, with one recorded defect
+
+`Settings { }` scene (⌘,), `Form` + `.formStyle(.grouped)`, 560 × 640. **SCANNING**: scan
+automatically (Off / 5 / 15 / 60 min, driven by a `.task(id:)` on the window with the
+injected clock), subnet "192.168.50.0/24 — auto, from en0" with a validated override
+(CIDR, /16 or narrower — core's `isEnumerable`), deep-scan toggle. **HISTORY**: keep events
+for 7 / 30 / 90 days / forever (handed to the store's `setRetention`), identity history
+"Kept forever — it's what makes merges possible". **PRIVILEGED ENGINE**: A3's copy, what it
+can and cannot do, and three states — not installed (Install Helper…, Remove beside it,
+disabled), waiting for approval (amber; Open Login Items…, Remove), installed (Show in
+System Settings…, which calls `SMAppService.openSystemSettingsLoginItems()`, and Remove,
+confirmed with `confirmationDialog`). Scan Now reads the deep-scan and subnet settings.
+
+The helper sits behind `HelperService`: `LiveHelperService` is `SMAppService.daemon` named
+by core's `HelperIdentity.plistName`; tests and `-UITesting` get `FakeHelperService`.
+**Nothing in this run registered anything.**
+
+The daemon plist is `Helper/com.jctec.zhen.helper.plist`, copied by an **Embed Launch
+Daemon** Copy Files phase (destination: wrapper, `Contents/Library/LaunchDaemons`). It lives
+outside the synchronised `Zhen/` folder so it is a plain file reference, not a resource.
+
+| Gate | Test | Shown failing on |
+|---|---|---|
+| **Built app's plist**: at `HelperIdentity.plistBundlePath`; `AssociatedBundleIdentifiers == [HelperIdentity.applicationBundleIdentifier] == [Bundle.main.bundleIdentifier]`; `Label` and the only Mach service == `HelperIdentity.label`; `BundleProgram == Contents/MacOS/zhen-helper` | `HelperPlistTests` (4) | key removed → `associated → nil`; label `…Helper` → mismatch with core; program under `Resources/` → mismatch; copy phase pointed at `Contents/Resources` (fresh build directory, so no stale copy could pass it) → all four: `no such file` at `Contents/Library/LaunchDaemons/` |
+| Sections and controls present; identity history kept forever | `SettingsUITests.testSectionsAndControls` | — |
+| Subnet override validated | `testSubnetOverrideIsValidated`; `SettingsTests.subnet` (6 cases) | validation removed → `a /8 was accepted` |
+| Helper panel: Remove always beside Install; approval is its own state; the OS check is offered; removal confirmed and undone | `testHelperPanelInstallApproveRemove` | Remove dropped from the not-installed state → `no Remove beside Install` |
+| Settings reach the scan | `SettingsTests.scanUsesPreferences`, `.preferences` | — |
+| The fake helper walks the three states | `SettingsTests.helperStates` | — |
+
+### Defect E1 — the helper executable is not in the Xcode build
+
+`BundleProgram` names `Contents/MacOS/zhen-helper`, and the built app has no such file.
+zhen-core 0.6.0 deliberately declares no executable product for `zhen-helper` ("declaring
+it would put a second scheme in Xcode's menu"), and Xcode can only build a remote
+package's **products**. So the plist is right and tested, and the program it names is
+absent: `SMAppService.register()` on this build would register a job whose program does
+not exist. **Three honest routes, none taken in this run:** (1) a zhen-core release with a
+`zhen-helper` product — a zhen-core change, out of bounds; (2) a Run Script phase calling
+`swift build` on the resolved checkout — needs user-script sandboxing off for the target
+and the whole package graph resolved inside a build phase, fragile and slow; (3) a script
+that builds the helper from the pinned zhen-core revision and embeds it before Developer ID
+signing — **this is what stage G hands JC**, because that signing is his anyway.
+Recorded, not hidden; see Q8.
+
+### Bends
+
+| Bend | Why |
+|---|---|
+| Section labels read "SCANNING" to accessibility | `.textCase(.uppercase)` inside a grouped `Form` header reaches AX transformed (probe). A1 asked for the underlying value; the Form header does not give it, and a custom header would leave the platform control |
+| The panel's Remove is present but disabled while nothing is installed | "an uninstall control beside it" — always in the same place, so a person learns where it is before they need it |
+| The launchd plist lives in `Helper/` at the repository root | a file in the synchronised `Zhen/` folder becomes a resource; a Copy Files phase needs a plain file reference |
+
+## Stage F — integration · done with gaps, recorded
+
+### Commands
+
+Every action in the menu bar; frequent ones with shortcuts; window state through
+`@FocusedValue(\.windowActions)`, published with `.focusedSceneValue`:
+
+| Menu | Items |
+|---|---|
+| View | Devices ⌘1 · Activity ⌘2 · Activity Filter: All ⌥⌘1, Presence ⌥⌘2, Identity ⌥⌘3, Ports ⌥⌘4, Addresses ⌥⌘5 |
+| Edit | Find… ⌘F |
+| Scan | Scan Now ⌘R · Stop Scan ⌘. |
+| Device | Open ⌘O · Back to Devices ⌘[ · Rename… ⇧⌘E · Scan Ports ⇧⌘R · Show in Activity ⇧⌘A · Copy Address ⇧⌘C · Copy MAC Address ⌥⇧⌘C |
+| (app) | Settings… ⌘, |
+
+The context menu mirrors Device, item for item (Back excepted: it acts on the detail).
+Return opens, Esc leaves a stopped scan, double-click opens.
+
+### Gates
+
+| Gate | Test | Result | Shown failing on |
+|---|---|---|---|
+| Every action in the menu bar | `CommandsUITests.testEveryActionIsInTheMenuBar` | pass | **not run** (below) |
+| Commands reach the front window's state through `@FocusedValue` | `testCopyAddressActsOnTheWindowsSelection` — ⇧⌘C puts the keyboard-selected row's address on the pasteboard | pass | **not run** |
+| The less-travelled shortcuts work when pressed | `testDeviceShortcuts` — ⌥⇧⌘C copies a MAC, ⇧⌘A opens Activity, ⇧⌘R scans the device's /32 | pass | **not run** |
+| Every interactive control on every screen has an identifier and a name — Devices, detail, Activity, live scan running and stopped, Settings in two helper states, never-scanned, nothing-answered | `AccessibilityAuditUITests` (2) | pass, **after it failed on four real gaps** (below) | the four gaps are its failing evidence: it failed before they were fixed |
+| Keyboard-only across rooms, detail, takeover, scene | `KeyboardUITests` (A) + the three above | pass | A: room shortcuts removed |
+| Restoration of window, room, device | `RestorationUITests` (A) | pass | A |
+| Min window → full screen: rooms | `WindowSizeUITests.testMinimumWindowAndFullScreen` (A) | pass in A and B | A: declared minimum |
+| Min window → full screen: **detail and takeover** | `WindowSizeUITests.testDetailAndTakeoverFitAtBothSizes` | **never seen passing** — its only runs failed on stolen key focus (below) | — |
+| Four appearances: rooms, detail, Settings | `AppearanceUITests` (A) | pass in A and B | A: pinned scheme ignored |
+| Four appearances: **takeover** added | same test, extended | **never seen passing** after the extension, same reason | — |
+
+### Found by the gates
+
+- **Four Settings controls had no accessible name** — the interval and retention pickers,
+  the deep-scan toggle and the subnet field. A grouped `Form` draws the label as its own
+  element and leaves the control nameless. Each now names itself. This is the old app's
+  defect in miniature (its helper could not be uninstalled because no button had a name).
+- **Stop Scan stayed disabled** while a scan ran: a `Commands` body is not re-evaluated
+  by an `@Observable` model alone. The scan commands now read the window's focused value
+  (re-sent on every redraw) and fall back to the model only before the window publishes.
+- **Copy Address, Copy MAC Address and Show in Activity** existed only in the context menu
+  or the detail. They are in the Device menu now, with shortcuts.
+- Activity's segments had no identifiers; each has `activityFilter-<kind>`.
+
+### Why UI runs stopped here — and what that leaves
+
+At 19:23 the recordings showed another app's setup window ("Add your xAI key", a key being
+typed into it) holding key focus over Zhen during this suite, and text appearing in the
+Claude app's reply field. `pgrep` then showed a second `xcodebuild … -scheme Perch … test`
+driving its own UI tests on the same desktop. XCUITest synthesises real keystrokes: two
+suites on one screen type into each other's windows, and this one could type into a field
+holding a secret. **No further UI tests were run in this session.** Unit tests (which only
+launch the test host briefly) were still run where a stage needed them.
+
+Left open by that decision, each to be closed in a session with the desktop to itself:
+
+1. Deliberate breaks for `CommandsUITests` and `AccessibilityAuditUITests` (the audit's
+   failing evidence is real but came from bugs, not a planted break).
+2. `WindowSizeUITests.testDetailAndTakeoverFitAtBothSizes` and the takeover capture in
+   `AppearanceUITests`: written, never seen passing.
+3. A full-suite run of everything on one quiet desktop.
+
+The commands are in `PHASE-2-verification.md`.
+
+### macOS screen checklist (house rules), per screen
+
+| | Devices | Detail | Activity | Live scan | Settings |
+|---|---|---|---|---|---|
+| Reachable from sidebar **and** menu bar | ⌘1 + sidebar | ⌘O / Return / double-click; ⌘[ back | ⌘2 + sidebar | ⌘R; replaces Devices | ⌘, |
+| Every action has a menu item; frequent ones ⌘ | yes (above) | Rename ⇧⌘E, Scan Ports ⇧⌘R, Show in Activity ⇧⌘A | filters ⌥⌘1–5, Find ⌘F | Stop ⌘., Scan Again ⌘R, Esc | form controls; ⌘W |
+| Keyboard-only: Tab, arrows, Return, Esc, ⌫ | arrows + Return (gate A). **⌫ does nothing**: there is nothing to delete — devices are history | toolbar via Tab | segmented picker via ⌥⌘n | Esc leaves a stopped scan | Tab through the form |
+| `.help()` on icon-only controls | Scan Now has words; toolbar search is the system's | Rename, Scan Ports | — | Stop Scan has words | — |
+| Lists are `Table`s with multi-select; context menu mirrors the menu bar | yes | n/a | **`List`** (bend, stage D) | `List` of arrivals, read-only | n/a |
+| Min size → full screen; light, dark, increased | gate (A) | gate written, unverified (above) | gate (A) | gate written, unverified | fixed 560 × 640 |
+| Window and selection restore on relaunch | gate (A) | gate (A) | room restored (A) | **not restored on purpose**: a scan is not resumed on relaunch | the system does not restore Settings windows |
+| No iOS-only API, no `#if os` in feature views | `grep -rn '#if os' Zhen/Features` → 0 | | | | |
+
+## Stage G — the handoff · done
+
+`PHASE-2-verification.md`: seven steps only JC can take, each with exact commands and what
+a pass looks like — the UI suite on a quiet desktop (with the three breaks still owed),
+Developer ID signing and notarisation (keychain profile **`zhen-notary`**; no credential
+anywhere in the repo), helper registration and the Login Items check, the mis-signed caller,
+removal, a real scan of 10.10.20.0/24 with and without the Local Network grant, and the
+instrument trace.
+
+What was built for those steps, and what was run here:
+
+| Piece | Run here | Shown failing on |
+|---|---|---|
+| `Scripts/release.sh` — Release build, `zhen-helper` built from the pinned zhen-core checkout and embedded (the route around E1), inside-out signing as `com.jctec.zhen.helper` then the app, hardened runtime, team, daemon plist checks, then notarise + staple + Gatekeeper | ad hoc (`release.sh - --no-notarize`): helper 171 KB embedded, both signed `flags=…(adhoc,runtime)`, all checks PASS | plist `BundleProgram` broken → `release: BundleProgram — FAIL`. A first version also failed falsely: under `pipefail`, `codesign … \| grep -q` reports failure when grep matches early; the checks now capture first |
+| `Tools/MisSignedCaller` — calls the helper through zhen-core's own `HelperClient` at the pinned 0.6.0; exit 0 = refused, 1 = answered | built: `Identifier=MisSignedCaller`, `adhoc`, no team | not run: no helper is registered here, and a refusal from nothing proves nothing — the doc makes Settings' live version the positive control |
+| Settings shows the helper's **own** answer (`HelperClient.version()`) when installed, not just `SMAppService.status` | unit level (fake) | — |
+| `Scripts/check-main-thread-trace.py` — exports a Time Profiler trace, fails on any engine frame in a main-thread sample, and on a trace with no engine frames at all | on a real export of a CLI process: as recorded → `the engine never appears … FAIL`; engine frame planted off main → `PASS` | planted on main → `1 main-thread samples were scanning — FAIL` |
+
+### Found while writing the handoff
+
+**The unit-test host saw real data.** The unit tests' host is Zhen.app launched with no
+arguments — live mode — so every unit-test run opened the shared history file (read-only:
+its SHA-256 was `d735909a…d239a` at the start of the run and is the same now). An XCTest
+host is now detected in `AppEnvironment` and runs on the fixture network.
+`TestHostTests` pins it; with the detection removed both its tests fail
+(`AppEnvironment.current.dataSource → .live`).
+
+### Unverified at the end of the run
+
+`SettingsUITests.testHelperPanelInstallApproveRemove` now waits for "Installed · Zhen Scan
+Engine fixture" (the fake's version). Changed after UI runs stopped; never seen passing.
+
+## Stage H — not run
+
+The brief: "only if A–G are green … drop this stage without regret if anything earlier is
+unfinished." E carries defect E1 and F carries three gates never shown failing on a break
+plus two harness extensions never seen passing. Not green, so no `fastlane/`,
+`Marketing/copy.json`, `AppStoreAssets/`, `Localizable.xcstrings`, `screenshots.yml` or
+`Docs/ARCHITECTURE.md`. The marketing captures would also need the quiet desktop of
+verification step 0 (Q7).
+
+## Report
+
+| Stage | State | Commit |
+|---|---|---|
+| A — foundation | done; six gates, each shown failing | `e664cfe` |
+| B — Devices and detail | done; eleven gates; a real sort bug found and fixed | `fc6d133` |
+| C — live scan | done; coalescing and degradation gates; a quadratic `apply` found and fixed (88 s → 0.47 s) | `9cc24de` |
+| D — Activity | done; the filter drives list and histogram | `46cb4c7` |
+| E — Settings and helper | done; plist pinned to core; **defect E1** (no helper binary from Xcode) | `2e250f7` |
+| F — integration | done; menu bar, audit (found four nameless controls); **gaps**: UI runs halted | `51f9375` |
+| G — handoff | done | this commit |
+| H — repo layer | not run (above) | — |
+
+**Hard stops:** none hit. No root, no password, no real network data committed (the
+transform's `--verify` and `FixtureNetworkTests` guard it; the ledger's capture note names
+no host address), nothing outside `zhen-app` changed. The real history file is untouched.
+
+**Defects carried:** E1. **Gates owed a break:** three (verification step 0).
+**Never seen passing:** `testDetailAndTakeoverFitAtBothSizes`, the takeover capture in
+`AppearanceUITests`, and the version wait in `SettingsUITests`. **Questions:** Q1–Q8.

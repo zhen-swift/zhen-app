@@ -1,8 +1,7 @@
 name: CI
 
-# Fast feedback on every pull request and every push to main. AGENTS.md's CI section adds
-# `bundle exec fastlane test` once phase 3 brings fastlane; until then the jobs here are the
-# ones that exist.
+# Fast feedback on every pull request and every push to main: the token check, then
+# `bundle exec fastlane test` — the same command a person runs locally.
 
 on:
   push:
@@ -31,3 +30,48 @@ jobs:
 
       - name: Check the app's sources
         run: ./Scripts/check-tokens.sh
+
+  app:
+    # The app's own tests, unit and UI. Phase 1's "CI green" never ran them: this job is
+    # what makes it mean the suite passed.
+    name: App — build and test the Zhen scheme
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Xcode
+        run: |
+          sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
+          xcodebuild -version
+
+      # The plist is generated from zhen-core; a stale one is a Bonjour type browsed and
+      # never declared, which fails silently at runtime. Fail here instead.
+      - name: NSBonjourServices matches zhen-core
+        run: ./Scripts/generate-bonjour-services.sh --check
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+
+      # SwiftPM's checkouts, keyed on the lock file. SPM_CACHE_PATH reaches `scan`'s
+      # cloned_source_packages_path, or the cache is never read.
+      - uses: actions/cache@v4
+        with:
+          path: .spm
+          key: spm-${{ hashFiles('Zhen.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+
+      # Exactly the local command. Ad-hoc signing is in the lane: forks have no team.
+      - name: Test
+        env:
+          SPM_CACHE_PATH: ${{ github.workspace }}/.spm
+        run: bundle exec fastlane test
+
+      - name: Keep the results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-output
+          path: fastlane/test_output
+          retention-days: 14
