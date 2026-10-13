@@ -18,9 +18,9 @@ private struct ComponentSheet: View {
         ForEach(StatusDot.Tone.allCases, id: \.self) { StatusDot($0) }
       }
       HStack(spacing: .spacing.small) {
-        Text("ER7206").foregroundStyle(.textPrimary)
+        Text("GW1000").foregroundStyle(.textPrimary)
         Chip("Gateway", style: .accent)
-        Text("F2:3A:91:6B:0D:44").font(.callout.monospaced()).foregroundStyle(.textTertiary)
+        Text("2A:5C:00:00:00:01").font(.callout.monospaced()).foregroundStyle(.textTertiary)
         Chip("private")
       }
       HStack(spacing: .spacing.large) {
@@ -30,7 +30,7 @@ private struct ComponentSheet: View {
         SignalMeter(lit: 3, of: 4, tint: .statusOnline)
       }
       VStack(alignment: .leading, spacing: .spacing.xSmall) {
-        Text("Mac Studio de Jose").font(.body).foregroundStyle(.textPrimary)
+        Text("Mac Studio de Luis").font(.body).foregroundStyle(.textPrimary)
         Text("Mac Studio · Mac16,9 · Apple").font(.subheadline).foregroundStyle(.textSecondary)
         Text("Randomized MAC · no vendor").font(.subheadline).foregroundStyle(.textTertiary)
         Text(12_345, format: .number).numericValue().foregroundStyle(.textPrimary)

@@ -9,8 +9,6 @@ collection, which scrolls; and the states the collection can be in. A screen is 
 from a platform control first, and the design spends itself only on what that control
 does not cover.
 
-![The Devices room in light appearance.](02-devices-light.png)
-
 ### 1. Start from the platform control
 
 Devices is a SwiftUI `Table` (`DevicesView.DeviceTableView`):

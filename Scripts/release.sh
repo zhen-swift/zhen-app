@@ -2,8 +2,8 @@
 #
 # release.sh — a Developer ID build of Zhen with its privileged helper, notarised.
 #
-# JC's to run: it signs with his Developer ID and submits to Apple's notary under his
-# account. Nothing here holds a credential — the identity is named, the notary password
+# The maintainer's to run: it signs with the project's Developer ID and submits to Apple's
+# notary under that account. Nothing here holds a credential — the identity is named, the notary password
 # lives in the keychain profile `notarytool store-credentials` made.
 #
 #   Scripts/release.sh "Developer ID Application: <Name> (S8662L649U)" zhen-notary

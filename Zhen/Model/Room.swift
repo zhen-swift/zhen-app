@@ -22,7 +22,7 @@ enum Room: String, CaseIterable, Identifiable, Hashable, Codable {
   }
 
   /// ⌘1, ⌘2: the only keyboard route between rooms, since the split view keeps the
-  /// sidebar out of the Tab loop (DESIGN-FINDINGS §3).
+  /// sidebar out of the Tab loop.
   var shortcut: KeyEquivalent {
     switch self {
     case .devices: "1"

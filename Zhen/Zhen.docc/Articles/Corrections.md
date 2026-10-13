@@ -5,14 +5,14 @@ Where the app deliberately differs from the artboards, and why.
 ## Overview
 
 Written down, a difference is a decision. Undocumented, the next person "fixes" it back to
-match the artboards. Each line names what forced it; the measurements are in the phase
-ledgers (`Docs/process/`).
+match the artboards. Each line names what forced it.
 
 ### Structure
 
-- **Two rooms, not five.** Omada is gone from the project; Events folded into Activity,
+- **Two rooms, not five.** A room for an integration that was dropped went with it; Events folded into Activity,
   one dataset with one door; Settings is a `Settings` scene, ⌘,.
-- **Device detail is pushed, in one column.** The artboards' second column was Omada's.
+- **Device detail is pushed, in one column.** The artboards' second column belonged to the
+  dropped integration.
 - **The live scan is not a room.** It replaces the Devices content and hands back.
 - **Activity is a `List` with day sections**, not a table: events are sentences read in
   time order.

@@ -29,7 +29,7 @@ struct ActivityTests {
   }
 
   /// Gate. Break: `case .ports: false` in `ActivityFilter.includes` — the always-empty
-  /// segment zhen-core 0.6.0 left (PHASE-2-questions Q3).
+  /// segment zhen-core 0.6.0 left, before core derived port events.
   @Test("The Ports segment shows port events, and only port events")
   func portsSegment() {
     let ports = ActivityView.filtered(events, by: .ports, search: "")

@@ -202,4 +202,4 @@ helper missing from Xcode builds, and the 3 s stale-registration wait. The
   fields, not finished sentences.
 - **Not yet verified by a person:** Developer ID signing and notarisation, helper
   registration in Login Items, a mis-signed caller being refused, a real-LAN scan, and the
-  main-thread trace. `Docs/process/PHASE-2-verification.md` steps 1–6.
+  main-thread trace. `Docs/APP_STORE.md` lists them under "Before a release".

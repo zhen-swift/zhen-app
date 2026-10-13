@@ -11,9 +11,8 @@ together, every empty and partial state, the accessibility floor, and every plac
 deliberately differs from the artboards.
 
 Read in order: <doc:Foundations>, then <doc:Components>, then <doc:BuildingAScreen>. The
-artboards themselves are the visual reference throughout.
-
-![The Devices room, dark, as the artboards draw it.](01-devices-dark.png)
+artboards were the visual reference these pages were measured from; they are not
+published, because they were drawn over a real network.
 
 How the app fits together beyond the design system — isolation, scanning, the helper — is
 in `Docs/ARCHITECTURE.md` in the repository.

@@ -1,6 +1,0 @@
-toggleOn 1723 842 1740 872 fill
-toggleOff 1773 1260 1787 1284 fill
-textFieldFill 1418 408 1773 447 fill
-cardFill 827 1017 1537 1052 fill
-popupFill 1537 676 1548 709 fill
-connectedDot 538 236 546 245 fill

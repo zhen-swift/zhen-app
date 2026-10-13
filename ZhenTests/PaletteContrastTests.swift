@@ -9,8 +9,8 @@ import ZhenCore
 // it — `Color(resource).resolve(in:)`, the call `foregroundStyle` and `fill` make — under
 // all four appearances, and held to WCAG.
 //
-// The values come from Docs/process/evidence/derive-palette.py. This suite does not trust
-// that script: it reads the compiled catalogue back, so a colorset edited by hand fails here.
+// The values were derived from the original artboards. This suite does not trust that
+// derivation: it reads the compiled catalogue back, so a colorset edited by hand fails here.
 // Scripts/check-palette.py checks the same pairs from the shipped Assets.car.
 //
 // The arithmetic is zhen-core's `Contrast`, the WCAG 2 helper the house rules put in Core.
@@ -138,7 +138,7 @@ struct PaletteContrastTests {
 
   @Test("Surfaces, accent and primary text keep the artboards' exact values")
   func keyColoursAreTheArtboards() {
-    // DESIGN-FINDINGS.md section 4, sampled from Docs/Design/01 and 02.
+    // Sampled from the original artboards, Devices dark and light.
     #expect(hex(components(.surface, .dark)) == 0x1A1A1F)
     #expect(hex(components(.surface, .light)) == 0xFFFFFF)
     #expect(hex(components(.surfaceRaised, .dark)) == 0x212127)

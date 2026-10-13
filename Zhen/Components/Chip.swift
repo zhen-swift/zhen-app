@@ -39,11 +39,11 @@ private struct ChipPreview: View {
   var body: some View {
     VStack(alignment: .leading, spacing: .spacing.medium) {
       HStack(spacing: .spacing.small) {
-        Text(verbatim: "ER7206").foregroundStyle(.textPrimary)
+        Text(verbatim: "GW1000").foregroundStyle(.textPrimary)
         Chip(.gateway, style: .accent)
       }
       HStack(spacing: .spacing.small) {
-        Text(verbatim: "F2:3A:91:6B:0D:44").font(.callout.monospaced()).foregroundStyle(.textTertiary)
+        Text(verbatim: "2A:5C:00:00:00:01").font(.callout.monospaced()).foregroundStyle(.textTertiary)
         Chip(.private)
       }
     }

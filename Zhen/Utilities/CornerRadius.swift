@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Corner radii, measured from the artboards with `Docs/process/evidence/corner-artboard.swift`.
+/// Corner radii, measured from the pixels of the original artboards.
 ///
 /// A1 recorded cards at 10 and chips at 5; the pixels say 8 and 4. A capsule — the filter
 /// pills, a toggle — is `Capsule()`, not a radius.

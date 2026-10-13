@@ -1,20 +1,17 @@
 # Documentation
 
+Reference documentation for the app: what is true of it now.
+
 | | |
 |---|---|
 | `../AGENTS.md` | The house rules: **how** the app is written. Wins over every document here |
 | `ARCHITECTURE.md` | **How the app fits together**, its deviations from the house rules, and its known rough edges |
-| `TESTING.md` · `CI.md` · `SCREENSHOTS.md` | Test layers and commands; the workflows; the artwork pipeline |
-| `APP_STORE.md` · `PRIVACY.md` | Distribution (Developer ID, not the Mac App Store), and what the app does with what it sees |
-| `process/PHASE-3-progress.md` | **Phase 3's ledger:** the scanning bugs, detail depth, housekeeping, phase 2's open gates closed, and the store layer. `PHASE-3-questions.md` beside it is JC's |
-| `plans/REBUILD-plan.md` | **Start here.** Why the app is being demolished and rebuilt, and in what order |
-| `Design/` | The six artboards the design was measured from, `01-devices-dark.png` through `06-settings.png`. `../Design/artboards-2026-10-01.pdf` is the same six as one export |
-| `process/PHASE-2-progress.md` | **Phase 2's ledger:** every stage, every gate with what it was shown failing on, every design bend with its measurement. `PHASE-2-questions.md` beside it is JC's to answer; `PHASE-2-verification.md` is JC's to run |
-| `process/REBUILD-progress.md` | The rebuild's ledger: every step, its gate and its evidence. `REBUILD-questions.md` beside it holds what is JC's to decide |
-| `process/REBUILD-phase-1-report.md` | **Phases 0 and 1, summarised:** what was built, the gates with their numbers, what platform controls cover, and what the artboards ask that the house rules do not allow |
-| `process/DESIGN-FINDINGS.md` | What the old app's tests measured — contrast, symbols, keyboard — extracted before they were deleted. Phase 1's case list |
-| `process/` | Record, not documentation. Also: the old app's brief (`03-zhen-app.md`), design system (`A1`–`A3`), review (`REVIEW-ui-architecture.md`), responsive plan (`RESPONSIVE-plan.md`, whose choice of `ScrollView` over `Table` the rebuild plan names as the root cause) and migration list (`APP-CATCHUP.md`); and the brief for rebuild phases 0 and 1 (`prompts/rebuild-phase-0-1.md`) |
+| `TESTING.md` | The test layers, the fixture network, and the commands that run them |
+| `CI.md` | The workflows, what each job checks, and what it needs |
+| `SCREENSHOTS.md` | The artwork pipeline: showcase data, captures, and the marketing assets |
+| `APP_STORE.md` | Distribution: Developer ID and notarisation, not the Mac App Store, and why |
+| `PRIVACY.md` | What the app does with what it sees |
+| `../Zhen/Zhen.docc` | The design system as DocC: foundations, components, and building a screen. `bundle exec fastlane docc` builds it |
 
-The engine's documentation is in [`zhen-core`](https://github.com/zhen-swift/zhen-core).
-These documents were written in the monorepo and name its paths — `zhen/` is now
-`zhen-core`, and `zhen-app/` is this repository's root.
+The engine — scanning, naming, history, the privileged helper — is documented in
+[`zhen-core`](https://github.com/zhen-swift/zhen-core).

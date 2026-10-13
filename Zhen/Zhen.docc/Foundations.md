@@ -61,5 +61,3 @@ name — `laptopcomputer`, `desktopcomputer`, `appletv`, `iphone`, `ipad`, `prin
 
 One curve: `.spring(duration: 0.3)`, for rows arriving in a live scan and the partial-run
 disclosure. Nothing animates that the person did not cause or that does not show progress.
-
-![Device detail, from the artboards.](03-device-detail.png)

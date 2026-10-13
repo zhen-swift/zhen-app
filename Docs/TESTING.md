@@ -32,7 +32,7 @@ A unit test that needs its own preferences passes its own `UserDefaults` to
 `NetworkModel(environment:defaults:)`. The fixture domain is cleared whenever a fixture
 model is made, so parallel tests would clear each other's.
 
-The fixture is JC's home network anonymised by `Scripts/anonymise-scan.py`.
+The fixture is a real home network, anonymised by `Scripts/anonymise-scan.py`.
 `anonymise-scan.py --verify RAW FIXTURE` proves no raw identifier survives. The raw capture
 is never committed.
 
@@ -45,6 +45,6 @@ drawn over it.
 
 ## The gates, and proving them
 
-Every gate is first shown failing on a deliberate break, then recorded as passing. The
-breaks and their failure messages are in `Docs/process/PHASE-2-progress.md` and
-`PHASE-3-progress.md`.
+Every gate is first shown failing on a deliberate break, then recorded as passing. A
+gate's doc comment says `Gate.`, and most also name the break (`Break: …`) so it can be
+repeated; adding the break to a gate that lacks one is a welcome first pull request.

@@ -14,7 +14,7 @@ nonisolated enum HelperState: Equatable, Sendable {
 /// The privileged helper, as the Settings panel drives it.
 ///
 /// A protocol so that tests and `-UITesting` never register anything: registration needs a
-/// Developer ID and an administrator's consent, and both are JC's.
+/// Developer ID and an administrator's consent, and neither belongs in a test.
 protocol HelperService {
   var state: HelperState { get }
   func install() throws

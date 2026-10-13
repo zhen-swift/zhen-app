@@ -2,8 +2,7 @@
 
 Zhen ships **outside the Mac App Store**: Developer ID signed, hardened runtime, notarised.
 The App Sandbox has no entitlement for raw sockets or `/dev/bpf*`, which the scanner and
-its privileged helper need (`Docs/process/03-zhen-app.md`). The app is unsandboxed on
-purpose. `InfoPlistTests.appIsNotSandboxed` pins it.
+its privileged helper need. The app is unsandboxed on purpose. `InfoPlistTests.appIsNotSandboxed` pins it.
 
 ## Building a release
 
@@ -14,9 +13,10 @@ bundle exec fastlane release identity:"Developer ID Application: <Name> (S8662L6
 ```
 
 The script:
-1. builds the app (Release)
-2. builds `zhen-helper` from the pinned zhen-core
-3. embeds the helper and signs inside-out
+1. resolves the pinned zhen-core
+2. builds the app (Release); Xcode's Embed Helper phase builds zhen-core's `zhen-helper`
+   product from that same checkout and embeds it
+3. signs inside-out: the helper under its daemon identifier, then the app
 4. verifies the signatures, the hardened runtime, the team and the daemon plist
 5. notarises, staples and asks Gatekeeper
 
@@ -32,6 +32,6 @@ today, and a store listing if distribution ever changes.
 
 ## Before a release
 
-`Docs/process/PHASE-2-verification.md` lists the checks only a person with the Developer
-ID can run: notarisation, helper registration and Login Items, a mis-signed caller
-refused, removal, a real-LAN scan, and the main-thread trace.
+Some checks only a person with the Developer ID can run, because CI has no identity and
+no administrator: notarisation, helper registration and Login Items, a mis-signed caller
+refused (`Tools/MisSignedCaller`), removal, a real-LAN scan, and the main-thread trace.
