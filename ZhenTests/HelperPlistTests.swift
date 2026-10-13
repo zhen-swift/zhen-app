@@ -41,4 +41,15 @@ struct HelperPlistTests {
   func programPath() {
     #expect(plist["BundleProgram"] as? String == "Contents/MacOS/zhen-helper")
   }
+
+  /// Gate — phase 2's defect E1. Break: remove the Embed Helper phase (or the target's
+  /// dependency on the `zhen-helper` product). An Xcode-built app then registers a daemon
+  /// whose program launchd cannot find, and only `Scripts/release.sh` could fix it.
+  @Test("An Xcode build embeds the helper where the daemon plist says it is")
+  func helperIsEmbedded() throws {
+    let program = try #require(plist["BundleProgram"] as? String)
+    let url = Bundle.main.bundleURL.appending(path: program)
+    #expect(FileManager.default.isExecutableFile(atPath: url.path(percentEncoded: false)),
+            "no helper at \(program): launchd would find no program")
+  }
 }

@@ -12,12 +12,13 @@
 # Steps, each checked before the next:
 #   1. Resolve the pinned zhen-core into build/spm (Package.resolved decides the revision).
 #   2. Release build of the app, signed with the identity, hardened runtime, timestamped.
-#   3. Build `zhen-helper` from that same zhen-core checkout. It is an executable target
-#      with no product (zhen-core's choice), so Xcode cannot build it — defect E1 — but
-#      SwiftPM builds a root package's executable targets on request.
-#   4. Embed it as Contents/MacOS/zhen-helper and sign inside-out: helper first, as
-#      com.jctec.zhen.helper (ZhenPrivilege's HelperIdentity.label), then the app again so
-#      its seal covers the helper.
+#   3. Check the helper is in the bundle. Xcode builds it from zhen-core's `zhen-helper`
+#      product and embeds it as Contents/MacOS/zhen-helper (the Embed Helper phase), from
+#      the same pinned checkout as everything else. Until zhen-core 0.7.0 declared that
+#      product this step built it by hand with SwiftPM — defect E1.
+#   4. Sign inside-out: the helper first, as com.jctec.zhen.helper (ZhenPrivilege's
+#      HelperIdentity.label) — Xcode signs it on copy under a derived identifier the
+#      app's code requirement would refuse — then the app again so its seal covers it.
 #   5. Verify: signatures, hardened runtime, team, the daemon plist, the helper in place.
 #   6. Notarise, staple, and ask Gatekeeper.
 
@@ -52,15 +53,12 @@ rm -rf "$OUT" && mkdir -p "$OUT"
 ditto "$DD/Build/Products/Release/Zhen.app" "$OUT/Zhen.app"
 APP="$OUT/Zhen.app"
 
-say "3. building zhen-helper from the same checkout"
-swift build -c release --package-path "$CORE" --scratch-path build/helper --product zhen-helper > /dev/null
-HELPER_BIN=build/helper/release/zhen-helper
-[ -x "$HELPER_BIN" ] || fail "no helper binary at $HELPER_BIN"
+say "3. the helper Xcode embedded"
+[ -x "$APP/Contents/MacOS/zhen-helper" ] || fail "no helper at Contents/MacOS/zhen-helper — is the Embed Helper phase there?"
 
-say "4. embedding and signing inside-out"
+say "4. signing inside-out"
 TIMESTAMP=--timestamp
 [ "$IDENTITY" = - ] && TIMESTAMP=--timestamp=none
-cp "$HELPER_BIN" "$APP/Contents/MacOS/zhen-helper"
 codesign --force --options runtime "$TIMESTAMP" --identifier "$HELPER_ID" --sign "$IDENTITY" \
   "$APP/Contents/MacOS/zhen-helper"
 codesign --force --options runtime "$TIMESTAMP" --sign "$IDENTITY" \

@@ -12,6 +12,7 @@
 		D4E0392ADDB0F46AAD8F273F /* ZhenPrivilege in Frameworks */ = {isa = PBXBuildFile; productRef = 070E7AE6E4415407A08EDDCC /* ZhenPrivilege */; };
 		5E1A0C0D2F00000000000021 /* ZhenDarwin in Frameworks */ = {isa = PBXBuildFile; productRef = 5E1A0C0D2F00000000000022 /* ZhenDarwin */; };
 		5E1A0C0D2F00000000000012 /* com.jctec.zhen.helper.plist in Embed Launch Daemon */ = {isa = PBXBuildFile; fileRef = 5E1A0C0D2F00000000000010 /* com.jctec.zhen.helper.plist */; };
+		5E1A0C0D2F00000000000031 /* zhen-helper in Embed Helper */ = {isa = PBXBuildFile; productRef = 5E1A0C0D2F00000000000032 /* zhen-helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		5E1A0C0D2F00000000000033 /* Embed Helper */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				5E1A0C0D2F00000000000031 /* zhen-helper in Embed Helper */,
+			);
+			name = "Embed Helper";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5E1A0C0D2F00000000000013 /* Embed Launch Daemon */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,10 +164,12 @@
 				78AE8C6BEB2A40A6D824CCEE,
 				364863F9F2E558B0F50473FC,
 				5E1A0C0D2F00000000000013 /* Embed Launch Daemon */,
+				5E1A0C0D2F00000000000033 /* Embed Helper */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5E1A0C0D2F00000000000034 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				69F8D45498D7E20DA99BB780 /* Zhen */,
@@ -314,6 +328,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5E1A0C0D2F00000000000034 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 5E1A0C0D2F00000000000032 /* zhen-helper */;
+		};
 		CB1A96DB8C9BF61DDC12ABCE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C13732C8E715C9BEE4FA51C9 /* Zhen */;
@@ -583,6 +601,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
 			productName = ZhenScan;
+		};
+		5E1A0C0D2F00000000000032 /* zhen-helper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			productName = "zhen-helper";
 		};
 		5E1A0C0D2F00000000000022 /* ZhenDarwin */ = {
 			isa = XCSwiftPackageProductDependency;
