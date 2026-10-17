@@ -1,41 +1,65 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "CFBundleDisplayName": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zhen"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zhen"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zhen"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zhen"
           }
         }
       }
     },
-    "NSLocalNetworkUsageDescription": {
-      "comment": "The Local Network permission prompt. Must say what and why, in words (InfoPlistTests).",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zhen lists the devices on your network. To find them it asks each address on this network whether anything is there, and reads the names devices announce about themselves. Nothing is sent anywhere else."
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Zhen"
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright" : {
+      "comment" : "Copyright (human-readable)",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "NSLocalNetworkUsageDescription" : {
+      "comment" : "The Local Network permission prompt. Must say what and why, in words (InfoPlistTests).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zhen lists the devices on your network. To find them it asks each address on this network whether anything is there, and reads the names devices announce about themselves. Nothing is sent anywhere else."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zhen muestra los dispositivos de tu red. Para encontrarlos pregunta a cada dirección de esta red si hay algo ahí y lee los nombres que los dispositivos anuncian de sí mismos. No se envía nada a ningún otro lugar."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zhen muestra los dispositivos de tu red. Para encontrarlos pregunta a cada dirección de esta red si hay algo ahí y lee los nombres que los dispositivos anuncian de sí mismos. No se envía nada a ningún otro lugar."
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

@@ -14,6 +14,8 @@
 - The app icon, from the design mark.
 - `Localizable.xcstrings` with plural forms.
 - fastlane lanes, the App Store screenshot pipeline and `Marketing/copy.json`.
+- `Scripts/ship.sh`: a release tag to a notarised, stapled disk image on the maintainer's
+  Mac, kept in the git-ignored `Releases/`.
 - Shortcuts: Scan Network and Count Online Devices, with Siri phrases.
 - Every string a symbol key in `Localizable.xcstrings`.
 - Spanish, including the Local Network permission prompt.
@@ -37,6 +39,8 @@
   documents name exists (`Scripts/check-docs.sh`, zhen-core's check, adapted).
 
 ### Fixed
+- Scan Now no longer blanks the window when the scan reports a missing source: the
+  partial-results banner made the window's minimum height thousands of points tall.
 - fastlane refused the whole Fastfile because a lane was named `docs`; it is `docc`.
 - CI's token check failed on a computed view in the Ports card; it is a view of its own.
 - The Local Network advice no longer tells the app its grant may be under the terminal.

@@ -23,7 +23,7 @@ FILES=(README.md CONTRIBUTING.md SECURITY.md Docs/*.md)
 # Paths the documents name as OUTPUTS: made by a lane or a script, ignored by git, and
 # absent from a fresh clone by design. A document naming one is describing where a
 # result lands, not claiming a committed file.
-GENERATED='^(fastlane/(test_output|screenshots|report\.xml)|Docs/assets|AppStoreAssets|AppStoreSimulatorCaptures|build|vendor)(/|$)'
+GENERATED='^(fastlane/(test_output|screenshots|report\.xml)|Docs/assets|AppStoreAssets|AppStoreSimulatorCaptures|build|vendor|Releases)(/|$)'
 
 # The anchors include the old monorepo's top-level `zhen/` and `zhen-app/`, which do not
 # exist here, so a document still naming `zhen-app/Docs/…` fails rather than passing on

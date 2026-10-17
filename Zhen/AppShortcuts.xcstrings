@@ -2,18 +2,53 @@
   "sourceLanguage" : "en",
   "strings" : {
     "How many devices are online in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
       "localizations" : {
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cuántos dispositivos están en línea en ${applicationName}" } }
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "How many devices are online in ${applicationName}"
+            ]
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cuántos dispositivos están en línea en ${applicationName}"
+          }
+        }
       }
     },
     "Scan my network with ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
       "localizations" : {
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Escanea mi red con ${applicationName}" } }
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Scan my network with ${applicationName}",
+              "Scan the network in ${applicationName}"
+            ]
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escanea mi red con ${applicationName}"
+          }
+        }
       }
     },
     "Scan the network in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Escanea la red en ${applicationName}" } }
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escanea la red en ${applicationName}"
+          }
+        }
       }
     }
   },

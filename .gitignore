@@ -26,6 +26,10 @@ DerivedData/
 # ── Build products ──────────────────────────────────────────────────────────
 build/
 
+# Releases: ship.sh's settings (release.env) and its disk images, one folder per version.
+# This Mac's, never committed. Scripts/release.env.example is the template.
+Releases/
+
 # Rasterised icons at the repository root. Design/marks/03-z/ is the source; a
 # checked-in PNG at the root is a second answer to the question "what does the mark
 # look like", and it is the one that goes stale without anybody noticing.

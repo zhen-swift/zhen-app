@@ -44,8 +44,13 @@ CORE="$SPM/checkouts/zhen-core"
 echo "zhen-core at $(git -C "$CORE" rev-parse --short HEAD) ($(git -C "$CORE" describe --tags 2>/dev/null || echo untagged))"
 
 say "2. building the app (Release)"
-SIGNING=(CODE_SIGN_IDENTITY="$IDENTITY" CODE_SIGN_STYLE=Manual OTHER_CODE_SIGN_FLAGS=--timestamp)
-if [ "$IDENTITY" = - ]; then SIGNING=(CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM=); fi
+# CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO: a `build` (not an archive) adds get-task-allow, the
+# debugger's entitlement, and step 4 preserves it. The notary refuses any binary that has it.
+SIGNING=(CODE_SIGN_IDENTITY="$IDENTITY" CODE_SIGN_STYLE=Manual OTHER_CODE_SIGN_FLAGS=--timestamp
+  CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO)
+if [ "$IDENTITY" = - ]; then
+  SIGNING=(CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO)
+fi
 xcodebuild build -project Zhen.xcodeproj -scheme Zhen -configuration Release \
   -destination 'platform=macOS' -derivedDataPath "$DD" -clonedSourcePackagesDirPath "$SPM" \
   "${SIGNING[@]}" > "$DD.log" 2>&1 || { tail -20 "$DD.log"; fail "xcodebuild"; }
@@ -82,7 +87,11 @@ PLIST="$APP/Contents/Library/LaunchDaemons/$HELPER_ID.plist"
 [ "$(plutil -extract BundleProgram raw -o - "$PLIST")" = Contents/MacOS/zhen-helper ] || fail "BundleProgram"
 entitlements=$(codesign -d --entitlements - "$APP" 2>/dev/null || true)
 [[ "$entitlements" == *app-sandbox* ]] && fail "the app is sandboxed"
-echo "signatures, runtime, team, helper identity, daemon plist — PASS"
+for bin in "$APP" "$APP/Contents/MacOS/zhen-helper"; do
+  [[ "$(codesign -d --entitlements - "$bin" 2>/dev/null || true)" == *get-task-allow* ]] \
+    && fail "$bin has get-task-allow, which the notary refuses"
+done
+echo "signatures, runtime, team, helper identity, daemon plist, no get-task-allow — PASS"
 
 if [ "$PROFILE" = --no-notarize ] || [ "$IDENTITY" = - ]; then
   echo "dry run: not notarised. $APP"
