@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.0 — 2026-10-17
+
 ### Added
 - Devices, device detail, live scan and Activity, rebuilt on `Table`, `NavigationSplitView`
   and a `Settings` scene (phase 2).
