@@ -23,10 +23,15 @@ struct DegradationBanner: View {
               Text(copy.cause)
                 .font(.body.bold())
                 .foregroundStyle(.textPrimary)
+              // Wraps on the width it is given, never `fixedSize(vertical:)`: the banner sits
+              // in a safe-area inset, outside any scroll view, so its height is part of the
+              // detail column's minimum. Measured at the zero width AppKit asks for, a
+              // fixed-height paragraph is one character per line — thousands of points — and
+              // the window, unable to grow that tall, centred the content off screen: the
+              // whole window went blank the moment a scan reported a degradation.
               Text(copy.consequence)
                 .font(.subheadline)
                 .foregroundStyle(.textSecondary)
-                .fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: .spacing.large)
             if let action = copy.action {
