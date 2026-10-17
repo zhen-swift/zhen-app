@@ -70,7 +70,7 @@ extension NetworkModel {
     return devices.first { $0.device.mac == nil && $0.device.ipv4Addresses.contains(facts.ip) }
   }
 
-  /// "13 devices · 11 online · 5 unidentified".
+  /// "13 devices · 11 online · 10 unidentified".
   var devicesSummary: String {
     let devices = devices.count
     return String(localized: .devicesOnlineUnidentified(devices: devices, onlineCount, unidentifiedCount))

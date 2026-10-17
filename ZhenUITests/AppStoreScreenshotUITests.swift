@@ -7,7 +7,8 @@ import XCTest
 /// Each capture is the main window at 1440 × 900 points — 2880 × 1800 pixels on a Retina
 /// display, the Mac's 16:10 slot — attached under its `Marketing/copy.json` id, the
 /// contract between this file and the renderer. Every launch is `-ShowcaseData`: the
-/// fixture network, never a real one.
+/// invented network `Scripts/make-showcase-fixture.py` writes, never a real one — not
+/// even the anonymised home network the other UI tests run on.
 final class AppStoreScreenshotUITests: XCTestCase {
   override func setUpWithError() throws {
     continueAfterFailure = false
@@ -60,7 +61,7 @@ final class AppStoreScreenshotUITests: XCTestCase {
     settle(app, on: "deviceTable")
     capture(app, "01-devices")
 
-    // The Apple TV: a name from Bonjour, a rename in its history, open ports.
+    // Living Room, the Apple TV: a name from Bonjour, a rename in its history, AirPlay's port.
     app.descendants(matching: .any)["deviceName-192.168.50.10"].firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).doubleClick()
     settle(app, on: "deviceDetail")
     capture(app, "02-device-detail")
@@ -70,7 +71,7 @@ final class AppStoreScreenshotUITests: XCTestCase {
     app = launch(scanPace: 700)
     settle(app, on: "deviceTable")
     app.typeKey("r", modifierFlags: .command)
-    XCTAssertTrue(app.descendants(matching: .any)["foundHost-192.168.50.37"].firstMatch.waitForExistence(timeout: 20))
+    XCTAssertTrue(app.descendants(matching: .any)["foundHost-192.168.50.71"].firstMatch.waitForExistence(timeout: 20))
     Thread.sleep(forTimeInterval: 2.5)
     capture(app, "03-live-scan")
     app.terminate()
@@ -81,6 +82,7 @@ final class AppStoreScreenshotUITests: XCTestCase {
     capture(app, "04-activity")
     app.terminate()
 
+    // The same invented network with every name, vendor and model stripped.
     app = launch(fixture: "unidentified", look: "light")
     settle(app, on: "deviceTable")
     capture(app, "05-unidentified")

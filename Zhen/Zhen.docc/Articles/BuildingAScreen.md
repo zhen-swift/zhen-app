@@ -50,7 +50,8 @@ is identified, address, last seen.
 ### 5. Every state, from fixtures
 
 Every state renders from `FixtureNetwork` alone — `home`, `unidentified`, `empty`,
-`partial`, `silent` — with no store and no network. If a state needs live data to look
+`partial`, `silent`, over the anonymised home capture or, for marketing, the invented
+showcase one — with no store and no network. If a state needs live data to look
 right, it is not finished. <doc:StatesAndEmptiness> lists them.
 
 ### 6. Reach it from the menu bar and the keyboard

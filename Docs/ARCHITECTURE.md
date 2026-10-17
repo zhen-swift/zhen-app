@@ -45,7 +45,7 @@ emits far faster than 60 Hz. `ScanPipelineTests` constructs the pipeline from a
 | `Components/` | The design system's pieces: `Card`, `StatusDot`, `Chip`, `StageCard`, `DegradationBanner`, `EventRow`, `TimelineHistogram`, … |
 | `Platform/` | AppKit and system edges: pasteboard, Finder, System Settings URLs, `LiveHelperService` (`SMAppService`), `HistoryWatcher` |
 | `Utilities/` | Tokens: spacing, radii, borders, icon sizes, dimensions, window sizes |
-| `Fixtures/` | The anonymised home network (`home-network.json`, made by `Scripts/anonymise-scan.py`), its variants, and `PreviewContainer` |
+| `Fixtures/` | The anonymised home network (`home-network.json`, made by `Scripts/anonymise-scan.py`), the invented showcase network (`showcase-network.json`, made by `Scripts/make-showcase-fixture.py`), their variants, and `PreviewContainer` |
 
 ## Scenes
 
@@ -158,7 +158,9 @@ on the app's one `NetworkModel`, registered with `AppDependencyManager`.
 
 Under `-UITesting` and `-ShowcaseData`, and in the unit-test host, the app runs on the
 fixture. That means an in-memory store, a replaying scanner, a fake helper and a throwaway
-defaults domain, so no test can see or change real history or preferences.
+defaults domain, so no test can see or change real history or preferences. Tests and
+`-UITesting` replay the home network; `-ShowcaseData` replays the showcase network
+(`Docs/SCREENSHOTS.md`).
 `Docs/TESTING.md` has the layers and commands.
 
 ## Deviations from the house rules

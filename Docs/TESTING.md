@@ -32,9 +32,11 @@ A unit test that needs its own preferences passes its own `UserDefaults` to
 `NetworkModel(environment:defaults:)`. The fixture domain is cleared whenever a fixture
 model is made, so parallel tests would clear each other's.
 
-The fixture is a real home network, anonymised by `Scripts/anonymise-scan.py`.
+The fixture every test runs on is a real home network, anonymised by `Scripts/anonymise-scan.py`.
 `anonymise-scan.py --verify RAW FIXTURE` proves no raw identifier survives. The raw capture
-is never committed.
+is never committed. The marketing captures use a second, invented network instead
+(`-ShowcaseData`, `Docs/SCREENSHOTS.md`). No test depends on it except
+`ShowcaseFixtureTests`, which holds it to core's rules.
 
 ## UI tests and the desktop
 

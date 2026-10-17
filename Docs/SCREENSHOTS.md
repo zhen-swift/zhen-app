@@ -19,6 +19,24 @@ fastlane/screenshots/macOS/<id>.png
 | `bundle exec fastlane screenshots` | capture, export, render |
 | `bundle exec fastlane marketing` | render only, from `fastlane/screenshots/macOS/` or the committed `AppStoreSimulatorCaptures/macOS/` |
 
+## What the captures show
+
+`-ShowcaseData` loads `Zhen/Fixtures/showcase-network.json`, an invented home network:
+sixteen devices, most named by Bonjour, UPnP or NetBIOS and carrying a vendor, and a few
+honestly unnamed. It was never scanned. `Scripts/make-showcase-fixture.py` writes it from a
+table and computes each device's identification by zhen-core's rules; `--check` fails if
+the committed file is not its output, and `ShowcaseFixtureTests` checks the rules against
+core itself. Every MAC is documentation-range or synthetic, and every name is generic.
+
+The anonymised home network the tests use is not shown in any capture: it is a real
+network's shape, and most of its devices are unnamed. `05-unidentified` is the invented
+network with every name, vendor and model stripped (`-Fixture unidentified`).
+To change what the captures show, edit the table and regenerate:
+
+```
+Scripts/make-showcase-fixture.py > Zhen/Fixtures/showcase-network.json
+```
+
 ## The contract
 
 - `Marketing/copy.json` lists each screenshot's `id`, title, subtitle and palette.

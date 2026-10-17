@@ -18,8 +18,12 @@ nonisolated struct AppEnvironment: Sendable {
   var dataSource: DataSource
   /// `-UITesting`: fixtures, fake side effects, a throwaway defaults domain.
   var isUITesting: Bool
-  /// `-ShowcaseData`: the same, seeded with the marketing dataset.
+  /// `-ShowcaseData`: fixtures as under `-UITesting`, but the invented network the App Store
+  /// and README captures show instead of the anonymised home one. `-Fixture` still picks
+  /// the variant, so `-Fixture unidentified` strips the invented network's names.
   var isShowcase: Bool
+  /// Which capture a fixture launch replays.
+  var fixtureDataset: FixtureNetwork.Dataset { isShowcase ? .showcase : .home }
   /// Whether the window puts back its last room, device and selection. Always, except
   /// under fixtures, where only `-RestoreState` asks for it: AppKit keeps writing window
   /// state even with `-ApplePersistenceIgnoreState`, and one test's open device must not

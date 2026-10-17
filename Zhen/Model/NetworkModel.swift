@@ -77,9 +77,10 @@ final class NetworkModel {
       self.store = store
       self.historyURL = nil
       self.liveRunner = nil
-      let capture = (try? FixtureNetwork.capture()) ?? ScanReport(run: FixtureNetwork.emptyRun)
+      let dataset = environment.fixtureDataset
+      let capture = (try? FixtureNetwork.capture(dataset)) ?? ScanReport(run: FixtureNetwork.emptyRun)
       self.pipeline = ScanPipeline(runner: FixtureScanRunner(
-        store: store, capture: capture, variant: variant,
+        store: store, capture: capture, variant: variant, dataset: dataset,
         pace: environment.scanPace, clock: ContinuousClock(), addsNewDevice: environment.newDeviceOnScan
       ))
       // A throwaway domain: a test can never change, or be changed by, real preferences.
@@ -107,12 +108,15 @@ final class NetworkModel {
   /// Fills the model, seeding the fixture network first when this launch uses one.
   func load() async {
     if case .fixture(let variant) = environment.dataSource, !hasLoaded,
-       let capture = try? FixtureNetwork.capture() {
-      for report in FixtureNetwork.history(variant, capture: capture, now: environment.launchedAt) {
+       let capture = try? FixtureNetwork.capture(environment.fixtureDataset) {
+      let history = FixtureNetwork.history(
+        variant, capture: capture, dataset: environment.fixtureDataset, now: environment.launchedAt
+      )
+      for report in history {
         _ = await store.record(report)
       }
       lastDegradations = FixtureNetwork.degradations(variant, capture: capture)
-      remember(lastDegradations, for: FixtureNetwork.history(variant, capture: capture, now: environment.launchedAt).last?.run.id)
+      remember(lastDegradations, for: history.last?.run.id)
       interface = NetworkInterface(
         name: capture.run.interface, address: capture.run.target.networkAddress,
         network: capture.run.target

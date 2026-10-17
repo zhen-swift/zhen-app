@@ -11,15 +11,22 @@ nonisolated struct FixtureScanRunner: ScanRunning {
   let store: any HistoryStore
   let capture: ScanReport
   let variant: FixtureNetwork.Variant
+  /// Which capture `capture` is, so its history has the right cast.
+  var dataset: FixtureNetwork.Dataset = .home
   /// Time between events, so a person or a UI test can see the stream.
   let pace: Duration
   let clock: any Clock<Duration>
   /// Whether a scan finds `guest` too: a device the fixture history has never seen.
   var addsNewDevice = false
 
+  /// The latest fixture run: what a scan finds. An empty network's scan finds the home one.
+  private var latest: ScanReport? {
+    FixtureNetwork.history(variant == .empty ? .home : variant, capture: capture, dataset: dataset, now: .now).last
+  }
+
   func run(_ request: ScanRequest, progress: ProgressSink) async -> ScanOutcome {
     let started = Timestamp.now
-    let latest = FixtureNetwork.history(variant == .empty ? .home : variant, capture: capture, now: .now).last
+    let latest = self.latest
     let network = request.network ?? capture.run.target
     // Only what the request covers. An IPv6-only device has no IPv4 address to be inside a
     // target, and a full scan finds it anyway, the way discovery's neighbour reads do.
@@ -100,7 +107,7 @@ nonisolated struct FixtureScanRunner: ScanRunning {
   /// the device at each, or the common ports closed when it recorded none — folded into
   /// the store the way core folds one, as ports and not as a run.
   func probePorts(_ request: PortProbeRequest, progress: ProgressSink) async -> PortProbeOutcome {
-    let latest = FixtureNetwork.history(variant == .empty ? .home : variant, capture: capture, now: .now).last
+    let latest = self.latest
     var ports: [IPAddress: [PortObservation]] = [:]
     for case .v4(let address) in request.addresses {
       guard await pause() else { break }

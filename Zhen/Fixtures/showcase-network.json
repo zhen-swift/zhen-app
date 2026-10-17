@@ -1,0 +1,926 @@
+{
+  "degradations": [],
+  "devices": [
+    {
+      "addresses": [
+        "192.168.50.1",
+        "fe80::0200:5eff:fe00:5301%en0"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:01",
+      "names": [
+        {
+          "model": "RAX50",
+          "rank": 1,
+          "source": "ssdp",
+          "value": "Home Gateway"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.1",
+          "port": 53,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 2.1,
+            "samples": 1
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.1",
+          "port": 80,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 2.1,
+            "samples": 1
+          },
+          "service": {
+            "banner": "HTTP/1.1 200 OK",
+            "evidence": "banner",
+            "name": "http"
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.1",
+          "port": 443,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 2.1,
+            "samples": 1
+          },
+          "service": {
+            "evidence": "tls_certificate",
+            "name": "https",
+            "tls_subject": "Home Gateway"
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 2.1,
+        "samples": 1,
+        "smoothed_millis": 2.1,
+        "variance_millis": 1.05
+      },
+      "ttl": 64,
+      "vendor": "Netgear"
+    },
+    {
+      "addresses": [
+        "192.168.50.10",
+        "fe80::0200:5eff:fe00:530a%en0"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:0A",
+      "names": [
+        {
+          "model": "AppleTV14,1",
+          "rank": 1,
+          "source": "mdns",
+          "value": "Living Room"
+        },
+        {
+          "model": "AppleTV14,1",
+          "rank": 3,
+          "source": "mdns",
+          "value": "Living Room"
+        },
+        {
+          "rank": 16,
+          "source": "mdns",
+          "value": "Living Room"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.10",
+          "port": 7000,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 4.8,
+            "samples": 1
+          },
+          "service": {
+            "banner": "AirTunes/870.14.1",
+            "evidence": "banner",
+            "name": "http"
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 4.8,
+        "samples": 1,
+        "smoothed_millis": 4.8,
+        "variance_millis": 2.4
+      },
+      "ttl": 64,
+      "vendor": "Apple"
+    },
+    {
+      "addresses": [
+        "192.168.50.12",
+        "fe80::0200:5eff:fe00:530c%en0"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:0C",
+      "names": [
+        {
+          "model": "AudioAccessory6,1",
+          "rank": 1,
+          "source": "mdns",
+          "value": "Kitchen"
+        },
+        {
+          "rank": 16,
+          "source": "mdns",
+          "value": "Kitchen"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.12",
+          "port": 7000,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 6.3,
+            "samples": 1
+          },
+          "service": {
+            "banner": "AirTunes/870.14.1",
+            "evidence": "banner",
+            "name": "http"
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 6.3,
+        "samples": 1,
+        "smoothed_millis": 6.3,
+        "variance_millis": 3.15
+      },
+      "ttl": 64,
+      "vendor": "Apple"
+    },
+    {
+      "addresses": [
+        "192.168.50.14"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:0E",
+      "names": [
+        {
+          "model": "Sonos One",
+          "rank": 1,
+          "source": "ssdp",
+          "value": "Bedroom"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.14",
+          "port": 1400,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 7.9,
+            "samples": 1
+          },
+          "service": {
+            "banner": "HTTP/1.1 200 OK",
+            "evidence": "banner",
+            "name": "http"
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 7.9,
+        "samples": 1,
+        "smoothed_millis": 7.9,
+        "variance_millis": 3.95
+      },
+      "ttl": 64,
+      "vendor": "Sonos"
+    },
+    {
+      "addresses": [
+        "192.168.50.20",
+        "fe80::1000:0:0:1%en0"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": false,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "moderate",
+      "last_seen": 1767268806027,
+      "mac": "2E:5A:00:00:01:01",
+      "names": [
+        {
+          "model": "Mac15,12",
+          "rank": 1,
+          "source": "mdns",
+          "value": "Maya’s MacBook Air"
+        }
+      ],
+      "ports": [],
+      "rtt": {
+        "millis": 3.4,
+        "samples": 1,
+        "smoothed_millis": 3.4,
+        "variance_millis": 1.7
+      },
+      "ttl": 64
+    },
+    {
+      "addresses": [
+        "192.168.50.21",
+        "fe80::1000:0:0:2%en0"
+      ],
+      "discovered_via": [
+        "probe_reply",
+        "neighbor_table"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": false,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "moderate",
+      "last_seen": 1767268806027,
+      "mac": "2E:5A:00:00:01:02",
+      "names": [
+        {
+          "model": "iPhone16,2",
+          "rank": 1,
+          "source": "mdns",
+          "value": "Maya’s iPhone"
+        }
+      ],
+      "ports": [],
+      "rtt": {
+        "millis": 38.6,
+        "samples": 1,
+        "smoothed_millis": 38.6,
+        "variance_millis": 19.3
+      },
+      "ttl": 64
+    },
+    {
+      "addresses": [
+        "192.168.50.30"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 2,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:1E",
+      "names": [
+        {
+          "model": "LaserJet MFP M234dw",
+          "rank": 1,
+          "source": "mdns",
+          "value": "Office Printer"
+        },
+        {
+          "model": "LaserJet MFP M234dw",
+          "rank": 1,
+          "source": "ssdp",
+          "value": "HP LaserJet MFP M234dw"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.30",
+          "port": 80,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 9.2,
+            "samples": 1
+          },
+          "service": {
+            "banner": "HTTP/1.1 200 OK",
+            "evidence": "banner",
+            "name": "http"
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.30",
+          "port": 631,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 9.2,
+            "samples": 1
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.30",
+          "port": 9100,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 9.2,
+            "samples": 1
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 9.2,
+        "samples": 1,
+        "smoothed_millis": 9.2,
+        "variance_millis": 4.6
+      },
+      "ttl": 64,
+      "vendor": "HP"
+    },
+    {
+      "addresses": [
+        "192.168.50.32",
+        "fe80::0200:5eff:fe00:5320%en0"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:20",
+      "names": [
+        {
+          "model": "DS224+",
+          "rank": 1,
+          "source": "mdns",
+          "value": "Archive"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.32",
+          "port": 443,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 1.7,
+            "samples": 1
+          },
+          "service": {
+            "evidence": "tls_certificate",
+            "name": "https",
+            "tls_subject": "Archive"
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.32",
+          "port": 445,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 1.7,
+            "samples": 1
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.32",
+          "port": 5000,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 1.7,
+            "samples": 1
+          },
+          "service": {
+            "banner": "HTTP/1.1 200 OK",
+            "evidence": "banner",
+            "name": "http"
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 1.7,
+        "samples": 1,
+        "smoothed_millis": 1.7,
+        "variance_millis": 0.85
+      },
+      "ttl": 64,
+      "vendor": "Synology"
+    },
+    {
+      "addresses": [
+        "192.168.50.35"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:23",
+      "names": [
+        {
+          "model": "BSB002",
+          "rank": 1,
+          "source": "mdns",
+          "value": "Hue Bridge"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.35",
+          "port": 80,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 5.5,
+            "samples": 1
+          },
+          "service": {
+            "banner": "HTTP/1.1 200 OK",
+            "evidence": "banner",
+            "name": "http"
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.35",
+          "port": 443,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 5.5,
+            "samples": 1
+          },
+          "service": {
+            "evidence": "tls_certificate",
+            "name": "https",
+            "tls_subject": "Hue Bridge"
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 5.5,
+        "samples": 1,
+        "smoothed_millis": 5.5,
+        "variance_millis": 2.75
+      },
+      "ttl": 64,
+      "vendor": "Signify"
+    },
+    {
+      "addresses": [
+        "192.168.50.40"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "partial",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:28",
+      "names": [],
+      "ports": [],
+      "rtt": {
+        "millis": 24.0,
+        "samples": 1,
+        "smoothed_millis": 24.0,
+        "variance_millis": 12.0
+      },
+      "ttl": 64,
+      "vendor": "Nintendo"
+    },
+    {
+      "addresses": [
+        "192.168.50.41"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": true,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 1,
+        "name_source_is_self_sufficient": true
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:29",
+      "names": [
+        {
+          "model": "QN55Q80C",
+          "rank": 1,
+          "source": "ssdp",
+          "value": "[TV] Samsung Q80 Series"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.41",
+          "port": 8001,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 11.4,
+            "samples": 1
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.41",
+          "port": 8002,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 11.4,
+            "samples": 1
+          },
+          "state": "open"
+        }
+      ],
+      "rtt": {
+        "millis": 11.4,
+        "samples": 1,
+        "smoothed_millis": 11.4,
+        "variance_millis": 5.7
+      },
+      "ttl": 64,
+      "vendor": "Samsung"
+    },
+    {
+      "addresses": [
+        "192.168.50.50"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": false,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 2,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:32",
+      "names": [
+        {
+          "rank": 1,
+          "source": "netbios",
+          "value": "PIHOLE"
+        },
+        {
+          "rank": 1,
+          "source": "dns",
+          "value": "pihole.home.arpa"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.50",
+          "port": 22,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 1.2,
+            "samples": 1
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.50",
+          "port": 53,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 1.2,
+            "samples": 1
+          },
+          "state": "open"
+        },
+        {
+          "address": "192.168.50.50",
+          "port": 80,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 1.2,
+            "samples": 1
+          },
+          "service": {
+            "banner": "HTTP/1.1 200 OK",
+            "evidence": "banner",
+            "name": "http"
+          },
+          "state": "open"
+        }
+      ],
+      "reverse_dns": "pihole.home.arpa",
+      "rtt": {
+        "millis": 1.2,
+        "samples": 1,
+        "smoothed_millis": 1.2,
+        "variance_millis": 0.6
+      },
+      "ttl": 64,
+      "vendor": "Raspberry Pi"
+    },
+    {
+      "addresses": [
+        "192.168.50.60"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "identified",
+      "identification_evidence": {
+        "has_distinct_name": true,
+        "has_model": false,
+        "has_os_hint": true,
+        "has_vendor": true,
+        "independent_sources": 2,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "strong",
+      "last_seen": 1767268806027,
+      "mac": "00:00:5E:00:53:3C",
+      "names": [
+        {
+          "rank": 1,
+          "source": "netbios",
+          "value": "STUDIO-PC"
+        },
+        {
+          "rank": 1,
+          "source": "dns",
+          "value": "studio-pc.home.arpa"
+        }
+      ],
+      "ports": [
+        {
+          "address": "192.168.50.60",
+          "port": 445,
+          "proto": "tcp",
+          "rtt": {
+            "millis": 2.6,
+            "samples": 1
+          },
+          "state": "open"
+        }
+      ],
+      "reverse_dns": "studio-pc.home.arpa",
+      "rtt": {
+        "millis": 2.6,
+        "samples": 1,
+        "smoothed_millis": 2.6,
+        "variance_millis": 1.3
+      },
+      "ttl": 128,
+      "vendor": "Intel"
+    },
+    {
+      "addresses": [
+        "192.168.50.70"
+      ],
+      "discovered_via": [
+        "probe_reply"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "partial",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": true,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "weak",
+      "last_seen": 1767268806027,
+      "mac": "2E:5A:00:00:01:03",
+      "names": [],
+      "ports": [],
+      "rtt": {
+        "millis": 42.3,
+        "samples": 1,
+        "smoothed_millis": 42.3,
+        "variance_millis": 21.15
+      },
+      "ttl": 64
+    },
+    {
+      "addresses": [
+        "192.168.50.71"
+      ],
+      "discovered_via": [
+        "neighbor_table"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "minimal",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "weak",
+      "last_seen": 1767268806027,
+      "mac": "2E:5A:00:00:01:04",
+      "names": [],
+      "ports": []
+    },
+    {
+      "addresses": [
+        "192.168.50.72"
+      ],
+      "discovered_via": [
+        "neighbor_table"
+      ],
+      "first_seen": 1767268800000,
+      "identification": "minimal",
+      "identification_evidence": {
+        "has_distinct_name": false,
+        "has_model": false,
+        "has_os_hint": false,
+        "has_vendor": false,
+        "independent_sources": 0,
+        "name_source_is_self_sufficient": false
+      },
+      "identity_stability": "weak",
+      "last_seen": 1767268806027,
+      "mac": "2E:5A:00:00:01:05",
+      "names": [],
+      "ports": []
+    }
+  ],
+  "run": {
+    "engine": {
+      "capabilities": [
+        "icmp_sweep",
+        "connect_scan",
+        "banner_probe",
+        "neighbor_table"
+      ],
+      "kind": "unprivileged",
+      "name": "unprivileged-icmp"
+    },
+    "finished_at": 1767268806027,
+    "id": "c2e2927f-23a7-558b-94ca-f0c671f4635c",
+    "interface": "en0",
+    "mode": "full",
+    "outcome": "complete",
+    "started_at": 1767268800000,
+    "target": "192.168.50.0/24",
+    "timing": {
+      "effective_probes_per_second": 310.63559204823247,
+      "peak_concurrency": 396,
+      "probes_sent": 1169,
+      "replies_seen": 27,
+      "stages": [
+        {
+          "budget_policy": "split",
+          "elapsed_millis": 475.769208,
+          "hosts_found": 14,
+          "probes_sent": 763,
+          "replies_seen": 17,
+          "retransmit_budget_millis": 150,
+          "spacing_jitter": 0.25,
+          "spacing_policy": "spread-into-tail",
+          "spread_budget_millis": 0,
+          "stage": "discovery",
+          "tail_budget_millis": 251.226686
+        },
+        {
+          "elapsed_millis": 2658.19375,
+          "hosts_found": 12,
+          "name_source_budget_millis": 3150,
+          "name_stage_budget_millis": 4500,
+          "probes_sent": 10,
+          "replies_seen": 6,
+          "stage": "naming"
+        },
+        {
+          "elapsed_millis": 629.289,
+          "probes_sent": 396,
+          "replies_seen": 4,
+          "stage": "deep_scan"
+        }
+      ]
+    }
+  },
+  "schema": 3
+}

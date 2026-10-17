@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Changed
+- The App Store and README captures show an invented home network, mostly named and with
+  vendors, instead of the anonymised capture of a real one (`-ShowcaseData`,
+  `Scripts/make-showcase-fixture.py`). Tests still run on the anonymised capture.
+
 ## 1.0.0 — 2026-10-17
 
 ### Added
