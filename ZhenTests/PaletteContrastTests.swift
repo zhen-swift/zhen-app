@@ -65,10 +65,14 @@ struct Pair: CustomTestStringConvertible {
   var testDescription: String { name }
 }
 
+// Main-actor, as the asset catalog's generated symbols are under Xcode 27's default
+// isolation; read only by the main-actor suite below.
+@MainActor
 let textSurfaces: [(String, ColorResource)] = [
   ("surface", .surface), ("surfaceRaised", .surfaceRaised), ("surfaceField", .surfaceField),
 ]
 
+@MainActor
 let drawnPairs: [Pair] = [
   Pair(name: "textPrimary", foreground: .textPrimary,
        backgrounds: textSurfaces + [("selection", .selectionFill)], standard: 4.5, increased: 7),
@@ -96,9 +100,12 @@ let drawnPairs: [Pair] = [
 ]
 
 @MainActor
+let themedResources: [ColorResource] = [.surface, .textPrimary, .accent]
+
+@MainActor
 struct PaletteContrastTests {
   @Test("Every drawn pair clears its floor in every appearance",
-        arguments: drawnPairs, Look.allCases)
+        arguments: await drawnPairs, Look.allCases)
   func clearsItsFloor(_ pair: Pair, _ look: Look) {
     guard let floor = look.isIncreased ? pair.increased : pair.standard else { return }
     for (name, background) in pair.backgrounds {
@@ -131,7 +138,7 @@ struct PaletteContrastTests {
     #expect(hex(components(.textTertiary, increased)) == (look == .dark ? 0xB8B8BB : 0x4F4F51))
   }
 
-  @Test("The themes really differ", arguments: [ColorResource.surface, .textPrimary, .accent])
+  @Test("The themes really differ", arguments: await themedResources)
   func themesDiffer(_ resource: ColorResource) {
     #expect(components(resource, .light) != components(resource, .dark))
   }
