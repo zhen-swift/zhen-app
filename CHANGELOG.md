@@ -7,6 +7,13 @@
   vendors, instead of the anonymised capture of a real one (`-ShowcaseData`,
   `Scripts/make-showcase-fixture.py`). Tests still run on the anonymised capture.
 
+### Fixed
+- On a screen narrower than the window's measured minimum, such as a 13-inch Mac at
+  "Larger Text", the window fits the screen and the device table scrolls sideways.
+  Previously the window's right edge, including Show Details, was off screen.
+- Empty states and Settings' toggle descriptions use the palette's secondary text colour.
+  On macOS 26 the system's measured 3.9:1, below the 4.5:1 the palette is held to.
+
 ## 1.0.0 — 2026-10-17
 
 ### Added

@@ -12,8 +12,10 @@ extension DevicesView {
       VStack(spacing: .spacing.large) {
         ContentUnavailableView {
           Label(String(localized: .nothingAnswered), systemImage: "antenna.radiowaves.left.and.right.slash")
+            .foregroundStyle(.textSecondary)
         } description: {
           Text(.scanCompletedButNoDevicesReplied)
+            .foregroundStyle(.textSecondary)
         } actions: {
           Button(String(localized: .openSystemSettings)) {
             if let url = SystemSettings.localNetwork { openURL(url) }

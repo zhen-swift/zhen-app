@@ -42,21 +42,26 @@ struct SettingsView: View {
         .accessibilityIdentifier("scanBudgetPicker")
         // A3's "Deep-scan new devices", which it is again: zhen-core 0.7.0 can limit the
         // port stage to devices history has never seen (`PortStage.newHosts`).
+        // Each toggle's second line in the palette's secondary: the system's measured
+        // 3.90:1 on macOS 26 (`SystemAccessibilityAuditUITests`).
         Toggle(isOn: $deepScan) {
           Text(.deepScanNewDevices)
           Text(.deepScanNewDevicesDetail)
+            .foregroundStyle(.textSecondary)
         }
         .accessibilityLabel(String(localized: .deepScanNewDevices))
         .accessibilityIdentifier("deepScanToggle")
         Toggle(isOn: $notifyNewDevices) {
           Text(.notifyNewDeviceJoins)
           Text(.notifyNewDeviceJoinsDetail)
+            .foregroundStyle(.textSecondary)
         }
         .accessibilityLabel(String(localized: .notifyNewDeviceJoins))
         .accessibilityIdentifier("notifyNewDevicesToggle")
         Toggle(isOn: $keepInMenuBar) {
           Text(.keepWatchingFromMenuBar)
           Text(.keepWatchingFromMenuBarDetail)
+            .foregroundStyle(.textSecondary)
         }
         // Not mid-scan: the scan would move between hosts while it ran.
         .disabled(model.isBusy)

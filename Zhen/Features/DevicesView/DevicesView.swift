@@ -49,10 +49,13 @@ struct DevicesView: View {
         .onChange(of: sortOrder) { storedSort = SortStorage.encode(sortOrder) }
         .overlay {
           if rows.isEmpty {
-            ContentUnavailableView(
-              String(localized: .noMatches), systemImage: "magnifyingglass",
-              description: Text(.noDeviceMatches(search))
-            )
+            ContentUnavailableView {
+              Label(String(localized: .noMatches), systemImage: "magnifyingglass")
+                .foregroundStyle(.textSecondary)
+            } description: {
+              Text(.noDeviceMatches(search))
+                .foregroundStyle(.textSecondary)
+            }
             .accessibilityIdentifier("noMatches")
           }
         }
