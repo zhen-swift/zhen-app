@@ -24,7 +24,7 @@ struct ZhenRobot {
   @discardableResult
   static func launch(
     fixture: String = "home", look: Look? = nil, scanPace: Int = 40,
-    restoreState: Bool = false, savedStateFromEarlierTests: Bool = true, language: String = "en", extra: [String] = []
+    restoreState: Bool = false, language: String = "en", extra: [String] = []
   ) -> ZhenRobot {
     let app = XCUIApplication()
     // `-UITesting` takes no value, so it goes LAST. Anywhere else AppKit reads it as a
@@ -33,11 +33,7 @@ struct ZhenRobot {
     // "the main window never appeared" with every argument in the right order but this one.
     app.launchArguments = ["-Fixture", fixture, "-ScanPace", "\(scanPace)"]
       + (look?.arguments ?? [])
-      + (restoreState ? ["-NSQuitAlwaysKeepsWindows", "YES"] : [])
-      // Saved state is written even when it is ignored, so an earlier test's — the menu bar
-      // tests close the window — comes back windowless. A restoration test's first launch
-      // reads none, keeps what it does, and its relaunch reads that.
-      + (!restoreState || !savedStateFromEarlierTests ? ["-ApplePersistenceIgnoreState", "YES"] : [])
+      + (restoreState ? ["-NSQuitAlwaysKeepsWindows", "YES"] : ["-ApplePersistenceIgnoreState", "YES"])
       // The interface language, pinned: assertions read English words, and this Mac's
       // second language is Spanish, which the app now speaks.
       + ["-AppleLanguages", "(\(language))"]

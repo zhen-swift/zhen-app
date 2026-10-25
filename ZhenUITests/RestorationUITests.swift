@@ -9,7 +9,7 @@ final class RestorationUITests: XCTestCase {
 
   @MainActor
   func testWindowRoomAndDeviceReturn() {
-    var robot = ZhenRobot.launch(restoreState: true, savedStateFromEarlierTests: false)
+    var robot = ZhenRobot.launch(restoreState: true)
     robot.key("1", .command)
     robot.press("[", .command, expecting: "deviceTable")
     robot.shrinkToMinimum()
@@ -44,7 +44,7 @@ final class RestorationUITests: XCTestCase {
   /// column; click one to sort.
   @MainActor
   func testSortAndColumnsReturn() {
-    var robot = ZhenRobot.launch(restoreState: true, savedStateFromEarlierTests: false)
+    var robot = ZhenRobot.launch(restoreState: true)
     robot.key("1", .command)
     robot.press("[", .command, expecting: "deviceTable")
     // From a known state: a column hidden by an earlier run comes back first. (The sort
