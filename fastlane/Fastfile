@@ -1,5 +1,6 @@
 # Zhen's lanes. Local commands are exactly CI's commands (AGENTS.md, CI); the only CI-only
-# setting is SPM_CACHE_PATH. A macOS app: every lane runs on this Mac, no simulator.
+# settings are SPM_CACHE_PATH and TEST_RUNNER_ZHEN_BUDGET_SCALE (Docs/CI.md). A macOS app:
+# every lane runs on this Mac, no simulator.
 #
 #   bundle exec fastlane test          unit + UI, results in fastlane/test_output
 #   bundle exec fastlane unit          unit only

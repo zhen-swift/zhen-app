@@ -19,6 +19,10 @@ First time: `bundle config set --local path vendor/bundle && bundle install`.
 
 The lanes sign ad hoc (`CODE_SIGN_IDENTITY=-`), so forks and CI need no team.
 
+Performance gates (`ScaleTests`, the session's coalescing) state their budgets as measured
+on a developer's Mac and compare through `Budget.of(_:)`. CI sets
+`TEST_RUNNER_ZHEN_BUDGET_SCALE=3` for its slower virtual Mac; locally the scale is 1.
+
 ## What a test can touch
 
 Nothing real. Under `-UITesting`, and in the unit-test host (detected from
