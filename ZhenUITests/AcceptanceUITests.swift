@@ -21,10 +21,12 @@ final class AcceptanceUITests: XCTestCase {
 
   @MainActor
   private func assertNormalList(_ robot: ZhenRobot, at size: String) {
-    // Whole rows only: one the scroll view cuts in half reports its visible height.
+    // Whole rows only: one the scroll view cuts in half reports its visible height. Top to
+    // bottom only: on a screen narrower than the measured minimum the table scrolls
+    // sideways, and every row runs past its right edge.
     let visible = robot.table.frame
     let rows = robot.rows.filter {
-      !$0.cells.allElementsBoundByIndex.isEmpty && visible.contains($0.frame)
+      !$0.cells.allElementsBoundByIndex.isEmpty && $0.frame.minY >= visible.minY && $0.frame.maxY <= visible.maxY
     }
     XCTAssertGreaterThanOrEqual(rows.count, 8, "too few rows to judge at \(size)")
     let heights = Set(rows.map { $0.frame.height.rounded() })

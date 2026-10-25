@@ -14,23 +14,26 @@ final class AccessibilityAuditUITests: XCTestCase {
   ]
 
   /// AppKit's own controls, named by the system and not ours to identify: window buttons,
-  /// the sidebar toggle, the toolbar search field, sortable column headers, and the overlay
-  /// scroller's disabled parts.
+  /// the sidebar toggle, the toolbar search field, sortable column headers, the overlay
+  /// scroller's disabled parts, and the parts of a legacy scroll bar — a Mac driven by a
+  /// mouse, as CI's virtual one is, shows those, and their page areas are nameless buttons.
   @MainActor
-  private func isSystem(_ element: XCUIElement) -> Bool {
+  private func isSystem(_ element: XCUIElement, scrollBars: [CGRect]) -> Bool {
     element.identifier.hasPrefix("_XCUI:")
       || ["Hide Sidebar", "Show Sidebar", "Search", "Back"].contains(element.label)
       || (!element.title.isEmpty && element.identifier.isEmpty && element.label.isEmpty)
       || (!element.isEnabled && element.frame.width <= 8)
+      || (element.identifier.isEmpty && element.label.isEmpty && scrollBars.contains { $0.contains(element.frame) })
   }
 
   @MainActor
   private func audit(_ root: XCUIElement, screen: String) {
     var checked = 0
+    let scrollBars = root.descendants(matching: .scrollBar).allElementsBoundByIndex.map(\.frame)
     for type in types {
-      for element in root.descendants(matching: type).allElementsBoundByIndex where element.exists && !isSystem(element) {
+      for element in root.descendants(matching: type).allElementsBoundByIndex where element.exists && !isSystem(element, scrollBars: scrollBars) {
         checked += 1
-        XCTAssertFalse(element.identifier.isEmpty, "\(screen): a \(type) named '\(element.label)' has no identifier")
+        XCTAssertFalse(element.identifier.isEmpty, "\(screen): a \(type) named '\(element.label)' at \(element.frame) has no identifier")
         XCTAssertFalse(element.label.isEmpty && element.title.isEmpty, "\(screen): '\(element.identifier)' has no accessible name")
       }
     }

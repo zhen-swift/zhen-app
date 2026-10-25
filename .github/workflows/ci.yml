@@ -82,9 +82,12 @@ jobs:
           key: spm-${{ hashFiles('Zhen.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
 
       # Exactly the local command. Ad-hoc signing is in the lane: forks have no team.
+      # The runner is a virtual Mac two to three times slower than a developer's, so the
+      # performance gates' budgets scale by 3 here (ZhenTests/Budget.swift).
       - name: Test
         env:
           SPM_CACHE_PATH: ${{ github.workspace }}/.spm
+          TEST_RUNNER_ZHEN_BUDGET_SCALE: '3'
         run: bundle exec fastlane test
 
       - name: Keep the results

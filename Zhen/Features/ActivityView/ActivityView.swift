@@ -14,10 +14,13 @@ struct ActivityView: View {
     let events = filtered
     Group {
       if model.eventsInWindow.isEmpty {
-        ContentUnavailableView(
-          String(localized: .nothingHasChanged), systemImage: "waveform.path.ecg",
-          description: Text(.eventsAppearHereWhenDevicesJoin)
-        )
+        ContentUnavailableView {
+          Label(String(localized: .nothingHasChanged), systemImage: "waveform.path.ecg")
+            .foregroundStyle(.textSecondary)
+        } description: {
+          Text(.eventsAppearHereWhenDevicesJoin)
+            .foregroundStyle(.textSecondary)
+        }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("activityEmpty")
       } else {
@@ -38,10 +41,13 @@ struct ActivityView: View {
         .accessibilityIdentifier("activityList")
         .overlay {
           if events.isEmpty {
-            ContentUnavailableView(
-              noMatchTitle, systemImage: "line.3.horizontal.decrease.circle",
-              description: Text(.tryAnotherFilterClearSearch)
-            )
+            ContentUnavailableView {
+              Label(noMatchTitle, systemImage: "line.3.horizontal.decrease.circle")
+                .foregroundStyle(.textSecondary)
+            } description: {
+              Text(.tryAnotherFilterClearSearch)
+                .foregroundStyle(.textSecondary)
+            }
             .accessibilityIdentifier("activityNoMatch")
           }
         }

@@ -33,11 +33,15 @@ struct ZhenRobot {
     // "the main window never appeared" with every argument in the right order but this one.
     app.launchArguments = ["-Fixture", fixture, "-ScanPace", "\(scanPace)"]
       + (look?.arguments ?? [])
-      + (restoreState ? ["-NSQuitAlwaysKeepsWindows", "YES", "-RestoreState"] : ["-ApplePersistenceIgnoreState", "YES"])
+      + (restoreState ? ["-NSQuitAlwaysKeepsWindows", "YES"] : ["-ApplePersistenceIgnoreState", "YES"])
       // The interface language, pinned: assertions read English words, and this Mac's
       // second language is Spanish, which the app now speaks.
       + ["-AppleLanguages", "(\(language))"]
       + extra
+      // `-RestoreState` takes no value either, so it goes just before `-UITesting`, which
+      // AppKit then reads as its value — nothing is left over. Followed by
+      // `-AppleLanguages`, it left "(en)" over and every restoration launch was windowless.
+      + (restoreState ? ["-RestoreState"] : [])
       + ["-UITesting"]
     app.launch()
     let robot = ZhenRobot(app: app)
@@ -128,6 +132,24 @@ struct ZhenRobot {
       if element(identifier).waitForExistence(timeout: 4) { return }
     }
     XCTFail("\(identifier) never appeared after ⌘-key \(key) ×3", file: file, line: line)
+  }
+
+  /// Whether Activity's `segment` (an `ActivityFilter` raw value) becomes the selected
+  /// one. A segment is a radio button whose value is 1 when on.
+  func isSelected(segment: String, timeout: TimeInterval = 4) -> Bool {
+    let on = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == 1"), object: element("activityFilter-\(segment)"))
+    return XCTWaiter.wait(for: [on], timeout: timeout) == .completed
+  }
+
+  /// Under `segment`, searches Activity for a device nobody has, so the segment matches
+  /// nothing. The home fixture has events of every kind, ports included since zhen-core
+  /// 0.7.0, so no segment is empty on its own.
+  func emptyActivity(under segment: (key: String, name: String), file: StaticString = #filePath, line: UInt = #line) {
+    key(segment.key, [.command, .option])
+    XCTAssertTrue(isSelected(segment: segment.name), "\(segment.name) was never selected", file: file, line: line)
+    key("f", .command)
+    app.typeText("zzz")
+    waitFor("activityNoMatch", file: file, line: line)
   }
 
   /// Opens the device at `address` with a double-click, as a person would.

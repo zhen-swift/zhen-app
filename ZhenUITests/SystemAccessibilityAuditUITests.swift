@@ -155,6 +155,9 @@ final class SystemAccessibilityAuditUITests: XCTestCase {
     audit(robot, "Activity")
     robot.press("1", .command, expecting: "deviceTable")
     robot.press("r", .command, expecting: "liveScan")
+    // After the first host, not during "Listening…": the audit flagged that placeholder as
+    // it was replaced, and an element gone by the time it reports cannot be measured.
+    robot.waitFor("foundHost-192.168.50.1")
     audit(robot, "Live scan")
     robot.press(".", .command, expecting: "showDevicesButton")
     robot.key(.escape)

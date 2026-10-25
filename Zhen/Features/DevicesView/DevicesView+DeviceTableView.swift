@@ -47,8 +47,9 @@ extension DevicesView {
           .customizationID("lastSeen")
         }
         // The table's minimum is its measured columns. The window grows its own minimum
-        // to match, rather than the split view taking the width from the sidebar (F2).
-        .frame(minWidth: widths.minimumTable)
+        // to match, rather than the split view taking the width from the sidebar (F2) —
+        // up to the screen's width, past which the table scrolls sideways.
+        .frame(minWidth: widths.minimumTableOnScreen)
         .contextMenu(forSelectionType: DeviceItem.ID.self) { ids in
           DeviceMenuView(ids: ids, onOpen: onOpen, onRename: onRename, onShowActivity: onShowActivity)
         } primaryAction: { ids in

@@ -30,7 +30,7 @@ struct ScaleTests {
     let took = clock.now - start
     print("ColumnWidths, \(count) rows: \(took)")
     #expect(widths.address > 0)
-    #expect(took < .milliseconds(250), "\(count) rows took \(took)")
+    #expect(took < Budget.of(.milliseconds(250)), "\(count) rows took \(took)")
   }
 }
 
@@ -56,7 +56,7 @@ extension ScaleTests {
     let start = clock.now
     for _ in 0..<1_000 { _ = DevicesView.ColumnWidths.cached(for: model, now: now) }
     let took = clock.now - start
-    #expect(took < .milliseconds(20), "1 000 cached reads took \(took)")
+    #expect(took < Budget.of(.milliseconds(20)), "1 000 cached reads took \(took)")
   }
 }
 
@@ -92,6 +92,6 @@ extension ScaleTests {
     let took = clock.now - start
     print("search, 65 534 rows: \(took)")
     #expect(!found.isEmpty)
-    #expect(took < .seconds(1), "took \(took)")
+    #expect(took < Budget.of(.seconds(1)), "took \(took)")
   }
 }

@@ -43,10 +43,13 @@ struct DeviceDetailView: View {
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("deviceDetail")
       } else {
-        ContentUnavailableView(
-          String(localized: .deviceNotFound), systemImage: "questionmark.circle",
-          description: Text(.historyNoLongerHasThisDevice)
-        )
+        ContentUnavailableView {
+          Label(String(localized: .deviceNotFound), systemImage: "questionmark.circle")
+            .foregroundStyle(.textSecondary)
+        } description: {
+          Text(.historyNoLongerHasThisDevice)
+            .foregroundStyle(.textSecondary)
+        }
       }
     }
   }

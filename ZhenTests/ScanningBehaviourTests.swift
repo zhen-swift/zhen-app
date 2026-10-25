@@ -181,9 +181,10 @@ struct ScanningBehaviourTests {
     let seen = Mutex(0)
     let consumer = Task { for await _ in stream { seen.withLock { $0 += 1 } } }
     defer { consumer.cancel() }
-    /// Waits, up to two seconds, for the watcher to have reported `count` changes.
+    /// Waits, up to ten seconds, for the watcher to have reported `count` changes. It polls
+    /// on the main actor, which the scale tests beside it can hold for seconds on CI.
     func reported(_ count: Int) async -> Bool {
-      let deadline = ContinuousClock.now + .seconds(2)
+      let deadline = ContinuousClock.now + .seconds(10)
       while seen.withLock({ $0 }) < count, ContinuousClock.now < deadline {
         try? await Task.sleep(for: .milliseconds(20))
       }

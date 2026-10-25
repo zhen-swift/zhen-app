@@ -7,23 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E1A0C0D2F00000000000012 /* com.jctec.zhen.helper.plist in Embed Launch Daemon */ = {isa = PBXBuildFile; fileRef = 5E1A0C0D2F00000000000010 /* com.jctec.zhen.helper.plist */; };
+		5E1A0C0D2F00000000000021 /* ZhenDarwin in Frameworks */ = {isa = PBXBuildFile; productRef = 5E1A0C0D2F00000000000022 /* ZhenDarwin */; };
+		5E1A0C0D2F00000000000031 /* zhen-helper in Embed Helper */ = {isa = PBXBuildFile; productRef = 5E1A0C0D2F00000000000032 /* zhen-helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		BAF25A90929912BA8CB8FBBF /* ZhenCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1B417D090B1D07A91103FA /* ZhenCore */; };
 		C172F36BA8767423C41086E4 /* ZhenScan in Frameworks */ = {isa = PBXBuildFile; productRef = D5818EF3CE50B07BBF9458FC /* ZhenScan */; };
 		D4E0392ADDB0F46AAD8F273F /* ZhenPrivilege in Frameworks */ = {isa = PBXBuildFile; productRef = 070E7AE6E4415407A08EDDCC /* ZhenPrivilege */; };
-		5E1A0C0D2F00000000000021 /* ZhenDarwin in Frameworks */ = {isa = PBXBuildFile; productRef = 5E1A0C0D2F00000000000022 /* ZhenDarwin */; };
-		5E1A0C0D2F00000000000012 /* com.jctec.zhen.helper.plist in Embed Launch Daemon */ = {isa = PBXBuildFile; fileRef = 5E1A0C0D2F00000000000010 /* com.jctec.zhen.helper.plist */; };
-		5E1A0C0D2F00000000000031 /* zhen-helper in Embed Helper */ = {isa = PBXBuildFile; productRef = 5E1A0C0D2F00000000000032 /* zhen-helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		795885AFF87306F1F737B182 = {
+		795885AFF87306F1F737B182 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 98F54143AB4E86B28C3AFEE0 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = C13732C8E715C9BEE4FA51C9;
 			remoteInfo = Zhen;
 		};
-		7C3F7C2476CF2BD9AE55EACD = {
+		7C3F7C2476CF2BD9AE55EACD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 98F54143AB4E86B28C3AFEE0 /* Project object */;
 			proxyType = 1;
@@ -33,17 +33,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5E1A0C0D2F00000000000033 /* Embed Helper */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
-			files = (
-				5E1A0C0D2F00000000000031 /* zhen-helper in Embed Helper */,
-			);
-			name = "Embed Helper";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5E1A0C0D2F00000000000013 /* Embed Launch Daemon */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -55,13 +44,24 @@
 			name = "Embed Launch Daemon";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5E1A0C0D2F00000000000033 /* Embed Helper */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				5E1A0C0D2F00000000000031 /* zhen-helper in Embed Helper */,
+			);
+			name = "Embed Helper";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8BCD5BC4CDFDF0918087C782 /* Zhen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zhen.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FDC0227D447700EB725E9769 /* ZhenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZhenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A7C9FD69DA095A3BF0CB4587 /* ZhenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZhenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E1A0C0D2F00000000000010 /* com.jctec.zhen.helper.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = com.jctec.zhen.helper.plist; sourceTree = "<group>"; };
+		8BCD5BC4CDFDF0918087C782 /* Zhen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zhen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7C9FD69DA095A3BF0CB4587 /* ZhenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZhenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDC0227D447700EB725E9769 /* ZhenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZhenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -75,6 +75,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		119C44536C59FD2DC605EB12 /* ZhenUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ZhenUITests;
+			sourceTree = "<group>";
+		};
 		69F8D45498D7E20DA99BB780 /* Zhen */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -88,15 +93,10 @@
 			path = ZhenTests;
 			sourceTree = "<group>";
 		};
-		119C44536C59FD2DC605EB12 /* ZhenUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ZhenUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		78AE8C6BEB2A40A6D824CCEE = {
+		78AE8C6BEB2A40A6D824CCEE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -107,14 +107,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A0C136533CEB3FBB31D5D182 = {
+		8390B7595BCD2F6FEF17F197 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8390B7595BCD2F6FEF17F197 = {
+		A0C136533CEB3FBB31D5D182 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -124,6 +124,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		328EC33DF3954DC9B83FA285 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8BCD5BC4CDFDF0918087C782 /* Zhen.app */,
+				FDC0227D447700EB725E9769 /* ZhenTests.xctest */,
+				A7C9FD69DA095A3BF0CB4587 /* ZhenUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E1A0C0D2F00000000000011 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,26 +153,39 @@
 			);
 			sourceTree = "<group>";
 		};
-		328EC33DF3954DC9B83FA285 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8BCD5BC4CDFDF0918087C782 /* Zhen.app */,
-				FDC0227D447700EB725E9769 /* ZhenTests.xctest */,
-				A7C9FD69DA095A3BF0CB4587 /* ZhenUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5A84779F73F7B6419BDB1882 /* ZhenUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED9B4239EA7D13F3B2F611D1 /* Build configuration list for PBXNativeTarget "ZhenUITests" */;
+			buildPhases = (
+				3F0002D04A541FE103F80CF6 /* Sources */,
+				8390B7595BCD2F6FEF17F197 /* Frameworks */,
+				43A098B05C43B6CE676DA934 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4F9B188C23E0E7478CAF56D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				119C44536C59FD2DC605EB12 /* ZhenUITests */,
+			);
+			name = ZhenUITests;
+			packageProductDependencies = (
+			);
+			productName = ZhenUITests;
+			productReference = A7C9FD69DA095A3BF0CB4587 /* ZhenUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		C13732C8E715C9BEE4FA51C9 /* Zhen */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5333CCA39857637925FB3D0C /* Build configuration list for PBXNativeTarget "Zhen" */;
 			buildPhases = (
-				971ED9D05B25DB6C4D7680D4,
-				78AE8C6BEB2A40A6D824CCEE,
-				364863F9F2E558B0F50473FC,
+				971ED9D05B25DB6C4D7680D4 /* Sources */,
+				78AE8C6BEB2A40A6D824CCEE /* Frameworks */,
+				364863F9F2E558B0F50473FC /* Resources */,
 				5E1A0C0D2F00000000000013 /* Embed Launch Daemon */,
 				5E1A0C0D2F00000000000033 /* Embed Helper */,
 			);
@@ -182,16 +205,16 @@
 				5E1A0C0D2F00000000000022 /* ZhenDarwin */,
 			);
 			productName = Zhen;
-			productReference = 8BCD5BC4CDFDF0918087C782;
+			productReference = 8BCD5BC4CDFDF0918087C782 /* Zhen.app */;
 			productType = "com.apple.product-type.application";
 		};
 		CA67227E0198D50520DB978D /* ZhenTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7847684E1F6A273085FFC5EA /* Build configuration list for PBXNativeTarget "ZhenTests" */;
 			buildPhases = (
-				254997B761D4EBEC4B65DD70,
-				A0C136533CEB3FBB31D5D182,
-				8C40F1F655563060A4AAA4CF,
+				254997B761D4EBEC4B65DD70 /* Sources */,
+				A0C136533CEB3FBB31D5D182 /* Frameworks */,
+				8C40F1F655563060A4AAA4CF /* Resources */,
 			);
 			buildRules = (
 			);
@@ -205,31 +228,8 @@
 			packageProductDependencies = (
 			);
 			productName = ZhenTests;
-			productReference = FDC0227D447700EB725E9769;
+			productReference = FDC0227D447700EB725E9769 /* ZhenTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		5A84779F73F7B6419BDB1882 /* ZhenUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = ED9B4239EA7D13F3B2F611D1 /* Build configuration list for PBXNativeTarget "ZhenUITests" */;
-			buildPhases = (
-				3F0002D04A541FE103F80CF6,
-				8390B7595BCD2F6FEF17F197,
-				43A098B05C43B6CE676DA934,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E4F9B188C23E0E7478CAF56D /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				119C44536C59FD2DC605EB12 /* ZhenUITests */,
-			);
-			name = ZhenUITests;
-			packageProductDependencies = (
-			);
-			productName = ZhenUITests;
-			productReference = A7C9FD69DA095A3BF0CB4587;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -241,14 +241,14 @@
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					5A84779F73F7B6419BDB1882 = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = C13732C8E715C9BEE4FA51C9;
+					};
 					C13732C8E715C9BEE4FA51C9 = {
 						CreatedOnToolsVersion = 26.6;
 					};
 					CA67227E0198D50520DB978D = {
-						CreatedOnToolsVersion = 26.6;
-						TestTargetID = C13732C8E715C9BEE4FA51C9;
-					};
-					5A84779F73F7B6419BDB1882 = {
 						CreatedOnToolsVersion = 26.6;
 						TestTargetID = C13732C8E715C9BEE4FA51C9;
 					};
@@ -280,21 +280,21 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		364863F9F2E558B0F50473FC = {
+		364863F9F2E558B0F50473FC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8C40F1F655563060A4AAA4CF = {
+		43A098B05C43B6CE676DA934 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		43A098B05C43B6CE676DA934 = {
+		8C40F1F655563060A4AAA4CF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -304,21 +304,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		971ED9D05B25DB6C4D7680D4 = {
+		254997B761D4EBEC4B65DD70 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		254997B761D4EBEC4B65DD70 = {
+		3F0002D04A541FE103F80CF6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3F0002D04A541FE103F80CF6 = {
+		971ED9D05B25DB6C4D7680D4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -345,103 +345,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		D08DD63EED508AD30D0CB0B4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		811CB99F7A296F7846C18A7F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
-				SWIFT_VERSION = 6.0;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-			};
-			name = Release;
-		};
-		E9B2E96ABC5F6856F2BE79CF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = SystemAccent;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S8662L649U;
-				ENABLE_APP_SANDBOX = NO;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Zhen/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Zhen;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Zhen lists the devices on your network. To find them it asks each address on this network whether anything is there, and reads the names devices announce about themselves. Nothing is sent anywhere else.";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jctec.zhen;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-			};
-			name = Debug;
-		};
 		5A8C91857F674E16E2724F47 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -473,37 +376,32 @@
 			};
 			name = Release;
 		};
-		AEE072417D1ABB34757C5072 /* Debug */ = {
+		811CB99F7A296F7846C18A7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S8662L649U;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jctec.zhen.ZhenTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zhen.app/Contents/MacOS/Zhen";
-			};
-			name = Debug;
-		};
-		9BB52494F7CCFD3DFCED98B0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S8662L649U;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jctec.zhen.ZhenTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zhen.app/Contents/MacOS/Zhen";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -539,23 +437,125 @@
 			};
 			name = Release;
 		};
+		9BB52494F7CCFD3DFCED98B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S8662L649U;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jctec.zhen.ZhenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zhen.app/Contents/MacOS/Zhen";
+			};
+			name = Release;
+		};
+		AEE072417D1ABB34757C5072 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S8662L649U;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jctec.zhen.ZhenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zhen.app/Contents/MacOS/Zhen";
+			};
+			name = Debug;
+		};
+		D08DD63EED508AD30D0CB0B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		E9B2E96ABC5F6856F2BE79CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = SystemAccent;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S8662L649U;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Zhen/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zhen;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Zhen lists the devices on your network. To find them it asks each address on this network whether anything is there, and reads the names devices announce about themselves. Nothing is sent anywhere else.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jctec.zhen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		60AA9EB27EE681A82A9AEC1A /* Build configuration list for PBXProject "Zhen" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D08DD63EED508AD30D0CB0B4 /* Debug */,
-				811CB99F7A296F7846C18A7F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		5333CCA39857637925FB3D0C /* Build configuration list for PBXNativeTarget "Zhen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E9B2E96ABC5F6856F2BE79CF /* Debug */,
 				5A8C91857F674E16E2724F47 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		60AA9EB27EE681A82A9AEC1A /* Build configuration list for PBXProject "Zhen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D08DD63EED508AD30D0CB0B4 /* Debug */,
+				811CB99F7A296F7846C18A7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -592,6 +592,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		070E7AE6E4415407A08EDDCC /* ZhenPrivilege */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			productName = ZhenPrivilege;
+		};
+		5E1A0C0D2F00000000000022 /* ZhenDarwin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			productName = ZhenDarwin;
+		};
+		5E1A0C0D2F00000000000032 /* zhen-helper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			productName = "zhen-helper";
+		};
 		7B1B417D090B1D07A91103FA /* ZhenCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
@@ -601,21 +616,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
 			productName = ZhenScan;
-		};
-		5E1A0C0D2F00000000000032 /* zhen-helper */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
-			productName = "zhen-helper";
-		};
-		5E1A0C0D2F00000000000022 /* ZhenDarwin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
-			productName = ZhenDarwin;
-		};
-		070E7AE6E4415407A08EDDCC /* ZhenPrivilege */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
-			productName = ZhenPrivilege;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
