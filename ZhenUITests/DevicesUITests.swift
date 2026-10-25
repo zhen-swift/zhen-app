@@ -17,16 +17,18 @@ final class DevicesUITests: XCTestCase {
 
   @MainActor
   func testFirstScanStreamsRowsNeverASpinner() {
-    let robot = ZhenRobot.launch(fixture: "empty", scanPace: 250)
+    // 600 ms a host: on CI's virtual Mac one accessibility query can take seconds, and at
+    // 250 ms the tenth host had arrived before the test looked for the first.
+    let robot = ZhenRobot.launch(fixture: "empty", scanPace: 600)
     robot.waitFor("neverScanned")
     robot.element("emptyScanNowButton").click()
     robot.waitFor("liveScan")
     // Rows arrive one at a time while discovery is still running.
-    XCTAssertTrue(robot.element("foundHost-192.168.50.1").waitForExistence(timeout: 5))
+    XCTAssertTrue(robot.element("foundHost-192.168.50.1").waitForExistence(timeout: 10))
     XCTAssertFalse(robot.element("foundHost-192.168.50.37").exists, "everything arrived at once: nothing streamed")
     XCTAssertEqual(robot.app.progressIndicators.matching(NSPredicate(format: "identifier == 'deviceTable'")).count, 0)
     // And it hands back to a table on its own.
-    XCTAssertTrue(robot.table.waitForExistence(timeout: 20), "the scan never handed back to Devices")
+    XCTAssertTrue(robot.table.waitForExistence(timeout: 40), "the scan never handed back to Devices")
   }
 
   @MainActor
