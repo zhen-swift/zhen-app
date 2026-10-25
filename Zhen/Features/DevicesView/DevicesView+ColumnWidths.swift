@@ -20,6 +20,12 @@ extension DevicesView {
       return columns.reduce(0, +) + CGFloat(columns.count) * Dimension.tableIntercell + Dimension.tableIntercell
     }
 
+    /// `minimumTable`, or what the screen leaves beside the sidebar when that is less. The
+    /// table, not the sidebar, gives up the difference: it scrolls sideways (F2 still holds).
+    var minimumTableOnScreen: CGFloat {
+      min(minimumTable, WindowSize.screenWidth - WindowSize.sidebarShare)
+    }
+
     /// The widths for the model's devices, worked out once per change to them and once a
     /// minute ("2 min. ago" grows), not on every redraw. Uncached, a selection click on a
     /// /16 re-measured 65 534 rows (`ScaleTests`). All devices, never the search's subset:
