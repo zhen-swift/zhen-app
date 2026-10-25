@@ -24,7 +24,7 @@ struct ZhenRobot {
   @discardableResult
   static func launch(
     fixture: String = "home", look: Look? = nil, scanPace: Int = 40,
-    restoreState: Bool = false, language: String = "en", extra: [String] = []
+    restoreState: Bool = false, savedStateFromEarlierTests: Bool = true, language: String = "en", extra: [String] = []
   ) -> ZhenRobot {
     let app = XCUIApplication()
     // `-UITesting` takes no value, so it goes LAST. Anywhere else AppKit reads it as a
@@ -33,11 +33,19 @@ struct ZhenRobot {
     // "the main window never appeared" with every argument in the right order but this one.
     app.launchArguments = ["-Fixture", fixture, "-ScanPace", "\(scanPace)"]
       + (look?.arguments ?? [])
-      + (restoreState ? ["-NSQuitAlwaysKeepsWindows", "YES", "-RestoreState"] : ["-ApplePersistenceIgnoreState", "YES"])
+      + (restoreState ? ["-NSQuitAlwaysKeepsWindows", "YES"] : [])
+      // Saved state is written even when it is ignored, so an earlier test's — the menu bar
+      // tests close the window — comes back windowless. A restoration test's first launch
+      // reads none, keeps what it does, and its relaunch reads that.
+      + (!restoreState || !savedStateFromEarlierTests ? ["-ApplePersistenceIgnoreState", "YES"] : [])
       // The interface language, pinned: assertions read English words, and this Mac's
       // second language is Spanish, which the app now speaks.
       + ["-AppleLanguages", "(\(language))"]
       + extra
+      // `-RestoreState` takes no value either, so it goes just before `-UITesting`, which
+      // AppKit then reads as its value — nothing is left over. Followed by
+      // `-AppleLanguages`, it left "(en)" over and every restoration launch was windowless.
+      + (restoreState ? ["-RestoreState"] : [])
       + ["-UITesting"]
     app.launch()
     let robot = ZhenRobot(app: app)
