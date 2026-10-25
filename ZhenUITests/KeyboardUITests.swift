@@ -52,10 +52,11 @@ final class KeyboardUITests: XCTestCase {
     XCTAssertTrue(filtered, "the Presence filter kept an identity event")
     XCTAssertTrue(robot.element("event-appeared").exists)
 
-    // ⌥⌘4 is Ports: nothing in this window, said so, and the filter stays.
-    robot.press("4", [.command, .option], expecting: "activityNoMatch")
+    // ⌥⌘4 is Ports, and ⌘F searches it: nothing matches, said so, and the filter stays.
+    robot.emptyActivity(under: ("4", "ports"))
     XCTAssertTrue(robot.element("activityFilter").exists)
 
+    robot.key(.escape)
     robot.key("1", [.command, .option])
     robot.press("1", .command, expecting: "deviceTable")
   }

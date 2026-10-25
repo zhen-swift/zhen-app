@@ -130,6 +130,24 @@ struct ZhenRobot {
     XCTFail("\(identifier) never appeared after ⌘-key \(key) ×3", file: file, line: line)
   }
 
+  /// Whether Activity's `segment` (an `ActivityFilter` raw value) becomes the selected
+  /// one. A segment is a radio button whose value is 1 when on.
+  func isSelected(segment: String, timeout: TimeInterval = 4) -> Bool {
+    let on = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == 1"), object: element("activityFilter-\(segment)"))
+    return XCTWaiter.wait(for: [on], timeout: timeout) == .completed
+  }
+
+  /// Under `segment`, searches Activity for a device nobody has, so the segment matches
+  /// nothing. The home fixture has events of every kind, ports included since zhen-core
+  /// 0.7.0, so no segment is empty on its own.
+  func emptyActivity(under segment: (key: String, name: String), file: StaticString = #filePath, line: UInt = #line) {
+    key(segment.key, [.command, .option])
+    XCTAssertTrue(isSelected(segment: segment.name), "\(segment.name) was never selected", file: file, line: line)
+    key("f", .command)
+    app.typeText("zzz")
+    waitFor("activityNoMatch", file: file, line: line)
+  }
+
   /// Opens the device at `address` with a double-click, as a person would.
   func openDevice(_ address: String, file: StaticString = #filePath, line: UInt = #line) {
     for _ in 0..<3 {

@@ -43,7 +43,7 @@ final class ActivityUITests: XCTestCase {
   func testFilterWithNoMatchKeepsItsContext() {
     let robot = ZhenRobot.launch()
     robot.press("2", .command, expecting: "activityList")
-    robot.press("4", [.command, .option], expecting: "activityNoMatch")
+    robot.emptyActivity(under: ("4", "ports"))
     XCTAssertTrue(robot.element("activityNoMatch").words.contains("No port events in this window"), robot.element("activityNoMatch").words)
     XCTAssertTrue(robot.element("activityFilter").exists, "the segments went away")
     XCTAssertTrue(robot.element("activityHistogram").exists, "the histogram went away")
@@ -55,11 +55,14 @@ final class ActivityUITests: XCTestCase {
   func testShowInActivityStartsFromAll() {
     let robot = ZhenRobot.launch()
     robot.press("2", .command, expecting: "activityList")
-    robot.press("4", [.command, .option], expecting: "activityNoMatch")
+    robot.key("4", [.command, .option])
+    XCTAssertTrue(robot.isSelected(segment: "ports"), "Ports was never selected")
     robot.press("1", .command, expecting: "deviceTable")
     robot.selectRowByKeyboard()
     robot.press("a", [.command, .shift], expecting: "activityList")
-    XCTAssertFalse(robot.element("activityNoMatch").exists, "arrived under the Ports segment, showing nothing")
+    // The segment itself, not an empty list: the router has port events, so arriving
+    // under Ports from it would still show rows.
+    XCTAssertTrue(robot.isSelected(segment: "all"), "arrived under the Ports segment")
     XCTAssertGreaterThan(eventRows(robot), 0)
   }
 
