@@ -586,7 +586,7 @@
 			repositoryURL = "https://github.com/zhen-swift/zhen-core.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.7.0;
+				minimumVersion = 0.9.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
