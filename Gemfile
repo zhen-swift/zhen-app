@@ -2,4 +2,4 @@
 # which is gitignored: `bundle config set --local path vendor/bundle && bundle install`.
 source "https://rubygems.org"
 
-gem "fastlane", "~> 2.228"
+gem "fastlane", "~> 2.241"
