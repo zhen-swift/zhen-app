@@ -9,18 +9,6 @@
         "revision" : "6a52f3251125d74daf04fcbd5e6f08a75d074382",
         "version" : "1.8.2"
       }
-<<<<<<< HEAD
-=======
-    },
-    {
-      "identity" : "zhen-core",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/zhen-swift/zhen-core.git",
-      "state" : {
-        "revision" : "00dffeb06d03fd6e5142f6a9e0f2804b9ec471fe",
-        "version" : "0.9.0"
-      }
->>>>>>> origin/dependabot/swift/github.com/zhen-swift/zhen-core-0.9.0
     }
   ],
   "version" : 3

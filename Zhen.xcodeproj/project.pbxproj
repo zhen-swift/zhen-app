@@ -580,21 +580,10 @@
 		};
 /* End XCConfigurationList section */
 
-<<<<<<< HEAD
 /* Begin XCLocalSwiftPackageReference section */
 		4FF15B936B8851E2CAA578B9 /* XCLocalSwiftPackageReference "../zhen-core" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../zhen-core";
-=======
-/* Begin XCRemoteSwiftPackageReference section */
-		4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zhen-swift/zhen-core.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.9.0;
-			};
->>>>>>> origin/dependabot/swift/github.com/zhen-swift/zhen-core-0.9.0
 		};
 /* End XCLocalSwiftPackageReference section */
 
