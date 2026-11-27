@@ -7,20 +7,36 @@ import ZhenScan
 /// and the scan in progress.
 ///
 /// One per app, shared by every window, owned by the `App` with `@State`. It reads the same
-/// history file `zhen scan` writes, so a scan in a terminal and a scan here are one history.
+/// history files `zhen scan` writes, so a scan in a terminal and a scan here are one history.
+///
+/// Each network has its own history (zhen-core 0.10.0). The one in view is the network this
+/// Mac is on, unless the person picked another: that one is read only, and a scan returns to
+/// the current network first.
 @Observable
 final class NetworkModel {
   let environment: AppEnvironment
   let scan = ScanSession()
-  @ObservationIgnored let store: any HistoryStore
+  /// The store of the network in view.
+  @ObservationIgnored private(set) var store: any HistoryStore
+  /// The store of the network this Mac is on: what scans and port scans record into. The
+  /// same as `store` unless the person is looking at another network.
+  @ObservationIgnored private var currentStore: any HistoryStore
+  /// Where each network's history is kept. Nil under fixtures, and where there is nowhere.
+  @ObservationIgnored let histories: NetworkHistories?
   @ObservationIgnored private let pipeline: ScanPipeline
   @ObservationIgnored let defaults: UserDefaults
   @ObservationIgnored let helper: any HelperService
   @ObservationIgnored let notifier: any Notifier
   @ObservationIgnored private let clock: any Clock<Duration>
   @ObservationIgnored private let liveRunner: LiveScanRunner?
-  /// The history file, when this launch uses one.
-  @ObservationIgnored let historyURL: URL?
+  /// The history file in view, when this launch uses one.
+  private(set) var historyURL: URL?
+  /// The history file of the network this Mac is on, once known.
+  private(set) var currentHistoryURL: URL?
+  /// The network this Mac is on, as last read.
+  @ObservationIgnored private var currentIdentity: NetworkIdentity?
+  /// Every network with a history, for the picker: the current one first.
+  private(set) var networks: [NetworkChoice] = []
 
   private(set) var devices: [DeviceItem] = [] {
     didSet { devicesRevision &+= 1 }
@@ -55,18 +71,26 @@ final class NetworkModel {
   ///     clears when it is made — fine for one app, a race between parallel tests.
   ///   - engine: for a live launch, what builds the scanner. zhen-core's `ScanRunner`
   ///     unless a test is driving the real history file with a stand-in engine.
+  ///   - histories: for a live launch, where each network's history is kept. Resolved from
+  ///     the process unless a test keeps them in a scratch directory.
   init(
     environment: AppEnvironment, defaults testDefaults: UserDefaults? = nil,
-    engine: LiveScanRunner.Factory? = nil
+    engine: LiveScanRunner.Factory? = nil, histories testHistories: NetworkHistories? = nil
   ) {
     self.environment = environment
     switch environment.dataSource {
     case .live:
-      let url = HistoryLocation.resolve(environment: environment.processEnvironment)
+      let histories = testHistories ?? NetworkHistories.resolve(environment: environment.processEnvironment)
+      // `ZHEN_HISTORY` names one file for every network, known now. Otherwise which file is
+      // the current network's is known once `load` has read the network.
+      let url: URL? = if case .single(let file) = histories?.layout { file } else { nil }
       let store: any HistoryStore = url.map { LogHistoryStore(url: $0) } ?? InMemoryHistoryStore()
       let runner = engine.map { LiveScanRunner(store: store, make: $0) } ?? LiveScanRunner(store: store)
+      self.histories = histories
       self.historyURL = url
+      self.currentHistoryURL = url
       self.store = store
+      self.currentStore = store
       self.liveRunner = runner
       self.pipeline = ScanPipeline(runner: runner)
       self.defaults = testDefaults ?? .standard
@@ -75,6 +99,8 @@ final class NetworkModel {
     case .fixture(let variant):
       let store = InMemoryHistoryStore()
       self.store = store
+      self.currentStore = store
+      self.histories = nil
       self.historyURL = nil
       self.liveRunner = nil
       let dataset = environment.fixtureDataset
@@ -122,17 +148,19 @@ final class NetworkModel {
         network: capture.run.target
       )
     } else if let liveRunner, interface == nil {
-      interface = await liveRunner.interface()
+      await openCurrentNetwork(through: liveRunner)
     }
     // Retention is a property of the store, not of the Settings window: applied here, it
     // holds for every run this launch records, Settings opened or not.
     await applyRetention(days: Preferences(defaults).retentionDays)
     await reload()
+    await refreshNetworks()
     hasLoaded = true
   }
 
-  /// Rereads history whenever the file changes, for as long as the calling task lives: a
-  /// scan run in a terminal appears in the open window.
+  /// Rereads history whenever the file in view changes, for as long as the calling task
+  /// lives: a scan run in a terminal appears in the open window. The host restarts it when
+  /// the network in view changes.
   func watchHistory() async {
     guard let historyURL else { return }
     let changes = HistoryWatcher.changes(of: historyURL)
@@ -187,7 +215,8 @@ final class NetworkModel {
 
   /// Scans one device's ports, without taking over the window or recording a run.
   func scanPorts(_ id: DeviceItem.ID) {
-    guard !isBusy, let item = device(id), let address = item.device.ipv4Addresses.first else { return }
+    // Another network's devices are not here to answer: the probe would record into this one.
+    guard !isBusy, isViewingCurrentNetwork, let item = device(id), let address = item.device.ipv4Addresses.first else { return }
     portScans[id] = PortScan(state: .running, ports: portScans[id]?.ports ?? [], at: .now)
     portScanTarget = PortScanTarget(id: id, address: address, isOnline: item.isOnline)
   }
@@ -219,13 +248,23 @@ final class NetworkModel {
 
   /// Applies the event-retention setting to the store.
   func applyRetention(days: Int) async {
-    await store.setRetention(days > 0 ? .days(days) : .forever)
+    await store.setRetention(Self.retention(days: days))
+    await currentStore.setRetention(Self.retention(days: days))
+  }
+
+  static func retention(days: Int) -> RetentionPolicy {
+    days > 0 ? .days(days) : .forever
   }
 
   /// Runs the scan the session asked for. Called from the window's task, so closing the
   /// window or stopping the scan cancels it.
   func performScan() async {
     guard scan.runToken != nil else { return }
+    // A scan records into the network this Mac is on, so that is the one it shows.
+    if !isViewingCurrentNetwork {
+      showCurrentNetwork()
+      await reload()
+    }
     await liveRunner?.note(helper.state)
     let knownBefore = Set(devices.map(\.id))
     let started = Date.now
@@ -240,6 +279,7 @@ final class NetworkModel {
       unavailable = degradation
     }
     await reload()
+    await refreshNetworks()
     // A scan that could not start recorded no run; its reason must outlive the reload,
     // which restores the previous run's degradations.
     if let unavailable { lastDegradations = [unavailable] }
@@ -341,6 +381,121 @@ final class NetworkModel {
     guard defaults.string(forKey: Keys.degradationsRun) == run.uuidString,
           let data = defaults.data(forKey: Keys.degradations) else { return nil }
     return try? JSONDecoder().decode([Degradation].self, from: data)
+  }
+}
+
+// ── Networks ──────────────────────────────────────────────────────────────────────
+
+extension NetworkModel {
+  /// Whether the network in view is the one this Mac is on. Always, under fixtures and
+  /// `ZHEN_HISTORY`, where there is one history.
+  var isViewingCurrentNetwork: Bool { historyURL == currentHistoryURL }
+
+  /// Whether the picker has anything to offer: a network other than the current one.
+  var hasOtherNetworks: Bool { networks.contains { !$0.isCurrent } }
+
+  /// The network in view, as the picker names it.
+  var networkInView: NetworkChoice? { networks.first { $0.id == historyURL } }
+
+  /// Reads the network this Mac is on and opens its history. With no interface, the most
+  /// recently scanned network is shown instead, read only.
+  fileprivate func openCurrentNetwork(through runner: LiveScanRunner) async {
+    guard let histories, case .perNetwork = histories.layout else {
+      // One file for every network: nothing is read to choose one (zhen-core's D6).
+      interface = await runner.interface()
+      return
+    }
+    await runner.choose { [weak self] identity in
+      await self?.historyStore(for: identity) ?? InMemoryHistoryStore()
+    }
+    if let current = await runner.currentNetwork() {
+      interface = current.interface
+      await runner.use(await historyStore(for: current.identity))
+    } else if let latest = await histories.known().first {
+      store = openStore(at: latest.url)
+      historyURL = latest.url
+    }
+  }
+
+  /// The store a scan of `identity` records into, which becomes the current network and
+  /// the one in view. Called by the scan runner once it has read the gateway, so through
+  /// the helper's capture device when it has one; `NetworkHistories` migrates and adopts.
+  fileprivate func historyStore(for identity: NetworkIdentity) async -> any HistoryStore {
+    guard let histories else { return currentStore }
+    let url = await histories.url(for: identity)
+    currentIdentity = identity
+    if url != currentHistoryURL {
+      currentStore = openStore(at: url)
+      currentHistoryURL = url
+    }
+    showCurrentNetwork()
+    return currentStore
+  }
+
+  private func openStore(at url: URL) -> any HistoryStore {
+    LogHistoryStore(url: url, retention: Self.retention(days: Preferences(defaults).retentionDays))
+  }
+
+  /// Puts the current network back in view. The caller reloads.
+  private func showCurrentNetwork() {
+    guard currentHistoryURL != nil else { return }
+    store = currentStore
+    historyURL = currentHistoryURL
+  }
+
+  /// Shows another network's history, read only, or the current one again.
+  func show(_ network: NetworkChoice) async {
+    guard network.id != historyURL, !isBusy else { return }
+    if network.id == currentHistoryURL {
+      showCurrentNetwork()
+    } else {
+      store = openStore(at: network.id)
+      historyURL = network.id
+    }
+    await reload()
+  }
+
+  /// Rereads the list of networks. Each history is read once for its router's name, so
+  /// this runs at launch, after a scan and after an erase, not on every change.
+  func refreshNetworks() async {
+    guard let histories, case .perNetwork = histories.layout else {
+      networks = []
+      return
+    }
+    let known = await histories.known()
+    var routers: [URL: String] = [:]
+    for network in known {
+      let devices = network.url == historyURL
+        ? await store.devices() : await LogHistoryStore(url: network.url).devices()
+      routers[network.url] = NetworkChoice.routerName(in: devices, gateway: network.identity.gateway)
+    }
+    networks = NetworkChoice.list(
+      known: known, current: currentHistoryURL, currentIdentity: currentIdentity, routers: routers
+    )
+  }
+
+  /// Erases every network's history, and everything this app kept about it: the names
+  /// given to devices, the last run's warnings, this session's port results. What the
+  /// person asked for on 2026-11-20 was "everything" (zhen-core 0.10.0).
+  ///
+  /// Each history through its own store's lock, so a `zhen scan` writing at the same moment
+  /// is either erased or recorded after, never half of each.
+  func eraseAllHistory() async {
+    guard !isBusy else { return }
+    await store.erase()
+    await currentStore.erase()
+    await histories?.eraseAll()
+    userNames = [:]
+    nameAnchors = [:]
+    aliases = [:]
+    saveNames()
+    portScans = [:]
+    lastDegradations = []
+    defaults.removeObject(forKey: Keys.degradations)
+    defaults.removeObject(forKey: Keys.degradationsRun)
+    showCurrentNetwork()
+    await reload()
+    await refreshNetworks()
   }
 }
 

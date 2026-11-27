@@ -742,6 +742,108 @@
         }
       }
     },
+    "eraseAllHistory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase All History"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borrar todo el historial"
+          }
+        }
+      }
+    },
+    "eraseAllHistoryDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every network’s devices and events, and the names you gave devices, are deleted from this Mac. The zhen command line shares this history, so it is erased there too. This can’t be undone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se eliminan de esta Mac los dispositivos y eventos de todas las redes, y los nombres que les diste. La línea de comandos zhen comparte este historial, así que también se borra allí. No se puede deshacer."
+          }
+        }
+      }
+    },
+    "eraseAllHistoryEllipsis": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase All History…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borrar todo el historial…"
+          }
+        }
+      }
+    },
+    "eraseAllHistoryHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete every network’s devices and events"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar los dispositivos y eventos de todas las redes"
+          }
+        }
+      }
+    },
+    "eraseAllHistoryQuestion": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase all history?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Borrar todo el historial?"
+          }
+        }
+      }
+    },
+    "eraseHistory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase history"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borrar historial"
+          }
+        }
+      }
+    },
     "eventCount": {
       "extractionState": "manual",
       "localizations": {
@@ -2297,6 +2399,23 @@
         }
       }
     },
+    "network": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red"
+          }
+        }
+      }
+    },
     "networkDeviceTtl": {
       "extractionState": "manual",
       "localizations": {
@@ -2310,6 +2429,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dispositivo de red (TTL)"
+          }
+        }
+      }
+    },
+    "networkReadOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Another network, read only. Scan Now returns to the one this Mac is on."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otra red, solo lectura. Escanear ahora vuelve a la red de esta Mac."
           }
         }
       }
@@ -4503,6 +4639,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "esta Mac"
+          }
+        }
+      }
+    },
+    "thisNetwork": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This network"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta red"
           }
         }
       }

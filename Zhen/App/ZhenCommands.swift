@@ -23,6 +23,10 @@ struct ZhenCommands: Commands {
       Button(String(localized: .exportHistory)) { window?.exportHistory() }
         .keyboardShortcut("s", modifiers: [.command, .shift])
         .disabled(window == nil)
+      Divider()
+      // No shortcut: nothing this hard to undo should be one keystroke away.
+      Button(String(localized: .eraseAllHistoryEllipsis)) { window?.eraseAllHistory() }
+        .disabled(window == nil || window?.isScanning == true)
     }
 
     CommandGroup(after: .pasteboard) {

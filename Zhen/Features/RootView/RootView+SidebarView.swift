@@ -25,7 +25,12 @@ extension RootView {
       .listStyle(.sidebar)
       .accessibilityIdentifier("sidebar")
       .safeAreaInset(edge: .bottom, spacing: .zero) {
-        SidebarFooterView()
+        VStack(alignment: .leading, spacing: .zero) {
+          if model.hasOtherNetworks {
+            NetworkPickerView()
+          }
+          SidebarFooterView()
+        }
       }
     }
 

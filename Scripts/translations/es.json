@@ -45,6 +45,12 @@
   "didNotAnswerThisTimeSo": "%@ no respondió esta vez, así que no se revisó ningún puerto.",
   "discovery": "Descubrimiento",
   "done": "Listo",
+  "eraseAllHistory": "Borrar todo el historial",
+  "eraseAllHistoryDetail": "Se eliminan de esta Mac los dispositivos y eventos de todas las redes, y los nombres que les diste. La línea de comandos zhen comparte este historial, así que también se borra allí. No se puede deshacer.",
+  "eraseAllHistoryEllipsis": "Borrar todo el historial…",
+  "eraseAllHistoryHelp": "Eliminar los dispositivos y eventos de todas las redes",
+  "eraseAllHistoryQuestion": "¿Borrar todo el historial?",
+  "eraseHistory": "Borrar historial",
   "eventCount": {
     "one": "%lld evento",
     "other": "%lld eventos"
@@ -146,7 +152,9 @@
   },
   "naming": "Nombres",
   "netbios": "NetBIOS",
+  "network": "Red",
   "networkDeviceTtl": "Dispositivo de red (TTL)",
+  "networkReadOnly": "Otra red, solo lectura. Escanear ahora vuelve a la red de esta Mac.",
   "neverScanned": "Nunca escaneado",
   "newDeviceOnYourNetwork": "Nuevo dispositivo en tu red",
   "newDevicesOnYourNetwork": {
@@ -282,6 +290,7 @@
   "subnetOverride": "Subred personalizada",
   "tcpFingerprint": "%@ (huella TCP)",
   "thisMac": "esta Mac",
+  "thisNetwork": "Esta red",
   "today": "Hoy — %@",
   "tryAnotherFilterClearSearch": "Prueba otro filtro o borra la búsqueda.",
   "unidentifiedDevice": "Dispositivo sin identificar",

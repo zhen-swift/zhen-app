@@ -21,6 +21,8 @@ struct RootView: View {
   @State var restored = false
   /// The export being saved, while its panel is up.
   @State var exporting: HistoryDocument?
+  /// Erase All History… from the File menu, while its question is up.
+  @State var confirmingErase = false
   @FocusState var searchFocused: Bool
   @AppStorage(Preferences.Key.keepInMenuBar) var keepInMenuBar = false
 
@@ -69,6 +71,7 @@ struct RootView: View {
       isPresented: Binding(get: { exporting != nil }, set: { if !$0 { exporting = nil } }),
       document: exporting, contentType: .json, defaultFilename: NetworkModel.exportFilename
     ) { _ in exporting = nil }
+    .eraseHistoryConfirmation(isPresented: $confirmingErase, model: model)
     .focusedSceneValue(\.windowActions, actions)
   }
 }

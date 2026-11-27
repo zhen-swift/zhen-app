@@ -25,7 +25,8 @@ extension RootView {
       showSelectionInActivity: {
         if let id = singleSelection, let item = model.device(id) { showActivity(for: item.activitySearchTerm) }
       },
-      exportHistory: { exporting = model.exportDocument() }
+      exportHistory: { exporting = model.exportDocument() },
+      eraseAllHistory: { confirmingErase = true }
     )
   }
 

@@ -165,6 +165,10 @@ final class ScanSession {
         }
       case .degraded(let degradation):
         if !degradations.contains(degradation) { degradations.append(degradation) }
+      case .settling:
+        // zhen-core 0.8.0: only addresses history expects are still being waited for.
+        // Not shown yet; the live scan's stages already say the sweep is running.
+        break
       }
     }
   }
