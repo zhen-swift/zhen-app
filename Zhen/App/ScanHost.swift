@@ -21,7 +21,8 @@ struct ScanHost: ViewModifier {
       .task(id: Key(active: isActive, token: model.portScanTarget)) {
         if isActive { await model.performPortScan() }
       }
-      .task(id: isActive) {
+      // Keyed by the file in view too: picking another network watches that one.
+      .task(id: Key(active: isActive, token: model.historyURL)) {
         if isActive { await model.watchHistory() }
       }
       .task(id: Key(active: isActive, token: scanInterval)) {

@@ -265,7 +265,7 @@
 			mainGroup = E50290A24C49A459B43487C5;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */,
+				4FF15B936B8851E2CAA578B9 /* XCLocalSwiftPackageReference "../zhen-core" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 328EC33DF3954DC9B83FA285 /* Products */;
@@ -580,41 +580,37 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zhen-swift/zhen-core.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.7.0;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		4FF15B936B8851E2CAA578B9 /* XCLocalSwiftPackageReference "../zhen-core" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../zhen-core";
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		070E7AE6E4415407A08EDDCC /* ZhenPrivilege */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			package = 4FF15B936B8851E2CAA578B9 /* XCLocalSwiftPackageReference "../zhen-core" */;
 			productName = ZhenPrivilege;
 		};
 		5E1A0C0D2F00000000000022 /* ZhenDarwin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			package = 4FF15B936B8851E2CAA578B9 /* XCLocalSwiftPackageReference "../zhen-core" */;
 			productName = ZhenDarwin;
 		};
 		5E1A0C0D2F00000000000032 /* zhen-helper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			package = 4FF15B936B8851E2CAA578B9 /* XCLocalSwiftPackageReference "../zhen-core" */;
 			productName = "zhen-helper";
 		};
 		7B1B417D090B1D07A91103FA /* ZhenCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			package = 4FF15B936B8851E2CAA578B9 /* XCLocalSwiftPackageReference "../zhen-core" */;
 			productName = ZhenCore;
 		};
 		D5818EF3CE50B07BBF9458FC /* ZhenScan */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FF15B936B8851E2CAA578B9 /* XCRemoteSwiftPackageReference "zhen-core" */;
+			package = 4FF15B936B8851E2CAA578B9 /* XCLocalSwiftPackageReference "../zhen-core" */;
 			productName = ZhenScan;
 		};
 /* End XCSwiftPackageProductDependency section */

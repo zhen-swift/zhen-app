@@ -12,6 +12,7 @@ struct SettingsView: View {
   @AppStorage(Preferences.Key.retentionDays) private var retentionDays = 0
   @AppStorage(Preferences.Key.budgetSeconds) private var budgetSeconds = Preferences.defaultBudgetSeconds
   @State private var exporting: HistoryDocument?
+  @State private var confirmingErase = false
   @AppStorage(Preferences.Key.notifyNewDevices) private var notifyNewDevices = false
   @AppStorage(Preferences.Key.keepInMenuBar) private var keepInMenuBar = false
   /// The person said yes here and macOS said no.
@@ -106,6 +107,13 @@ struct SettingsView: View {
               .accessibilityIdentifier("exportHistoryButton")
           }
         }
+        LabeledContent(String(localized: .eraseHistory)) {
+          Button(String(localized: .eraseAllHistoryEllipsis), role: .destructive) { confirmingErase = true }
+            // Not mid-scan: the scan would record into a history erased under it.
+            .disabled(model.isBusy)
+            .help(String(localized: .eraseAllHistoryHelp))
+            .accessibilityIdentifier("eraseHistoryButton")
+        }
       } header: {
         Text(.history).sectionLabel()
       }
@@ -131,6 +139,7 @@ struct SettingsView: View {
       isPresented: Binding(get: { exporting != nil }, set: { if !$0 { exporting = nil } }),
       document: exporting, contentType: .json, defaultFilename: NetworkModel.exportFilename
     ) { _ in exporting = nil }
+    .eraseHistoryConfirmation(isPresented: $confirmingErase, model: model)
     .frame(width: .windowSize.settingsWidth, height: .windowSize.settingsHeight)
     .task(id: retentionDays) { await model.applyRetention(days: retentionDays) }
     // Permission is asked when the person turns this on, never before: the prompt then

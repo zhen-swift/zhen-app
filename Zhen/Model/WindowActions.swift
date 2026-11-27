@@ -21,6 +21,7 @@ struct WindowActions {
   var copyMACAddresses: () -> Void
   var showSelectionInActivity: () -> Void
   var exportHistory: () -> Void
+  var eraseAllHistory: () -> Void
 }
 
 extension FocusedValues {

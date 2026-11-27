@@ -11,13 +11,26 @@ import ZhenScan
 nonisolated final class CountingEngine: ScanEngine {
   let store: any HistoryStore
   let report: ScanReport
+  /// The router this engine reads: what tells two networks on one subnet apart.
+  let gateway: any GatewayResolving
   var interface: NetworkInterface {
     NetworkInterface(name: "en0", address: report.run.target.networkAddress, network: report.run.target)
   }
 
-  init(store: any HistoryStore, report: ScanReport) {
+  init(store: any HistoryStore, report: ScanReport, gateway: MACAddress? = nil) {
     self.store = store
     self.report = report
+    self.gateway = FixedGatewayResolver(gateway)
+  }
+
+  private init(store: any HistoryStore, report: ScanReport, gateway: any GatewayResolving) {
+    self.store = store
+    self.report = report
+    self.gateway = gateway
+  }
+
+  func engine(recordingInto store: any HistoryStore) -> any ScanEngine {
+    CountingEngine(store: store, report: report, gateway: gateway)
   }
 
   func run(network: IPv4Network?, budget: Duration, ports: PortStage, progress: ProgressSink) async -> CompletedScan {
